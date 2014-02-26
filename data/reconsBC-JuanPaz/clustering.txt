@@ -1,0 +1,112 @@
+El Node 0
+	 aporta al clustering 0.008333
+	 te una BC de 0.011427
+	 te 4 nodes a la distancia 1
+	 te 13 nodes a la distancia 2
+	 te 2 nodes a la distancia 3
+El Node 1
+	 aporta al clustering 0.025000
+	 te una BC de 0.009526
+	 te 4 nodes a la distancia 1
+	 te 14 nodes a la distancia 2
+	 te 1 nodes a la distancia 3
+El Node 2
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 1 nodes a la distancia 1
+	 te 9 nodes a la distancia 2
+	 te 9 nodes a la distancia 3
+El Node 3
+	 aporta al clustering 0.035000
+	 te una BC de 0.012369
+	 te 5 nodes a la distancia 1
+	 te 14 nodes a la distancia 2
+El Node 4
+	 aporta al clustering 0.013736
+	 te una BC de 0.242389
+	 te 14 nodes a la distancia 1
+	 te 5 nodes a la distancia 2
+El Node 5
+	 aporta al clustering 0.017273
+	 te una BC de 0.113102
+	 te 11 nodes a la distancia 1
+	 te 8 nodes a la distancia 2
+El Node 6
+	 aporta al clustering 0.015556
+	 te una BC de 0.155370
+	 te 10 nodes a la distancia 1
+	 te 9 nodes a la distancia 2
+El Node 7
+	 aporta al clustering 0.012500
+	 te una BC de 0.074236
+	 te 9 nodes a la distancia 1
+	 te 9 nodes a la distancia 2
+	 te 1 nodes a la distancia 3
+El Node 8
+	 aporta al clustering 0.023333
+	 te una BC de 0.021261
+	 te 6 nodes a la distancia 1
+	 te 10 nodes a la distancia 2
+	 te 3 nodes a la distancia 3
+El Node 9
+	 aporta al clustering 0.023810
+	 te una BC de 0.021864
+	 te 7 nodes a la distancia 1
+	 te 11 nodes a la distancia 2
+	 te 1 nodes a la distancia 3
+El Node 10
+	 aporta al clustering 0.016667
+	 te una BC de 0.028921
+	 te 6 nodes a la distancia 1
+	 te 13 nodes a la distancia 2
+El Node 11
+	 aporta al clustering 0.022222
+	 te una BC de 0.051940
+	 te 9 nodes a la distancia 1
+	 te 10 nodes a la distancia 2
+El Node 12
+	 aporta al clustering 0.025000
+	 te una BC de 0.023424
+	 te 8 nodes a la distancia 1
+	 te 10 nodes a la distancia 2
+	 te 1 nodes a la distancia 3
+El Node 13
+	 aporta al clustering 0.025000
+	 te una BC de 0.007943
+	 te 5 nodes a la distancia 1
+	 te 12 nodes a la distancia 2
+	 te 2 nodes a la distancia 3
+El Node 14
+	 aporta al clustering 0.000000
+	 te una BC de 0.000731
+	 te 2 nodes a la distancia 1
+	 te 14 nodes a la distancia 2
+	 te 3 nodes a la distancia 3
+El Node 15
+	 aporta al clustering 0.016667
+	 te una BC de 0.010234
+	 te 4 nodes a la distancia 1
+	 te 12 nodes a la distancia 2
+	 te 3 nodes a la distancia 3
+El Node 16
+	 aporta al clustering 0.030000
+	 te una BC de 0.009419
+	 te 6 nodes a la distancia 1
+	 te 13 nodes a la distancia 2
+El Node 17
+	 aporta al clustering 0.026667
+	 te una BC de 0.013519
+	 te 6 nodes a la distancia 1
+	 te 12 nodes a la distancia 2
+	 te 1 nodes a la distancia 3
+El Node 18
+	 aporta al clustering 0.030000
+	 te una BC de 0.013992
+	 te 6 nodes a la distancia 1
+	 te 13 nodes a la distancia 2
+El Node 19
+	 aporta al clustering 0.033333
+	 te una BC de 0.002894
+	 te 3 nodes a la distancia 1
+	 te 15 nodes a la distancia 2
+	 te 1 nodes a la distancia 3
