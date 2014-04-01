@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		360BA70918DD74E300F54F2B /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 360BA70818DD74E300F54F2B /* main.c */; };
+		36093C8818E97C3F003710C0 /* CTrace.cc in Sources */ = {isa = PBXBuildFile; fileRef = 36093C8618E97C3F003710C0 /* CTrace.cc */; };
+		36093C8A18E9A6FA003710C0 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36093C8918E9A6FA003710C0 /* libgsl.a */; };
+		360BA70918DD74E300F54F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA70818DD74E300F54F2B /* main.cpp */; };
 		360BA70B18DD74E300F54F2B /* rebuild_graph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 360BA70A18DD74E300F54F2B /* rebuild_graph.1 */; };
+		360BA71218DD753600F54F2B /* graphs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA71118DD753600F54F2B /* graphs.cpp */; };
+		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,9 +29,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		36093C8618E97C3F003710C0 /* CTrace.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cc; path = ../../../../libcpp/CTrace.cc; sourceTree = "<group>"; };
+		36093C8718E97C3F003710C0 /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
+		36093C8918E9A6FA003710C0 /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
 		360BA70518DD74E300F54F2B /* rebuild_graph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = rebuild_graph; sourceTree = BUILT_PRODUCTS_DIR; };
-		360BA70818DD74E300F54F2B /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		360BA70818DD74E300F54F2B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		360BA70A18DD74E300F54F2B /* rebuild_graph.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = rebuild_graph.1; sourceTree = "<group>"; };
+		360BA71118DD753600F54F2B /* graphs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphs.cpp; sourceTree = "<group>"; };
+		36C4F4DD18E9E10C002B67FD /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +44,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */,
+				36093C8A18E9A6FA003710C0 /* libgsl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,7 +71,12 @@
 		360BA70718DD74E300F54F2B /* rebuild_graph */ = {
 			isa = PBXGroup;
 			children = (
-				360BA70818DD74E300F54F2B /* main.c */,
+				36C4F4DD18E9E10C002B67FD /* libgslcblas.a */,
+				36093C8918E9A6FA003710C0 /* libgsl.a */,
+				36093C8618E97C3F003710C0 /* CTrace.cc */,
+				36093C8718E97C3F003710C0 /* CTrace.hpp */,
+				360BA71118DD753600F54F2B /* graphs.cpp */,
+				360BA70818DD74E300F54F2B /* main.cpp */,
 				360BA70A18DD74E300F54F2B /* rebuild_graph.1 */,
 			);
 			path = rebuild_graph;
@@ -117,7 +133,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				360BA70918DD74E300F54F2B /* main.c in Sources */,
+				360BA71218DD753600F54F2B /* graphs.cpp in Sources */,
+				360BA70918DD74E300F54F2B /* main.cpp in Sources */,
+				36093C8818E97C3F003710C0 /* CTrace.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +215,15 @@
 		360BA70F18DD74E300F54F2B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-I",
+					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
+					"$(OTHER_CFLAGS)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -204,6 +231,15 @@
 		360BA71018DD74E300F54F2B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-I",
+					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
+					"$(OTHER_CFLAGS)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -227,6 +263,7 @@
 				360BA71018DD74E300F54F2B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

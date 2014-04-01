@@ -52,7 +52,7 @@ vertex sigui major que 1                                                      */
 if (vertex[vert].degree>1){   
    for(i=0;i<(vertex[vert].degree);i++)
       {
-      a=vertex[vert].nei[i];   
+      a=vertex[vert].nei[i];   // we got a neighbour
       for (k=i+1;k<vertex[vert].degree;k++)
          for(j=0;j<(vertex[a].degree);j++)        
             if(vertex[vert].nei[k]==vertex[a].nei[j]) count ++;
