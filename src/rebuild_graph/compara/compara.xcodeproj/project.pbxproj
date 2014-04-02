@@ -1,0 +1,270 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3609205918ECAA0700BAE922 /* compara_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3609205818ECAA0700BAE922 /* compara_main.cpp */; };
+		3609205B18ECAA0700BAE922 /* compara.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3609205A18ECAA0700BAE922 /* compara.1 */; };
+		3609206A18ECAAFF00BAE922 /* compara.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3609206918ECAAFF00BAE922 /* compara.cpp */; };
+		3609206D18ECB0C000BAE922 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3609206C18ECB0C000BAE922 /* libgsl.a */; };
+		3609206F18ECB0D900BAE922 /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3609206E18ECB0D900BAE922 /* libgslcblas.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3609205318ECAA0700BAE922 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				3609205B18ECAA0700BAE922 /* compara.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3609205518ECAA0700BAE922 /* compara */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = compara; sourceTree = BUILT_PRODUCTS_DIR; };
+		3609205818ECAA0700BAE922 /* compara_main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = compara_main.cpp; sourceTree = "<group>"; };
+		3609205A18ECAA0700BAE922 /* compara.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = compara.1; sourceTree = "<group>"; };
+		3609206918ECAAFF00BAE922 /* compara.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compara.cpp; sourceTree = "<group>"; };
+		3609206B18ECAD8500BAE922 /* compara.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = compara.h; sourceTree = "<group>"; };
+		3609206C18ECB0C000BAE922 /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
+		3609206E18ECB0D900BAE922 /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3609205218ECAA0700BAE922 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3609206F18ECB0D900BAE922 /* libgslcblas.a in Frameworks */,
+				3609206D18ECB0C000BAE922 /* libgsl.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3609204C18ECAA0700BAE922 = {
+			isa = PBXGroup;
+			children = (
+				3609206E18ECB0D900BAE922 /* libgslcblas.a */,
+				3609206C18ECB0C000BAE922 /* libgsl.a */,
+				3609205718ECAA0700BAE922 /* compara */,
+				3609205618ECAA0700BAE922 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3609205618ECAA0700BAE922 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3609205518ECAA0700BAE922 /* compara */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3609205718ECAA0700BAE922 /* compara */ = {
+			isa = PBXGroup;
+			children = (
+				3609206918ECAAFF00BAE922 /* compara.cpp */,
+				3609205818ECAA0700BAE922 /* compara_main.cpp */,
+				3609205A18ECAA0700BAE922 /* compara.1 */,
+				3609206B18ECAD8500BAE922 /* compara.h */,
+			);
+			path = compara;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3609205418ECAA0700BAE922 /* compara */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3609205E18ECAA0700BAE922 /* Build configuration list for PBXNativeTarget "compara" */;
+			buildPhases = (
+				3609205118ECAA0700BAE922 /* Sources */,
+				3609205218ECAA0700BAE922 /* Frameworks */,
+				3609205318ECAA0700BAE922 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = compara;
+			productName = compara;
+			productReference = 3609205518ECAA0700BAE922 /* compara */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3609204D18ECAA0700BAE922 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "___FULLUSERNAME___";
+			};
+			buildConfigurationList = 3609205018ECAA0700BAE922 /* Build configuration list for PBXProject "compara" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3609204C18ECAA0700BAE922;
+			productRefGroup = 3609205618ECAA0700BAE922 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3609205418ECAA0700BAE922 /* compara */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3609205118ECAA0700BAE922 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3609205918ECAA0700BAE922 /* compara_main.cpp in Sources */,
+				3609206A18ECAAFF00BAE922 /* compara.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3609205C18ECAA0700BAE922 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3609205D18ECAA0700BAE922 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3609205F18ECAA0700BAE922 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-I",
+					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
+					"$(OTHER_CFLAGS)",
+					"-I",
+					/opt/local/include/,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3609206018ECAA0700BAE922 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-I",
+					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
+					"$(OTHER_CFLAGS)",
+					"-I",
+					/opt/local/include/,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3609205018ECAA0700BAE922 /* Build configuration list for PBXProject "compara" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3609205C18ECAA0700BAE922 /* Debug */,
+				3609205D18ECAA0700BAE922 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3609205E18ECAA0700BAE922 /* Build configuration list for PBXNativeTarget "compara" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3609205F18ECAA0700BAE922 /* Debug */,
+				3609206018ECAA0700BAE922 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3609204D18ECAA0700BAE922 /* Project object */;
+}
