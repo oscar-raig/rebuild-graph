@@ -1540,6 +1540,16 @@ void graph::printGraph(FILE *myFile){
   }
 }
 
+
+//Write a grapth
+// In the format
+// 0 is connected with 1 and 2
+// 3 is connected with 1
+//∫
+// 1 2
+// 0 3
+// 2
+// 1
 void graph::printMyGraph(FILE *myFile){
   int i,j;
   int auxNNeighbours;
@@ -2479,8 +2489,8 @@ int printGslVector(gsl_vector* gslVector){
 
 
 gsl_vector *
-calculateExp(gsl_vector_complex *eval){
-	CFuncTrace lFuncTrace("calculateExpo");
+calculateExp(const gsl_vector_complex *eval){
+	CFuncTrace lFuncTrace("calculateExp");
 	int order = eval->size;
 	
 	lFuncTrace.trace("Ordre for Expo %d",order);
@@ -2529,9 +2539,9 @@ fCalculateCommunicability(const char *argv[]){
 	return RESULT_OK;
 }
 
-gsl_vector * GetDiagonalFromGslMatrix(gsl_matrix * gslMatrix){
+gsl_vector * GetDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
 	
-	int nMatrixOrder = gslMatrix->size1;
+	int nMatrixOrder = (int) gslMatrix->size1;
 	gsl_vector * gslvDiagonal = gsl_vector_alloc(nMatrixOrder);
 	
 	for (int i=0; i < nMatrixOrder;i++){
@@ -2541,7 +2551,8 @@ gsl_vector * GetDiagonalFromGslMatrix(gsl_matrix * gslMatrix){
 	return gslvDiagonal;
 }
 
-int fCalculateCommunicability_cent_exp(const char *argv[]){
+int
+fCalculateCommunicability_cent_exp(const char *argv[]){
 	CFuncTrace lFuncTrace("fCalculateCommunicability_cent_exp");
 	
 	graph *targetGraph=NULL;
