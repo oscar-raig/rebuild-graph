@@ -38,7 +38,7 @@ int main(int argc, const char *argv[])
 	
 	/* llegir el nom del fitxer de la comanda de linia                            */
 	
-	if (argc!=2) { printf("falta el nom del fitxer a llegir\n"); exit(1); }
+	if (argc!=2) { printf("analitza: falta el nom del fitxer a llegir\n"); exit(1); }
 	
 	for (i = 1; i < argc; i++)  nom = argv[i];
 	

@@ -11,7 +11,7 @@
 		360BA70918DD74E300F54F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA70818DD74E300F54F2B /* main.cpp */; };
 		360BA70B18DD74E300F54F2B /* rebuild_graph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 360BA70A18DD74E300F54F2B /* rebuild_graph.1 */; };
 		360BA71218DD753600F54F2B /* graphs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA71118DD753600F54F2B /* graphs.cpp */; };
-		36207B8218EC276A0033A4DC /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36207B8118EC276A0033A4DC /* CTrace.cpp */; };
+		3625A35818EDBA400037F00D /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35618EDBA400037F00D /* CTrace.cpp */; };
 		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
 /* End PBXBuildFile section */
 
@@ -61,7 +61,6 @@
 
 /* Begin PBXFileReference section */
 		3609206118ECAA0700BAE922 /* compara.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = compara.xcodeproj; path = compara/compara.xcodeproj; sourceTree = "<group>"; };
-		36093C8718E97C3F003710C0 /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
 		36093C8918E9A6FA003710C0 /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
 		3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = analitza.xcodeproj; path = analitza/analitza.xcodeproj; sourceTree = "<group>"; };
 		360BA70518DD74E300F54F2B /* rebuild_graph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = rebuild_graph; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,8 +68,9 @@
 		360BA70A18DD74E300F54F2B /* rebuild_graph.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = rebuild_graph.1; sourceTree = "<group>"; };
 		360BA71118DD753600F54F2B /* graphs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphs.cpp; sourceTree = "<group>"; };
 		36207B7918EC25A10033A4DC /* TestRebuildGraph.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestRebuildGraph.xcodeproj; path = TestRebuildGraph/TestRebuildGraph.xcodeproj; sourceTree = "<group>"; };
-		36207B8118EC276A0033A4DC /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 		36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = convert_graph_file.xcodeproj; path = convert_graph_file/convert_graph_file.xcodeproj; sourceTree = "<group>"; };
+		3625A35618EDBA400037F00D /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
+		3625A35718EDBA400037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
 		36C4F4DD18E9E10C002B67FD /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,10 +126,10 @@
 		360BA70718DD74E300F54F2B /* rebuild_graph */ = {
 			isa = PBXGroup;
 			children = (
-				36207B8118EC276A0033A4DC /* CTrace.cpp */,
+				3625A35618EDBA400037F00D /* CTrace.cpp */,
+				3625A35718EDBA400037F00D /* CTrace.hpp */,
 				36C4F4DD18E9E10C002B67FD /* libgslcblas.a */,
 				36093C8918E9A6FA003710C0 /* libgsl.a */,
-				36093C8718E97C3F003710C0 /* CTrace.hpp */,
 				360BA71118DD753600F54F2B /* graphs.cpp */,
 				360BA70818DD74E300F54F2B /* main.cpp */,
 				360BA70A18DD74E300F54F2B /* rebuild_graph.1 */,
@@ -255,7 +255,7 @@
 			files = (
 				360BA71218DD753600F54F2B /* graphs.cpp in Sources */,
 				360BA70918DD74E300F54F2B /* main.cpp in Sources */,
-				36207B8218EC276A0033A4DC /* CTrace.cpp in Sources */,
+				3625A35818EDBA400037F00D /* CTrace.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
