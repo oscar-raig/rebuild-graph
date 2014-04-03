@@ -53,8 +53,7 @@
 		3609204C18ECAA0700BAE922 = {
 			isa = PBXGroup;
 			children = (
-				3609206E18ECB0D900BAE922 /* libgslcblas.a */,
-				3609206C18ECB0C000BAE922 /* libgsl.a */,
+				3609866F18ED4B2200A0F6F8 /* libs */,
 				3609205718ECAA0700BAE922 /* compara */,
 				3609205618ECAA0700BAE922 /* Products */,
 			);
@@ -77,6 +76,15 @@
 				3609206B18ECAD8500BAE922 /* compara.h */,
 			);
 			path = compara;
+			sourceTree = "<group>";
+		};
+		3609866F18ED4B2200A0F6F8 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				3609206E18ECB0D900BAE922 /* libgslcblas.a */,
+				3609206C18ECB0C000BAE922 /* libgsl.a */,
+			);
+			name = libs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +271,7 @@
 				3609206018ECAA0700BAE922 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
