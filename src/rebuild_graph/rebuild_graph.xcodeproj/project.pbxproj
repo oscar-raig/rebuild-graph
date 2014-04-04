@@ -71,6 +71,7 @@
 		36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = convert_graph_file.xcodeproj; path = convert_graph_file/convert_graph_file.xcodeproj; sourceTree = "<group>"; };
 		3625A35618EDBA400037F00D /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 		3625A35718EDBA400037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
+		36ABBBF718EF049D0042FE9C /* graphs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphs.h; sourceTree = "<group>"; };
 		36C4F4DD18E9E10C002B67FD /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,6 +134,7 @@
 				360BA71118DD753600F54F2B /* graphs.cpp */,
 				360BA70818DD74E300F54F2B /* main.cpp */,
 				360BA70A18DD74E300F54F2B /* rebuild_graph.1 */,
+				36ABBBF718EF049D0042FE9C /* graphs.h */,
 			);
 			path = rebuild_graph;
 			sourceTree = "<group>";

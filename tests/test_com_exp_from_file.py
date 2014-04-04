@@ -3,7 +3,6 @@ import networkx as nx
 import numpy
 
 import scipy.linalg
-#G = nx.Graph([(0,1),(1,2),(1,5),(5,4),(2,4),(2,3),(4,3),(3,6)])
 G=nx.read_adjlist("test.gpfc",delimiter=" ",nodetype=int)
 sc = nx.communicability_centrality_exp(G)
 # alternative implementation that calculates the matrix exponential

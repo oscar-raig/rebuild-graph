@@ -42,8 +42,7 @@
 		3625A35D18EDC8FA0037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
 		3625A35F18EDC9980037F00D /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
 		3625A36018EDC9980037F00D /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
-		3625A36318EDFDB30037F00D /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../lib/libboost_system.a; sourceTree = "<group>"; };
-		3625A36518EE03680037F00D /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../lib/libboost_filesystem.a; sourceTree = "<group>"; };
+		36ABBBFC18EF04DF0042FE9C /* graphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphs.h; path = ../../rebuild_graph/graphs.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +62,6 @@
 		36207B6418EC25A10033A4DC = {
 			isa = PBXGroup;
 			children = (
-				3625A36518EE03680037F00D /* libboost_filesystem.a */,
-				3625A36318EDFDB30037F00D /* libboost_system.a */,
 				3625A35F18EDC9980037F00D /* libgsl.a */,
 				3625A36018EDC9980037F00D /* libgslcblas.a */,
 				36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */,
@@ -84,6 +81,7 @@
 		36207B6F18EC25A10033A4DC /* TestRebuildGraph */ = {
 			isa = PBXGroup;
 			children = (
+				36ABBBFC18EF04DF0042FE9C /* graphs.h */,
 				3625A35C18EDC8FA0037F00D /* CTrace.cpp */,
 				3625A35D18EDC8FA0037F00D /* CTrace.hpp */,
 				3625A35918EDC6C70037F00D /* analitza.cpp */,

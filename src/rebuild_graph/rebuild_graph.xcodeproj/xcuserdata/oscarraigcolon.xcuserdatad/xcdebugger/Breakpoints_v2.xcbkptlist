@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/graphs.cpp"
-            timestampString = "418140281.454632"
+            timestampString = "418339199.23231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2178"
-            endingLineNumber = "2178"
-            landmarkName = "fmain(int argc, const char *argv[])"
+            startingLineNumber = "2217"
+            endingLineNumber = "2217"
+            landmarkName = "fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *order)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/graphs.cpp"
-            timestampString = "418140281.454632"
+            timestampString = "418339199.23231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2377"
-            endingLineNumber = "2377"
+            startingLineNumber = "2402"
+            endingLineNumber = "2402"
             landmarkName = "fCalculateBeterness(const char *argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,12 +106,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/graphs.cpp"
-            timestampString = "418140281.454632"
+            timestampString = "418339199.23231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2520"
-            endingLineNumber = "2520"
+            startingLineNumber = "2545"
+            endingLineNumber = "2545"
             landmarkName = "fCalculateCommunicability(const char *argv[])"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rebuild_graph/graphs.cpp"
+            timestampString = "418339199.23231"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2111"
+            endingLineNumber = "2111"
+            landmarkName = "generateOutputFile(const graph *targetGraph,const char *inputFileName, int lx, int ly, int lz, float To, float Tk,float Tmin, float k,long Nmax,double costBest,double *targetBC, double *bestBC, time_t timeStart, time_t timeEnd)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -393,7 +393,7 @@ class graph{
     ////////////////////////////////////////////////////////////////////////////
 
     // Get the number of vertex (order) of the graph
-    int getOrder();
+    int getOrder() const;
 
     // Get the graph degree
     int getDegree();
@@ -723,7 +723,7 @@ double graph::vertex::addVertexBC(double newBC){
 // PUBLIC class graph operation getOrder()
 // RETURNS the value of de PRIVATE variable order
 //-----------------------------------------------------------------------------
-int graph::getOrder(){
+int graph::getOrder() const{
   return order;
 }
 
@@ -2094,7 +2094,47 @@ int getMin(double *source1,double *source2, int count){
   return result;
 }
 
-int fmain(int argc, const char *argv[]){
+void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
+						int lx, int ly, int lz, float To, float Tk,float Tmin,
+						float k,long Nmax,double costBest,double *targetBC,
+						double *bestBC, time_t timeStart, time_t timeEnd){
+	
+	FILE *output=NULL;
+	int graphOrder =targetGraph->getOrder();
+	char outputFilename[STRING_LENGTH];
+	strcpy(outputFilename,inputFileName);
+	strcat(outputFilename,".out");
+	output=fopen(outputFilename,"w");
+	if(output==NULL){
+		printf("Cannot open output file %s for writting\n",outputFilename);
+		exit(-1);
+	}
+	fprintf(output,"Graph reconstruction via  vertex betweenness centrality\n");
+	fprintf(output,"\tOriginal graph description file-> %s",inputFileName);
+	fprintf(output,"\t\tOrdre-> %d\n",targetGraph->getOrder());
+	fprintf(output,"\tPseudorandom generator seeds-> %d,%d,%d\n",lx,ly,lz);
+	fprintf(output,"SIMULATED ANNEALING:\n");
+	fprintf(output,"\tTo-> %f\n",To);
+	fprintf(output,"\tTk final-> %f\n",Tk);
+	fprintf(output,"\tTmin-> %f\n",Tmin);
+	fprintf(output,"\tGeometric cooling rate: T[k]=%f * T[k-1]\n",k);
+	fprintf(output,"\tN-> %ld\n",Nmax);
+	fprintf(output,"RESULTS:\n");
+	fprintf(output,"\tBest cost -> %3.20f\n",costBest);
+	fprintf(output,"\tBetweenness centrality\n");
+	fprintf(output,"\t Desired BC  |  Closest BC  | Difference^2\n");
+	for(int i=0; i<graphOrder; i++){
+		fprintf(output,"\t%2.10f | ",targetBC[i]);
+		fprintf(output,"%2.10f | ",bestBC[i]);
+		fprintf(output,"%2.10f\n",pow(targetBC[i]-bestBC[i],2));
+	}
+	fprintf(output,"CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
+	fclose(output);
+
+	
+}
+
+int fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *order){
 
   int i=0;
   int lx=0;
@@ -2105,13 +2145,12 @@ int fmain(int argc, const char *argv[]){
   time_t timeEnd;
 
   char inputFilename[STRING_LENGTH];
-  char outputFilename[STRING_LENGTH];
   char outputGraphFilename[STRING_LENGTH];
   char inputGraphFilename[STRING_LENGTH];
   char logFilename[STRING_LENGTH];
 
   
-  FILE *output=NULL;
+ 
   FILE *outputGraph=NULL;
   FILE *inputGraph=NULL;
   FILE *logFile=NULL;
@@ -2185,11 +2224,16 @@ int fmain(int argc, const char *argv[]){
   graphOrder=targetGraph->getOrder();
   printf("si\n");
 
-  double targetBC [graphOrder];
-  double bestBC [graphOrder];
+  //double targetBC [graphOrder];
+  //double bestBC [graphOrder];
+	*ptargetBC =(double*) malloc(graphOrder*sizeof(double));
+	*pbestBC=(double*) malloc(graphOrder*sizeof(double));
+	double *targetBC = *ptargetBC;
+	double *bestBC = *pbestBC;
   double oldBC [graphOrder];
   double newBC [graphOrder];
-
+	*order = graphOrder;
+	
   for(i=0;i<graphOrder;i++){
     targetBC[i]=0.0;
     bestBC[i]=0.0;
@@ -2212,13 +2256,7 @@ int fmain(int argc, const char *argv[]){
     fclose(inputGraph);
   }
 
-  strcpy(outputFilename,inputFilename);
-  strcat(outputFilename,".out");
-  output=fopen(outputFilename,"w");
-  if(output==NULL){
-    printf("Cannot open output file %s for writting\n",outputFilename);
-    exit(-1);
-  }
+  
 
   strcpy(outputGraphFilename,inputFilename);
   strcat(outputGraphFilename,".res");
@@ -2321,34 +2359,21 @@ int fmain(int argc, const char *argv[]){
 
   printf("RESULTS:\n");
   printf("CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
-  printf("Output file: %s\n",outputFilename);
-  fprintf(output,"Graph reconstruction via  vertex betweenness centrality\n");
-  fprintf(output,"\tOriginal graph description file-> %s",inputFilename);
-  fprintf(output,"\t\tOrdre-> %d\n",targetGraph->getOrder());
-  fprintf(output,"\tPseudorandom generator seeds-> %d,%d,%d\n",lx,ly,lz);
-  fprintf(output,"SIMULATED ANNEALING:\n");
-  fprintf(output,"\tTo-> %f\n",To);
-  fprintf(output,"\tTk final-> %f\n",Tk);
-  fprintf(output,"\tTmin-> %f\n",Tmin);
-  fprintf(output,"\tGeometric cooling rate: T[k]=%f * T[k-1]\n",k);
-  fprintf(output,"\tN-> %ld\n",Nmax);
-  fprintf(output,"RESULTS:\n");
-  fprintf(output,"\tBest cost -> %3.20f\n",costBest);
-  fprintf(output,"\tBetweenness centrality\n");
-  fprintf(output,"\t Desired BC  |  Closest BC  | Difference^2\n");
-  for(i=0; i<graphOrder; i++){
-    fprintf(output,"\t%2.10f | ",targetBC[i]);
-    fprintf(output,"%2.10f | ",bestBC[i]);
-    fprintf(output,"%2.10f\n",pow(targetBC[i]-bestBC[i],2));
-  }
-  fprintf(output,"CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
-  fclose(output);
+ // printf("Output file: %s\n",outputFilename);
+	
+	
+	
+							
+	
+	generateOutputFile(targetGraph,inputFilename, lx,  ly,  lz,  To,  Tk, Tmin,
+											    k, Nmax, costBest,targetBC,
+											   bestBC, timeStart, timeEnd);
+ 
+	printf("\nReconstructed graph file: %s\n",outputGraphFilename);
+	bestGraph->printGraph();
 
-  printf("\nReconstructed graph file: %s\n",outputGraphFilename);
-  bestGraph->printGraph();
-
-  bestGraph->printMyGraph(outputGraph);
-  fclose(outputGraph);
+	bestGraph->printMyGraph(outputGraph);
+	fclose(outputGraph);
     return 1;
 }
 

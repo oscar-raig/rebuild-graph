@@ -1,5 +1,5 @@
 Graph reconstruction via  vertex betweenness centrality
-	Original graph description file-> ba3.txt		Ordre-> 20
+	Original graph description file-> /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc		Ordre-> 20
 	Pseudorandom generator seeds-> 11,92,37
 SIMULATED ANNEALING:
 	To-> 10.000000
