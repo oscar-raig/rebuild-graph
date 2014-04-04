@@ -40,8 +40,8 @@ extern int Nvertexs;               /* Nombre de Vertexs                         
 extern const char *nom;                  /* String on guardem el arxiu d¥entrada           */
 
 
-
-int llegir_dades();
+int llegir_dades(const char* nom, int &linies,int &maxveins,int &minveins, float &mitja );
 int distancies();
 int be_ce();
+float clustering(int vert);
 #endif

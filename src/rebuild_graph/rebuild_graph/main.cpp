@@ -19,12 +19,12 @@ int main(int argc, const char * argv[])
 
     // insert code here...
     printf("Hello, World!\n");
-//    fmain(argc,argv);
+    fmain(argc,argv);
 	
 	//fCalculateBeterness(argv);
     //fCalculateCommunicability(argv);
 	
-	fCalculateCommunicability_cent_exp(argv);
+//	fCalculateCommunicability_cent_exp(argv);
 	return 0;
 }
 

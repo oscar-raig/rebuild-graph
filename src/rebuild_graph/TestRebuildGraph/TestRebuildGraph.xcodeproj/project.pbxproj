@@ -11,6 +11,10 @@
 		36207B7118EC25A10033A4DC /* TestRebuildGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36207B7018EC25A10033A4DC /* TestRebuildGraph.cpp */; };
 		36207B7318EC25A10033A4DC /* TestRebuildGraph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 36207B7218EC25A10033A4DC /* TestRebuildGraph.1 */; };
 		36207B8518EC3CFC0033A4DC /* libboost_unit_test_framework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */; };
+		3625A35B18EDC6C70037F00D /* analitza.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35918EDC6C70037F00D /* analitza.cpp */; };
+		3625A35E18EDC8FA0037F00D /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35C18EDC8FA0037F00D /* CTrace.cpp */; };
+		3625A36118EDC9980037F00D /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625A35F18EDC9980037F00D /* libgsl.a */; };
+		3625A36218EDC9980037F00D /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625A36018EDC9980037F00D /* libgslcblas.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +36,14 @@
 		36207B7018EC25A10033A4DC /* TestRebuildGraph.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestRebuildGraph.cpp; sourceTree = "<group>"; };
 		36207B7218EC25A10033A4DC /* TestRebuildGraph.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestRebuildGraph.1; sourceTree = "<group>"; };
 		36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_unit_test_framework.a; path = ../../../lib/libboost_unit_test_framework.a; sourceTree = "<group>"; };
+		3625A35918EDC6C70037F00D /* analitza.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = analitza.cpp; path = ../../analitza/analitza/analitza.cpp; sourceTree = "<group>"; };
+		3625A35A18EDC6C70037F00D /* analitza.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = analitza.h; path = ../../analitza/analitza/analitza.h; sourceTree = "<group>"; };
+		3625A35C18EDC8FA0037F00D /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
+		3625A35D18EDC8FA0037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
+		3625A35F18EDC9980037F00D /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
+		3625A36018EDC9980037F00D /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
+		3625A36318EDFDB30037F00D /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_system.a; path = ../../../lib/libboost_system.a; sourceTree = "<group>"; };
+		3625A36518EE03680037F00D /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_filesystem.a; path = ../../../lib/libboost_filesystem.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3625A36118EDC9980037F00D /* libgsl.a in Frameworks */,
+				3625A36218EDC9980037F00D /* libgslcblas.a in Frameworks */,
 				36207B8518EC3CFC0033A4DC /* libboost_unit_test_framework.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,6 +63,10 @@
 		36207B6418EC25A10033A4DC = {
 			isa = PBXGroup;
 			children = (
+				3625A36518EE03680037F00D /* libboost_filesystem.a */,
+				3625A36318EDFDB30037F00D /* libboost_system.a */,
+				3625A35F18EDC9980037F00D /* libgsl.a */,
+				3625A36018EDC9980037F00D /* libgslcblas.a */,
 				36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */,
 				36207B6F18EC25A10033A4DC /* TestRebuildGraph */,
 				36207B6E18EC25A10033A4DC /* Products */,
@@ -66,6 +84,10 @@
 		36207B6F18EC25A10033A4DC /* TestRebuildGraph */ = {
 			isa = PBXGroup;
 			children = (
+				3625A35C18EDC8FA0037F00D /* CTrace.cpp */,
+				3625A35D18EDC8FA0037F00D /* CTrace.hpp */,
+				3625A35918EDC6C70037F00D /* analitza.cpp */,
+				3625A35A18EDC6C70037F00D /* analitza.h */,
 				3609204A18ECA4D100BAE922 /* graphs.cpp */,
 				36207B7018EC25A10033A4DC /* TestRebuildGraph.cpp */,
 				36207B7218EC25A10033A4DC /* TestRebuildGraph.1 */,
@@ -125,6 +147,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3609204B18ECA4D100BAE922 /* graphs.cpp in Sources */,
+				3625A35E18EDC8FA0037F00D /* CTrace.cpp in Sources */,
+				3625A35B18EDC6C70037F00D /* analitza.cpp in Sources */,
 				36207B7118EC25A10033A4DC /* TestRebuildGraph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +238,8 @@
 					"$(OTHER_CFLAGS)",
 					"-I",
 					/opt/local/include/,
+					"-I",
+					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -231,6 +257,8 @@
 					"$(OTHER_CFLAGS)",
 					"-I",
 					/opt/local/include/,
+					"-I",
+					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

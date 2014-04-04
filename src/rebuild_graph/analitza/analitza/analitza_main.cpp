@@ -9,11 +9,7 @@
 #include <iostream>
 #include "analitza.h"
 
-vert vertex[VERTEXS];       /* Vector de Vertexs                              */
-int dist[VERTEXS][VERTEXS]; /* Matriu de dist‡ncies                           */
-int dis[VERTEXS];           /* Vector de dist‡ncies                           */
-int Nvertexs;               /* Nombre de Vertexs                              */
-const char *nom;                  /* String on guardem el arxiu d¥entrada           */
+
 
 
 
@@ -31,20 +27,23 @@ const char *nom;                  /* String on guardem el arxiu d¥entrada      
  ********************************************************************************
  *******************************************************************************/
 
-int main(int argc, const char *argv[])
-
-{
-	int i;
+int main(int argc, const char *argv[]){
+	
 	
 	/* llegir el nom del fitxer de la comanda de linia                            */
+	const char *nom = NULL;                  /* String on guardem el arxiu d¥entrada           */
+	if (argc!=2) {
+		printf("analitza: falta el nom del fitxer a llegir\n");
+		exit(1);
+	}
 	
-	if (argc!=2) { printf("analitza: falta el nom del fitxer a llegir\n"); exit(1); }
+	nom = argv[1];
+	int order=0,maxveins=0,minveins=0;
+	float mitja = 0.0;
+	llegir_dades(nom,order,maxveins,minveins,mitja);
+	be_ce();
+	distancies();
 	
-	for (i = 1; i < argc; i++)  nom = argv[i];
-	
-	llegir_dades();
-	i=be_ce();
-	i=distancies();
-	
+	return 0;
 }
 

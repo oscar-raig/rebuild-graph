@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include "analitza.h"
 
+vert vertex[VERTEXS];       /* Vector de Vertexs                              */
+int dist[VERTEXS][VERTEXS]; /* Matriu de distàncies                           */
+int dis[VERTEXS];           /* Vector de distàncies                           */
+int Nvertexs;               /* Nombre de Vertexs                              */
 
 
 
@@ -14,11 +18,12 @@ FUNCIó clustering()
 AQUESTA FUNCIO CALCULA I RETORNA LA APORTACIO AL CLUSTERING
 DEL NODE PASSAT COM A PARAMETRE (NO ESTA NORMALITZADA)
 
+Clustering: how the other nodes are connected between them
 ********************************************************************************
 *******************************************************************************/
 
-float clustering(int vert)
-{
+float
+clustering(int vert){
 int i ,j ,a ,k,count=0,max=0;
 
 /* Posibles conexions*/
@@ -258,80 +263,6 @@ return(1);
 /*******************************************************************************
 ********************************************************************************
 
-FUNCIO distancies_matriu()
-
-AQUESTA FUNCIÓ INTENTA CALCULAR LA MATRIU DE DISTÀNCIES DEL GRAF.
-PER FER-HO SEGUEIZ ELS SEGÜENTS PASOS:
-
-1.- INICIALITZA LA MATRIU A VERTEXS+1 I LA DIAGONAL A 0
-2.- PER A CADA VERTEX FICA LA DISTÀNCIA ALS SEUS VEINS A 1
-
-|   0 1001 1001 1001 1001|     |   0    1 1001 1001 1001|
-|1001    0 1001 1001 1001|     |   1    0    1    1 1001|
-|1001 1001    0 1001 1001| =>  |1001    1    0    1 1001|
-|1001 1001 1001    0 1001|     |1001    1    1    0    1|
-|1001 1001 1001 1001    0|     |1001 1001 1001    1    0|
-
-3.-ANEM RECORRENT LA MATRIU REPETIDAMENT COMPROBANT PER A CADA DISTANCIA
-ENTRE NODES I-J SI EXISTEIX UN NODE L TAL QUE:
-
-DISTACIA I-L + DISTANCIA L-J < DISTANCIA QUE TENIM GUARDADA DE I-J
-
-4.- ES VA RECORREGUENT LA MATRIU FINS QUE DURANT TOT UN RECORREGUT NO ES
-REALITZA CAP CAMBI.
-
-UN COP ROBAT EL FUNCIONAMENT DE LA FUNCIÓ ENS VAREM ADONAR DE QUE PER
-A GRAFS GRANS EL RENDIMENT ERA MASSA POBRE I NO ERA VIABLE UTILITZAR-LA
-
-********************************************************************************
-*******************************************************************************/
-
-
-int distancies_matriu()
-{
-
-int repetir,i,j,l;
-for (i=0;i<Nvertexs;i++)
-   {
-   dist[i][i]=0;
-   for (j=i+1;j<Nvertexs;j++)
-      {
-      dist[i][j]=VERTEXS+1;
-	  dist[j][i]=VERTEXS+1;
-	  }
-   }
-
-for (i=0;i<Nvertexs;i++)
-   for (j=0;j<vertex[i].degree;j++)
-      dist[i][vertex[i].nei[j]]=1;
-
-repetir=1;
-
-while(repetir==1)
-
-{
-repetir=0;
-
-for (i=0;i<Nvertexs;i++)
-   for (j=0;j<Nvertexs;j++)
-      for (l=0;l<Nvertexs;l++)
-         {
-            if ( (dist[i][l] + dist[l][j]) < dist[i][j])
-               {
-               repetir= 1 ;
-               dist[i][j]=dist[i][l]+dist[l][j];
-               dist[j][i]=dist[i][l]+dist[l][j];
-               }
-        }
-}
-return (1);
-
-}
-
-           
-/*******************************************************************************
-********************************************************************************
-
 FUNCIO llegir_dades()
 
 AQUESTA FUNCIO LLEGEIX EL GRAF DEL ARXIU PASSAT COM A PARAMETRE  I LES GUARDA
@@ -340,20 +271,23 @@ A LA VARIABLE GLOBAL vertex[]
 ********************************************************************************
 *******************************************************************************/
 
-int llegir_dades()
-{
+int
+llegir_dades(const char* nom, int &linies,int &maxveins,int &minveins, float &mitja ){
+	
 FILE * llista, * sortida;
-int i,j, val,linies=0, minveins=0,maxveins=0, veins=0, posicio=0;
-float mitja=0.0;
+int i,j, val, veins=0, posicio=0;
 char c;
 
 
-if ((llista=fopen(nom, "rt"))==NULL)
-   {printf("ep! no trobo el fitxer.\n"); return -1; }
+if ((llista=fopen(nom, "rt"))==NULL){
+	printf("ep! no trobo el fitxer.\n");
+	return -1;
+}
                  
 /* Aprofitem la primera passada per calcular el nombre de vertexs i el  grau
 mínim, maxim i mitja del graf                                                 */
 
+linies=0, minveins=0,maxveins=0,mitja=0.0;
 while (!feof(llista)) {
    c=fgetc(llista); 
    posicio++;

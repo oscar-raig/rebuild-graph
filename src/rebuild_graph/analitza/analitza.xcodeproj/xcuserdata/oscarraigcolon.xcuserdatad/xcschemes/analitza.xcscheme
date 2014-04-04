@@ -57,6 +57,12 @@
             ReferencedContainer = "container:analitza.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
