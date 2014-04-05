@@ -1736,7 +1736,109 @@ void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
 	
 }
 
-int fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *order){
+void AnnealingAlgorithm(double &Tk, int To,graph **pbestGraph,int graphOrder,
+					double *bestBC,double *targetBC,  graph *oldGraph,
+					FILE *logFile,double &costBest){
+	double Tmin=TMIN;
+	double k=K;
+	int iterations=0;
+	double tol=TOL;
+	int weAreDone=0;
+	costBest=0.0;
+	double costOld=0.0;
+	double costNew=0.0;
+	long int Nmax=NMAX;
+	long int N=0;
+	graph * bestGraph= NULL;
+	double newBC [graphOrder];
+	graph *newGraph=NULL;
+	
+	// STARTING SIMMULATED ANNEALING
+	Tk=To;
+	bestGraph=generateInitialGraph(graphOrder);
+	*pbestGraph= bestGraph;
+	bestGraph->setAllVertexNeighbours();
+	bestGraph->brandes_betweenness_centrality(bestBC);
+	costBest=cost(targetBC,bestBC,graphOrder);
+	costOld=2.0*costBest;
+	costNew=costOld;
+	oldGraph=copyGraph(bestGraph);
+	oldGraph->setAllVertexNeighbours();
+	newGraph=copyGraph(bestGraph);
+	newGraph->setAllVertexNeighbours();
+	
+	int accept=false;
+	int okTrue=0;
+	int okFalse=0;
+	int notOk=0;
+	do{
+		/* Repeat NMAX times */
+		for(N=0;(N<Nmax)&&(!weAreDone);N++){
+			// Slightly modify oldGraph to obtain newGraph
+			//printf("ANTES NEWGRAPH\n"); newGraph->printGraph();
+			//      modifyGraph(oldGraph,newGraph,getMax(oldBC,graphOrder),accept);
+			//      modifyGraph(oldGraph,newGraph,bestGraph,accept);
+			modifyGraph(newGraph);
+			// Evaluate newGraph's vertex betweenness centrality
+			newGraph->brandes_betweenness_centrality(newBC);
+			// Update cost variables (new and old graphs)
+			costOld=costNew;
+			costNew=cost(targetBC,newBC,graphOrder);
+			if(costNew<costBest){
+				costBest=costNew;
+				copyGraph(newGraph,bestGraph);
+				copyArray(newBC,bestBC,graphOrder);
+				if(costBest<=tol){
+					weAreDone=true;
+					break;
+				}
+				accept=0;
+				okTrue++;
+				printf(".");
+				fprintf(logFile,".");
+			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
+				// if newCost not is better than oldCost,
+				// we still accept it if exp(df/T_k)<rand()
+				accept=1;
+				okFalse++;
+				printf("o");
+				fprintf(logFile,"o");
+			} else {
+				//otherwise we don't accept the new graph
+				//        printf("best\n");
+				//        bestGraph->printGraph();
+				//        printf("new\n");
+				//        newGraph->printGraph();
+				copyGraph(bestGraph,newGraph);
+				//        printf("best\n");
+				//        bestGraph->printGraph();
+				//        printf("new\n");
+				//        newGraph->printGraph();
+				accept=2;
+				notOk++;
+				printf("x");
+				fprintf(logFile,"x");
+			}
+		}
+		printf("\n");
+		fprintf(logFile,"\n");
+		printf("Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
+			   Tk,costBest,weAreDone,iterations);
+		fprintf(logFile,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
+				Tk,costBest,weAreDone,iterations);
+		// Lower temperature: T(k)=k*T(k-1)
+		Tk*=k;
+		// Update number of iterations
+		iterations++;
+	}while((Tk>=Tmin)&&(!weAreDone)&&(iterations!=MAX_ITERATIONS));
+
+	
+}
+
+
+
+int
+fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *order){
 
   int i=0;
   int lx=0;
@@ -1876,84 +1978,9 @@ int fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int
     exit(-1);
   }
 
-  // STARTING SIMMULATED ANNEALING
-  Tk=To;
-  bestGraph=generateInitialGraph(graphOrder);
-  bestGraph->setAllVertexNeighbours();
-  bestGraph->brandes_betweenness_centrality(bestBC);
-  costBest=cost(targetBC,bestBC,graphOrder);
-  costOld=2.0*costBest;
-  costNew=costOld;
-  oldGraph=copyGraph(bestGraph);
-  oldGraph->setAllVertexNeighbours();
-  newGraph=copyGraph(bestGraph);
-  newGraph->setAllVertexNeighbours();
-
-  int accept=false;
-  int okTrue=0;
-  int okFalse=0;
-  int notOk=0;
-  do{
-    /* Repeat NMAX times */
-    for(N=0;(N<Nmax)&&(!weAreDone);N++){
-      // Slightly modify oldGraph to obtain newGraph
-//printf("ANTES NEWGRAPH\n"); newGraph->printGraph();
-//      modifyGraph(oldGraph,newGraph,getMax(oldBC,graphOrder),accept);
-//      modifyGraph(oldGraph,newGraph,bestGraph,accept);
-      modifyGraph(newGraph);
-      // Evaluate newGraph's vertex betweenness centrality
-      newGraph->brandes_betweenness_centrality(newBC);
-      // Update cost variables (new and old graphs)
-      costOld=costNew;
-      costNew=cost(targetBC,newBC,graphOrder);
-      if(costNew<costBest){
-        costBest=costNew;
-        copyGraph(newGraph,bestGraph);
-        copyArray(newBC,bestBC,graphOrder);
-        if(costBest<=tol){
-          weAreDone=true;
-          break;
-        }
-        accept=0;
-        okTrue++;
-        printf(".");
-        fprintf(logFile,".");
-      } else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
-      // if newCost not is better than oldCost,
-      // we still accept it if exp(df/T_k)<rand()
-        accept=1;
-        okFalse++;
-        printf("o");
-        fprintf(logFile,"o");
-      } else {
-      //otherwise we don't accept the new graph
-//        printf("best\n");
-//        bestGraph->printGraph();
-//        printf("new\n");
-//        newGraph->printGraph();
-        copyGraph(bestGraph,newGraph);
-//        printf("best\n");
-//        bestGraph->printGraph();
-//        printf("new\n");
-//        newGraph->printGraph();
-        accept=2;
-        notOk++;
-        printf("x");
-        fprintf(logFile,"x");
-      }
-    }
-    printf("\n");
-    fprintf(logFile,"\n");
-    printf("Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
-      Tk,costBest,weAreDone,iterations);
-    fprintf(logFile,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
-      Tk,costBest,weAreDone,iterations);
-    // Lower temperature: T(k)=k*T(k-1)
-    Tk*=k;
-    // Update number of iterations
-    iterations++;
-  }while((Tk>=Tmin)&&(!weAreDone)&&(iterations!=MAX_ITERATIONS));
-
+	AnnealingAlgorithm( Tk, To,&bestGraph,graphOrder,
+					   bestBC,targetBC, oldGraph,logFile,costBest);
+	
   // Processing tasks accomplished
   // Showing results
 
