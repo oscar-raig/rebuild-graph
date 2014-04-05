@@ -345,7 +345,7 @@ public:
     void printGraph(FILE *myfile);
 	
     // Print the graph MY way to a file
-    void printMyGraph(FILE *myfile);
+    void printMyGraph(const char*outputFileName);
 	
     // Print the graph's betweenness centrality values
     void printGraphBetweenness();
@@ -409,6 +409,6 @@ private:
 
 
 
-int fmain(int argc,const char *argv[], double **targetBC, double **bestBC,int *order);
+int fmain(int argc,const char *argv[], double *&targetBC, double *&bestBC,int *order);
 
 #endif

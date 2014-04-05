@@ -49,23 +49,6 @@ int random_value_z;
 //////////                     VERTEX OPERATIONS                      //////////
 ////////////////////////////////////////////////////////////////////////////////
 
-//-----------------------------------------------------------------------------
-// PUBLIC class vertex operation getVertexId()
-// RETURNS the value of de PRIVATE variable vertexId
-//-----------------------------------------------------------------------------
-int graph::vertex::getVertexId(){
-  return vertexId;
-}
-
-//-----------------------------------------------------------------------------
-// PUBLIC class vertex operation setVertexId()
-// SETS the value of de PRIVATE variable vertexId to newVertexId
-// RETURNS true
-//-----------------------------------------------------------------------------
-int graph::vertex::setVertexId(int newVertexId){
-  vertexId=newVertexId;
-  return true;
-}
 
 //-----------------------------------------------------------------------------
 // PUBLIC class vertex operation addNeighbour(newNeighbourId)
@@ -108,36 +91,7 @@ int graph::vertex::addNeighbour(int newNeighbourId){
   return degree;
 }
 
-//-----------------------------------------------------------------------------
-// PUBLIC class vertex operation addNeighbour(newNeighbourId)
-// This operation:
-//  -adds newNeighbourId to the list of neighbours(if needed)
-//  -updates the value of the PRIVATE variable degree
-// RETURNS the updated value of de PRIVATE variable degree
-//-----------------------------------------------------------------------------
-int graph::vertex::addNewNeighbour(int newNeighbourId){
-  int i;
-  int found=false;
 
-  if(vertexId!=newNeighbourId){
-    if(degree==0){
-      neighbours[0]=newNeighbourId;
-      degree=1;
-    } else {
-      for(i=0;i<degree;i++){
-        if(neighbours[i]==newNeighbourId){
-          found=true;
-          break;
-        }
-      }
-      if(!found){
-        neighbours[degree]=newNeighbourId;
-        degree++;
-      }
-    }
-  }
-  return degree;
-}
 
 //-----------------------------------------------------------------------------
 // PUBLIC class vertex operation removeNeighbour(oldNeighbourId)
@@ -166,17 +120,6 @@ int graph::vertex::removeNeighbour(int oldNeighbourId){
   return degree;
 }
 
-//-----------------------------------------------------------------------------
-// PUBLIC class vertex operation removeNeighbours()
-// This operation:
-//  -removes all neighbours(if any)
-//  -updates the value of the PRIVATE variable degree
-// RETURNS the updated value of de PRIVATE variable degree
-//-----------------------------------------------------------------------------
-int graph::vertex::removeNeighbours(){
-  degree=0;
-  return degree;
-}
 
 //-----------------------------------------------------------------------------
 // PUBLIC class vertex operation getNeighbours(numberOfMyNeighbours)
@@ -554,22 +497,7 @@ int **graph::getDistanceMatrix(){
   return result;
 }
 
-//-----------------------------------------------------------------------------
-// PUBLIC class graph operation showDistanceMatrix()
-// Shows the distanceMatrix
-//-----------------------------------------------------------------------------
-void graph::showDistanceMatrix(){
-  int i,j;
 
-  printf("\nDistance Matrix:\n");
-  for(i=0;i<order;i++){
-    for(j=0;j<order;j++){
-      printf("%3d ",distanceMatrix[i][j]);
-    }
-    printf("\n");
-  }
-  printf("\n");
-}
 
 //-----------------------------------------------------------------------------
 // PUBLIC class graph operation updateDistanceMatrix()
@@ -632,339 +560,6 @@ int graph::updateDistanceMatrix(){
   return true;
 }
 
-//-----------------------------------------------------------------------------
-// PUBLIC class graph operation vertexInSameShortestPath(
-//                              firstVertexSearched,secondVertexSearched,
-//                              vertexBegining,vertexEnding)
-// RETURNS
-//  -true if any shortest path from vertexBegining to vertexEnding
-//          goes through vertexSearched
-//  -false otherwise
-//-----------------------------------------------------------------------------
-int graph::vertexInSameShortestPath(
-           int firstVertexSearched,int secondVertexSearched,
-           int vertexBegining,int vertexEnding){
-
-  int result=(firstVertexSearched!=secondVertexSearched);
-
-  result=result &&(firstVertexSearched!=vertexBegining);
-  result=result &&(firstVertexSearched!=vertexEnding);
-  result=result &&(secondVertexSearched!=vertexBegining);
-  result=result &&(secondVertexSearched!=vertexEnding);
-  result=result &&(vertexBegining!=vertexEnding);
-  result=result &&((vertexDistance(vertexBegining,vertexEnding)==
-                     (vertexDistance(vertexBegining,firstVertexSearched)+
-                       vertexDistance(firstVertexSearched,secondVertexSearched)
-+
-                       vertexDistance(secondVertexSearched,vertexEnding)))
-                    ||(vertexDistance(vertexBegining,vertexEnding)==
-                     (vertexDistance(vertexBegining,secondVertexSearched)+
-                       vertexDistance(secondVertexSearched,firstVertexSearched)
-+
-                       vertexDistance(firstVertexSearched,vertexEnding))));
-  return result;
-}
-
-//-----------------------------------------------------------------------------
-// PUBLIC class graph operation
-//        vertexInPath(vertexSearched,vertexBegining,vertexEnding)
-// RETURNS
-//  -true if any shortest path from vertexBegining to vertexEnding
-//          goes through vertexSearched
-//  -false otherwise
-//-----------------------------------------------------------------------------
-int graph::vertexInPath(int vertexSearched,int vertexBegining,int
-vertexEnding){
-  int result=(vertexSearched!=vertexBegining);
-
-  result=result &&(vertexSearched!=vertexEnding);
-  result=result &&(vertexBegining!=vertexEnding);
-  result=result &&(vertexDistance(vertexBegining,vertexEnding)==
-                    (vertexDistance(vertexBegining,vertexSearched)+
-                      vertexDistance(vertexSearched,vertexEnding)));
-  return result;
-}
-
-int graph::getShortPaths(int begining,int ending,int *matrix){
-  int i,j;
-  int d=distanceMatrix[begining][ending];
-  int r=0;
-  int nVertexOfShortestPath=0;
-
-  if(begining==ending){
-    r=0;
-  } else if(matrix[0]==(d-1)){
-    if(d==1){
-      r=0;
-    } else{
-      r=1;
-    }
-  } else{
-    switch(d){
-      case 0:
-      case 1:
-        r=0;
-        break;
-      case 2:
-        for(i=1;i<=matrix[0];i++){
-          if(vertexArray[begining]->vertexIsMyNeighbour(matrix[i])&&
-              vertexArray[ending]->vertexIsMyNeighbour(matrix[i])){
-            r++;
-          }
-        }
-        break;
-      default:
-        for(i=1;i<=matrix[0];i++){
-          if(vertexArray[begining]->vertexIsMyNeighbour(matrix[i])){
-            nVertexOfShortestPath=matrix[0];
-            int myArray[nVertexOfShortestPath];
-            nVertexOfShortestPath--;
-            myArray[0]=nVertexOfShortestPath;
-            for(j=1;j<i;j++){
-              myArray[j]=matrix[j];
-            }
-            for(j=i+1;j<=(nVertexOfShortestPath+1);j++){
-              myArray[j-1]=matrix[j];
-            }
-            r+=getShortPaths(matrix[i],ending,myArray);
-          }
-        }
-      break;
-    }
-  }
-  return r;
-}
-
-int graph::getShortPathsThroughK(
-            int begining,
-            int ending,
-            int middlepoint,
-            int *matrix){
-  int i,j;
-  int d=distanceMatrix[begining][ending];
-  int r=0;
-  int nVertexOfShortestPath=0;
-
-  switch(d){
-    case 0:
-      r=0;
-      break;
-    case 1:
-      r=0;
-      break;
-    case 2:
-      if(vertexArray[begining]->vertexIsMyNeighbour(middlepoint)&&
-          vertexArray[ending]->vertexIsMyNeighbour(middlepoint)){
-        r=1;
-      } else if(begining==middlepoint){
-        r=getShortPaths(begining,ending,matrix);
-      } else if(ending==middlepoint){
-        r=getShortPaths(begining,middlepoint,matrix);
-      }
-      break;
-    default:
-      if(begining==middlepoint){
-        r=getShortPaths(begining,ending,matrix);
-      } else if(ending==middlepoint){
-        r=getShortPaths(begining,middlepoint,matrix);
-      } else if(matrix[0]==(d-1)){
-        r=1;
-      } else{
-        for(i=1;i<=matrix[0];i++){
-          if(distanceMatrix[begining][ending]==
-             distanceMatrix[begining][matrix[i]]+
-             distanceMatrix[matrix[i]][ending]){
-            nVertexOfShortestPath=matrix[0];
-            int myArray[nVertexOfShortestPath];
-            nVertexOfShortestPath--;
-            myArray[0]=nVertexOfShortestPath;
-            for(j=1;j<i;j++){
-              myArray[j]=matrix[j];
-            }
-            for(j=i+1;j<=(nVertexOfShortestPath+1);j++){
-              myArray[j-1]=matrix[j];
-            }
-            if(matrix[i]==middlepoint){
-              r+=getShortPaths(middlepoint,ending,myArray);
-            } else{
-              r+=getShortPathsThroughK(matrix[i],ending,middlepoint,myArray);
-            }
-          }
-        }
-      break;
-    }
-  }
-  return r;
-}
-
-
-//-----------------------------------------------------------------------------
-// PUBLIC class graph operation vertex_betweenness()
-// RETURNS an array of integers (one for each vertex in the graph)
-//         corresponding to the number of short paths each vertex belongs to
-//-----------------------------------------------------------------------------
-void graph::vertex_betweenness(double *result){
-//  double *result;
-  int resultsMatrix[order][order*order];
-  int i,j,k;
-  int pathNumber=0;
-  updateDistanceMatrix();
-  for(k=0;k<order;k++){
-    pathNumber=0;
-    for(i=0;i<order-1;i++){
-      for(j=i+1;j<order;j++){
-        if(vertexInPath(k,i,j)){
-          resultsMatrix[k][pathNumber]=1;
-        } else{
-          resultsMatrix[k][pathNumber]=0;
-        }
-        pathNumber++;
-      }
-    }
-    result[k]=0.0;
-  }
-
-  for(k=0;k<order;k++){
-    pathNumber=0;
-    for(i=0;i<order-1;i++){
-      for(j=i+1;j<order;j++){
-        result[k]+=2.0*(double)resultsMatrix[k][pathNumber];
-        pathNumber++;
-      }
-    }
-  }
-
-//  for(i=0;i<order;i++){
-//    result[i]=result[i]/((order-1)*(order-2));
-//  }
-
-//  printf("\nBetweenness:\n");
-//  for(i=0;i<order;i++){
-//    printf("Vertex %d: %d(%f)(N=%f)(n-1)*(n-2)=%f\n",i,result[i],
-//     (double)result[i]/((order-1)*(order-2)),
-//     (double)order,(double)((order-1)*(order-2)));
-//    aux+=(double)result[i]/((order-1)*(order-2));
-//  }
-//  printf("Suma de betweenness: %f\n",aux);
-
-//  return result;
-}
-
-//-----------------------------------------------------------------------------
-// PUBLIC class graph operation vertex_betweenness(double *result2)
-// RETURNS an array of integers (one for each vertex in the graph)
-//         corresponding to the number of short paths each vertex belongs to
-//-----------------------------------------------------------------------------
-/*
-int *graph::vertex_betweenness(double *result2){
-  int i,j,k,a,b,c;
-  int resultsMatrix[order][order*order];
-  int resultsMatrixK[order][order*order];
-  int pathNumber=0;
-  int paths[order*order];
-  int r2[order*order];
-  int *result=(int *)malloc(sizeof(int)*order);
-
-  result2=(double *)realloc(result2,sizeof(double)*order);
-  for(i=0;i<order*order;i++){
-    r2[i]=0;
-    paths[i]=-1;
-  }
-
-// We first need to assure the d matrix is updated
-  updateDistanceMatrix();
-
-// Let's see if any short path from vertex i to vertex j goes through vertex k
-// We'll store the results in resultsMatrix[vertexNumer][pathNumber]
-// Array result stores the number of short paths each vertex participates in
-// Array r2 stores the number of vertex in any short path from i to j
-  for(k=0;k<order;k++){
-    pathNumber=0;
-    result[k]=0;
-    result2[k]=0.0;
-    for(i=0;i<order;i++){
-      for(j=0;j<order;j++){
-        if(vertexInPath(k,i,j)){
-          resultsMatrix[k][pathNumber]=1;
-          resultsMatrixK[k][pathNumber]=1;
-          result[k]++;
-          r2[pathNumber]++;
-        } else{
-          resultsMatrix[k][pathNumber]=0;
-          resultsMatrixK[k][pathNumber]=0;
-        }
-        pathNumber++;
-      }
-    }
-  }
-
-// Let's now count the number of possible short path from i to j
-  pathNumber=0;
-  for(i=0;i<order;i++){
-    for(j=0;j<order;j++){
-      if(paths[pathNumber]==-1){        // the path has not yet been calculated
-        a=r2[pathNumber];               // a gets the number of vertex
-        int myArray[a+1];               // myArray gets the path vertex IDs
-        myArray[0]=a;
-        c=1;
-        for(k=0;k<order;k++){
-          if(resultsMatrix[k][pathNumber]!=0){
-            myArray[c++]=k;
-          }
-        }
-        paths[pathNumber]=getShortPaths(i,j,myArray);
-      }
-      pathNumber++;
-    }
-  }
-
-// Let's count the number of short paths through k
-  pathNumber=0;
-  for(i=0;i<order;i++){
-    for(j=0;j<order;j++){
-      if(paths[pathNumber]>1){
-        a=r2[pathNumber];               // a gets the number of vertex
-        int myArray[a+1];               // myArray gets the path vertex IDs
-        myArray[0]=a;
-        c=1;
-        for(k=0;k<order;k++){
-          if(resultsMatrix[k][pathNumber]!=0){
-            myArray[c++]=k;
-          }
-        }
-        for(k=0;k<order;k++){
-          if(resultsMatrixK[k][pathNumber]>0){
-            resultsMatrixK[k][pathNumber]=getShortPathsThroughK(i,j,k,myArray);
-          }
-        }
-      }
-      pathNumber++;
-    }
-  }
-
-// Let's normalize the results array
-  pathNumber=0;
-  for(i=0;i<order;i++){
-    for(j=0;j<order;j++){
-      for(k=0;k<order;k++){
-        if(((b=resultsMatrixK[k][pathNumber])>0)&&
-          ((a=paths[pathNumber])>0)){
-          result2[k]+=(((double)(b*1.0))/((double)(a*1.0)));
-        }
-      }
-      pathNumber++;
-    }
-  }
-
-  printf("Betweenness Centrality\n");
-  for(i=0;i<order;i++){
-    printf("Vertex %3d: %2.15f\n",
-      i,result2[i]/double(((order-1.0)*(order-2.0)))
-   );
-  }
-  return result;
-}
-*/
 
 void graph::brandes_betweenness_centrality(double *myBBC){
   int i,j,s,t,v,w;
@@ -1090,23 +685,7 @@ int graph::graphNotConnected(int *unconnectedVertex){
 }
 
 
-void graph::printGraphBetweenness(){
-  int i;
 
-  printf("Betweenness Centrality(Ulrik Brandes)\n");
-  for(i=0;i<order;i++){
-    printf("Vertex %3d: %2.19f\n",i,vertexArray[i]->getVertexBC());
-  }
-}
-
-void graph::printGraphBetweenness(FILE *myFile){
-  int i;
-
-  fprintf(myFile,"Betweenness Centrality(Ulrik Brandes)\n");
-  for(i=0;i<order;i++){
-    fprintf(myFile,"Vertex %3d: %2.19f\n",i,vertexArray[i]->getVertexBC());
-  }
-}
 
 void graph::printGraph(){
   int i,j;
@@ -1152,19 +731,28 @@ void graph::printGraph(FILE *myFile){
 // 0 3
 // 2
 // 1
-void graph::printMyGraph(FILE *myFile){
-  int i,j;
-  int auxNNeighbours;
-  int *auxNeighbours;
+void graph::printMyGraph(const char * outputGraphFilename){
+	
+	FILE *outputGraph;
+	int i,j;
+	int auxNNeighbours;
+	int *auxNeighbours;
 
-  for(i=0;i<order;i++){
-    auxNNeighbours=vertexArray[i]->getNeighbours(&auxNeighbours);
-    for(j=0;j<(auxNNeighbours-1);j++){
-      fprintf(myFile,"%d ",auxNeighbours[j]);
-    }
-    fprintf(myFile,"%d\n",auxNeighbours[auxNNeighbours-1]);
-    free(auxNeighbours);
-  }
+	outputGraph=fopen(outputGraphFilename,"w");
+	if(outputGraph==NULL){
+			printf("Cannot open out graph file %s for writting\n",outputGraphFilename);
+			exit(-1);
+	}
+
+	for(i=0;i<order;i++){
+		auxNNeighbours=vertexArray[i]->getNeighbours(&auxNeighbours);
+		for(j=0;j<(auxNNeighbours-1);j++){
+		  fprintf(outputGraph,"%d ",auxNeighbours[j]);
+		}
+		fprintf(outputGraph,"%d\n",auxNeighbours[auxNNeighbours-1]);
+		free(auxNeighbours);
+	}
+	fclose(outputGraph);
 }
 
 
@@ -1174,58 +762,6 @@ typedef struct {
 }myBC;
 
 
-/*
-int readGraphFile(char *fileName,int *n_vertex,int *n_edges,int **vertex){
-  FILE *input;
-  int i,j,value;
-  int lines=0;
-  char c;
-
-  if((input=fopen(fileName,"rt"))==NULL){
-    printf("file not found");
-    printf("\n");
-    exit(1);
-  }
-  fscanf(input,"%d %d",n_vertex,n_edges);
-  while(!feof(input)){
-    c=fgetc(input);
-    if(!feof(input)&& c=='\n'){
-      lines++;
-    }
-  }
-  fclose(input);
-  if(lines!=(*n_vertex+1)){
-    printf("ERROR: Incorrect number of vertex.\n");
-    exit(1);
-  }
-  graph *g=(graph *)new graph(*n_vertex);
-
-  // Obrim de nou el fitxer i guardem la informaci�del graf a vertex[]
-  //Aprofitem la passada per generar el fitxer graus.txt
-
-  if((input=fopen(fileName,"rt"))==NULL){
-    printf("ep! no trobo el fitxer.\n");
-    exit(1);
-  }
-  i=0;
-  j=0;
-  do{
-    fscanf(input,"%c",&c);
-  } while(c!='\n');
-  do{
-    if(fscanf(input,"%d",&value)==EOF)break;
-    g->addVertexNeighbour(i,value);
-    if(fscanf(input,"%c",&c)==EOF)break;
-    if(c=='\n'){
-      i++;
-    }
-  } while(!feof(input));
-  fclose(input);
-  g->printGraph();
-  g->vertex_betweenness();
-  return 0;
-}
-*/
 
 //-----------------------------------------------------------------------------
 // GLOBAL operation readPythonGraphFile(char *fileName)
@@ -1270,144 +806,6 @@ graph *readPythonGraphFile(char *fileName){
   fclose(input);
   free(line);
   result->updateDistanceMatrix();
-  return result;
-}
-
-
-//-----------------------------------------------------------------------------
-// GLOBAL operation readGraphFile(char *fileName)
-// RETURNS a graph pointer
-//-----------------------------------------------------------------------------
-graph *readGraphFile(char *fileName){
-  FILE *input;
-  int i=0;
-  int vertex_identifier=0;
-  int vertex_neighbour=0;
-  char *line;
-  char *aux,*newaux;
-
-  graph *result=new graph();
-  line=(char *)malloc(sizeof(char)*STRING_LENGTH);
-  if((input=fopen(fileName,"rt"))==NULL){
-    printf("file not found\n");
-    exit(1);
-  }
-  line[0]='\0';
-  line=fgets(line,STRING_LENGTH,input);
-  while(line!=NULL){
-    if(line!=NULL && line[0]!='#'){
-//      vertex_identifier=(int)strtol(&line[i],&aux,10);
-      result->addVertex(vertex_identifier);
-      aux=&line[i];
-      newaux=aux;
-      do{
-        aux=newaux;
-        vertex_neighbour=(int)strtol(aux,&newaux,10);
-        if(newaux-aux!=0){
-          result->addVertexNeighbour(vertex_identifier,vertex_neighbour);
-        }
-      } while(aux!=newaux);
-      vertex_identifier++;
-    }
-    line[0]='\0';
-    line=fgets(line,STRING_LENGTH,input);
-  }
-  fclose(input);
-  free(line);
-  result->updateDistanceMatrix();
-  return result;
-}
-//-----------------------------------------------------------------------------
-// GLOBAL operation readGraphFile(char *fileName)
-// RETURNS a graph pointer
-//-----------------------------------------------------------------------------
-int readBetweenness(char *fileName,double* myBC){
-  FILE *input;
-  int i=0;
-  int vertexCount=0;
-  char *line;
-  char *aux,*newaux;
-
-  line=(char *)malloc(sizeof(char)*STRING_LENGTH);
-  if((input=fopen(fileName,"rt"))==NULL){
-    printf("file not found\n");
-    exit(1);
-  }
-  line[0]='\0';
-  line=fgets(line,STRING_LENGTH,input);
-  while(line!=NULL){
-    if(line!=NULL && line[0]!='#'){
-//      vertex_identifier=(int)strtol(&line[i],&aux,10);
-      aux=&line[i];
-      newaux=aux;
-      do{
-        aux=newaux;
-        strtol(aux,&newaux,10);
-        if(newaux-aux!=0){
-          vertexCount++;
-        }
-      } while(aux!=newaux);
-    }
-    line[0]='\0';
-    line=fgets(line,STRING_LENGTH,input);
-  }
-  fclose(input);
-
-  myBC=(double *)malloc(sizeof(int)*vertexCount);
-
-  if((input=fopen(fileName,"rt"))==NULL){
-    printf("file not found\n");
-    exit(1);
-  }
-  line[0]='\0';
-  line=fgets(line,STRING_LENGTH,input);
-  while(line!=NULL){
-    if(line!=NULL && line[0]!='#'){
-//      vertex_identifier=(int)strtol(&line[i],&aux,10);
-      aux=&line[i];
-      newaux=aux;
-      do{
-        aux=newaux;
-        strtol(aux,&newaux,10);
-        if(newaux-aux!=0){
-          vertexCount++;
-        }
-      } while(aux!=newaux);
-    }
-    line[0]='\0';
-    line=fgets(line,STRING_LENGTH,input);
-  }
-  fclose(input);
-  free(line);
-
-  return vertexCount;
-}
-
-
-
-//-----------------------------------------------------------------------------
-// GLOBAL operation readParameters(char *fileName)
-// RETURNS an int
-//-----------------------------------------------------------------------------
-int readParameters(char *fileName){
-  FILE *input;
-  int result;
-  char *line=(char *)malloc(sizeof(char)*STRING_LENGTH);
-
-  if((input=fopen(fileName,"rt"))==NULL){
-    printf("file not found\n");
-    exit(1);
-  }
-  line[0]='\0';
-  line=fgets(line,STRING_LENGTH,input);
-  while(line!=NULL){
-    if(line!=NULL && line[0]!='#'){
-    }
-    line[0]='\0';
-    line=fgets(line,STRING_LENGTH,input);
-  }
-  fclose(input);
-  free(line);
   return result;
 }
 
@@ -1471,15 +869,6 @@ graph *generateInitialGraph(int sourceGraphOrder){
   return result;
 }
 
-//-----------------------------------------------------------------------------
-// GLOBAL operation copyArray(sourceArray,objectArray,arraySize)
-// Copies arraySize double values from sourceArray to objectArray
-//-----------------------------------------------------------------------------
-void copyArray(double *sourceArray,double *objectArray,int arraySize){
-  for(int i=0;i<arraySize;i++){
-    objectArray[i]=sourceArray[i];
-  }
-}
 
 //-----------------------------------------------------------------------------
 // GLOBAL operation copyGraph(sourceGraph)
@@ -1577,41 +966,6 @@ void modifyGraph(graph *sourceGraph){
 }
 
 
-int *getSortingOrder(double *source,int count){
-  int i,j,min_pos,aux_pos;
-  double min_val,aux_val;
-  int *result=(int *)malloc(sizeof(int)*count);
-  myBC *aux=(myBC *)malloc(sizeof(myBC)*count);
-  for(i=0;i<count;i++){
-    aux[i].position=i;
-    aux[i].value=source[i];
-  }
-
-  for(i=0;i<count;i++){
-    min_val=aux[i].value;
-    min_pos=aux[i].position;
-    for(j=i+1;j<count;j++){
-      if(aux[j].value<min_val){
-        min_val=aux[j].value;
-        min_pos=j;
-      }
-    }
-    if(min_pos!=aux[i].position){
-      aux_val=aux[i].value;
-      aux_pos=aux[i].position;
-      aux[i].value=min_val;
-      aux[i].position=min_pos;
-      aux[min_pos].value=aux_val;
-      aux[min_pos].position=aux_pos;
-    }
-  }
-  for(i=0;i<count;i++){
-    result[i]=aux[i].position;
-  }
-  free(aux);
-  return result;
-}
-
 //-----------------------------------------------------------------------------
 // GLOBAL operation cost(double *tarjet,double *current,int count)
 // RETURNS the cost
@@ -1624,76 +978,6 @@ double cost(double *tarjet,double *current,int count){
     result+=pow((tarjet[i]-current[i]),2);
   }
   return pow(result,0.5);
-}
-
-//-----------------------------------------------------------------------------
-// GLOBAL operation cost(double *tarjet,double *current,int count)
-// RETURNS the cost
-//-----------------------------------------------------------------------------
-double cost(double *target,double *current, int *sorting, int count){
-  int i;
-  double result=0.0;
-  double aux[count];
-
-  for(i=0;i<count;i++){
-    aux[i]=current[sorting[i]];
-  }
-  for(i=0; i<count; i++){
-    result+=(double)i*(double)pow((target[i]-aux[i]),2);
-  }
-  return((double)pow(result,0.5));
-}
-
-int getMax(double *source, int count){
-  double max=source[0];
-  double aux;
-  int result=0;
-  for(int i=0;i<count;i++){
-    if((aux=source[i])>max) {
-      max=aux;
-      result=i;
-    }
-  }
-  return result;
-}
-
-int getMin(double *source, int count){
-  double min=source[0];
-  double aux;
-  int result=0;
-  for(int i=0;i<count;i++){
-    if((aux=source[i])<min) {
-      min=aux;
-      result=i;
-    }
-  }
-  return result;
-}
-
-int getMax(double *source1, double *source2,int count){
-  double max=pow(source1[0]-source2[0],2);
-  double aux;
-  int result=0;
-  for(int i=0;i<count;i++){
-    if((aux=pow(source1[i]-source2[i],2))>max) {
-      max=aux;
-      result=i;
-    }
-  }
-  return result;
-}
-
-int getMin(double *source1,double *source2, int count){
-  double min=pow(source1[0]-source2[0],2);
-  double aux;
-  int result=0;
-  for(int i=0;i<count;i++){
-    if((aux=pow(source1[i]-source2[i],2))<min) {
-      min=aux;
-      result=i;
-    }
-  }
-  return result;
 }
 
 void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
@@ -1787,7 +1071,7 @@ void AnnealingAlgorithm(double &Tk, int To,graph **pbestGraph,int graphOrder,
 			if(costNew<costBest){
 				costBest=costNew;
 				copyGraph(newGraph,bestGraph);
-				copyArray(newBC,bestBC,graphOrder);
+				memcpy(bestBC,newBC,graphOrder*sizeof(double));
 				if(costBest<=tol){
 					weAreDone=true;
 					break;
@@ -1838,13 +1122,12 @@ void AnnealingAlgorithm(double &Tk, int To,graph **pbestGraph,int graphOrder,
 
 
 int
-fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *order){
+fmain(int argc, const char *argv[], double *&targetBC, double *&bestBC,int *order){
 
   int i=0;
   int lx=0;
   int ly=0;
   int lz=0;
-  int weAreDone=0;
   time_t timeStart;
   time_t timeEnd;
 
@@ -1852,31 +1135,25 @@ fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *or
   char outputGraphFilename[STRING_LENGTH];
   char inputGraphFilename[STRING_LENGTH];
   char logFilename[STRING_LENGTH];
-
-  
- 
-  FILE *outputGraph=NULL;
-  FILE *inputGraph=NULL;
   FILE *logFile=NULL;
-  int iterations=0;
-  double tol=TOL;
+ 
 
   // Simmulated Annealing variables
   double To=TO;
   double Tmin=TMIN;
   double Tk=TO;
   long int Nmax=NMAX;
-  long int N=0;
+ 
   double k=K;
 
-  double costNew=0.0;
+ 
   double costBest=0.0;
-  double costOld=0.0;
+
 
   graph *targetGraph=NULL;
   graph *bestGraph=NULL;
   graph *oldGraph=NULL;
-  graph *newGraph=NULL;
+
 
   int graphOrder=0;
   int inputFormat=PYTHON;
@@ -1894,46 +1171,29 @@ fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *or
   printf("Reconstruction of a graph ");
   printf("from its vertex's betweenness centrality values\n");
   printf("Use: reconstruct [input_file] [P/A/B] [To] [Tmin] [Nmax] [k]");
-  printf("[llav_x][llav_y][llav_z]\n");
   switch(argc){
-    case 10:random_value_z=atoi(argv[9]);
-    case  9:random_value_y=atoi(argv[8]);
-    case  8:random_value_x=atoi(argv[7]);
-    case  7:k=atof(argv[6]);
-    case  6:Nmax=atoi(argv[5]);
-    case  5:Tmin=atof(argv[4]);
-    case  4:To=atof(argv[3]);
-    case  3:
-      if((strcmp(argv[2],"P")==0)||(strcmp(argv[2],"p")==0)){
-        inputFormat=PYTHON;
-      } else if((strcmp(argv[2],"A")==0)||(strcmp(argv[2],"a")==0)) {;
-        inputFormat=ADJLIST;
-      } else if((strcmp(argv[2],"B")==0)||(strcmp(argv[2],"b")==0)){;
-        inputFormat=BETWEENNESS;
-      }
-    case  2:strcpy(inputFilename,argv[1]);
+    case  6:k=atof(argv[5]);
+    case  5:Nmax=atoi(argv[4]);
+    case  4:Tmin=atof(argv[3]);
+    case  3:To=atof(argv[2]);
+	case  2:strcpy(inputFilename,argv[1]);
     break;
     default:printf("ERROR incorrect parameters\n");
              exit(-1);
   }
 
-  if(inputFormat==PYTHON){
-    targetGraph=readPythonGraphFile(inputFilename);
-  } else if(inputFormat==ADJLIST){
-    targetGraph=readGraphFile(inputFilename);
-  } else if(inputFormat==BETWEENNESS){
-//    graphOrder=readBetweenness(inputFilename,targetBC);
-  }
+	targetGraph=readPythonGraphFile(inputFilename);
+  
 
   graphOrder=targetGraph->getOrder();
   printf("si\n");
 
   //double targetBC [graphOrder];
   //double bestBC [graphOrder];
-	*ptargetBC =(double*) malloc(graphOrder*sizeof(double));
-	*pbestBC=(double*) malloc(graphOrder*sizeof(double));
-	double *targetBC = *ptargetBC;
-	double *bestBC = *pbestBC;
+	targetBC =(double*) malloc(graphOrder*sizeof(double));
+	bestBC=(double*) malloc(graphOrder*sizeof(double));
+//	double *targetBC = *ptargetBC;
+//	double *bestBC = *pbestBC;
   double oldBC [graphOrder];
   double newBC [graphOrder];
 	*order = graphOrder;
@@ -1945,30 +1205,17 @@ fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *or
     newBC[i]=0.0;
   }
   targetGraph->printGraph();
-  if((inputFormat==PYTHON)||(inputFormat==ADJLIST)){
-    targetGraph->setAllVertexNeighbours();
+     targetGraph->setAllVertexNeighbours();
     targetGraph->brandes_betweenness_centrality(targetBC);
     strcpy(inputGraphFilename,inputFilename);
     strcat(inputGraphFilename,".in");
-    inputGraph=fopen(inputGraphFilename,"w");
-    if(inputGraph==NULL){
-      printf("Cannot open in graph file %s for writting\n",
-             inputGraphFilename);
-      exit(-1);
-    }
-    targetGraph->printMyGraph(inputGraph);
-    fclose(inputGraph);
-  }
-
+	targetGraph->printMyGraph(inputGraphFilename);
+  
   
 
   strcpy(outputGraphFilename,inputFilename);
   strcat(outputGraphFilename,".res");
-  outputGraph=fopen(outputGraphFilename,"w");
-  if(outputGraph==NULL){
-    printf("Cannot open out graph file %s for writting\n",outputGraphFilename);
-    exit(-1);
-  }
+ 
 
   strcpy(logFilename,inputFilename);
   strcat(logFilename,".log");
@@ -1990,10 +1237,6 @@ fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *or
   printf("CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
  // printf("Output file: %s\n",outputFilename);
 	
-	
-	
-							
-	
 	generateOutputFile(targetGraph,inputFilename, lx,  ly,  lz,  To,  Tk, Tmin,
 											    k, Nmax, costBest,targetBC,
 											   bestBC, timeStart, timeEnd);
@@ -2001,8 +1244,8 @@ fmain(int argc, const char *argv[], double **ptargetBC, double **pbestBC,int *or
 	printf("\nReconstructed graph file: %s\n",outputGraphFilename);
 	bestGraph->printGraph();
 
-	bestGraph->printMyGraph(outputGraph);
-	fclose(outputGraph);
+	bestGraph->printMyGraph(outputGraphFilename);
+	
     return 1;
 }
 
@@ -2086,7 +1329,7 @@ calculateEgeinval (gsl_matrix *target)
 			printf ("eigenvector = \n");
 			for (j = 0; j < order; ++j)
 			{
-				gsl_complex z =
+				/* gsl_complex z = */
 				gsl_vector_complex_get(&evec_i.vector, j);
 //				printf("%g + %gi\n", GSL_REAL(z), GSL_IMAG(z));
 			}
@@ -2188,7 +1431,7 @@ fCalculateCommunicability(const char *argv[]){
 	
 	gsl_vector_complex *eval = calculateEgeinval(A1);
 	
-	gsl_vector *evalexp = calculateExp(eval);
+	/*gsl_vector *evalexp = */ calculateExp(eval);
 
 	return RESULT_OK;
 }
