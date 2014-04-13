@@ -41,9 +41,9 @@
 #define MAX_ITERATIONS 1000
 
 // GLOBAL VARIABLES
-int random_value_x;
-int random_value_y;
-int random_value_z;
+//int random_value_x;
+//int random_value_y;
+//int random_value_z;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -816,7 +816,8 @@ graph *readPythonGraphFile(char *fileName){
 // Wichmann-Hill method to generate random numbers (needs 3 seed numbers)
 // RETURNS a random double [0,1(
 //-----------------------------------------------------------------------------
-double generateRandomNumber(){
+double
+generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z){
 
   double temp;
   random_value_x=171*(random_value_x%177)-2*(random_value_x/177);
@@ -837,7 +838,7 @@ double generateRandomNumber(){
 // GLOBAL operation generateInitialGraph(int sourceGraphOrder)
 // RETURNS a random graph with sourceGraphOrder vertex
 //-----------------------------------------------------------------------------
-graph *generateInitialGraph(int sourceGraphOrder){
+graph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
   int i,j;
   int newNeighbour;
   int newDegree;
@@ -849,11 +850,11 @@ graph *generateInitialGraph(int sourceGraphOrder){
     //   at most n-1 (the vertex is connected to every other vertex
     if(result->vertexArray[i]->degree==0){
       // vertex i has no neighbours yet
-      newDegree=1+(int)(generateRandomNumber()*(sourceGraphOrder-1));
+      newDegree=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(sourceGraphOrder-1));
       // newDegre is in [1,n-1]
     } else if(result->vertexArray[i]->degree<(sourceGraphOrder-1)){
       // vertex i is connected to some other vertex
-      newDegree=(int)(generateRandomNumber()*
+      newDegree=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*
         (sourceGraphOrder-result->vertexArray[i]->degree));
       // newDegree is in [0,n-1-degree]
     } else {
@@ -862,7 +863,7 @@ graph *generateInitialGraph(int sourceGraphOrder){
     }
     for(j=0;j<newDegree;j++){
       do{
-        newNeighbour=(int)(generateRandomNumber()*(sourceGraphOrder));
+        newNeighbour=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(sourceGraphOrder));
         // newNeighbour is in [0,n-1]
       } while(result->vertexAreNeighbours(i,newNeighbour));
       result->addVertexNeighbour(i,newNeighbour);
@@ -916,7 +917,7 @@ void copyGraph(graph *sourceGraph,graph *targetGraph){
 // GLOBAL operation modifyGraph(sourceGraph)
 // MODIFIES a randon sourceGraph vertex's connections
 //-----------------------------------------------------------------------------
-void modifyGraph(graph *sourceGraph){
+void modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
   int i,j;
   int vertex2change;
   int myOrder=sourceGraph->getOrder();
@@ -926,7 +927,7 @@ void modifyGraph(graph *sourceGraph){
   int found;
 
   // Select vertex to change
-  vertex2change=(int)(generateRandomNumber()*(myOrder));
+  vertex2change=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
   // vertex2change is in [0,n-1]
   // Disconnect vertex2change
 //printf("modifyGraph\n");
@@ -937,7 +938,7 @@ void modifyGraph(graph *sourceGraph){
 //printf("modifyGraph vertex removed\n");
   do{
   //Choose new vertex degree
-    myNewNumberOfNeighbours=1+(int)(generateRandomNumber()*(myOrder-1));
+    myNewNumberOfNeighbours=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder-1));
     // myNewNumberOfNeighbours is in [1,n-1]
   // Connect new neighbours
     for(i=0; i<myNewNumberOfNeighbours; i++){
@@ -946,7 +947,7 @@ void modifyGraph(graph *sourceGraph){
       do{
         found=false;
 //printf("modifyGraph4\n");
-        myNewNeighbour=(int)(generateRandomNumber()*(myOrder));
+        myNewNeighbour=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
         // myNewNeighbour is in [0,n-1]
         for(j=0;j<i;j++){
 //printf("modifyGraph4 new=%d newNei[j]=%d\n",myNewNeighbour,newNeighbours[j]);
@@ -1024,7 +1025,7 @@ void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
 
 void AnnealingAlgorithm(double &Tk, int To,graph **pbestGraph,int graphOrder,
 					double *bestBC,double *targetBC,  graph *oldGraph,
-					FILE *logFile,double &costBest){
+					FILE *logFile,double &costBest,int &random_value_x,int &random_value_y,int &random_value_z){
 	double Tmin=TMIN;
 	double k=K;
 	int iterations=0;
@@ -1041,7 +1042,7 @@ void AnnealingAlgorithm(double &Tk, int To,graph **pbestGraph,int graphOrder,
 	
 	// STARTING SIMMULATED ANNEALING
 	Tk=To;
-	bestGraph=generateInitialGraph(graphOrder);
+	bestGraph=generateInitialGraph(graphOrder,random_value_x,random_value_y,random_value_z);
 	*pbestGraph= bestGraph;
 	bestGraph->setAllVertexNeighbours();
 	bestGraph->brandes_betweenness_centrality(bestBC);
@@ -1064,7 +1065,7 @@ void AnnealingAlgorithm(double &Tk, int To,graph **pbestGraph,int graphOrder,
 			//printf("ANTES NEWGRAPH\n"); newGraph->printGraph();
 			//      modifyGraph(oldGraph,newGraph,getMax(oldBC,graphOrder),accept);
 			//      modifyGraph(oldGraph,newGraph,bestGraph,accept);
-			modifyGraph(newGraph);
+			modifyGraph(newGraph,random_value_x,random_value_y,random_value_z);
 			// Evaluate newGraph's vertex betweenness centrality
 			newGraph->brandes_betweenness_centrality(newBC);
 			// Update cost variables (new and old graphs)
@@ -1082,7 +1083,7 @@ void AnnealingAlgorithm(double &Tk, int To,graph **pbestGraph,int graphOrder,
 				okTrue++;
 				printf(".");
 				fprintf(logFile,".");
-			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
+			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber(random_value_x,random_value_y,random_value_z)){
 				// if newCost not is better than oldCost,
 				// we still accept it if exp(df/T_k)<rand()
 				accept=1;
@@ -1161,9 +1162,9 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
  
   // Default value initialization
   timeStart=time(NULL);
-  random_value_x=LLAVOR_X;
-  random_value_y=LLAVOR_Y;
-  random_value_z=LLAVOR_Z;
+  int random_value_x=LLAVOR_X;
+  int random_value_y=LLAVOR_Y;
+  int random_value_z=LLAVOR_Z;
   lx=random_value_x;
   ly=random_value_y;
   lz=random_value_z;
@@ -1235,7 +1236,7 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
   }
 
 	AnnealingAlgorithm( Tk, To,&bestGraph,graphOrder,
-					   bestBC,targetBC, oldGraph,logFile,costBest);
+					   bestBC,targetBC, oldGraph,logFile,costBest,random_value_x,random_value_y,random_value_z);
 	
   // Processing tasks accomplished
   // Showing results
