@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360854F218F731CC00033919 /* CSettingsSumulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360854F018F731CC00033919 /* CSettingsSumulation.cpp */; };
 		36093C8A18E9A6FA003710C0 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36093C8918E9A6FA003710C0 /* libgsl.a */; };
 		360BA70918DD74E300F54F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA70818DD74E300F54F2B /* main.cpp */; };
 		360BA70B18DD74E300F54F2B /* rebuild_graph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 360BA70A18DD74E300F54F2B /* rebuild_graph.1 */; };
 		360BA71218DD753600F54F2B /* graphs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA71118DD753600F54F2B /* graphs.cpp */; };
 		3625A35818EDBA400037F00D /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35618EDBA400037F00D /* CTrace.cpp */; };
 		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
+		36DC6DC718F4979D00CEFE98 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		360854F018F731CC00033919 /* CSettingsSumulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSettingsSumulation.cpp; sourceTree = "<group>"; };
+		360854F118F731CC00033919 /* CSettingsSumulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSettingsSumulation.h; sourceTree = "<group>"; };
 		3609206118ECAA0700BAE922 /* compara.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = compara.xcodeproj; path = compara/compara.xcodeproj; sourceTree = "<group>"; };
 		36093C8918E9A6FA003710C0 /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
 		3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = analitza.xcodeproj; path = analitza/analitza.xcodeproj; sourceTree = "<group>"; };
@@ -73,6 +77,7 @@
 		3625A35718EDBA400037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
 		36ABBBF718EF049D0042FE9C /* graphs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphs.h; sourceTree = "<group>"; };
 		36C4F4DD18E9E10C002B67FD /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
+		36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../lib/libboost_program_options.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36DC6DC718F4979D00CEFE98 /* libboost_program_options.a in Frameworks */,
 				36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */,
 				36093C8A18E9A6FA003710C0 /* libgsl.a in Frameworks */,
 			);
@@ -107,6 +113,7 @@
 		360BA6FC18DD74E300F54F2B = {
 			isa = PBXGroup;
 			children = (
+				36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */,
 				3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */,
 				3609206118ECAA0700BAE922 /* compara.xcodeproj */,
 				36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */,
@@ -135,6 +142,8 @@
 				360BA70818DD74E300F54F2B /* main.cpp */,
 				360BA70A18DD74E300F54F2B /* rebuild_graph.1 */,
 				36ABBBF718EF049D0042FE9C /* graphs.h */,
+				360854F018F731CC00033919 /* CSettingsSumulation.cpp */,
+				360854F118F731CC00033919 /* CSettingsSumulation.h */,
 			);
 			path = rebuild_graph;
 			sourceTree = "<group>";
@@ -256,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				360BA71218DD753600F54F2B /* graphs.cpp in Sources */,
+				360854F218F731CC00033919 /* CSettingsSumulation.cpp in Sources */,
 				360BA70918DD74E300F54F2B /* main.cpp in Sources */,
 				3625A35818EDBA400037F00D /* CTrace.cpp in Sources */,
 			);
@@ -337,6 +347,7 @@
 		360BA70F18DD74E300F54F2B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
@@ -355,6 +366,7 @@
 		360BA71018DD74E300F54F2B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",

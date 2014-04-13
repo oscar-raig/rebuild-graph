@@ -16,6 +16,7 @@
 #include <gsl/gsl_sf_exp.h>
 #include <gsl/gsl_linalg.h>
 #include "graphs.h"
+#include "CSettingsSumulation.h"
 
 // Defining constants
 
@@ -59,6 +60,7 @@ int random_value_z;
 //-----------------------------------------------------------------------------
 int graph::vertex::addNeighbour(int newNeighbourId){
   int i;
+	
   int found=false;
 
   if(vertexId!=newNeighbourId){
@@ -1122,7 +1124,7 @@ void AnnealingAlgorithm(double &Tk, int To,graph **pbestGraph,int graphOrder,
 
 
 int
-fmain(int argc, const char *argv[], double *&targetBC, double *&bestBC,int *order){
+fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int *order){
 
   int i=0;
   int lx=0;
@@ -1156,8 +1158,7 @@ fmain(int argc, const char *argv[], double *&targetBC, double *&bestBC,int *orde
 
 
   int graphOrder=0;
-  int inputFormat=PYTHON;
-
+ 
   // Default value initialization
   timeStart=time(NULL);
   random_value_x=LLAVOR_X;
@@ -1171,6 +1172,7 @@ fmain(int argc, const char *argv[], double *&targetBC, double *&bestBC,int *orde
   printf("Reconstruction of a graph ");
   printf("from its vertex's betweenness centrality values\n");
   printf("Use: reconstruct [input_file] [P/A/B] [To] [Tmin] [Nmax] [k]");
+	/*
   switch(argc){
     case  6:k=atof(argv[5]);
     case  5:Nmax=atoi(argv[4]);
@@ -1181,6 +1183,13 @@ fmain(int argc, const char *argv[], double *&targetBC, double *&bestBC,int *orde
     default:printf("ERROR incorrect parameters\n");
              exit(-1);
   }
+	 */
+	
+	k = settingsSimulation.k;
+	Nmax = settingsSimulation.nMax;
+	Tmin = settingsSimulation.tMin;
+	To = settingsSimulation.To;
+	strcpy(inputFilename,settingsSimulation.inputFileName.c_str());
 
 	targetGraph=readPythonGraphFile(inputFilename);
   

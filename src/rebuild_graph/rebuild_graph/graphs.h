@@ -9,6 +9,8 @@
 #ifndef rebuild_graph_graphs_h
 #define rebuild_graph_graphs_h
 
+
+#include "CSettingsSumulation.h"
 ////////////////////////////////////////////////////////////////////////////////
 //////////                        GRAPH CLASS                         //////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -407,8 +409,7 @@ private:
 							  );
 };
 
-
-
-int fmain(int argc,const char *argv[], double *&targetBC, double *&bestBC,int *order);
+int
+fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int *order);
 
 #endif
