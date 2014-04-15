@@ -12,6 +12,7 @@
 		360BA70918DD74E300F54F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA70818DD74E300F54F2B /* main.cpp */; };
 		360BA70B18DD74E300F54F2B /* rebuild_graph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 360BA70A18DD74E300F54F2B /* rebuild_graph.1 */; };
 		360BA71218DD753600F54F2B /* graphs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA71118DD753600F54F2B /* graphs.cpp */; };
+		36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36133E1218FC7AC3000F7E09 /* rebuildgraph.cpp */; };
 		3625A35818EDBA400037F00D /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35618EDBA400037F00D /* CTrace.cpp */; };
 		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
 		36DC6DC718F4979D00CEFE98 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */; };
@@ -71,6 +72,8 @@
 		360BA70818DD74E300F54F2B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		360BA70A18DD74E300F54F2B /* rebuild_graph.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = rebuild_graph.1; sourceTree = "<group>"; };
 		360BA71118DD753600F54F2B /* graphs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphs.cpp; sourceTree = "<group>"; };
+		36133E1218FC7AC3000F7E09 /* rebuildgraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rebuildgraph.cpp; sourceTree = "<group>"; };
+		36133E1818FC7C09000F7E09 /* rebuildgraph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rebuildgraph.h; sourceTree = "<group>"; };
 		36207B7918EC25A10033A4DC /* TestRebuildGraph.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestRebuildGraph.xcodeproj; path = TestRebuildGraph/TestRebuildGraph.xcodeproj; sourceTree = "<group>"; };
 		36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = convert_graph_file.xcodeproj; path = convert_graph_file/convert_graph_file.xcodeproj; sourceTree = "<group>"; };
 		3625A35618EDBA400037F00D /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
@@ -144,6 +147,8 @@
 				36ABBBF718EF049D0042FE9C /* graphs.h */,
 				360854F018F731CC00033919 /* CSettingsSumulation.cpp */,
 				360854F118F731CC00033919 /* CSettingsSumulation.h */,
+				36133E1218FC7AC3000F7E09 /* rebuildgraph.cpp */,
+				36133E1818FC7C09000F7E09 /* rebuildgraph.h */,
 			);
 			path = rebuild_graph;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				360BA71218DD753600F54F2B /* graphs.cpp in Sources */,
+				36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */,
 				360854F218F731CC00033919 /* CSettingsSumulation.cpp in Sources */,
 				360BA70918DD74E300F54F2B /* main.cpp in Sources */,
 				3625A35818EDBA400037F00D /* CTrace.cpp in Sources */,

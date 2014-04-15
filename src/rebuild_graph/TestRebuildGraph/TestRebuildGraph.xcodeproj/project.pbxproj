@@ -10,6 +10,7 @@
 		360854F518F7489100033919 /* CSettingsSumulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360854F418F7489100033919 /* CSettingsSumulation.cpp */; };
 		3609204B18ECA4D100BAE922 /* graphs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3609204A18ECA4D100BAE922 /* graphs.cpp */; };
 		3609DCF418F5F83B00AC64B9 /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3609DCF318F5F83B00AC64B9 /* CTrace.cpp */; };
+		36133E1B18FCE0F9000F7E09 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36133E1918FCE0F9000F7E09 /* rebuildgraph.cpp */; };
 		36207B7118EC25A10033A4DC /* TestRebuildGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36207B7018EC25A10033A4DC /* TestRebuildGraph.cpp */; };
 		36207B7318EC25A10033A4DC /* TestRebuildGraph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 36207B7218EC25A10033A4DC /* TestRebuildGraph.1 */; };
 		36207B8518EC3CFC0033A4DC /* libboost_unit_test_framework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -36,6 +37,8 @@
 		360854F418F7489100033919 /* CSettingsSumulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CSettingsSumulation.cpp; path = ../../rebuild_graph/CSettingsSumulation.cpp; sourceTree = "<group>"; };
 		3609204A18ECA4D100BAE922 /* graphs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphs.cpp; path = ../../rebuild_graph/graphs.cpp; sourceTree = "<group>"; };
 		3609DCF318F5F83B00AC64B9 /* CTrace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
+		36133E1918FCE0F9000F7E09 /* rebuildgraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rebuildgraph.cpp; path = ../rebuild_graph/rebuildgraph.cpp; sourceTree = "<group>"; };
+		36133E1A18FCE0F9000F7E09 /* rebuildgraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rebuildgraph.h; path = ../rebuild_graph/rebuildgraph.h; sourceTree = "<group>"; };
 		36207B6D18EC25A10033A4DC /* TestRebuildGraph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestRebuildGraph; sourceTree = BUILT_PRODUCTS_DIR; };
 		36207B7018EC25A10033A4DC /* TestRebuildGraph.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestRebuildGraph.cpp; sourceTree = "<group>"; };
 		36207B7218EC25A10033A4DC /* TestRebuildGraph.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestRebuildGraph.1; sourceTree = "<group>"; };
@@ -66,6 +69,8 @@
 		36207B6418EC25A10033A4DC = {
 			isa = PBXGroup;
 			children = (
+				36133E1918FCE0F9000F7E09 /* rebuildgraph.cpp */,
+				36133E1A18FCE0F9000F7E09 /* rebuildgraph.h */,
 				3609DCF318F5F83B00AC64B9 /* CTrace.cpp */,
 				3625A35F18EDC9980037F00D /* libgsl.a */,
 				3625A36018EDC9980037F00D /* libgslcblas.a */,
@@ -151,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36133E1B18FCE0F9000F7E09 /* rebuildgraph.cpp in Sources */,
 				360854F518F7489100033919 /* CSettingsSumulation.cpp in Sources */,
 				3609DCF418F5F83B00AC64B9 /* CTrace.cpp in Sources */,
 				3609204B18ECA4D100BAE922 /* graphs.cpp in Sources */,
