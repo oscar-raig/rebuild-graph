@@ -2,11 +2,11 @@ Graph reconstruction via  vertex betweenness centrality
 	Original graph description file-> /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc		Ordre-> 20
 	Pseudorandom generator seeds-> 11,92,37
 SIMULATED ANNEALING:
-	To-> 10.000000
+	Initial Temperature-> 10.000000
 	Tk final-> 0.000093
-	Tmin-> 0.000100
+	Minimum Temperature-> 0.000100
 	Geometric cooling rate: T[k]=0.900000 * T[k-1]
-	N-> 1000
+	Number Maxim of Combinations-> 1000
 RESULTS:
 	Best cost -> 0.02805260457147027570
 	Betweenness centrality

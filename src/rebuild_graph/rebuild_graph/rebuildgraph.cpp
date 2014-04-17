@@ -229,8 +229,8 @@ double cost(double *tarjet,double *current,int count){
 }
 
 void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
-						int lx, int ly, int lz, float To, float Tk,float Tmin,
-						float k,long Nmax,double costBest,double *targetBC,
+						int lx, int ly, int lz, double To, double Tk,double Tmin,
+						double k,long int Nmax,double costBest,double *targetBC,
 						double *bestBC, time_t timeStart, time_t timeEnd){
 	
 	FILE *output=NULL;
@@ -248,11 +248,11 @@ void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
 	fprintf(output,"\t\tOrdre-> %d\n",targetGraph->getOrder());
 	fprintf(output,"\tPseudorandom generator seeds-> %d,%d,%d\n",lx,ly,lz);
 	fprintf(output,"SIMULATED ANNEALING:\n");
-	fprintf(output,"\tTo-> %f\n",To);
+	fprintf(output,"\tInitial Temperature-> %f\n",To);
 	fprintf(output,"\tTk final-> %f\n",Tk);
-	fprintf(output,"\tTmin-> %f\n",Tmin);
+	fprintf(output,"\tMinimum Temperature-> %f\n",Tmin);
 	fprintf(output,"\tGeometric cooling rate: T[k]=%f * T[k-1]\n",k);
-	fprintf(output,"\tN-> %ld\n",Nmax);
+	fprintf(output,"\tNumber Maxim of Combinations-> %ld\n",Nmax);
 	fprintf(output,"RESULTS:\n");
 	fprintf(output,"\tBest cost -> %3.20f\n",costBest);
 	fprintf(output,"\tBetweenness centrality\n");
@@ -268,11 +268,11 @@ void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
 	
 }
 
-void AnnealingAlgorithm(double &Tk, int temperInitial,graph **pbestGraph,int graphOrder,
+void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombination,graph **pbestGraph,int graphOrder,
 						double *bestBC,double *targetBC,
 						FILE *logFile,double &costBest,
 						int &random_value_x,int &random_value_y,int &random_value_z){
-	double Tmin=TMIN;
+	double temperMin=TEMPER_MIN_DEFAULT;
 	double k=K;
 	int iterations=0;
 	double tol=TOL;
@@ -280,7 +280,7 @@ void AnnealingAlgorithm(double &Tk, int temperInitial,graph **pbestGraph,int gra
 	costBest=0.0;
 	double costOld=0.0;
 	double costNew=0.0;
-	long int Nmax=NMAX;
+	numberMaxCombination=NUMBER_MAX_COMBINATIONS_DEFAULT;
 	long int N=0;
 	graph * bestGraph= NULL;
 	double newBC [graphOrder];
@@ -307,7 +307,7 @@ void AnnealingAlgorithm(double &Tk, int temperInitial,graph **pbestGraph,int gra
 	int notOk=0;
 	do{
 		/* Repeat NMAX times */
-		for(N=0;(N<Nmax)&&(!weAreDone);N++){
+		for(N=0;(N<numberMaxCombination)&&(!weAreDone);N++){
 			// Slightly modify oldGraph to obtain newGraph
 			//printf("ANTES NEWGRAPH\n"); newGraph->printGraph();
 			//      modifyGraph(oldGraph,newGraph,getMax(oldBC,graphOrder),accept);
@@ -364,7 +364,7 @@ void AnnealingAlgorithm(double &Tk, int temperInitial,graph **pbestGraph,int gra
 		Tk*=k;
 		// Update number of iterations
 		iterations++;
-	}while((Tk>=Tmin)&&(!weAreDone)&&(iterations!=MAX_ITERATIONS));
+	}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!=MAX_ITERATIONS));
 	
 	
 }
@@ -389,11 +389,10 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
 	
 	
 	// Simmulated Annealing variables
-	double temperInitial=TEMPER_INICIAL;
-	double Tmin=TMIN;
-	double Tk=TEMPER_INICIAL;
-	long int Nmax=NMAX;
-	
+	double temperInitial=TEMPER_INITIAL_DEFAULT;
+	double temperMin=TEMPER_MIN_DEFAULT;
+	double Tk=TEMPER_INITIAL_DEFAULT;
+	long int numberMaxCombination=NUMBER_MAX_COMBINATIONS_DEFAULT;
 	double k=K;
 	
 	
@@ -434,8 +433,8 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
 	 */
 	
 	k = settingsSimulation.k;
-	Nmax = settingsSimulation.nMax;
-	Tmin = settingsSimulation.tMin;
+	numberMaxCombination = settingsSimulation.nMax;
+	temperMin = settingsSimulation.tMin;
 	temperInitial = settingsSimulation.To;
 	strcpy(inputFilename,settingsSimulation.inputFileName.c_str());
 	
@@ -482,7 +481,7 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
 		exit(-1);
 	}
 	
-	AnnealingAlgorithm( Tk, temperInitial,&bestGraph,graphOrder,
+	AnnealingAlgorithm( Tk, temperInitial,numberMaxCombination,&bestGraph,graphOrder,
 					   bestBC,targetBC, logFile,costBest,random_value_x,random_value_y,random_value_z);
 	
 	// Processing tasks accomplished
@@ -494,8 +493,8 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
 	printf("CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
 	// printf("Output file: %s\n",outputFilename);
 	
-	generateOutputFile(targetGraph,inputFilename, lx,  ly,  lz,  temperInitial,  Tk, Tmin,
-					   k, Nmax, costBest,targetBC,
+	generateOutputFile(targetGraph,inputFilename, lx,  ly,  lz,  temperInitial,  Tk, temperMin,
+					   k, numberMaxCombination, costBest,targetBC,
 					   bestBC, timeStart, timeEnd);
 	
 	printf("\nReconstructed graph file: %s\n",outputGraphFilename);

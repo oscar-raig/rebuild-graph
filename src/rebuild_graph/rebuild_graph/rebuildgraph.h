@@ -17,9 +17,9 @@
 #include "CTrace.hpp"
 
 // Simulated Annealing
-#define TEMPER_INICIAL 10
-#define TMIN 0.0001
-#define NMAX 1000
+#define TEMPER_INITIAL_DEFAULT 10
+#define TEMPER_MIN_DEFAULT 0.0001
+#define NUMBER_MAX_COMBINATIONS_DEFAULT 1000
 #define K 0.9
 #define TOL 0.0001
 #define MAX_ITERATIONS 1000
