@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iterator>
 #include "CSettingsSumulation.h"
+#include "rebuildgraph.h"
 
 int add( int i, int j ) { return i+j; }
 
@@ -57,7 +58,8 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 		int order = 0;
 	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
 	settingSimulation->inputFileName =largv[1];
-	fregenerateGraph(*settingSimulation,TargetBC,BestBC,&order);
+	CRebuildGraph *rebuildGraph = new CRebuildGraph();
+	rebuildGraph->fregenerateGraph(*settingSimulation,TargetBC,BestBC,&order);
 		BOOST_CHECK( 4 == order);
 		double ExpectedTargetBC[4]={0,0.66,0.66,0};
 		double ExpectedBestBC[4]={0,0.66,0.66,0};
@@ -77,7 +79,7 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 		largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
 		order = 0;
 	settingSimulation->inputFileName = largv[1];
-		fregenerateGraph(*settingSimulation,TargetBC,BestBC,&order);
+		rebuildGraph->fregenerateGraph(*settingSimulation,TargetBC,BestBC,&order);
 		BOOST_CHECK( 20 == order);
 		double expectedTargetBCBarabase[20]={0.0139492459,0.0000000000,0.0121514823,0.0099333301,0.2414517944,
 			0.1100452867,	0.1536684219, 0.0866688151,	0.0177944862, 0.0201197438,

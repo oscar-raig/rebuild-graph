@@ -14,7 +14,7 @@
 // GLOBAL operation readPythonGraphFile(char *fileName)
 // RETURNS a graph pointer
 //-----------------------------------------------------------------------------
-graph *readPythonGraphFile(char *fileName){
+graph *CRebuildGraph::readPythonGraphFile(char *fileName){
 	FILE *input;
 	int i=0;
 	int vertex_identifier=0;
@@ -62,7 +62,7 @@ graph *readPythonGraphFile(char *fileName){
 // RETURNS a random double [0,1(
 //-----------------------------------------------------------------------------
 double
-generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z){
+CRebuildGraph::generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z){
 	
 	double temp;
 	random_value_x=171*(random_value_x%177)-2*(random_value_x/177);
@@ -83,7 +83,7 @@ generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_
 // GLOBAL operation generateInitialGraph(int sourceGraphOrder)
 // RETURNS a random graph with sourceGraphOrder vertex
 //-----------------------------------------------------------------------------
-graph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
+graph *CRebuildGraph::generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
 	int i,j;
 	int newNeighbour;
 	int newDegree;
@@ -122,7 +122,7 @@ graph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random
 // GLOBAL operation copyGraph(sourceGraph)
 // RETURNS a copy of sourceGraph
 //-----------------------------------------------------------------------------
-graph *copyGraph(graph *sourceGraph){
+graph *CRebuildGraph::copyGraph(graph *sourceGraph){
 	int i,myDegree,*myNeighbours;
 	int myOrder=sourceGraph->getOrder();
 	graph *result=(graph *)new graph(myOrder);
@@ -138,7 +138,7 @@ graph *copyGraph(graph *sourceGraph){
 // GLOBAL operation copyGraph(sourceGraph,targetGraph)
 // COPIES sourceGraph to targetGraph
 //-----------------------------------------------------------------------------
-void copyGraph(graph *sourceGraph,graph *targetGraph){
+void CRebuildGraph::copyGraph(graph *sourceGraph,graph *targetGraph){
 	int i,j,aux;
 	int myOrder=sourceGraph->getOrder();
 	
@@ -162,7 +162,7 @@ void copyGraph(graph *sourceGraph,graph *targetGraph){
 // GLOBAL operation modifyGraph(sourceGraph)
 // MODIFIES a randon sourceGraph vertex's connections
 //-----------------------------------------------------------------------------
-void modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
+void CRebuildGraph::modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
 	int i,j;
 	int vertex2change;
 	int myOrder=sourceGraph->getOrder();
@@ -218,7 +218,7 @@ void modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int 
 // GLOBAL operation cost(double *tarjet,double *current,int count)
 // RETURNS the cost
 //-----------------------------------------------------------------------------
-double cost(double *tarjet,double *current,int count){
+double CRebuildGraph::cost(double *tarjet,double *current,int count){
 	int i;
 	double result=0.0;
 	
@@ -228,7 +228,7 @@ double cost(double *tarjet,double *current,int count){
 	return pow(result,0.5);
 }
 
-void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
+void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inputFileName,
 						int lx, int ly, int lz, double To, double Tk,double Tmin,
 						double k,long int Nmax,double costBest,double *targetBC,
 						double *bestBC, time_t timeStart, time_t timeEnd){
@@ -268,7 +268,7 @@ void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
 	
 }
 
-void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombination,graph **pbestGraph,int graphOrder,
+void CRebuildGraph::AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombination,graph **pbestGraph,int graphOrder,
 						double *bestBC,double *targetBC,
 						FILE *logFile,double &costBest,
 						CSettingsSimulation settingSimulation){
@@ -366,7 +366,7 @@ void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombinat
 
 
 int
-fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int *order){
+CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int *order){
 	
 	
 	time_t timeStart;
@@ -479,7 +479,7 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
 #define RESULT_OK 1
 
 graph*
-GetGraphfromFile(const char *argv[])
+CRebuildGraph::GetGraphfromFile(const char *argv[])
 {
 	CFuncTrace lFuncTrace(string("GetGraphfromFile"));
 	graph *targetGraph=NULL;
@@ -496,7 +496,7 @@ GetGraphfromFile(const char *argv[])
 	return targetGraph;
 }
 
-int fCalculateBeterness(const char *argv[]){
+int CRebuildGraph::fCalculateBeterness(const char *argv[]){
 	CFuncTrace lFuncTrace("fCalculateBeterness");
 	graph *targetGraph=NULL;
 	int graphOrder=0;
@@ -518,7 +518,7 @@ int fCalculateBeterness(const char *argv[]){
 
 
 gsl_vector_complex *
-calculateEgeinval (gsl_matrix *target)
+CRebuildGraph::calculateEgeinval (gsl_matrix *target)
 {
 	
 	
@@ -569,7 +569,7 @@ calculateEgeinval (gsl_matrix *target)
 }
 
 int
-graphToGsl(graph * source, gsl_matrix* target){
+CRebuildGraph::graphToGsl(graph * source, gsl_matrix* target){
 	
 	int i,j;
 	gsl_matrix_set_zero(target);
@@ -589,7 +589,7 @@ graphToGsl(graph * source, gsl_matrix* target){
 	return RESULT_OK;
 }
 
-int printGslMatrix(gsl_matrix* gslMatrix,const char *format="%.3f "){
+int CRebuildGraph::printGslMatrix(gsl_matrix* gslMatrix,const char *format){
 	printf("\n");
 	for (size_t i = 0; i < gslMatrix->size1; i++) {
 		for (size_t j = 0; j < gslMatrix->size2; j++) {
@@ -601,7 +601,7 @@ int printGslMatrix(gsl_matrix* gslMatrix,const char *format="%.3f "){
 	return RESULT_OK;
 }
 
-int printGslVector(gsl_vector* gslVector){
+int CRebuildGraph::printGslVector(gsl_vector* gslVector){
 	printf("\n");
 	for (size_t i = 0; i < gslVector->size; i++) {
 		printf("%.03f ", gsl_vector_get(gslVector, i));
@@ -612,7 +612,7 @@ int printGslVector(gsl_vector* gslVector){
 
 
 gsl_vector *
-calculateExp(const gsl_vector_complex *eval){
+CRebuildGraph::calculateExp(const gsl_vector_complex *eval){
 	CFuncTrace lFuncTrace("calculateExp");
 	int order = (int)eval->size;
 	
@@ -635,7 +635,7 @@ calculateExp(const gsl_vector_complex *eval){
 }
 
 int
-fCalculateCommunicability(const char *argv[]){
+CRebuildGraph::fCalculateCommunicability(const char *argv[]){
 	CFuncTrace lFuncTrace("fCalculateConnectivity");
 	
 	graph *targetGraph=NULL;
@@ -662,7 +662,8 @@ fCalculateCommunicability(const char *argv[]){
 	return RESULT_OK;
 }
 
-gsl_vector * GetDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
+gsl_vector *
+CRebuildGraph::GetDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
 	
 	int nMatrixOrder = (int) gslMatrix->size1;
 	gsl_vector * gslvDiagonal = gsl_vector_alloc(nMatrixOrder);
@@ -675,7 +676,7 @@ gsl_vector * GetDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
 }
 
 int
-fCalculateCommunicability_cent_exp(const char *argv[]){
+CRebuildGraph::fCalculateCommunicability_cent_exp(const char *argv[]){
 	CFuncTrace lFuncTrace("fCalculateCommunicability_cent_exp");
 	
 	graph *targetGraph=NULL;

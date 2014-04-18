@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "boost/program_options.hpp"
 #include "CSettingsSumulation.h"
+#include "rebuildgraph.h"
 
 int
 fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&ptargetBC, double *&pbestBC,int *order);
@@ -57,9 +58,9 @@ int main(int argc, const char * argv[])
 	
 	
 	//
-	
+	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	// CSettingsSimulation *settingsSimulation = new CSettingsSimulation(argumentMap);
-    fregenerateGraph(*settingsSimulation,TargetBC,BestBC,&order);
+    rebuildGraph->fregenerateGraph(*settingsSimulation,TargetBC,BestBC,&order);
 	
 	//fCalculateBeterness(argv);
     //fCalculateCommunicability(argv);
