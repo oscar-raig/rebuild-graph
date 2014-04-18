@@ -71,6 +71,9 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 		}
 		free(TargetBC);
 	free(BestBC);
+	free(settingSimulation);
+	settingSimulation = new CSettingsSimulation() ;
+	
 		largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
 		order = 0;
 	settingSimulation->inputFileName = largv[1];

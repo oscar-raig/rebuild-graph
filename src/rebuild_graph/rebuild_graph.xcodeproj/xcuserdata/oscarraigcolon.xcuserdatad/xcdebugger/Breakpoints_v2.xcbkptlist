@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/CSettingsSumulation.h"
-            timestampString = "418859482.836389"
+            timestampString = "419512661.815764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "CSettingsSimulation(po::variables_map argumentMap)"
             landmarkType = "5">
             <Locations>
@@ -56,11 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/CSettingsSumulation.h"
-            timestampString = "418859482.836389"
+            timestampString = "419512661.815764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "CSettingsSimulation(po::variables_map argumentMap)"
             landmarkType = "5">
          </BreakpointContent>
@@ -91,6 +91,22 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
             endingLineNumber = "60"
+            landmarkName = "BOOST_AUTO_TEST_CASE(graph_betweness_centrality)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestRebuildGraph/TestRebuildGraph/TestRebuildGraph.cpp"
+            timestampString = "419517716.543809"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "BOOST_AUTO_TEST_CASE(graph_betweness_centrality)"
             landmarkType = "7">
          </BreakpointContent>

@@ -25,10 +25,6 @@
 #define MAX_ITERATIONS 1000
 #define STRING_LENGTH 256
 
-// Park-Miller pseudo random  number generator
-#define LLAVOR_X 11
-#define LLAVOR_Y 92
-#define LLAVOR_Z 37
 
 
 #endif

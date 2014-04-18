@@ -14,12 +14,18 @@
 namespace po = boost::program_options;
 
 
-#define TO_DEFAULT 10
-#define T_MIN_DEFAULT 0.0001
-#define N_MAX_DEFAULT 1000
-#define K_DEFAULT 0.9
-#define TOL 0.0001
-#define MAX_ITERATIONS 1000
+#define DEFAULT_TO		10
+#define DEFAULT_T_MIN	0.0001
+#define DEFAULT_N_MAX	1000
+#define DEFAULT_K 0.9
+#define DEFAULT_TOL 0.0001
+#define DEFAULT_MAX_ITERATIONS 1000
+
+// Park-Miller pseudo random  number generator
+#define DEFAULT_SEED_X 11
+#define DEFAULT_SEED_Y 92
+#define DEFAULT_SEED_Z 37
+
 
 class CSettingsSimulation{
 	
@@ -29,14 +35,26 @@ public:
 	double	tMin;
 	double	To;
 	std::string inputFileName;
+	int random_value_x;
+	int random_value_y;
+	int random_value_z;
+	
 	
 	CSettingsSimulation():
-	k(K_DEFAULT),nMax(N_MAX_DEFAULT),tMin(T_MIN_DEFAULT),To(TO_DEFAULT)
+	k(DEFAULT_K),nMax(DEFAULT_N_MAX),
+	tMin(DEFAULT_T_MIN),To(DEFAULT_TO),
+	random_value_x(DEFAULT_SEED_X),
+	random_value_y(DEFAULT_SEED_Y),
+	random_value_z(DEFAULT_SEED_Z)
 	{
 	}
 	
 	CSettingsSimulation(po::variables_map argumentMap):
-		k(K_DEFAULT),nMax(N_MAX_DEFAULT),tMin(T_MIN_DEFAULT),To(TO_DEFAULT)
+		k(DEFAULT_K),nMax(DEFAULT_N_MAX),tMin(DEFAULT_T_MIN),
+		To(DEFAULT_TO),
+		random_value_x(DEFAULT_SEED_X),
+		random_value_y(DEFAULT_SEED_Y),
+		random_value_z(DEFAULT_SEED_Z)
 	{
 		if (argumentMap.count("graphFile")){
 			inputFileName = argumentMap["graphFile"].as<std::string>();

@@ -271,7 +271,9 @@ void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
 void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombination,graph **pbestGraph,int graphOrder,
 						double *bestBC,double *targetBC,
 						FILE *logFile,double &costBest,
-						int &random_value_x,int &random_value_y,int &random_value_z){
+						CSettingsSimulation settingSimulation){
+	
+	
 	double temperMin=TEMPER_MIN_DEFAULT;
 	double k=K;
 	int iterations=0;
@@ -287,9 +289,14 @@ void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombinat
 	graph *newGraph=NULL;
 	graph *oldGraph=NULL;
 	
+	for(int i=0;i<graphOrder;i++){
+		bestBC[i]=0.0;
+		newBC[i]=0.0;
+	}
+	
 	// STARTING SIMMULATED ANNEALING
 	Tk=temperInitial;
-	bestGraph=generateInitialGraph(graphOrder,random_value_x,random_value_y,random_value_z);
+	bestGraph=generateInitialGraph(graphOrder,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
 	*pbestGraph= bestGraph;
 	bestGraph->setAllVertexNeighbours();
 	bestGraph->brandes_betweenness_centrality(bestBC);
@@ -300,8 +307,8 @@ void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombinat
 	oldGraph->setAllVertexNeighbours();
 	newGraph=copyGraph(bestGraph);
 	newGraph->setAllVertexNeighbours();
+
 	
-	int accept=false;
 	int okTrue=0;
 	int okFalse=0;
 	int notOk=0;
@@ -309,10 +316,8 @@ void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombinat
 		/* Repeat NMAX times */
 		for(N=0;(N<numberMaxCombination)&&(!weAreDone);N++){
 			// Slightly modify oldGraph to obtain newGraph
-			//printf("ANTES NEWGRAPH\n"); newGraph->printGraph();
-			//      modifyGraph(oldGraph,newGraph,getMax(oldBC,graphOrder),accept);
-			//      modifyGraph(oldGraph,newGraph,bestGraph,accept);
-			modifyGraph(newGraph,random_value_x,random_value_y,random_value_z);
+
+			modifyGraph(newGraph,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
 			// Evaluate newGraph's vertex betweenness centrality
 			newGraph->brandes_betweenness_centrality(newBC);
 			// Update cost variables (new and old graphs)
@@ -326,29 +331,18 @@ void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombinat
 					weAreDone=true;
 					break;
 				}
-				accept=0;
 				okTrue++;
 				printf(".");
 				fprintf(logFile,".");
-			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber(random_value_x,random_value_y,random_value_z)){
+			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber(settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z)){
 				// if newCost not is better than oldCost,
 				// we still accept it if exp(df/T_k)<rand()
-				accept=1;
 				okFalse++;
 				printf("o");
 				fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
-				//        printf("best\n");
-				//        bestGraph->printGraph();
-				//        printf("new\n");
-				//        newGraph->printGraph();
 				copyGraph(bestGraph,newGraph);
-				//        printf("best\n");
-				//        bestGraph->printGraph();
-				//        printf("new\n");
-				//        newGraph->printGraph();
-				accept=2;
 				notOk++;
 				printf("x");
 				fprintf(logFile,"x");
@@ -374,10 +368,7 @@ void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombinat
 int
 fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int *order){
 	
-	int i=0;
-	int lx=0;
-	int ly=0;
-	int lz=0;
+	
 	time_t timeStart;
 	time_t timeEnd;
 	
@@ -408,30 +399,14 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
 	
 	// Default value initialization
 	timeStart=time(NULL);
-	int random_value_x=LLAVOR_X;
-	int random_value_y=LLAVOR_Y;
-	int random_value_z=LLAVOR_Z;
-	lx=random_value_x;
-	ly=random_value_y;
-	lz=random_value_z;
+	
+	
 	
 	// Substitution of default values with argument values
 	printf("Reconstruction of a graph ");
 	printf("from its vertex's betweenness centrality values\n");
 	printf("Use: reconstruct [input_file] [P/A/B] [To] [Tmin] [Nmax] [k]");
-	/*
-	 switch(argc){
-	 case  6:k=atof(argv[5]);
-	 case  5:Nmax=atoi(argv[4]);
-	 case  4:Tmin=atof(argv[3]);
-	 case  3:To=atof(argv[2]);
-	 case  2:strcpy(inputFilename,argv[1]);
-	 break;
-	 default:printf("ERROR incorrect parameters\n");
-	 exit(-1);
-	 }
-	 */
-	
+		
 	k = settingsSimulation.k;
 	numberMaxCombination = settingsSimulation.nMax;
 	temperMin = settingsSimulation.tMin;
@@ -443,23 +418,18 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
 	
 	graphOrder=targetGraph->getOrder();
 	printf("si\n");
-	
-	//double targetBC [graphOrder];
-	//double bestBC [graphOrder];
+
 	targetBC =(double*) malloc(graphOrder*sizeof(double));
 	bestBC=(double*) malloc(graphOrder*sizeof(double));
-	//	double *targetBC = *ptargetBC;
-	//	double *bestBC = *pbestBC;
-	double oldBC [graphOrder];
-	double newBC [graphOrder];
+	
+	
 	*order = graphOrder;
 	
-	for(i=0;i<graphOrder;i++){
+	for(int i=0;i<graphOrder;i++){
 		targetBC[i]=0.0;
 		bestBC[i]=0.0;
-		oldBC[i]=0.0;
-		newBC[i]=0.0;
 	}
+	
 	targetGraph->printGraph();
 	targetGraph->setAllVertexNeighbours();
     targetGraph->brandes_betweenness_centrality(targetBC);
@@ -482,7 +452,7 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
 	}
 	
 	AnnealingAlgorithm( Tk, temperInitial,numberMaxCombination,&bestGraph,graphOrder,
-					   bestBC,targetBC, logFile,costBest,random_value_x,random_value_y,random_value_z);
+					   bestBC,targetBC, logFile,costBest,settingsSimulation);
 	
 	// Processing tasks accomplished
 	// Showing results
@@ -493,7 +463,7 @@ fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, dou
 	printf("CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
 	// printf("Output file: %s\n",outputFilename);
 	
-	generateOutputFile(targetGraph,inputFilename, lx,  ly,  lz,  temperInitial,  Tk, temperMin,
+	generateOutputFile(targetGraph,inputFilename, settingsSimulation.random_value_x,  settingsSimulation.random_value_y,  settingsSimulation.random_value_z,  temperInitial,  Tk, temperMin,
 					   k, numberMaxCombination, costBest,targetBC,
 					   bestBC, timeStart, timeEnd);
 	
