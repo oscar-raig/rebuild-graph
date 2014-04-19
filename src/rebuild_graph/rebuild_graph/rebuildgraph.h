@@ -28,22 +28,23 @@
 class CRebuildGraph{
 
 public:
+	// Input Output File Functions
 	graph *readPythonGraphFile(char *fileName);
+	
 	double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
 	graph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
 	graph *copyGraph(graph *sourceGraph);
 	void copyGraph(graph *sourceGraph,graph *targetGraph);
 	void modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
 	double cost(double *tarjet,double *current,int count);
-	void generateOutputFile(const  graph *targetGraph,const char *inputFileName,
-										   int lx, int ly, int lz, double To, double Tk,double Tmin,
-										   double k,long int Nmax,double costBest,double *targetBC,
-							double *bestBC, time_t timeStart, time_t timeEnd);
-	void AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombination,graph **pbestGraph,int graphOrder,
+	void generateOutputFile(const  graph *targetGraph,const char *inputFileName,double Tk,
+										    double costBest,double *targetBC,
+							double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation);
+	void AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphOrder,
 										   double *bestBC,double *targetBC,
 										   FILE *logFile,double &costBest,
 										   CSettingsSimulation settingSimulation);
-	int fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int *order);
+	int fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int &graphOrder);
 	graph*GetGraphfromFile(const char *argv[]);
 	
 	int fCalculateBeterness(const char *argv[]);

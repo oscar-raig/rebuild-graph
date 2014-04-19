@@ -228,10 +228,9 @@ double CRebuildGraph::cost(double *tarjet,double *current,int count){
 	return pow(result,0.5);
 }
 
-void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inputFileName,
-						int lx, int ly, int lz, double To, double Tk,double Tmin,
-						double k,long int Nmax,double costBest,double *targetBC,
-						double *bestBC, time_t timeStart, time_t timeEnd){
+void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inputFileName,double Tk,
+						double costBest,double *targetBC,
+						double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation){
 	
 	FILE *output=NULL;
 	int graphOrder =targetGraph->getOrder();
@@ -246,13 +245,14 @@ void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inp
 	fprintf(output,"Graph reconstruction via  vertex betweenness centrality\n");
 	fprintf(output,"\tOriginal graph description file-> %s",inputFileName);
 	fprintf(output,"\t\tOrdre-> %d\n",targetGraph->getOrder());
-	fprintf(output,"\tPseudorandom generator seeds-> %d,%d,%d\n",lx,ly,lz);
+	fprintf(output,"\tPseudorandom generator seeds-> %d,%d,%d\n",
+			settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
 	fprintf(output,"SIMULATED ANNEALING:\n");
-	fprintf(output,"\tInitial Temperature-> %f\n",To);
+	fprintf(output,"\tInitial Temperature-> %f\n",settingSimulation.To);
 	fprintf(output,"\tTk final-> %f\n",Tk);
-	fprintf(output,"\tMinimum Temperature-> %f\n",Tmin);
-	fprintf(output,"\tGeometric cooling rate: T[k]=%f * T[k-1]\n",k);
-	fprintf(output,"\tNumber Maxim of Combinations-> %ld\n",Nmax);
+	fprintf(output,"\tMinimum Temperature-> %f\n",settingSimulation.tMin);
+	fprintf(output,"\tGeometric cooling rate: T[k]=%f * T[k-1]\n",settingSimulation.k);
+	fprintf(output,"\tNumber Maxim of Combinations-> %d\n",settingSimulation.nMax);
 	fprintf(output,"RESULTS:\n");
 	fprintf(output,"\tBest cost -> %3.20f\n",costBest);
 	fprintf(output,"\tBetweenness centrality\n");
@@ -268,7 +268,7 @@ void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inp
 	
 }
 
-void CRebuildGraph::AnnealingAlgorithm(double &Tk, int temperInitial,long int numberMaxCombination,graph **pbestGraph,int graphOrder,
+void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphOrder,
 						double *bestBC,double *targetBC,
 						FILE *logFile,double &costBest,
 						CSettingsSimulation settingSimulation){
@@ -282,7 +282,6 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, int temperInitial,long int nu
 	costBest=0.0;
 	double costOld=0.0;
 	double costNew=0.0;
-	numberMaxCombination=NUMBER_MAX_COMBINATIONS_DEFAULT;
 	long int N=0;
 	graph * bestGraph= NULL;
 	double newBC [graphOrder];
@@ -295,7 +294,7 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, int temperInitial,long int nu
 	}
 	
 	// STARTING SIMMULATED ANNEALING
-	Tk=temperInitial;
+	Tk=settingSimulation.To;
 	bestGraph=generateInitialGraph(graphOrder,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
 	*pbestGraph= bestGraph;
 	bestGraph->setAllVertexNeighbours();
@@ -314,7 +313,7 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, int temperInitial,long int nu
 	int notOk=0;
 	do{
 		/* Repeat NMAX times */
-		for(N=0;(N<numberMaxCombination)&&(!weAreDone);N++){
+		for(N=0;(N<settingSimulation.nMax)&&(!weAreDone);N++){
 			// Slightly modify oldGraph to obtain newGraph
 
 			modifyGraph(newGraph,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
@@ -366,7 +365,7 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, int temperInitial,long int nu
 
 
 int
-CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int *order){
+CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int &graphOrder){
 	
 	
 	time_t timeStart;
@@ -380,10 +379,8 @@ CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double 
 	
 	
 	// Simmulated Annealing variables
-	double temperInitial=TEMPER_INITIAL_DEFAULT;
 	double temperMin=TEMPER_MIN_DEFAULT;
 	double Tk=TEMPER_INITIAL_DEFAULT;
-	long int numberMaxCombination=NUMBER_MAX_COMBINATIONS_DEFAULT;
 	double k=K;
 	
 	
@@ -395,7 +392,7 @@ CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double 
 	
 	
 	
-	int graphOrder=0;
+	
 	
 	// Default value initialization
 	timeStart=time(NULL);
@@ -408,22 +405,18 @@ CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double 
 	printf("Use: reconstruct [input_file] [P/A/B] [To] [Tmin] [Nmax] [k]");
 		
 	k = settingsSimulation.k;
-	numberMaxCombination = settingsSimulation.nMax;
 	temperMin = settingsSimulation.tMin;
-	temperInitial = settingsSimulation.To;
 	strcpy(inputFilename,settingsSimulation.inputFileName.c_str());
 	
 	targetGraph=readPythonGraphFile(inputFilename);
 	
-	
+	graphOrder=0;
 	graphOrder=targetGraph->getOrder();
-	printf("si\n");
-
+	
 	targetBC =(double*) malloc(graphOrder*sizeof(double));
 	bestBC=(double*) malloc(graphOrder*sizeof(double));
 	
 	
-	*order = graphOrder;
 	
 	for(int i=0;i<graphOrder;i++){
 		targetBC[i]=0.0;
@@ -451,7 +444,7 @@ CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double 
 		exit(-1);
 	}
 	
-	AnnealingAlgorithm( Tk, temperInitial,numberMaxCombination,&bestGraph,graphOrder,
+	AnnealingAlgorithm( Tk, &bestGraph,graphOrder,
 					   bestBC,targetBC, logFile,costBest,settingsSimulation);
 	
 	// Processing tasks accomplished
@@ -463,9 +456,8 @@ CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double 
 	printf("CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
 	// printf("Output file: %s\n",outputFilename);
 	
-	generateOutputFile(targetGraph,inputFilename, settingsSimulation.random_value_x,  settingsSimulation.random_value_y,  settingsSimulation.random_value_z,  temperInitial,  Tk, temperMin,
-					   k, numberMaxCombination, costBest,targetBC,
-					   bestBC, timeStart, timeEnd);
+	generateOutputFile(targetGraph,inputFilename,  Tk, costBest,targetBC,
+					   bestBC, timeStart, timeEnd,settingsSimulation);
 	
 	printf("\nReconstructed graph file: %s\n",outputGraphFilename);
 	bestGraph->printGraph();
