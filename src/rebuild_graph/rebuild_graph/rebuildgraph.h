@@ -30,32 +30,58 @@ class CRebuildGraph{
 public:
 	// Input Output File Functions
 	graph *readPythonGraphFile(char *fileName);
+	graph*GetGraphfromFile(const char *argv[]);
+
 	
-	double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
+	
+	// Rebuilding Graph Main Functions
+	int fregenerateGraph(CSettingsSimulation &settingsSimulation,
+						 double *&targetBC,
+						 double *&bestBC,
+						 int &graphOrder);
+	void AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphOrder,
+							double *bestBC,double *targetBC,
+							FILE *logFile,double &costBest,
+							CSettingsSimulation settingSimulation);
+
+	// Copying And Modifying graphs
+	graph*	copyGraph(graph *sourceGraph);
+	void	copyGraph(graph *sourceGraph,graph *targetGraph);
+	int graphToGsl(graph * source, gsl_matrix* target);
+	
+	
 	graph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
-	graph *copyGraph(graph *sourceGraph);
-	void copyGraph(graph *sourceGraph,graph *targetGraph);
+	
 	void modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
 	double cost(double *tarjet,double *current,int count);
-	void generateOutputFile(const  graph *targetGraph,const char *inputFileName,double Tk,
-										    double costBest,double *targetBC,
-							double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation);
-	void AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphOrder,
-										   double *bestBC,double *targetBC,
-										   FILE *logFile,double &costBest,
-										   CSettingsSimulation settingSimulation);
-	int fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int &graphOrder);
-	graph*GetGraphfromFile(const char *argv[]);
 	
-	int fCalculateBeterness(const char *argv[]);
-	gsl_vector_complex * calculateEgeinval (gsl_matrix *target);
-	int graphToGsl(graph * source, gsl_matrix* target);
+	
+	
+	// Printing Graphs and Results
 	int printGslMatrix(gsl_matrix* gslMatrix,const char *format="%.3f ");
 	int printGslVector(gsl_vector* gslVector);
+	int calculateCommunicability_cent_exp(const char *argv[]);
+	void generateOutputFile(const  graph *targetGraph,const char *inputFileName,double Tk,
+							double costBest,double *targetBC,
+							double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation);
+	
+	
+	int compareMatrix(gsl_matrix* A, gsl_matrix*B);
+		
+
+	
+	
+	// Calculating properties Grpaphs
+	int calculateCommunicability(const char *argv[]);
+	int calculateBeterness(const char *argv[]);
+	
+	// Auxiliar Calculations
+	gsl_vector_complex * calculateEgeinval (gsl_matrix *target);
 	gsl_vector *calculateExp(const gsl_vector_complex *eval);
-	int fCalculateCommunicability(const char *argv[]);
-	gsl_vector *GetDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
-	int fCalculateCommunicability_cent_exp(const char *argv[]);
+	
+	// Others
+	gsl_vector *getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
+	double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
 	
 };
 

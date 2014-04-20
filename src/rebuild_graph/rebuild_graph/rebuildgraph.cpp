@@ -5,7 +5,7 @@
 //  Created by Oscar Raig Colon on 14/04/14.
 //  Copyright (c) 2014 Oscar Raig Colon. All rights reserved.
 //
-
+#include <math.h>
 #include <stdio.h>
 #include "graphs.h"
 #include "rebuildgraph.h"
@@ -488,7 +488,7 @@ CRebuildGraph::GetGraphfromFile(const char *argv[])
 	return targetGraph;
 }
 
-int CRebuildGraph::fCalculateBeterness(const char *argv[]){
+int CRebuildGraph::calculateBeterness(const char *argv[]){
 	CFuncTrace lFuncTrace("fCalculateBeterness");
 	graph *targetGraph=NULL;
 	int graphOrder=0;
@@ -519,9 +519,7 @@ CRebuildGraph::calculateEgeinval (gsl_matrix *target)
 	gsl_vector_complex *eval = gsl_vector_complex_alloc (order);
 	gsl_matrix_complex *evec = gsl_matrix_complex_alloc (order, order);
 	
-	
-	
-	
+
 	gsl_eigen_nonsymmv_workspace * w =
     gsl_eigen_nonsymmv_alloc (order);
 	
@@ -614,8 +612,6 @@ CRebuildGraph::calculateExp(const gsl_vector_complex *eval){
 	for ( int i = 0; i < order; i++){
 		gsl_complex eval_i
 		= gsl_vector_complex_get (eval, i);
-		
-		
 		//		printf ("eigenvalue = %g + %gi\n",
 		//				GSL_REAL(eval_i), GSL_IMAG(eval_i));
 		gsl_vector_set(evalexp,i,gsl_sf_exp(GSL_REAL(eval_i)));
@@ -627,7 +623,7 @@ CRebuildGraph::calculateExp(const gsl_vector_complex *eval){
 }
 
 int
-CRebuildGraph::fCalculateCommunicability(const char *argv[]){
+CRebuildGraph::calculateCommunicability(const char *argv[]){
 	CFuncTrace lFuncTrace("fCalculateConnectivity");
 	
 	graph *targetGraph=NULL;
@@ -655,7 +651,7 @@ CRebuildGraph::fCalculateCommunicability(const char *argv[]){
 }
 
 gsl_vector *
-CRebuildGraph::GetDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
+CRebuildGraph::getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
 	
 	int nMatrixOrder = (int) gslMatrix->size1;
 	gsl_vector * gslvDiagonal = gsl_vector_alloc(nMatrixOrder);
@@ -668,7 +664,7 @@ CRebuildGraph::GetDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
 }
 
 int
-CRebuildGraph::fCalculateCommunicability_cent_exp(const char *argv[]){
+CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
 	CFuncTrace lFuncTrace("fCalculateCommunicability_cent_exp");
 	
 	graph *targetGraph=NULL;
@@ -690,7 +686,7 @@ CRebuildGraph::fCalculateCommunicability_cent_exp(const char *argv[]){
 	lFuncTrace.trace("Printing ExpmMatrix");
 	printGslMatrix(A1expm);
 	
-	gsl_vector * gslvDiagonal = GetDiagonalFromGslMatrix(A1expm);
+	gsl_vector * gslvDiagonal = getDiagonalFromGslMatrix(A1expm);
 	
 	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
 	printGslVector(gslvDiagonal);
@@ -699,3 +695,119 @@ CRebuildGraph::fCalculateCommunicability_cent_exp(const char *argv[]){
 }
 
 
+//Multiplica matrius quadrades
+void multiplica(gsl_matrix *result, gsl_matrix *m1, gsl_matrix *m2){
+	int i,j,k;
+	double resultat;
+	gsl_matrix *temp=gsl_matrix_alloc(m1->size1,m1->size1);
+	gsl_matrix_set_zero(temp);
+	
+	for(i=0; i<m1->size1; i++){
+		for(j=0; j<m1->size1;j++){
+			resultat=0;
+			for(k=0; k<m1->size1; k++){
+				resultat+=gsl_matrix_get(m1,i,k)*gsl_matrix_get(m2,k,j);
+			}
+			gsl_matrix_set(temp,i,j,resultat);
+		}
+	}
+	
+	gsl_matrix_memcpy (result, temp);
+}
+
+int
+CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
+
+	float delta;
+
+	gsl_vector *work = gsl_vector_alloc (matrixA->size1);
+	gsl_vector *s=gsl_vector_alloc(matrixA->size1);
+	gsl_matrix *U1=gsl_matrix_alloc(matrixA->size1,matrixA->size1);
+	gsl_matrix *U2=gsl_matrix_alloc(matrixA->size1,matrixA->size1);
+	gsl_matrix *V1=gsl_matrix_alloc(matrixA->size1,matrixA->size1);
+	gsl_matrix *V2=gsl_matrix_alloc(matrixA->size1,matrixA->size1);
+
+
+
+
+
+	gsl_matrix_memcpy (U1, matrixA);
+	//gsl_linalg_SV_decomp (gsl_matrix * A, gsl_matrix * V, gsl_vector * S, gsl_vector * work)
+	//La matriu A es substitueix per U a la sortida
+	gsl_linalg_SV_decomp(U1,V1,s,work);
+
+	gsl_matrix_memcpy (U2, matrixB);
+	gsl_linalg_SV_decomp(U2,V2,s,work);
+
+	//F = U1 VS2 V1^T = U1 U2^T A2 V2 V1^T
+	gsl_matrix *F=gsl_matrix_alloc(matrixA->size1,matrixA->size1);
+	gsl_matrix_transpose(U2);
+	multiplica(F,U1,U2);
+	multiplica(F,F,matrixB);
+	multiplica(F,F,V2);
+	gsl_matrix_transpose(V1);
+	multiplica(F,F,V1);
+
+	//F ja esta calculada. Calculem la norma.
+	delta=0;
+	for(int i=0; i<matrixA->size1; i++){
+	for(int j=0; j<matrixA->size1; j++){
+		delta+=pow(gsl_matrix_get(matrixA,i,j)-gsl_matrix_get(F,i,j),2);
+	}
+	}
+	delta=std::pow(delta,0.5f);
+	delta/=matrixA->size1;
+
+	printf("\nDIFERENCIA (delta) -> %f",delta);
+
+	//Per presentar-la, definim positiva i normalitzem la matriu F
+	if(gsl_matrix_min(F)<0)
+	gsl_matrix_add_constant (F, -gsl_matrix_min(F));
+	if(gsl_matrix_max(F)>0)
+	gsl_matrix_scale (F, 1/gsl_matrix_max(F));
+
+	FILE *out;
+	out=fopen("sortida.txt","w");
+	printf("\nResultats en sortida.txt");
+	fprintf(out, "DIFERENCIA (delta) -> %f\n\n",delta);
+	for(int i=0; i<matrixA->size1; i++){
+	for(int j=0; j<matrixA->size1; j++){
+		if(gsl_matrix_get(matrixA,i,j)==0)
+			fprintf(out," ");
+			else if(gsl_matrix_get(matrixA,i,j)==1)
+				fprintf(out,"#");
+				else{
+					printf("\nERROR-Matriu no valida");
+					exit(1);
+				}
+	}
+	fprintf(out,"\t|\t");
+	for(int j=0; j<matrixA->size1; j++){
+		if(gsl_matrix_get(F,i,j)<0.2)
+			fprintf(out," ");
+			else if(gsl_matrix_get(F,i,j)<0.4)
+				fprintf(out,"∑");
+				else if(gsl_matrix_get(F,i,j)<0.6)
+					fprintf(out,"^");
+					else if(gsl_matrix_get(F,i,j)<0.8)
+						fprintf(out,"-");
+						else if(gsl_matrix_get(F,i,j)<0.95)
+							fprintf(out,"/");
+							else
+								fprintf(out,"#");
+	}
+	fprintf(out,"\n");
+	}
+	fclose(out);
+
+
+	gsl_vector_free(work);
+	gsl_matrix_free(U1);
+	gsl_matrix_free(U2);
+	gsl_matrix_free(V1);
+	gsl_matrix_free(V2);
+	gsl_matrix_free(matrixA);
+	gsl_matrix_free(F);
+	
+	return 1;
+}

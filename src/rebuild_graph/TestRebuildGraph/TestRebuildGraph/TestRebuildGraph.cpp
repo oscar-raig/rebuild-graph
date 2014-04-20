@@ -123,3 +123,24 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 
 }
 
+
+BOOST_AUTO_TEST_CASE(compara){
+	
+	CRebuildGraph *rebuildGraph = new CRebuildGraph();
+	gsl_matrix * matrixA;
+	gsl_matrix * matrixB;
+	graph* graph = NULL;
+	
+	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
+	graph = rebuildGraph->GetGraphfromFile(largv);
+	
+	matrixA = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
+	matrixB = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
+	
+	rebuildGraph->graphToGsl(graph, matrixA );
+	rebuildGraph->graphToGsl(graph,matrixB);
+	
+	
+	rebuildGraph->compareMatrix(matrixA,matrixB);
+	
+}

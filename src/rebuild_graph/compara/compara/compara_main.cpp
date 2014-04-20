@@ -13,6 +13,11 @@
 #include <linalg/gsl_linalg.h>
 /********************************* FUNCIO PRINCIPAL ********************************/
 
+
+
+
+
+
 int main(int argc, char *argv[])
 {
 	int i,j;
