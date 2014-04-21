@@ -383,6 +383,8 @@ public:
     // Vertex Betweenness Centrality specfic operations
     void brandes_betweenness_centrality(double *bbc);
 	
+   
+	
     int graphNotConnected(int *unconnectedVertex);
 	
 private:

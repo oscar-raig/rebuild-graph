@@ -298,7 +298,12 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 	bestGraph=generateInitialGraph(graphOrder,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
 	*pbestGraph= bestGraph;
 	bestGraph->setAllVertexNeighbours();
-	bestGraph->brandes_betweenness_centrality(bestBC);
+	
+	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
+			bestGraph->brandes_betweenness_centrality(bestBC);
+	else
+		brandes_comunicability_centrality_exp(bestGraph,bestBC);
+	
 	costBest=cost(targetBC,bestBC,graphOrder);
 	costOld=2.0*costBest;
 	costNew=costOld;
@@ -318,7 +323,10 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 
 			modifyGraph(newGraph,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
 			// Evaluate newGraph's vertex betweenness centrality
-			newGraph->brandes_betweenness_centrality(newBC);
+			if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
+				newGraph->brandes_betweenness_centrality(newBC);
+			else
+				brandes_comunicability_centrality_exp(newGraph,newBC);
 			// Update cost variables (new and old graphs)
 			costOld=costNew;
 			costNew=cost(targetBC,newBC,graphOrder);
@@ -365,7 +373,11 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 
 
 int
-CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&targetBC, double *&bestBC,int &graphOrder){
+CRebuildGraph::regenerateGraph(CSettingsSimulation &settingsSimulation,
+							   double *&targetBC,
+							   double *&bestBC,
+							   int &graphOrder,
+							   double &compareResult){
 	
 	
 	time_t timeStart;
@@ -389,10 +401,6 @@ CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double 
 	
 	graph *targetGraph=NULL;
 	graph *bestGraph=NULL;
-	
-	
-	
-	
 	
 	// Default value initialization
 	timeStart=time(NULL);
@@ -425,8 +433,13 @@ CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double 
 	
 	targetGraph->printGraph();
 	targetGraph->setAllVertexNeighbours();
-    targetGraph->brandes_betweenness_centrality(targetBC);
-    strcpy(inputGraphFilename,inputFilename);
+	
+	if( settingsSimulation.graphProperty == BETWEENNESS_CENTRALITY )
+		targetGraph->brandes_betweenness_centrality(targetBC);
+    else
+		brandes_comunicability_centrality_exp(targetGraph,targetBC);
+	
+	strcpy(inputGraphFilename,inputFilename);
     strcat(inputGraphFilename,".in");
 	targetGraph->printMyGraph(inputGraphFilename);
 	
@@ -446,6 +459,15 @@ CRebuildGraph::fregenerateGraph(CSettingsSimulation &settingsSimulation, double 
 	
 	AnnealingAlgorithm( Tk, &bestGraph,graphOrder,
 					   bestBC,targetBC, logFile,costBest,settingsSimulation);
+	
+	gsl_matrix *targetGraphGsl = gsl_matrix_alloc(targetGraph->getOrder(), targetGraph->getOrder());
+	gsl_matrix *bestGraphGsl = gsl_matrix_alloc(bestGraph->getOrder(), bestGraph->getOrder());
+	
+	graphToGsl(targetGraph,targetGraphGsl);
+	graphToGsl(bestGraph,bestGraphGsl);
+	
+	
+	compareResult = compareMatrix(targetGraphGsl, bestGraphGsl);
 	
 	// Processing tasks accomplished
 	// Showing results
@@ -591,6 +613,16 @@ int CRebuildGraph::printGslMatrix(gsl_matrix* gslMatrix,const char *format){
 	return RESULT_OK;
 }
 
+int CRebuildGraph::gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles)
+{
+
+	for (size_t i = 0; i < gslVector->size; i++) {
+		arrayDoubles[i]=  gsl_vector_get(gslVector, i);
+	
+	}
+	return RESULT_OK;
+}
+
 int CRebuildGraph::printGslVector(gsl_vector* gslVector){
 	printf("\n");
 	for (size_t i = 0; i < gslVector->size; i++) {
@@ -663,15 +695,12 @@ CRebuildGraph::getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
 	return gslvDiagonal;
 }
 
-int
-CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
-	CFuncTrace lFuncTrace("fCalculateCommunicability_cent_exp");
+
+void
+CRebuildGraph::brandes_comunicability_centrality_exp(graph *targetGraph,double *myCExp){
+	CFuncTrace lFuncTrace("CRebuildGraph::brandes_comunicability_centrality_exp");
 	
-	graph *targetGraph=NULL;
-	targetGraph=GetGraphfromFile(argv);
 	int graphOrder=targetGraph->getOrder();
-	lFuncTrace.trace("Graph Order %d",graphOrder);
-	
 	// Get Numpy Matrix // Matriu d'adjacencia
 	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
 	
@@ -690,6 +719,21 @@ CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
 	
 	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
 	printGslVector(gslvDiagonal);
+	
+	gslVectorToArray(gslvDiagonal,myCExp);
+}
+
+int
+CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
+	CFuncTrace lFuncTrace("fCalculateCommunicability_cent_exp");
+	
+	graph *targetGraph=NULL;
+	targetGraph=GetGraphfromFile(argv);
+	int graphOrder=targetGraph->getOrder();
+	lFuncTrace.trace("Graph Order %d",graphOrder);
+	double * bestCommCentExp = (double*)malloc(graphOrder * sizeof(double));
+	
+	brandes_comunicability_centrality_exp(targetGraph,bestCommCentExp);
 	return RESULT_OK;
 	
 }
@@ -715,9 +759,10 @@ void multiplica(gsl_matrix *result, gsl_matrix *m1, gsl_matrix *m2){
 	gsl_matrix_memcpy (result, temp);
 }
 
-int
+float
 CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
 
+	
 	float delta;
 
 	gsl_vector *work = gsl_vector_alloc (matrixA->size1);
@@ -809,5 +854,5 @@ CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
 	gsl_matrix_free(matrixA);
 	gsl_matrix_free(F);
 	
-	return 1;
+	return delta;
 }

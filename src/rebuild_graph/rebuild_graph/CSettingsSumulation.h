@@ -27,6 +27,9 @@ namespace po = boost::program_options;
 #define DEFAULT_SEED_Z 37
 
 
+
+#define BETWEENNESS_CENTRALITY     1
+#define COMMUNICABILITY_BETWEENESS 2
 class CSettingsSimulation{
 	
 public:
@@ -38,14 +41,15 @@ public:
 	int random_value_x;
 	int random_value_y;
 	int random_value_z;
-	
+	int graphProperty;
 	
 	CSettingsSimulation():
 	k(DEFAULT_K),nMax(DEFAULT_N_MAX),
 	tMin(DEFAULT_T_MIN),To(DEFAULT_TO),
 	random_value_x(DEFAULT_SEED_X),
 	random_value_y(DEFAULT_SEED_Y),
-	random_value_z(DEFAULT_SEED_Z)
+	random_value_z(DEFAULT_SEED_Z),
+	graphProperty(BETWEENNESS_CENTRALITY)
 	{
 	}
 	
@@ -54,7 +58,8 @@ public:
 		To(DEFAULT_TO),
 		random_value_x(DEFAULT_SEED_X),
 		random_value_y(DEFAULT_SEED_Y),
-		random_value_z(DEFAULT_SEED_Z)
+		random_value_z(DEFAULT_SEED_Z),
+		graphProperty(BETWEENNESS_CENTRALITY)
 	{
 		if (argumentMap.count("graphFile")){
 			inputFileName = argumentMap["graphFile"].as<std::string>();

@@ -550,6 +550,9 @@ int graph::updateDistanceMatrix(){
 }
 
 
+
+
+
 void graph::brandes_betweenness_centrality(double *myBBC){
   int i,j,s,t,v,w;
   int S[order*order],Scount=0;
