@@ -698,27 +698,27 @@ CRebuildGraph::getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
 
 void
 CRebuildGraph::brandes_comunicability_centrality_exp(graph *targetGraph,double *myCExp){
-	CFuncTrace lFuncTrace("CRebuildGraph::brandes_comunicability_centrality_exp");
+//	CFuncTrace lFuncTrace("CRebuildGraph::brandes_comunicability_centrality_exp");
 	
 	int graphOrder=targetGraph->getOrder();
 	// Get Numpy Matrix // Matriu d'adjacencia
 	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
 	
-	targetGraph->printGraph();
+//	targetGraph->printGraph();
 	
 	graphToGsl(targetGraph,A1);
-	lFuncTrace.trace("\nPrinting Home made Matrix\n");
-	printGslMatrix(A1," %g");
+//	lFuncTrace.trace("\nPrinting Home made Matrix\n");
+//	printGslMatrix(A1," %g");
 	gsl_matrix *A1expm=gsl_matrix_alloc(graphOrder,graphOrder);
 	
 	gsl_linalg_exponential_ss(A1, A1expm, .01);
-	lFuncTrace.trace("Printing ExpmMatrix");
-	printGslMatrix(A1expm);
+//	lFuncTrace.trace("Printing ExpmMatrix");
+//	printGslMatrix(A1expm);
 	
 	gsl_vector * gslvDiagonal = getDiagonalFromGslMatrix(A1expm);
 	
-	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
-	printGslVector(gslvDiagonal);
+//	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
+//	printGslVector(gslvDiagonal);
 	
 	gslVectorToArray(gslvDiagonal,myCExp);
 }

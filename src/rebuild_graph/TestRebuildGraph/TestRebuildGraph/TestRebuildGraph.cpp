@@ -8,7 +8,39 @@
 #include "CSettingsSumulation.h"
 #include "rebuildgraph.h"
 
-int add( int i, int j ) { return i+j; }
+BOOST_AUTO_TEST_CASE( Test_Beetweeness_exp)
+{/*
+	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
+	largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc";
+	int graphOrder = 0;
+	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
+	
+	settingSimulation->inputFileName = largv[1];
+	double compareResult = 0.0;
+	CRebuildGraph *rebuildGraph = new CRebuildGraph();
+	double *TargetBC = NULL;
+	double *BestBC = NULL;
+	//rebuildGraph->regenerateGraph(*settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
+	
+	//BOOST_CHECK(abs(compareResult-0.061915)< 0.1);
+	
+	 graphOrder = 0;
+	 //largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
+	 largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc";
+	 settingSimulation->inputFileName = largv[1];
+	 settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS;
+	 compareResult = 0.0;
+	 TargetBC = NULL;
+	 BestBC = NULL;
+	 rebuildGraph->regenerateGraph(*settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
+	printf("Compare Result %f",compareResult);
+	 BOOST_CHECK(abs(compareResult-0.298288)< 0.1);
+	 
+	exit(1);
+	*/
+}
+
+
 
 BOOST_AUTO_TEST_CASE( Test_analitza){
 	
@@ -162,15 +194,17 @@ BOOST_AUTO_TEST_CASE(regenerate_compare){
 	rebuildGraph->regenerateGraph(*settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
 	
 	BOOST_CHECK(abs(compareResult-0.061915)< 0.1);
-	/*
+	
 	graphOrder = 0;
+	//largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
+	largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
 	settingSimulation->inputFileName = largv[1];
 	settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS;
 	compareResult = 0.0;
 	TargetBC = NULL;
 	BestBC = NULL;
 	rebuildGraph->regenerateGraph(*settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	
-	BOOST_CHECK(abs(compareResult-0.298288)< 0.1);*/
+	printf("Compare Result %f",compareResult);
+	BOOST_CHECK(abs(compareResult-0.051123)< 0.1);
 
 	 }

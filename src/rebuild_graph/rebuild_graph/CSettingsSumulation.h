@@ -66,6 +66,20 @@ public:
 		}
 		
 	};
+	
+	void Reset()
+	{
+		k = DEFAULT_K;
+		nMax = DEFAULT_MAX_ITERATIONS;
+		tMin = DEFAULT_T_MIN;
+		To= DEFAULT_TO;
+		random_value_x = DEFAULT_SEED_X;
+		random_value_y = DEFAULT_SEED_Y;
+		random_value_z = DEFAULT_SEED_Z;
+		
+		
+	}
+	
 };
 
 
