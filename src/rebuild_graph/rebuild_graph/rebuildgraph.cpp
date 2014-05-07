@@ -365,7 +365,7 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 		Tk*=k;
 		// Update number of iterations
 		iterations++;
-	}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!=MAX_ITERATIONS));
+	}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!=settingSimulation.maxIterations));
 	
 	
 }
@@ -759,22 +759,53 @@ void multiplica(gsl_matrix *result, gsl_matrix *m1, gsl_matrix *m2){
 	gsl_matrix_memcpy (result, temp);
 }
 
+void InitMatrix(int size,
+				gsl_vector **work,
+				gsl_vector **s,
+				gsl_matrix **U1,
+				gsl_matrix **U2,
+				gsl_matrix **V1,
+				gsl_matrix **V2)
+{
+	*work = gsl_vector_alloc (size);
+	*s=gsl_vector_alloc(size);
+	*U1=gsl_matrix_alloc(size,size);
+	*U2=gsl_matrix_alloc(size,size);
+	*V1=gsl_matrix_alloc(size,size);
+	*V2=gsl_matrix_alloc(size,size);
+}
+
+void FreeMatrix(gsl_vector **work,
+				gsl_vector **s,
+				gsl_matrix **U1,
+				gsl_matrix **U2,
+				gsl_matrix **V1,
+				gsl_matrix **V2,
+				gsl_matrix **matrixA,
+				gsl_matrix **F )
+{
+	gsl_vector_free(*s);
+	gsl_vector_free(*work);
+	gsl_matrix_free(*U1);
+	gsl_matrix_free(*U2);
+	gsl_matrix_free(*V1);
+	gsl_matrix_free(*V2);
+	gsl_matrix_free(*matrixA);
+	gsl_matrix_free(*F);
+
+	
+}
+
 float
 CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
 
 	
 	float delta;
-
-	gsl_vector *work = gsl_vector_alloc (matrixA->size1);
-	gsl_vector *s=gsl_vector_alloc(matrixA->size1);
-	gsl_matrix *U1=gsl_matrix_alloc(matrixA->size1,matrixA->size1);
-	gsl_matrix *U2=gsl_matrix_alloc(matrixA->size1,matrixA->size1);
-	gsl_matrix *V1=gsl_matrix_alloc(matrixA->size1,matrixA->size1);
-	gsl_matrix *V2=gsl_matrix_alloc(matrixA->size1,matrixA->size1);
-
-
-
-
+	gsl_vector *work ,*s;
+	
+	gsl_matrix *U1, *U2,*V1,*V2;
+	
+	InitMatrix(matrixA->size1,&work,&s,&U1,&U2,&V1,&V2);
 
 	gsl_matrix_memcpy (U1, matrixA);
 	//gsl_linalg_SV_decomp (gsl_matrix * A, gsl_matrix * V, gsl_vector * S, gsl_vector * work)
@@ -816,43 +847,46 @@ CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
 	printf("\nResultats en sortida.txt");
 	fprintf(out, "DIFERENCIA (delta) -> %f\n\n",delta);
 	for(int i=0; i<matrixA->size1; i++){
-	for(int j=0; j<matrixA->size1; j++){
-		if(gsl_matrix_get(matrixA,i,j)==0)
-			fprintf(out," ");
-			else if(gsl_matrix_get(matrixA,i,j)==1)
+		for(int j=0; j<matrixA->size1; j++){
+			if(gsl_matrix_get(matrixA,i,j)==0){
+				fprintf(out," ");
+			}else if(gsl_matrix_get(matrixA,i,j)==1){
 				fprintf(out,"#");
-				else{
-					printf("\nERROR-Matriu no valida");
-					exit(1);
-				}
-	}
-	fprintf(out,"\t|\t");
-	for(int j=0; j<matrixA->size1; j++){
-		if(gsl_matrix_get(F,i,j)<0.2)
-			fprintf(out," ");
-			else if(gsl_matrix_get(F,i,j)<0.4)
-				fprintf(out,"∑");
-				else if(gsl_matrix_get(F,i,j)<0.6)
-					fprintf(out,"^");
-					else if(gsl_matrix_get(F,i,j)<0.8)
-						fprintf(out,"-");
-						else if(gsl_matrix_get(F,i,j)<0.95)
-							fprintf(out,"/");
-							else
-								fprintf(out,"#");
+			}else{
+				printf("\nERROR-Matriu no valida");
+				exit(1);
+			}
+		}
+	
+		fprintf(out,"\t|\t");
+		for(int j=0; j<matrixA->size1; j++){
+			if(gsl_matrix_get(F,i,j)<0.2)
+				fprintf(out," ");
+				else if(gsl_matrix_get(F,i,j)<0.4)
+					fprintf(out,"∑");
+					else if(gsl_matrix_get(F,i,j)<0.6)
+						fprintf(out,"^");
+						else if(gsl_matrix_get(F,i,j)<0.8)
+							fprintf(out,"-");
+							else if(gsl_matrix_get(F,i,j)<0.95)
+								fprintf(out,"/");
+								else
+									fprintf(out,"#");
 	}
 	fprintf(out,"\n");
 	}
 	fclose(out);
 
+	FreeMatrix(&work,
+			   &s,
+			  &U1,
+			   &U2,
+			   &V1,
+			   &V2,
+			   &matrixA,
+			   &F );
 
-	gsl_vector_free(work);
-	gsl_matrix_free(U1);
-	gsl_matrix_free(U2);
-	gsl_matrix_free(V1);
-	gsl_matrix_free(V2);
-	gsl_matrix_free(matrixA);
-	gsl_matrix_free(F);
-	
 	return delta;
 }
+
+

@@ -42,6 +42,7 @@ public:
 	int random_value_y;
 	int random_value_z;
 	int graphProperty;
+	int maxIterations;
 	
 	CSettingsSimulation():
 	k(DEFAULT_K),nMax(DEFAULT_N_MAX),
@@ -49,7 +50,8 @@ public:
 	random_value_x(DEFAULT_SEED_X),
 	random_value_y(DEFAULT_SEED_Y),
 	random_value_z(DEFAULT_SEED_Z),
-	graphProperty(BETWEENNESS_CENTRALITY)
+	graphProperty(BETWEENNESS_CENTRALITY),
+	maxIterations(DEFAULT_MAX_ITERATIONS)
 	{
 	}
 	
@@ -59,13 +61,23 @@ public:
 		random_value_x(DEFAULT_SEED_X),
 		random_value_y(DEFAULT_SEED_Y),
 		random_value_z(DEFAULT_SEED_Z),
-		graphProperty(BETWEENNESS_CENTRALITY)
+		graphProperty(BETWEENNESS_CENTRALITY),
+		maxIterations(DEFAULT_MAX_ITERATIONS)
 	{
 		if (argumentMap.count("graphFile")){
 			inputFileName = argumentMap["graphFile"].as<std::string>();
 		}
 		
 	};
+	
+	void setNMax( int newNmax)
+	{
+		nMax = newNmax;
+	}
+	void setMaxIterations (int newMaxIterations)
+	{
+		maxIterations = newMaxIterations;
+	}
 	
 	void Reset()
 	{
