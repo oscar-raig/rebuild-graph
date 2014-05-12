@@ -69,6 +69,9 @@ public:
 							double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation);
 	
 	
+	void printingCompareMatrixResults(float delta,
+									  gsl_matrix *F,
+									  gsl_matrix* matrixA);
 	float compareMatrix(gsl_matrix* A, gsl_matrix*B);
 		
 

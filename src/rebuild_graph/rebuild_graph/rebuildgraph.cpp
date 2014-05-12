@@ -10,6 +10,9 @@
 #include "graphs.h"
 #include "rebuildgraph.h"
 #include "CTrace.hpp"
+/*
+#include <gsl/gsl_cblas.h>
+#include <gsl/gsl_cblas.h> */
 //-----------------------------------------------------------------------------
 // GLOBAL operation readPythonGraphFile(char *fileName)
 // RETURNS a graph pointer
@@ -757,6 +760,11 @@ void multiplica(gsl_matrix *result, gsl_matrix *m1, gsl_matrix *m2){
 	}
 	
 	gsl_matrix_memcpy (result, temp);
+	 
+/*	gsl_blas_dgemm(
+				   CblasNoTrans,
+				   CblasNoTrans,
+				   1.0, A, B, 0.0, C);*/
 }
 
 void InitMatrix(int size,
@@ -796,6 +804,58 @@ void FreeMatrix(gsl_vector **work,
 	
 }
 
+void CRebuildGraph::printingCompareMatrixResults(float delta,
+												 gsl_matrix *F,
+												 gsl_matrix* matrixA
+												 ){
+	
+	printf("\nDIFERENCIA (delta) -> %f",delta);
+	
+	//Per presentar-la, definim positiva i normalitzem la matriu F
+	if(gsl_matrix_min(F)<0)
+		gsl_matrix_add_constant (F, -gsl_matrix_min(F));
+	if(gsl_matrix_max(F)>0)
+		gsl_matrix_scale (F, 1/gsl_matrix_max(F));
+	
+	FILE *out;
+	out=fopen("sortida.txt","w");
+	printf("\nResultats en sortida.txt");
+	fprintf(out, "DIFERENCIA (delta) -> %f\n\n",delta);
+	for(int i=0; i<matrixA->size1; i++){
+		for(int j=0; j<matrixA->size1; j++){
+			if(gsl_matrix_get(matrixA,i,j)==0){
+				fprintf(out," ");
+			}else if(gsl_matrix_get(matrixA,i,j)==1){
+				fprintf(out,"#");
+			}else{
+				printf("\nERROR-Matriu no valida");
+				exit(1);
+			}
+		}
+		
+		fprintf(out,"\t|\t");
+		for(int j=0; j<matrixA->size1; j++){
+			if(gsl_matrix_get(F,i,j)<0.2)
+				fprintf(out," ");
+			else if(gsl_matrix_get(F,i,j)<0.4)
+				fprintf(out,"∑");
+			else if(gsl_matrix_get(F,i,j)<0.6)
+				fprintf(out,"^");
+			else if(gsl_matrix_get(F,i,j)<0.8)
+				fprintf(out,"-");
+			else if(gsl_matrix_get(F,i,j)<0.95)
+				fprintf(out,"/");
+			else
+				fprintf(out,"#");
+		}
+		fprintf(out,"\n");
+	}
+	fclose(out);
+
+	
+}
+
+
 float
 CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
 
@@ -834,49 +894,7 @@ CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
 	delta=std::pow(delta,0.5f);
 	delta/=matrixA->size1;
 
-	printf("\nDIFERENCIA (delta) -> %f",delta);
-
-	//Per presentar-la, definim positiva i normalitzem la matriu F
-	if(gsl_matrix_min(F)<0)
-	gsl_matrix_add_constant (F, -gsl_matrix_min(F));
-	if(gsl_matrix_max(F)>0)
-	gsl_matrix_scale (F, 1/gsl_matrix_max(F));
-
-	FILE *out;
-	out=fopen("sortida.txt","w");
-	printf("\nResultats en sortida.txt");
-	fprintf(out, "DIFERENCIA (delta) -> %f\n\n",delta);
-	for(int i=0; i<matrixA->size1; i++){
-		for(int j=0; j<matrixA->size1; j++){
-			if(gsl_matrix_get(matrixA,i,j)==0){
-				fprintf(out," ");
-			}else if(gsl_matrix_get(matrixA,i,j)==1){
-				fprintf(out,"#");
-			}else{
-				printf("\nERROR-Matriu no valida");
-				exit(1);
-			}
-		}
-	
-		fprintf(out,"\t|\t");
-		for(int j=0; j<matrixA->size1; j++){
-			if(gsl_matrix_get(F,i,j)<0.2)
-				fprintf(out," ");
-				else if(gsl_matrix_get(F,i,j)<0.4)
-					fprintf(out,"∑");
-					else if(gsl_matrix_get(F,i,j)<0.6)
-						fprintf(out,"^");
-						else if(gsl_matrix_get(F,i,j)<0.8)
-							fprintf(out,"-");
-							else if(gsl_matrix_get(F,i,j)<0.95)
-								fprintf(out,"/");
-								else
-									fprintf(out,"#");
-	}
-	fprintf(out,"\n");
-	}
-	fclose(out);
-
+	printingCompareMatrixResults(delta,F,matrixA);
 	FreeMatrix(&work,
 			   &s,
 			  &U1,
