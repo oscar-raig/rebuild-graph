@@ -265,7 +265,7 @@ void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inp
 		fprintf(output,"%2.10f | ",bestBC[i]);
 		fprintf(output,"%2.10f\n",pow(targetBC[i]-bestBC[i],2));
 	}
-	fprintf(output,"CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
+//	fprintf(output,"CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
 	fclose(output);
 	
 	
@@ -445,8 +445,10 @@ CRebuildGraph::regenerateGraph(CSettingsSimulation &settingsSimulation,
 		targetGraph->brandes_betweenness_centrality(targetBC);
     else if ( settingsSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
 		brandes_comunicability_centrality_exp(targetGraph,targetBC);
-	else
+	else if ( settingsSimulation.graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY )
 		communicability_betweenness_centrality(targetGraph,targetBC);
+	else
+		return -1;
 	
 	strcpy(inputGraphFilename,inputFilename);
     strcat(inputGraphFilename,".in");

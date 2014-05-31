@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality){
 	settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS_CENTRALITY;
 	rebuildGraph->regenerateGraph(*settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
 	
-	BOOST_CHECK(abs(compareResult-00.24459739029407501)< 0.1);
+	BOOST_CHECK(abs(compareResult-0.24459739029407501)< 0.1);
 	
 	
 

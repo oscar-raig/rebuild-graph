@@ -134,11 +134,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
+            timestampString = "423213588.842839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "472"
-            endingLineNumber = "472"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
             landmarkName = "CRebuildGraph::regenerateGraph(CSettingsSimulation &amp;settingsSimulation, double *&amp;targetBC, double *&amp;bestBC, int &amp;graphOrder, double &amp;compareResult)"
             landmarkType = "5">
          </BreakpointContent>
@@ -150,11 +150,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
+            timestampString = "423213588.842839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "976"
-            endingLineNumber = "976"
+            startingLineNumber = "978"
+            endingLineNumber = "978"
             landmarkName = "CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB)"
             landmarkType = "5">
          </BreakpointContent>
@@ -166,11 +166,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
+            timestampString = "423213588.842839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1007"
-            endingLineNumber = "1007">
+            startingLineNumber = "1009"
+            endingLineNumber = "1009">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -228,11 +228,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
+            timestampString = "423213588.842839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
+            startingLineNumber = "471"
+            endingLineNumber = "471"
             landmarkName = "CRebuildGraph::regenerateGraph(CSettingsSimulation &amp;settingsSimulation, double *&amp;targetBC, double *&amp;bestBC, int &amp;graphOrder, double &amp;compareResult)"
             landmarkType = "5">
          </BreakpointContent>
@@ -308,11 +308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
+            timestampString = "423213588.842839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "837"
-            endingLineNumber = "837"
+            startingLineNumber = "839"
+            endingLineNumber = "839"
             landmarkName = "CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[])"
             landmarkType = "5">
          </BreakpointContent>
@@ -388,11 +388,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
+            timestampString = "423213588.842839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "839"
-            endingLineNumber = "839">
+            startingLineNumber = "841"
+            endingLineNumber = "841">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -402,39 +402,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "891"
-            endingLineNumber = "891"
-            landmarkName = "FreeMatrix(gsl_vector **work, gsl_vector **s, gsl_matrix **U1, gsl_matrix **U2, gsl_matrix **V1, gsl_matrix **V2, gsl_matrix **matrixA, gsl_matrix **F )"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "892"
-            endingLineNumber = "892"
-            landmarkName = "FreeMatrix(gsl_vector **work, gsl_vector **s, gsl_matrix **U1, gsl_matrix **U2, gsl_matrix **V1, gsl_matrix **V2, gsl_matrix **matrixA, gsl_matrix **F )"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
+            timestampString = "423213588.842839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "893"
@@ -450,11 +418,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rebuild_graph/rebuildgraph.cpp"
-            timestampString = "423166100.350412"
+            timestampString = "423213588.842839"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "737"
-            endingLineNumber = "737"
+            startingLineNumber = "894"
+            endingLineNumber = "894"
+            landmarkName = "FreeMatrix(gsl_vector **work, gsl_vector **s, gsl_matrix **U1, gsl_matrix **U2, gsl_matrix **V1, gsl_matrix **V2, gsl_matrix **matrixA, gsl_matrix **F )"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rebuild_graph/rebuildgraph.cpp"
+            timestampString = "423213588.842839"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "895"
+            endingLineNumber = "895"
+            landmarkName = "FreeMatrix(gsl_vector **work, gsl_vector **s, gsl_matrix **U1, gsl_matrix **U2, gsl_matrix **V1, gsl_matrix **V2, gsl_matrix **matrixA, gsl_matrix **F )"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rebuild_graph/rebuildgraph.cpp"
+            timestampString = "423213588.842839"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "739"
+            endingLineNumber = "739"
             landmarkName = "CRebuildGraph:: communicability_betweenness_centrality(graph *targetGraph,double *myCExp)"
             landmarkType = "5">
          </BreakpointContent>
@@ -510,7 +510,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TestRebuildGraph/TestRebuildGraph/TestRebuildGraph.cpp"
@@ -520,6 +520,38 @@
             startingLineNumber = "35"
             endingLineNumber = "35"
             landmarkName = "BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestRebuildGraph/TestRebuildGraph/TestRebuildGraph.cpp"
+            timestampString = "423213316.836528"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "BOOST_AUTO_TEST_CASE(graph_betweness_centrality)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestRebuildGraph/TestRebuildGraph/TestRebuildGraph.cpp"
+            timestampString = "423213749.388857"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "BOOST_AUTO_TEST_CASE(graph_betweness_centrality)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
