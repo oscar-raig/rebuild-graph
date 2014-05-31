@@ -49,9 +49,15 @@ public:
 	// Copying And Modifying graphs
 	graph*	copyGraph(graph *sourceGraph);
 	void	copyGraph(graph *sourceGraph,graph *targetGraph);
+	gsl_matrix * gslCopyGraph(const gsl_matrix* target);
 	int graphToGsl(graph * source, gsl_matrix* target);
 	
-	
+	void gslDeleteNodeConnections( gsl_matrix* target, int i){
+		for (int iterator = 0; iterator < target->size1; iterator++){
+			gsl_matrix_set(target,i,iterator,0);
+			gsl_matrix_set(target,iterator,i,0);
+		}
+	};
 	graph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
 	
 	void modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
@@ -83,6 +89,9 @@ public:
 	
 	void
 	brandes_comunicability_centrality_exp(graph *targetGraph,double *myCExp);
+	
+	void
+	communicability_betweenness_centrality(graph *targetGraph,double *ßmyCExp);
 		
 	// Auxiliar Calculations
 	gsl_vector_complex * calculateEgeinval (gsl_matrix *target);

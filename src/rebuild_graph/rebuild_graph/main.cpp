@@ -57,10 +57,11 @@ int main(int argc, const char * argv[])
 	settingsSimulation->inputFileName =largv[1];
 	
 	
-	//
+	double compareResult = 0.0;
+
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	// CSettingsSimulation *settingsSimulation = new CSettingsSimulation(argumentMap);
-    rebuildGraph->fregenerateGraph(*settingsSimulation,TargetBC,BestBC,&order);
+    rebuildGraph->regenerateGraph(*settingsSimulation,TargetBC,BestBC,order,compareResult);
 	
 	//fCalculateBeterness(argv);
     //fCalculateCommunicability(argv);

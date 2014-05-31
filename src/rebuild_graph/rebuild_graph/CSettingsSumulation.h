@@ -30,6 +30,7 @@ namespace po = boost::program_options;
 
 #define BETWEENNESS_CENTRALITY     1
 #define COMMUNICABILITY_BETWEENESS 2
+#define COMMUNICABILITY_BETWEENESS_CENTRALITY 3
 class CSettingsSimulation{
 	
 public:

@@ -265,7 +265,7 @@ void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inp
 		fprintf(output,"%2.10f | ",bestBC[i]);
 		fprintf(output,"%2.10f\n",pow(targetBC[i]-bestBC[i],2));
 	}
-	printf("CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
+	fprintf(output,"CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
 	fclose(output);
 	
 	
@@ -276,7 +276,7 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 						FILE *logFile,double &costBest,
 						CSettingsSimulation settingSimulation){
 	
-	
+	CFuncTrace lFuncTrace(false,"CRebuildGraph::AnnealingAlgorithm");
 	double temperMin=TEMPER_MIN_DEFAULT;
 	double k=K;
 	int iterations=0;
@@ -304,9 +304,11 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 	
 	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
 			bestGraph->brandes_betweenness_centrality(bestBC);
-	else
+	else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
 		brandes_comunicability_centrality_exp(bestGraph,bestBC);
-	
+	else
+		communicability_betweenness_centrality(bestGraph,bestBC);
+		
 	costBest=cost(targetBC,bestBC,graphOrder);
 	costOld=2.0*costBest;
 	costNew=costOld;
@@ -328,8 +330,10 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 			// Evaluate newGraph's vertex betweenness centrality
 			if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
 				newGraph->brandes_betweenness_centrality(newBC);
-			else
+			else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
 				brandes_comunicability_centrality_exp(newGraph,newBC);
+			else
+				communicability_betweenness_centrality(bestGraph,bestBC);
 			// Update cost variables (new and old graphs)
 			costOld=costNew;
 			costNew=cost(targetBC,newBC,graphOrder);
@@ -342,25 +346,25 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 					break;
 				}
 				okTrue++;
-				printf(".");
+				lFuncTrace.trace(".");
 				fprintf(logFile,".");
 			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber(settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z)){
 				// if newCost not is better than oldCost,
 				// we still accept it if exp(df/T_k)<rand()
 				okFalse++;
-				printf("o");
+				lFuncTrace.trace("o");
 				fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
 				copyGraph(bestGraph,newGraph);
 				notOk++;
-				printf("x");
+				lFuncTrace.trace("x");
 				fprintf(logFile,"x");
 			}
 		}
-		printf("\n");
+		lFuncTrace.trace("\n");
 		fprintf(logFile,"\n");
-		printf("Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
+		lFuncTrace.trace("Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 			   Tk,costBest,weAreDone,iterations);
 		fprintf(logFile,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 				Tk,costBest,weAreDone,iterations);
@@ -439,8 +443,10 @@ CRebuildGraph::regenerateGraph(CSettingsSimulation &settingsSimulation,
 	
 	if( settingsSimulation.graphProperty == BETWEENNESS_CENTRALITY )
 		targetGraph->brandes_betweenness_centrality(targetBC);
-    else
+    else if ( settingsSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
 		brandes_comunicability_centrality_exp(targetGraph,targetBC);
+	else
+		communicability_betweenness_centrality(targetGraph,targetBC);
 	
 	strcpy(inputGraphFilename,inputFilename);
     strcat(inputGraphFilename,".in");
@@ -498,7 +504,7 @@ CRebuildGraph::regenerateGraph(CSettingsSimulation &settingsSimulation,
 graph*
 CRebuildGraph::GetGraphfromFile(const char *argv[])
 {
-	CFuncTrace lFuncTrace(string("GetGraphfromFile"));
+	CFuncTrace lFuncTrace(false,string("GetGraphfromFile"));
 	graph *targetGraph=NULL;
 	char inputFilename[STRING_LENGTH];
 	
@@ -514,7 +520,7 @@ CRebuildGraph::GetGraphfromFile(const char *argv[])
 }
 
 int CRebuildGraph::calculateBeterness(const char *argv[]){
-	CFuncTrace lFuncTrace("fCalculateBeterness");
+	CFuncTrace lFuncTrace(false,"fCalculateBeterness");
 	graph *targetGraph=NULL;
 	int graphOrder=0;
 	
@@ -583,6 +589,16 @@ CRebuildGraph::calculateEgeinval (gsl_matrix *target)
 	return eval;
 }
 
+gsl_matrix *
+CRebuildGraph::gslCopyGraph(const gsl_matrix* target){
+	
+	gsl_matrix *dest=gsl_matrix_alloc(target->size1,target->size1);
+
+	gsl_matrix_memcpy (dest, target);
+	return dest;
+}
+
+
 int
 CRebuildGraph::graphToGsl(graph * source, gsl_matrix* target){
 	
@@ -638,7 +654,7 @@ int CRebuildGraph::printGslVector(gsl_vector* gslVector){
 
 gsl_vector *
 CRebuildGraph::calculateExp(const gsl_vector_complex *eval){
-	CFuncTrace lFuncTrace("calculateExp");
+	CFuncTrace lFuncTrace(false,"calculateExp");
 	int order = (int)eval->size;
 	
 	lFuncTrace.trace("Ordre for Expo %d",order);
@@ -659,7 +675,7 @@ CRebuildGraph::calculateExp(const gsl_vector_complex *eval){
 
 int
 CRebuildGraph::calculateCommunicability(const char *argv[]){
-	CFuncTrace lFuncTrace("fCalculateConnectivity");
+	CFuncTrace lFuncTrace(false,"fCalculateConnectivity");
 	
 	graph *targetGraph=NULL;
 	targetGraph=GetGraphfromFile(argv);
@@ -684,6 +700,86 @@ CRebuildGraph::calculateCommunicability(const char *argv[]){
 	
 	return RESULT_OK;
 }
+
+void
+CRebuildGraph::	communicability_betweenness_centrality(graph *targetGraph,double *myCExp)
+{
+	CFuncTrace lFuncTrace(false,"communicability_betweenness_centrality");
+	/* Step 1
+	 nodelist = G.nodes() # ordering of nodes in matrix
+	 n = len(nodelist)
+	 A = nx.to_numpy_matrix(G,nodelist)
+	 # convert to 0-1 matrix
+	 A[A!=0.0] = 1
+	 */
+	int graphOrder=targetGraph->getOrder();
+	
+	
+	gsl_vector * matrixFinalResult = gsl_vector_alloc(graphOrder);
+	
+	
+	// Get Numpy Matrix // Matriu d'adjacencia
+	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
+	
+	//	targetGraph->printGraph();
+	
+	graphToGsl(targetGraph,A1);
+		lFuncTrace.trace("\nPrinting Home made Matrix\n");
+//		printGslMatrix(A1," %g");
+	 
+	 /* Step 2
+	 expA = scipy.linalg.expm(A)
+	 mapping = dict(zip(nodelist,range(n)))
+	 sc = {}
+	 */
+	gsl_matrix *A1expm=gsl_matrix_alloc(graphOrder,graphOrder);
+	
+	gsl_linalg_exponential_ss(A1, A1expm, .01);
+	//	lFuncTrace.trace("Printing ExpmMatrix");
+//		printGslMatrix(A1expm);
+
+	for ( int iteratorNode = 0; iteratorNode < graphOrder; iteratorNode++){
+		gsl_matrix *copyA1 = gslCopyGraph(A1);
+		gslDeleteNodeConnections(copyA1,iteratorNode);
+//		printGslMatrix(copyA1);
+		/*
+		 B = (expA - scipy.linalg.expm(A)) / expA
+		*/
+		gsl_matrix *copyA1expm=gsl_matrix_alloc(graphOrder,graphOrder);
+		gsl_linalg_exponential_ss(copyA1, copyA1expm, .01);
+		
+		gsl_matrix *copyexpmAForSubstract  = gslCopyGraph(A1expm);
+		
+		gsl_matrix_sub(copyexpmAForSubstract,copyA1expm);
+		gsl_matrix_div_elements (copyexpmAForSubstract, A1expm);
+		lFuncTrace.trace("Printing expA- scip\n");
+//		printGslMatrix(copyexpmAForSubstract);
+		gslDeleteNodeConnections(copyexpmAForSubstract,iteratorNode);
+		
+		gsl_matrix *copyB = gslCopyGraph(copyexpmAForSubstract);
+		
+		for ( int col =0; col < graphOrder; col++){
+			for ( int row = 0; row< graphOrder ; row ++){
+				if ( row != col)
+					gsl_matrix_set(copyB,row,col,0);
+			}
+		}
+		gsl_matrix_sub(copyexpmAForSubstract,copyB);
+//		printGslMatrix(copyexpmAForSubstract);
+		double sum = 0;
+		for ( int col =0; col < graphOrder; col++){
+			for ( int row = 0; row< graphOrder ; row ++){
+				
+					sum +=gsl_matrix_get(copyexpmAForSubstract,row,col);
+			}
+		}
+		lFuncTrace.trace("Suma %f\n",sum);
+		gsl_vector_set(matrixFinalResult,iteratorNode,sum);
+
+	}
+	gslVectorToArray(matrixFinalResult,myCExp);
+}
+
 
 gsl_vector *
 CRebuildGraph::getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
@@ -728,7 +824,7 @@ CRebuildGraph::brandes_comunicability_centrality_exp(graph *targetGraph,double *
 
 int
 CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
-	CFuncTrace lFuncTrace("fCalculateCommunicability_cent_exp");
+	CFuncTrace lFuncTrace(false,"fCalculateCommunicability_cent_exp");
 	
 	graph *targetGraph=NULL;
 	targetGraph=GetGraphfromFile(argv);
@@ -808,8 +904,8 @@ void CRebuildGraph::printingCompareMatrixResults(float delta,
 												 gsl_matrix *F,
 												 gsl_matrix* matrixA
 												 ){
-	
-	printf("\nDIFERENCIA (delta) -> %f",delta);
+	CFuncTrace lFuncTrace(false,"CRebuildGraph::printingCompareMatrixResults");
+	lFuncTrace.trace("\nDIFERENCIA (delta) -> %f",delta);
 	
 	//Per presentar-la, definim positiva i normalitzem la matriu F
 	if(gsl_matrix_min(F)<0)
@@ -819,7 +915,7 @@ void CRebuildGraph::printingCompareMatrixResults(float delta,
 	
 	FILE *out;
 	out=fopen("sortida.txt","w");
-	printf("\nResultats en sortida.txt");
+	lFuncTrace.trace("\nResultats en sortida.txt");
 	fprintf(out, "DIFERENCIA (delta) -> %f\n\n",delta);
 	for(int i=0; i<matrixA->size1; i++){
 		for(int j=0; j<matrixA->size1; j++){

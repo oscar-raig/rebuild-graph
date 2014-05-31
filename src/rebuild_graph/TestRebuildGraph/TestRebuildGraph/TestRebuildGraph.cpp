@@ -8,6 +8,34 @@
 #include "CSettingsSumulation.h"
 #include "rebuildgraph.h"
 
+BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality){
+	/*
+	CRebuildGraph *rebuildGraph = new CRebuildGraph();
+	graph * testGraph = rebuildGraph->readPythonGraphFile("/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc");
+	testGraph->printGraph();
+	rebuildGraph->communicability_betweenness_centrality(testGraph);
+	*/
+	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
+	largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc";
+	int graphOrder = 0;
+	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
+	
+	settingSimulation->inputFileName = largv[1];
+	settingSimulation->setNMax(100);
+	settingSimulation->setMaxIterations(100);
+	double compareResult = 0.0;
+	CRebuildGraph *rebuildGraph = new CRebuildGraph();
+	double *TargetBC = NULL;
+	double *BestBC = NULL;
+	settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS_CENTRALITY;
+	rebuildGraph->regenerateGraph(*settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
+	
+	BOOST_CHECK(abs(compareResult-00.24459739029407501)< 0.1);
+	
+	
+
+}
+
 BOOST_AUTO_TEST_CASE( Test_Beetweeness_exp)
 {
 	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
@@ -24,7 +52,7 @@ BOOST_AUTO_TEST_CASE( Test_Beetweeness_exp)
 	double *BestBC = NULL;
 	rebuildGraph->regenerateGraph(*settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
 	
-	BOOST_CHECK(abs(compareResult-0.061915)< 0.1);
+	BOOST_REQUIRE(abs(compareResult-0.061915)< 0.1);
 	
 	 graphOrder = 0;
 	 //largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
@@ -37,7 +65,7 @@ BOOST_AUTO_TEST_CASE( Test_Beetweeness_exp)
 	 rebuildGraph->regenerateGraph(*settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
 	printf("Compare Result %f",compareResult);
 	// BOOST_CHECK(abs(compareResult-0.298288)< 0.1);
-	BOOST_CHECK(abs(compareResult-0.051123<0.1));
+	BOOST_REQUIRE(abs(compareResult-0.051123<0.1));
 	
 	
 }
@@ -55,16 +83,16 @@ BOOST_AUTO_TEST_CASE( Test_analitza){
 	int order,maxdegree,mindegree;
 	float avaragedegree;
 	int res_llegir =llegir_dades("test",order,maxdegree,mindegree,avaragedegree);
-	BOOST_CHECK( res_llegir == -1 );
+	BOOST_REQUIRE( res_llegir == -1 );
 
 	const char *szFileGraph = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc";
 	res_llegir =llegir_dades(szFileGraph,order,maxdegree,mindegree,avaragedegree);
-	BOOST_CHECK( res_llegir != -1 );
+	BOOST_REQUIRE( res_llegir != -1 );
     // In this example order:7, maxim grau 3, minim grau 1, grau mitja 2.13
-	BOOST_CHECK(order == 7);
-	BOOST_CHECK(maxdegree == 3);
-	BOOST_CHECK(mindegree == 1);
-	BOOST_CHECK(fabs(avaragedegree - 2.142857) < 0.1 );
+	BOOST_REQUIRE(order == 7);
+	BOOST_REQUIRE(maxdegree == 3);
+	BOOST_REQUIRE(mindegree == 1);
+	BOOST_REQUIRE(fabs(avaragedegree - 2.142857) < 0.1 );
 	
 	/* End analitza::llegir_dades -------------------------------------------*/
 
@@ -77,7 +105,7 @@ BOOST_AUTO_TEST_CASE( Test_analitza){
 	for (int nVertex = 0;nVertex < order;nVertex++){
 		res_clustering = clustering(nVertex);
 		std::cout << res_clustering << std::endl;
-		BOOST_CHECK(fabs(res_expected_clusteringresults[nVertex] - res_clustering) < 0.1 );
+		BOOST_REQUIRE(fabs(res_expected_clusteringresults[nVertex] - res_clustering) < 0.1 );
 
 	}
 	/* End analitza::llegir_dades -------------------------------------------*/
@@ -211,6 +239,7 @@ BOOST_AUTO_TEST_CASE(regenerate_compare){
 	BestBC = NULL;
 	rebuildGraph->regenerateGraph(*settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
 	printf("Compare Result %f",compareResult);
-	BOOST_CHECK(abs(compareResult-0.051123)< 0.1);
+	BOOST_REQUIRE(abs(compareResult-0.051123)< 0.1);
 
 	 }
+

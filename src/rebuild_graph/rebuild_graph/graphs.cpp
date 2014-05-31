@@ -684,14 +684,14 @@ void graph::printGraph(){
   int auxNNeighbours;
   int *auxNeighbours;
 
-  printf("The graph has %d vertex:\n",order);
+//  printf("The graph has %d vertex:\n",order);
   for(i=0;i<order;i++){
     auxNNeighbours=vertexArray[i]->getNeighbours(&auxNeighbours);
-    printf("Vertex %3d(%d neighbours):",i,auxNNeighbours);
+//    printf("Vertex %3d(%d neighbours):",i,auxNNeighbours);
     for(j=0;j<auxNNeighbours;j++){
-      printf(" %d",auxNeighbours[j]);
+//      printf(" %d",auxNeighbours[j]);
     }
-    printf("\n");
+//    printf("\n");
     free(auxNeighbours);
   }
 }
