@@ -333,7 +333,7 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 			else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
 				brandes_comunicability_centrality_exp(newGraph,newBC);
 			else
-				communicability_betweenness_centrality(bestGraph,bestBC);
+				communicability_betweenness_centrality(bestGraph,newBC);
 			// Update cost variables (new and old graphs)
 			costOld=costNew;
 			costNew=cost(targetBC,newBC,graphOrder);
