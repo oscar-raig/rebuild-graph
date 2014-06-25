@@ -448,8 +448,10 @@ CRebuildGraph::regenerateGraph(CSettingsSimulation &settingsSimulation,
 	else if ( settingsSimulation.graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY )
 		communicability_betweenness_centrality(targetGraph,targetBC);
 	else
+	{
+		std::cout << " graphProperty is not set" << std::endl;
 		return -1;
-	
+	}
 	strcpy(inputGraphFilename,inputFilename);
     strcat(inputGraphFilename,".in");
 	targetGraph->printMyGraph(inputGraphFilename);

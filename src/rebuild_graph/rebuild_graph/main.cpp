@@ -10,7 +10,8 @@
 #include "boost/program_options.hpp"
 #include "CSettingsSumulation.h"
 #include "rebuildgraph.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 int
 fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&ptargetBC, double *&pbestBC,int *order);
 int fCalculateBeterness(const char *argv[]);
@@ -25,17 +26,25 @@ int main(int argc, const char * argv[])
     argumentDescription.add_options()
 		("help", "Print help messages")
 		("graphFile", po::value< std::string >(),"graph file in python format")
-		("k","k description");
+		("k","k description")
+		("algorithm",po::value<int>(),"algorithm BETWEENESS CENTRALITY, ");
 	
 	
 	po::variables_map argumentMap;
 	po::store(po::parse_command_line(argc, argv, argumentDescription),
 			  argumentMap);
+	po::notify(argumentMap);
 	if ( argumentMap.count("help")  )
 	{
         std::cout << "Basic Command Line Parameter App" << std::endl
 		<< argumentDescription << std::endl;
         return 1;
+	}
+	if ( !argumentMap.count("graphFile"))
+	{
+		std::cout << "graphFile" <<  argumentMap["graphFile"].as<std::string>() << std::endl;
+	   
+		return 1;
 	}
 	
 	po::notify(argumentMap); // throws on error, so do after help in case
@@ -51,22 +60,48 @@ int main(int argc, const char * argv[])
 	//
 //	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc"};
 
-	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc"};
+//	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc"};
 
 	CSettingsSimulation *settingsSimulation = new CSettingsSimulation() ;
-	settingsSimulation->inputFileName =largv[1];
+	settingsSimulation->inputFileName =argumentMap["graphFile"].as<std::string>();
 	
 	
 	double compareResult = 0.0;
 
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	// CSettingsSimulation *settingsSimulation = new CSettingsSimulation(argumentMap);
+	int option = COMMUNICABILITY_BETWEENESS_CENTRALITY;
+	if (argumentMap.count("algorithm")){
+		option = atoi(argv[2]);	
+		switch (option){
+			case BETWEENNESS_CENTRALITY:
+				printf("Option BETWEENESS CENTRALITY\n");
+				break;
+
+			case COMMUNICABILITY_BETWEENESS:
+				printf("Option COMMUNICABILITY BETWEENESS\n");
+				break;
+
+			case COMMUNICABILITY_BETWEENESS_CENTRALITY:
+			default:
+				option = COMMUNICABILITY_BETWEENESS_CENTRALITY;
+				printf("Option COMMUNICABILITY BETWEENESS CENTRALITY\n");
+				break;
+		}
+	}	
+	else
+	{
+		printf("No algorithm option>>COMMUNICABILITY_BETWEENESS_CENTRALITY\n");
+		option =COMMUNICABILITY_BETWEENESS_CENTRALITY;
+	}
+
+	settingsSimulation->graphProperty = option;
+
+	
+
     rebuildGraph->regenerateGraph(*settingsSimulation,TargetBC,BestBC,order,compareResult);
 	
-	//fCalculateBeterness(argv);
-    //fCalculateCommunicability(argv);
 	
-//	fCalculateCommunicability_cent_exp(argv);
 	if (settingsSimulation){
 		free(settingsSimulation);
 		settingsSimulation= NULL;
