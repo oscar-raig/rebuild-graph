@@ -2155,7 +2155,6 @@ int main(int argc,char *argv[]){
     default:printf("ERROR incorrect parameters\n");
              exit(-1);
   }
-printf("hola\n");
   if(inputFormat==PYTHON){
     targetGraph=readPythonGraphFile(inputFilename);
   } else if(inputFormat==ADJLIST){
