@@ -40,12 +40,12 @@ int main(int argc, const char * argv[])
 		<< argumentDescription << std::endl;
         return 1;
 	}
-	if ( !argumentMap.count("graphFile"))
-	{
+	if ( !argumentMap.count("graphFile")){
+		std::cout << "argumentMap count" << argumentMap.count("graphFile");
 		std::cout << "graphFile" <<  argumentMap["graphFile"].as<std::string>() << std::endl;
-	   
 		return 1;
 	}
+	
 	
 	po::notify(argumentMap); // throws on error, so do after help in case
 	// there are any problems
@@ -72,7 +72,7 @@ int main(int argc, const char * argv[])
 	// CSettingsSimulation *settingsSimulation = new CSettingsSimulation(argumentMap);
 	int option = COMMUNICABILITY_BETWEENESS_CENTRALITY;
 	if (argumentMap.count("algorithm")){
-		option = atoi(argv[2]);	
+		option = argumentMap["algorithm"].as<int>();	
 		switch (option){
 			case BETWEENNESS_CENTRALITY:
 				printf("Option BETWEENESS CENTRALITY\n");
@@ -94,13 +94,13 @@ int main(int argc, const char * argv[])
 		printf("No algorithm option>>COMMUNICABILITY_BETWEENESS_CENTRALITY\n");
 		option =COMMUNICABILITY_BETWEENESS_CENTRALITY;
 	}
-
 	settingsSimulation->graphProperty = option;
 
 	
 
     rebuildGraph->regenerateGraph(*settingsSimulation,TargetBC,BestBC,order,compareResult);
-	
+
+	std::cout << "We have used BC " << 	boost::lexical_cast<std::string>(option);
 	
 	if (settingsSimulation){
 		free(settingsSimulation);
