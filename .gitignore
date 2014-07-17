@@ -1,3 +1,15 @@
 .DS_Store
 data/reconsBC-JuanPaz/analitza9
 data/to_sent_2014_06_01/boost/
+data/example_graphs/barabase_20_4.gpfc.in
+data/example_graphs/barabase_20_4.gpfc.log
+data/example_graphs/barabase_20_4.gpfc.out
+data/example_graphs/barabase_20_4.gpfc.res
+data/example_graphs/test.gpfc.in
+data/example_graphs/test.gpfc.log
+data/example_graphs/test.gpfc.out
+data/example_graphs/test.gpfc.res
+data/example_graphs/test_4nodes.gpfc.in
+data/example_graphs/test_4nodes.gpfc.log
+data/example_graphs/test_4nodes.gpfc.out
+data/example_graphs/test_4nodes.gpfc.res
