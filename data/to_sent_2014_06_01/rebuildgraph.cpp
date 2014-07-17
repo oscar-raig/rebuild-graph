@@ -352,13 +352,13 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 				// if newCost not is better than oldCost,
 				// we still accept it if exp(df/T_k)<rand()
 				okFalse++;
-				lFuncTrace.trace("o");
+		//		lFuncTrace.trace("o");
 				fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
 				copyGraph(bestGraph,newGraph);
 				notOk++;
-				lFuncTrace.trace("x");
+		//		lFuncTrace.trace("x");
 				fprintf(logFile,"x");
 			}
 		}

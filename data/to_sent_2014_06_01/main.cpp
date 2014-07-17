@@ -18,16 +18,43 @@ int fCalculateBeterness(const char *argv[]);
 int fCalculateCommunicability(const char *argv[]);
 int fCalculateCommunicability_cent_exp(const char *argv[]);
 
-int main(int argc, const char * argv[])
-{
+int GetAlgorithmFromArgument( po::variables_map argumentMap ){
+	int Algorithm = COMMUNICABILITY_BETWEENESS_CENTRALITY;
+	if (argumentMap.count("algorithm")){
+		Algorithm = argumentMap["algorithm"].as<int>();
+		switch (Algorithm){
+			case BETWEENNESS_CENTRALITY:
+				printf("Option BETWEENESS CENTRALITY\n");
+				break;
+				
+			case COMMUNICABILITY_BETWEENESS:
+				printf("Option COMMUNICABILITY BETWEENESS\n");
+				break;
+				
+			case COMMUNICABILITY_BETWEENESS_CENTRALITY:
+			default:
+				Algorithm = COMMUNICABILITY_BETWEENESS_CENTRALITY;
+				printf("Option COMMUNICABILITY BETWEENESS CENTRALITY\n");
+				break;
+		}
+	}
+	else
+	{
+		printf("No algorithm option>>COMMUNICABILITY_BETWEENESS_CENTRALITY\n");
+		Algorithm =COMMUNICABILITY_BETWEENESS_CENTRALITY;
+	}
+	return Algorithm;
+}
 
+CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
+	
 	namespace po = boost::program_options;
     po::options_description argumentDescription("Options");
     argumentDescription.add_options()
-		("help", "Print help messages")
-		("graphFile", po::value< std::string >(),"graph file in python format")
-		("k","k description")
-		("algorithm",po::value<int>(),"algorithm BETWEENESS CENTRALITY, ");
+	("help", "Print help messages")
+	("graphFile", po::value< std::string >(),"graph file in python format")
+	("k","k description")
+	("algorithm",po::value<int>(),"algorithm 1:BETWEENESS CENTRALITY, 2:COMMUNICABILITY BETWEENESS, 3: COMMUNICABILITY BETWEENESS CENTRALITY ");
 	
 	
 	po::variables_map argumentMap;
@@ -38,69 +65,52 @@ int main(int argc, const char * argv[])
 	{
         std::cout << "Basic Command Line Parameter App" << std::endl
 		<< argumentDescription << std::endl;
-        return 1;
+        return NULL;
 	}
 	if ( !argumentMap.count("graphFile")){
 		std::cout << "argumentMap count" << argumentMap.count("graphFile");
 		std::cout << "graphFile" <<  argumentMap["graphFile"].as<std::string>() << std::endl;
-		return 1;
+		return NULL;
 	}
 	
 	
 	po::notify(argumentMap); // throws on error, so do after help in case
-	// there are any problems
 	
+	int Algorithm = GetAlgorithmFromArgument(argumentMap);
 	
-    // insert code here...
-  
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	int order = 0;
-	
-	//
-//	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc"};
-
-//	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc"};
-
 	CSettingsSimulation *settingsSimulation = new CSettingsSimulation() ;
 	settingsSimulation->inputFileName =argumentMap["graphFile"].as<std::string>();
 	
 	
-	double compareResult = 0.0;
-
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
+	
+	
+	
 	// CSettingsSimulation *settingsSimulation = new CSettingsSimulation(argumentMap);
-	int option = COMMUNICABILITY_BETWEENESS_CENTRALITY;
-	if (argumentMap.count("algorithm")){
-		option = argumentMap["algorithm"].as<int>();	
-		switch (option){
-			case BETWEENNESS_CENTRALITY:
-				printf("Option BETWEENESS CENTRALITY\n");
-				break;
-
-			case COMMUNICABILITY_BETWEENESS:
-				printf("Option COMMUNICABILITY BETWEENESS\n");
-				break;
-
-			case COMMUNICABILITY_BETWEENESS_CENTRALITY:
-			default:
-				option = COMMUNICABILITY_BETWEENESS_CENTRALITY;
-				printf("Option COMMUNICABILITY BETWEENESS CENTRALITY\n");
-				break;
-		}
-	}	
-	else
-	{
-		printf("No algorithm option>>COMMUNICABILITY_BETWEENESS_CENTRALITY\n");
-		option =COMMUNICABILITY_BETWEENESS_CENTRALITY;
-	}
-	settingsSimulation->graphProperty = option;
-
 	
 
+	
+	settingsSimulation->graphProperty = Algorithm;
+	return settingsSimulation;
+}
+
+int main(int argc, const char * argv[])
+{
+
+	
+	
+	CSettingsSimulation * settingsSimulation=  readConfiguration(argc,argv);
+	if (!settingsSimulation){
+		std::cout << "ERROR: Reading the configuration";
+		return -1;
+	}
+	CRebuildGraph *rebuildGraph = new CRebuildGraph();
+	double compareResult = 0.0;
+	double *TargetBC = NULL;
+	double *BestBC = NULL;
+	int order = 0;
     rebuildGraph->regenerateGraph(*settingsSimulation,TargetBC,BestBC,order,compareResult);
 
-	std::cout << "We have used BC " << 	boost::lexical_cast<std::string>(option);
+	
 	
 	if (settingsSimulation){
 		free(settingsSimulation);
