@@ -377,102 +377,19 @@ void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphO
 	
 }
 
-
-
-int
-CRebuildGraph::regenerateGraph(CSettingsSimulation &settingsSimulation,
-							   double *&targetBC,
-							   double *&bestBC,
-							   int &graphOrder,
-							   double &compareResult){
-	
-	
-	time_t timeStart;
+void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimulation,
+											  graph *targetGraph,
+											  graph *bestGraph,
+											  char* inputFilename,
+											  time_t timeStart,
+											  double Tk,
+											  double *&targetBC,
+											    double *&bestBC,
+											  double costBest,
+											double &compareResult,
+											char *outputGraphFilename
+											  ){
 	time_t timeEnd;
-	
-	char inputFilename[STRING_LENGTH];
-	char outputGraphFilename[STRING_LENGTH];
-	char inputGraphFilename[STRING_LENGTH];
-	char logFilename[STRING_LENGTH];
-	FILE *logFile=NULL;
-	
-	
-	// Simmulated Annealing variables
-	double temperMin=TEMPER_MIN_DEFAULT;
-	double Tk=TEMPER_INITIAL_DEFAULT;
-	double k=K;
-	
-	
-	double costBest=0.0;
-	
-	
-	graph *targetGraph=NULL;
-	graph *bestGraph=NULL;
-	
-	// Default value initialization
-	timeStart=time(NULL);
-	
-	
-	
-	// Substitution of default values with argument values
-	printf("Reconstruction of a graph ");
-	printf("from its vertex's betweenness centrality values\n");
-	printf("Use: reconstruct [input_file] [P/A/B] [To] [Tmin] [Nmax] [k]");
-		
-	k = settingsSimulation.k;
-	temperMin = settingsSimulation.tMin;
-	strcpy(inputFilename,settingsSimulation.inputFileName.c_str());
-	
-	targetGraph=readPythonGraphFile(inputFilename);
-	
-	graphOrder=0;
-	graphOrder=targetGraph->getOrder();
-	
-	targetBC =(double*) malloc(graphOrder*sizeof(double));
-	bestBC=(double*) malloc(graphOrder*sizeof(double));
-	
-	
-	
-	for(int i=0;i<graphOrder;i++){
-		targetBC[i]=0.0;
-		bestBC[i]=0.0;
-	}
-	
-	targetGraph->printGraph();
-	targetGraph->setAllVertexNeighbours();
-	
-	if( settingsSimulation.graphProperty == BETWEENNESS_CENTRALITY )
-		targetGraph->brandes_betweenness_centrality(targetBC);
-    else if ( settingsSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
-		brandes_comunicability_centrality_exp(targetGraph,targetBC);
-	else if ( settingsSimulation.graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY )
-		communicability_betweenness_centrality(targetGraph,targetBC);
-	else
-	{
-		std::cout << " graphProperty is not set" << std::endl;
-		return -1;
-	}
-	strcpy(inputGraphFilename,inputFilename);
-    strcat(inputGraphFilename,".in");
-	targetGraph->printMyGraph(inputGraphFilename);
-	
-	
-	
-	strcpy(outputGraphFilename,inputFilename);
-	strcat(outputGraphFilename,".res");
-	
-	
-	strcpy(logFilename,inputFilename);
-	strcat(logFilename,".log");
-	logFile=fopen(logFilename,"w");
-	if(logFile==NULL){
-		printf("Cannot open log file %s for writting \n",logFilename);
-		exit(-1);
-	}
-	
-	AnnealingAlgorithm( Tk, &bestGraph,graphOrder,
-					   bestBC,targetBC, logFile,costBest,settingsSimulation);
-	
 	gsl_matrix *targetGraphGsl = gsl_matrix_alloc(targetGraph->getOrder(), targetGraph->getOrder());
 	gsl_matrix *bestGraphGsl = gsl_matrix_alloc(bestGraph->getOrder(), bestGraph->getOrder());
 	
@@ -499,6 +416,113 @@ CRebuildGraph::regenerateGraph(CSettingsSimulation &settingsSimulation,
 	
 	bestGraph->printMyGraph(outputGraphFilename);
 	
+}
+
+
+int
+CRebuildGraph::regenerateGraph(CSettingsSimulation *settingsSimulation,
+							   double *&targetBC,
+							   double *&bestBC,
+							   int &graphOrder,
+							   double &compareResult){
+	
+	try {
+	
+	time_t timeStart;
+	
+	
+	char inputFilename[STRING_LENGTH];
+	char outputGraphFilename[STRING_LENGTH];
+	char inputGraphFilename[STRING_LENGTH];
+	char logFilename[STRING_LENGTH];
+	FILE *logFile=NULL;
+	
+	
+	// Simmulated Annealing variables
+	double temperMin=TEMPER_MIN_DEFAULT;
+	double Tk=TEMPER_INITIAL_DEFAULT;
+	double k=K;
+	
+	
+	double costBest=0.0;
+	
+	
+	graph *targetGraph=NULL;
+	graph *bestGraph=NULL;
+	
+	// Default value initialization
+	timeStart=time(NULL);
+	
+	
+	
+
+		
+	if ( settingsSimulation == NULL)
+		throw std::runtime_error("settingsSimulation is NULL");
+		
+	k = settingsSimulation->k;
+	temperMin = settingsSimulation->tMin;
+	strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
+	
+	targetGraph=readPythonGraphFile(inputFilename);
+	
+	graphOrder=0;
+	graphOrder=targetGraph->getOrder();
+	
+	targetBC =(double*) malloc(graphOrder*sizeof(double));
+	bestBC=(double*) malloc(graphOrder*sizeof(double));
+	
+	
+	
+	for(int i=0;i<graphOrder;i++){
+		targetBC[i]=0.0;
+		bestBC[i]=0.0;
+	}
+	
+	targetGraph->printGraph();
+	targetGraph->setAllVertexNeighbours();
+	
+	if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY )
+		targetGraph->brandes_betweenness_centrality(targetBC);
+    else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS )
+		brandes_comunicability_centrality_exp(targetGraph,targetBC);
+	else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY )
+		communicability_betweenness_centrality(targetGraph,targetBC);
+	else
+	{
+		std::cout << " graphProperty is not set" << std::endl;
+		return -1;
+	}
+	strcpy(inputGraphFilename,inputFilename);
+    strcat(inputGraphFilename,".in");
+	targetGraph->printMyGraph(inputGraphFilename);
+	
+	
+	
+	strcpy(outputGraphFilename,inputFilename);
+	strcat(outputGraphFilename,".res");
+	
+	
+	strcpy(logFilename,inputFilename);
+	strcat(logFilename,".log");
+	logFile=fopen(logFilename,"w");
+	if(logFile==NULL){
+		printf("Cannot open log file %s for writting \n",logFilename);
+		exit(-1);
+	}
+	
+		AnnealingAlgorithm( Tk, &bestGraph,graphOrder,
+						   bestBC,targetBC, logFile,costBest,*settingsSimulation);
+		
+		CompareAndGenerateResults(*settingsSimulation,targetGraph,bestGraph,inputFilename,timeStart,Tk,
+								targetBC,bestBC,costBest,compareResult,outputGraphFilename);
+	}
+	catch ( exception& e)
+	{
+		std::cout << "ERROR :" << e.what()<< std::endl;
+		throw;
+		return -1;
+	}
     return 1;
 }
 

@@ -1,0 +1,7 @@
+#test-wheel.py 4
+# GMT Sun Jun 22 18:01:15 2014
+# wheel_graph(4)
+0 1 2 3 
+1 2 3 
+2 3 
+3 

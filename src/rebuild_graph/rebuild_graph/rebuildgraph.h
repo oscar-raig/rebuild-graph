@@ -36,7 +36,7 @@ public:
 	
 	
 	// Rebuilding Graph Main Functions
-	int regenerateGraph(CSettingsSimulation &settingsSimulation,
+	int regenerateGraph(CSettingsSimulation *settingsSimulation,
 						 double *&targetBC,
 						 double *&bestBC,
 						 int &graphOrder,
@@ -100,6 +100,18 @@ public:
 	// Others
 	gsl_vector *getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
 	double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
+	void CompareAndGenerateResults(CSettingsSimulation settingsSimulation,
+												  graph *targetGraph,
+												  graph *bestGraph,
+												  char* inputFilename,
+												  time_t timeStart,
+												  double Tk,
+												  double *&targetBC,
+												  double *&bestBC,
+												  double costBest,
+												  double &compareResult,
+												  char *outputGraphFilename
+												  );
 	
 };
 
