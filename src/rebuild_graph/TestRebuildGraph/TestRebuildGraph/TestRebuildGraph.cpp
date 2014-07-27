@@ -7,8 +7,36 @@
 #include <iterator>
 #include "CSettingsSumulation.h"
 #include "rebuildgraph.h"
+#include "AbstractFactoryPatternRebuildGraph.h"
 
 using namespace boost::unit_test;
+
+//#define THROW_EXCEPTION
+//#define THROW_EXCEPTION_FILE_NOT_FOUND
+
+//#define COMMUNICABILITY_BETWEENESS__TEST_4_NODES
+//#define COMMUNICABILITY_BETWEENESS__WHEEL4
+//#define COMMUNICABILITY_BETWEENESS__WHEEL10
+//#define COMMUNICABILITY_BETWEENESS__BARBASE_20_4
+//#define COMMUNICABILITY_BETWEENESS__PETERSEN
+
+
+//#define BETWEENNESS_CENTRALITY__WHEEL4
+//#define BETWEENNESS_CENTRALITY__WHEEL10
+//#define BETWEENNESS_CENTRALITY__WHEEL14
+//#define BETWEENNESS_CENTRALITY__PETERSEN
+
+
+
+
+//#define DEFAULT_ALGORITHM_BARBASE_20_4
+
+
+
+//#define TEST_BEEWEENESS_EXP
+//#define COMPARA
+//#define TEST_ANALIZA
+//#define DEFAULT_GRAPH_TEST_TNODES
 
 
 void testexceptionSettingSimulationIsNULL(){
@@ -23,220 +51,167 @@ void testexceptionSettingSimulationIsNULL(){
 	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
 }
 
+#ifdef THROW_EXCEPTION
 BOOST_AUTO_TEST_CASE(Trow_excpetion){
 	BOOST_REQUIRE_THROW(testexceptionSettingSimulationIsNULL(), std::exception);
 	
 }
+#endif
+
+void testexceptionFileNotFound(){
+	//return ;
+	//throw std::exception();
+	CRebuildGraph *rebuildGraph = new CRebuildGraph();
+	int graphOrder = 0;
+	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
+	settingSimulation->inputFileName = "filenotfound.txt";
+	double *TargetBC = NULL;
+	double *BestBC = NULL;
+	double compareResult = 10.0;
+	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
+}
+
+
+
+#ifdef THROW_EXCEPTION_FILE_NOT_FOUND
+BOOST_AUTO_TEST_CASE(Trow_excpetion_file_not_found){
+	BOOST_REQUIRE_THROW(testexceptionFileNotFound(), std::exception);
+	
+}
+#endif
 
 
 void simulation( int algorithm, std::string GraphName, int nMax, double * compareResult){
 	
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
-	
-	settingSimulation->inputFileName = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/" + GraphName;
-	
-	settingSimulation->setNMax(nMax);
-	settingSimulation->setMaxIterations(100);
-	*compareResult = 10.0;
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,*compareResult);
-	
+    AbstractFactoryPatternRebuildGraph * FactoryTest= new	AbstractFactoryPatternRebuildGraph(algorithm,GraphName,nMax,compareResult);
+
 	BOOST_CHECK(abs(*compareResult-0.000001)< 0.001);
+
+	delete FactoryTest;
 }
 
+#ifdef COMMUNICABILITY_BETWEENESS_TEST_4_NODES
+BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality){
+	std::cout << " COMMUNICABILITY_BETWEENESS_CENTRALITY with test_4nodes>>" << std::endl;
+	//	BOOST_CHECK(abs(compareResult-0.24459739029407501)< 0.1);
+	double compareResult = 10.0;
+	simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,1000,&compareResult);
+	std::cout << "COMMUNICABILITY_BETWEENESS_CENTRALITY test_4nodes.gpfc " << compareResult << " <<" << std::endl;
+	
+}
+#endif
+
+#ifdef COMMUNICABILITY_BETWEENESS__WHEEL4
 BOOST_AUTO_TEST_CASE(test_wheel4_COMMUNICABILITY_BETWEENESS){
-	std::cout << " COMMUNICABILITY BETWEENESS with wheel 4"  << std::endl;
+	std::cout << " COMMUNICABILITY BETWEENESS with wheel 4 >>"  << std::endl;
 	double compareResult = 10.0;
 	simulation(COMMUNICABILITY_BETWEENESS, "wheel4.txt" ,100, &compareResult);
-	std::cout << "COMMUNICABILITY BETWEENESS wheel 4 Result:" << compareResult;
+	std::cout << "COMMUNICABILITY BETWEENESS wheel 4 Result:" << compareResult << " <<" << std::endl;
 }
+#endif
 
 
 
-
+#ifdef COMMUNICABILITY_BETWEENESS__WHEEL10
 BOOST_AUTO_TEST_CASE(test_wheel10_COMMUNICABILITY_BETWEENESS){
 	
-	std::cout << " COMMUNICABILITY BETWEENESS with wheel 10" << std::endl;
+	std::cout << " COMMUNICABILITY BETWEENESS with wheel 10 >>" << std::endl;
 	double compareResult = 10.0;
 	simulation(COMMUNICABILITY_BETWEENESS, "wheel10.txt" ,100,&compareResult);
-	std::cout << "COMMUNICABILITY BETWEENESS wheel 10 Result:" << compareResult;
-	
+	std::cout << "COMMUNICABILITY BETWEENESS wheel 10 Result:" << compareResult << " <<" << std::endl;
 }
+#endif
 
+#define COMMUNICABILITY_BETWEENESS_WHEEL_14
 
-
+#ifdef COMMUNICABILITY_BETWEENESS_WHEEL_14
 BOOST_AUTO_TEST_CASE(test_wheel14_COMMUNICABILITY_BETWEENESS){
 	return ;
-	std::cout << " COMMUNICABILITY BETWEENESS with wheel 14" << std::endl;
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
-	
-	settingSimulation->inputFileName = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/wheel14.txt";
-	
-	settingSimulation->setNMax(1000000);
-	
-	settingSimulation->setMaxIterations(100);
-	double compareResult = 10.0;
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	
-	BOOST_CHECK(abs(compareResult-0.000001)< 0.001);
+	std::cout << " COMMUNICABILITY BETWEENESS with wheel 14 >>" << std::endl;
 		
-	std::cout << "COMMUNICABILITY BETWEENESS wheel 14 Result:" << compareResult;
-	
-}
-
-
-
-BOOST_AUTO_TEST_CASE(test_petersen_COMMUNICABILITY_BETWEENESS){
-	
-	return;
-	std::cout << " COMMUNICABILITY BETWEENESS with petersen" << std::endl;
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
-	
-	settingSimulation->inputFileName = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/petersen.txt";
-	
-	settingSimulation->setNMax(100000);
-	
-	//	settingSimulation->setMaxIterations(100);
 	double compareResult = 10.0;
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	
-	BOOST_CHECK(abs(compareResult-0.000001)< 0.001);
-	
-	std::cout << "COMMUNICABILITY BETWEENESS petersen Result:" << compareResult;
-	
+	simulation(COMMUNICABILITY_BETWEENESS, "wheel14.txt" ,1000000,&compareResult);
+
+	std::cout << "COMMUNICABILITY BETWEENESS wheel 14 Result:" << compareResult << " <<" << std::endl;
 	
 }
+#endif
+
+#ifdef COMMUNICABILITY_BETWEENESS_BARBASE_20_4
+BOOST_AUTO_TEST_CASE(regenerate_compare_barbase_20_4_COMMUNICABILITY_BETWEENESS){
+	
+	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc>>" << std::endl;
+	double compareResult = 10.0;
+	simulation(COMMUNICABILITY_BETWEENESS, "barabase_20_4.gpfc" ,100,&compareResult);
+	std::cout << "COMMUNICABILITY_BETWEENESS barabase_20_4.gpfcResult:" << compareResult << " <<" << std::endl;
+	BOOST_REQUIRE(abs(compareResult-0.051123)< 0.1);
+	
+}
+#endif
+
+#ifdef COMMUNNICABILITY_BETWEENESS_PETERSEN
+BOOST_AUTO_TEST_CASE(test_petersen_COMMUNICABILITY_BETWEENESS){
+	return;
+	std::cout << " COMMUNICABILITY BETWEENESS with petersen >>" << std::endl;
+	double compareResult = 10.0;
+	simulation(COMMUNICABILITY_BETWEENESS, "petersen.txt" ,100000,&compareResult);
+	std::cout << "COMMUNICABILITY BETWEENESS petersen Result:" << compareResult << " <<" << std::endl;
+}
+#endif
 
 
 
+#ifdef BETWEENNESS_CENTRALITY__WHEEL4
 BOOST_AUTO_TEST_CASE(test_wheel4_BETWEENNESS_CENTRALITY){
-	
-	std::cout << " BETWEENNESS CENTRALITY with wheel 4" << std::endl;
-		double compareResult = 10.0;
+	std::cout << " BETWEENNESS CENTRALITY with wheel 4>>" << std::endl;
+	double compareResult = 10.0;
 	simulation(BETWEENNESS_CENTRALITY, "wheel4.txt" ,100,&compareResult);
-	std::cout << "BETWEENNESS CENTRALITY with wheel 4" << compareResult;
-
-	
+	std::cout << "BETWEENNESS CENTRALITY with wheel 4" << compareResult << " <<" << std::endl;
 }
+#endif
 
 
 
-
+#ifdef BETWEENESS_CENTRALITY__WHEEL10
 BOOST_AUTO_TEST_CASE(test_wheel10_BETWEENNESS_CENTRALITY){
 	
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
-	
-	settingSimulation->inputFileName = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/wheel10.txt";
-	
-	settingSimulation->setNMax(100);
-	settingSimulation->setMaxIterations(100);
+	std::cout << " BETWEENNESS CENTRALITY with wheel 10>>" << std::endl;
 	double compareResult = 10.0;
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	settingSimulation->graphProperty = BETWEENNESS_CENTRALITY;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	
-	BOOST_CHECK(abs(compareResult-0.000001)< 0.001);
-	
-	std::cout << "BETWEENESS CENTRALITY wheel 10 Result:" << compareResult;
+	simulation(BETWEENNESS_CENTRALITY, "wheel10.txt" ,100,&compareResult);
+	std::cout << "BETWEENESS CENTRALITY wheel 10 Result:" << compareResult << " <<" << std::endl;
 	
 }
+#endif
 
 
+
+#ifdef BETWEENNESS_CENTRALITY__WHEEL14
 BOOST_AUTO_TEST_CASE(test_wheel14_BETWEENNESS_CENTRALITY){
 	return ;
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
-	
-	settingSimulation->inputFileName = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/wheel14.txt";
-	
-	settingSimulation->setNMax(1000000);
-	
-	settingSimulation->setMaxIterations(100);
+	std::cout << " BETWEENNESS CENTRALITY with wheel 14>>" << std::endl;
 	double compareResult = 10.0;
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	settingSimulation->graphProperty = BETWEENNESS_CENTRALITY;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	
-	BOOST_CHECK(abs(compareResult-0.000001)< 0.001);
-	
-	std::cout << "BETWEENESS CENTRALITY wheel 14 Result:" << compareResult;
-	
+	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,1000000,&compareResult);
+	std::cout << "BETWEENESS CENTRALITY wheel 14 Result:" << compareResult << " <<" << std::endl;
 }
+#endif
 
 
-
+#ifdef BETWEENNESS_CENTRALITY__PETERSEN
 BOOST_AUTO_TEST_CASE(test_petersen_BETWEENNESS_CENTRALITY){
 	
 	return;
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
-	
-	settingSimulation->inputFileName = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/petersen.txt";
-	
-	settingSimulation->setNMax(100000);
-	
-//	settingSimulation->setMaxIterations(100);
+	std::cout << " BETWEENNESS CENTRALITY with petersen>>" << std::endl;
 	double compareResult = 10.0;
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	settingSimulation->graphProperty = BETWEENNESS_CENTRALITY;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	
-	BOOST_CHECK(abs(compareResult-0.000001)< 0.001);
-	std::cout << " test Petersen BETEENESS CENTRALITY " << compareResult;
-	
+	simulation(BETWEENNESS_CENTRALITY, "petersen.txt" ,100000,&compareResult);
+	std::cout << " test Petersen BETEENESS CENTRALITY " << compareResult << " <<" << std::endl;
 	
 }
+#endif
 
 
 
-BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality){
-	/*
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	graph * testGraph = rebuildGraph->readPythonGraphFile("/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc");
-	testGraph->printGraph();
-	rebuildGraph->communicability_betweenness_centrality(testGraph);
-	*/
-	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
 
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
-	
-	settingSimulation->inputFileName = largv[1];
-	settingSimulation->setNMax(100);
-	settingSimulation->setMaxIterations(100);
-	double compareResult = 0.0;
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS_CENTRALITY;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	
-	BOOST_CHECK(abs(compareResult-0.24459739029407501)< 0.1);
-	
-	
-
-}
+#ifdef TEST_BEEWEENESS_EXP
 
 BOOST_AUTO_TEST_CASE( Test_Beetweeness_exp)
 {
@@ -271,8 +246,10 @@ BOOST_AUTO_TEST_CASE( Test_Beetweeness_exp)
 	
 	
 }
+#endif
 
 
+#ifdef  TEST_ANALIZA
 
 BOOST_AUTO_TEST_CASE( Test_analitza){
 	
@@ -313,7 +290,10 @@ BOOST_AUTO_TEST_CASE( Test_analitza){
 	/* End analitza::llegir_dades -------------------------------------------*/
 
 }
+#endif
 
+
+#ifdef DEFAULT_GRAPH_TEST_TNODES
 BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 		
 		const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
@@ -390,8 +370,24 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 	BOOST_CHECK_EQUAL_COLLECTIONS(b1res, e1res, b2res, e2res);
 
 }
+#endif
 
 
+
+
+#ifdef DEFAULT_ALGORITHM_BARBASE_20_4
+BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm){
+	
+	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc>>" << std::endl;
+	double compareResult = 10.0;
+	simulation(0, "barabase_20_4.gpfc" ,100,&compareResult);
+	std::cout << "DEFAULT ALGORITHM test_4nodes.gpfc Result:" << compareResult << " <<" << std::endl;
+	
+	BOOST_CHECK(abs(compareResult-0.061915)< 0.1);
+}
+#endif
+
+#ifdef COMPARA_THE_SAME_GRAPH
 BOOST_AUTO_TEST_CASE(compara){
 	
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
@@ -399,7 +395,7 @@ BOOST_AUTO_TEST_CASE(compara){
 	gsl_matrix * matrixB;
 	graph* graph = NULL;
 	
-	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
+	const char *fileNameGraph="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc";
 	graph = rebuildGraph->GetGraphfromFile(largv);
 	
 	matrixA = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
@@ -411,37 +407,13 @@ BOOST_AUTO_TEST_CASE(compara){
 	
 	float result = rebuildGraph->compareMatrix(matrixA,matrixB);
 	BOOST_CHECK( abs(result)  < 0.00001);
-
+	
+	delete rebuildGraph;
+	delete matrixA;
+	delete matrixB;
 	
 }
+#endif
 
-BOOST_AUTO_TEST_CASE(regenerate_compare){
-	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
-	largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
-	settingSimulation->inputFileName = largv[1];
-	settingSimulation->setNMax(100);
-	settingSimulation->setMaxIterations(100);
-	double compareResult = 0.0;
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	
-	BOOST_CHECK(abs(compareResult-0.061915)< 0.1);
-	
-	graphOrder = 0;
-	//largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
-	largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
-	settingSimulation->inputFileName = largv[1];
-	settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS;
-	compareResult = 0.0;
-	TargetBC = NULL;
-	BestBC = NULL;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	printf("Compare Result %f",compareResult);
-	BOOST_REQUIRE(abs(compareResult-0.051123)< 0.1);
 
-	 }
 

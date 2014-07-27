@@ -17,6 +17,7 @@
 		3625A35B18EDC6C70037F00D /* analitza.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35918EDC6C70037F00D /* analitza.cpp */; };
 		3625A36118EDC9980037F00D /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625A35F18EDC9980037F00D /* libgsl.a */; };
 		3625A36218EDC9980037F00D /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625A36018EDC9980037F00D /* libgslcblas.a */; };
+		36DB1610198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DB160E198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,6 +51,8 @@
 		3625A35F18EDC9980037F00D /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
 		3625A36018EDC9980037F00D /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 		36ABBBFC18EF04DF0042FE9C /* graphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphs.h; path = ../../rebuild_graph/graphs.h; sourceTree = "<group>"; };
+		36DB160E198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractFactoryPatternRebuildGraph.cpp; sourceTree = "<group>"; };
+		36DB160F198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractFactoryPatternRebuildGraph.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				3609204A18ECA4D100BAE922 /* graphs.cpp */,
 				36207B7018EC25A10033A4DC /* TestRebuildGraph.cpp */,
 				36207B7218EC25A10033A4DC /* TestRebuildGraph.1 */,
+				36DB160E198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp */,
+				36DB160F198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.h */,
 			);
 			path = TestRebuildGraph;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 				36133E1B18FCE0F9000F7E09 /* rebuildgraph.cpp in Sources */,
 				360854F518F7489100033919 /* CSettingsSumulation.cpp in Sources */,
 				3609DCF418F5F83B00AC64B9 /* CTrace.cpp in Sources */,
+				36DB1610198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp in Sources */,
 				3609204B18ECA4D100BAE922 /* graphs.cpp in Sources */,
 				3625A35B18EDC6C70037F00D /* analitza.cpp in Sources */,
 				36207B7118EC25A10033A4DC /* TestRebuildGraph.cpp in Sources */,

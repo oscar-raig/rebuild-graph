@@ -33,7 +33,7 @@ graph *CRebuildGraph::readPythonGraphFile(char *fileName){
 		if (!getwd(szPath)){
 			printf("Current path (%s)",szPath);
 		}
-		exit(1);
+		throw runtime_error("File : Not Found");
 	}
 	line[0]='\0';
 	line=fgets(line,STRING_LENGTH,input);
@@ -530,17 +530,17 @@ CRebuildGraph::regenerateGraph(CSettingsSimulation *settingsSimulation,
 #define RESULT_OK 1
 
 graph*
-CRebuildGraph::GetGraphfromFile(const char *argv[])
+CRebuildGraph::GetGraphfromFile(const char *graphFileName)
 {
 	CFuncTrace lFuncTrace(false,string("GetGraphfromFile"));
 	graph *targetGraph=NULL;
 	char inputFilename[STRING_LENGTH];
 	
-	if (argv[1]==NULL){
+	if (graphFileName==NULL){
 		lFuncTrace.trace("ERROR : argv[1] is NULL");
 		return NULL;
 	}
-	strcpy(inputFilename,argv[1]);
+	strcpy(inputFilename,graphFileName);
 	targetGraph=readPythonGraphFile(inputFilename);
 	
 	
@@ -552,7 +552,7 @@ int CRebuildGraph::calculateBeterness(const char *argv[]){
 	graph *targetGraph=NULL;
 	int graphOrder=0;
 	
-	targetGraph=GetGraphfromFile(argv);
+	targetGraph=GetGraphfromFile(argv[1]);
 	graphOrder=targetGraph->getOrder();
 	
 	
@@ -706,7 +706,7 @@ CRebuildGraph::calculateCommunicability(const char *argv[]){
 	CFuncTrace lFuncTrace(false,"fCalculateConnectivity");
 	
 	graph *targetGraph=NULL;
-	targetGraph=GetGraphfromFile(argv);
+	targetGraph=GetGraphfromFile(argv[1]);
 	int graphOrder=targetGraph->getOrder();
 	lFuncTrace.trace("Graph Order %d",graphOrder);
 	
@@ -855,7 +855,7 @@ CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
 	CFuncTrace lFuncTrace(false,"fCalculateCommunicability_cent_exp");
 	
 	graph *targetGraph=NULL;
-	targetGraph=GetGraphfromFile(argv);
+	targetGraph=GetGraphfromFile(argv[1]);
 	int graphOrder=targetGraph->getOrder();
 	lFuncTrace.trace("Graph Order %d",graphOrder);
 	double * bestCommCentExp = (double*)malloc(graphOrder * sizeof(double));

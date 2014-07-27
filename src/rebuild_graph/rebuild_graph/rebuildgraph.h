@@ -31,7 +31,7 @@ class CRebuildGraph{
 public:
 	// Input Output File Functions
 	graph *readPythonGraphFile(char *fileName);
-	graph*GetGraphfromFile(const char *argv[]);
+	graph*GetGraphfromFile(const char *graphFileName);
 
 	
 	
