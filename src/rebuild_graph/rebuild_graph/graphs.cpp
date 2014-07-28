@@ -753,5 +753,262 @@ typedef struct {
   int position;
 }myBC;
 
+#define RESULT_OK 1
+
+int
+graph::graphToGsl( gsl_matrix* target){
+	
+	int i,j;
+	gsl_matrix_set_zero(target);
+	int graphOrder=getOrder();
+	int auxNNeighbours;
+	int *auxNeighbours;
+	
+	for(i=0;i<graphOrder;i++){
+		auxNNeighbours=vertexArray[i]->getNeighbours(&auxNeighbours);
+		//		printf("Vertex %3d(%d neighbours):",i,auxNNeighbours);
+		for(j=0;j<auxNNeighbours;j++){
+			//			printf(" %d",auxNeighbours[j]);
+			gsl_matrix_set (target, i, auxNeighbours[j], 1);
+		}
+		free(auxNeighbours);
+	}
+	return RESULT_OK;
+}
+
+//-----------------------------------------------------------------------------
+// GLOBAL operation copyGraph(sourceGraph,targetGraph)
+// COPIES sourceGraph to targetGraph
+//-----------------------------------------------------------------------------
+void graph::copyGraph(graph *targetGraph){
+	int i,j,aux;
+	int myOrder=getOrder();
+	
+	for(i=0;i<myOrder;i++){
+		aux=vertexArray[i]->degree;
+		targetGraph->vertexArray[i]->degree=aux;
+		for(j=0;j<aux;j++){
+			targetGraph->vertexArray[i]->neighbours[j]=
+			vertexArray[i]->neighbours[j];
+		}
+		for(j=i+1;j<myOrder;j++){
+			aux=distanceMatrix[i][j];
+			targetGraph->distanceMatrix[i][j]=aux;
+			targetGraph->distanceMatrix[j][i]=aux;
+		}
+	}
+	
+}
+
+
+//-----------------------------------------------------------------------------
+// GLOBAL operation copyGraph(sourceGraph)
+// RETURNS a copy of sourceGraph
+//-----------------------------------------------------------------------------
+graph *graph::copyGraph(){
+	int i,myDegree,*myNeighbours;
+	int myOrder=getOrder();
+	graph *result=(graph *)new graph(myOrder);
+	for(i=0;i<myOrder;i++){
+		myDegree=getVertexNeighbours(i,&myNeighbours);
+		result->addVertexNeighbours(i,myNeighbours,myDegree);
+		free(myNeighbours);
+	}
+	return result;
+}
+
+gsl_matrix *
+graph::gslCopyGraph(const gsl_matrix* target){
+	
+	gsl_matrix *dest=gsl_matrix_alloc(target->size1,target->size1);
+	
+	gsl_matrix_memcpy (dest, target);
+	return dest;
+}
+
+void
+graph::	communicability_betweenness_centrality(double *myCExp)
+{
+	CFuncTrace lFuncTrace(false,"communicability_betweenness_centrality");
+	/* Step 1
+	 nodelist = G.nodes() # ordering of nodes in matrix
+	 n = len(nodelist)
+	 A = nx.to_numpy_matrix(G,nodelist)
+	 # convert to 0-1 matrix
+	 A[A!=0.0] = 1
+	 */
+	int graphOrder=getOrder();
+	
+	
+	gsl_vector * matrixFinalResult = gsl_vector_alloc(graphOrder);
+	
+	
+	// Get Numpy Matrix // Matriu d'adjacencia
+	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
+	
+	//	targetGraph->printGraph();
+	
+	graphToGsl(A1);
+	lFuncTrace.trace("\nPrinting Home made Matrix\n");
+	//		printGslMatrix(A1," %g");
+	
+	/* Step 2
+	 expA = scipy.linalg.expm(A)
+	 mapping = dict(zip(nodelist,range(n)))
+	 sc = {}
+	 */
+	gsl_matrix *A1expm=gsl_matrix_alloc(graphOrder,graphOrder);
+	
+	gsl_linalg_exponential_ss(A1, A1expm, .01);
+	//	lFuncTrace.trace("Printing ExpmMatrix");
+	//		printGslMatrix(A1expm);
+	
+	for ( int iteratorNode = 0; iteratorNode < graphOrder; iteratorNode++){
+		gsl_matrix *copyA1 = gslCopyGraph(A1);
+		gslDeleteNodeConnections(copyA1,iteratorNode);
+		//		printGslMatrix(copyA1);
+		/*
+		 B = (expA - scipy.linalg.expm(A)) / expA
+		 */
+		gsl_matrix *copyA1expm=gsl_matrix_alloc(graphOrder,graphOrder);
+		gsl_linalg_exponential_ss(copyA1, copyA1expm, .01);
+		
+		gsl_matrix *copyexpmAForSubstract  = gslCopyGraph(A1expm);
+		
+		gsl_matrix_sub(copyexpmAForSubstract,copyA1expm);
+		gsl_matrix_div_elements (copyexpmAForSubstract, A1expm);
+		lFuncTrace.trace("Printing expA- scip\n");
+		//		printGslMatrix(copyexpmAForSubstract);
+		gslDeleteNodeConnections(copyexpmAForSubstract,iteratorNode);
+		
+		gsl_matrix *copyB = gslCopyGraph(copyexpmAForSubstract);
+		
+		for ( int col =0; col < graphOrder; col++){
+			for ( int row = 0; row< graphOrder ; row ++){
+				if ( row != col)
+					gsl_matrix_set(copyB,row,col,0);
+			}
+		}
+		gsl_matrix_sub(copyexpmAForSubstract,copyB);
+		//		printGslMatrix(copyexpmAForSubstract);
+		double sum = 0;
+		for ( int col =0; col < graphOrder; col++){
+			for ( int row = 0; row< graphOrder ; row ++){
+				
+				sum +=gsl_matrix_get(copyexpmAForSubstract,row,col);
+			}
+		}
+		lFuncTrace.trace("Suma %f\n",sum);
+		gsl_vector_set(matrixFinalResult,iteratorNode,sum);
+		
+	}
+	gslVectorToArray(matrixFinalResult,myCExp);
+}
+
+void
+graph::brandes_comunicability_centrality_exp(double *myCExp){
+	//	CFuncTrace lFuncTrace("CRebuildGraph::brandes_comunicability_centrality_exp");
+	
+	int graphOrder=getOrder();
+	// Get Numpy Matrix // Matriu d'adjacencia
+	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
+	
+	//	targetGraph->printGraph();
+	
+	graphToGsl(A1);
+	//	lFuncTrace.trace("\nPrinting Home made Matrix\n");
+	//	printGslMatrix(A1," %g");
+	gsl_matrix *A1expm=gsl_matrix_alloc(graphOrder,graphOrder);
+	
+	gsl_linalg_exponential_ss(A1, A1expm, .01);
+	//	lFuncTrace.trace("Printing ExpmMatrix");
+	//	printGslMatrix(A1expm);
+	
+	gsl_vector * gslvDiagonal = getDiagonalFromGslMatrix(A1expm);
+	
+	//	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
+	//	printGslVector(gslvDiagonal);
+	
+	gslVectorToArray(gslvDiagonal,myCExp);
+}
+
+int graph::gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles)
+{
+	
+	for (size_t i = 0; i < gslVector->size; i++) {
+		arrayDoubles[i]=  gsl_vector_get(gslVector, i);
+		
+	}
+	return RESULT_OK;
+}
+
+
+gsl_vector *
+graph::getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
+	
+	int nMatrixOrder = (int) gslMatrix->size1;
+	gsl_vector * gslvDiagonal = gsl_vector_alloc(nMatrixOrder);
+	
+	for (int i=0; i < nMatrixOrder;i++){
+		gsl_vector_set(gslvDiagonal,i,gsl_matrix_get(gslMatrix,i,i));
+	}
+	
+	return gslvDiagonal;
+}
+
+
+//-----------------------------------------------------------------------------
+// GLOBAL operation readPythonGraphFile(char *fileName)
+// RETURNS a graph pointer
+//-----------------------------------------------------------------------------
+graph *graph::readPythonGraphFile(char *fileName){
+	FILE *input;
+	int i=0;
+	int vertex_identifier=0;
+	int vertex_neighbour=0;
+	char *line;
+	char *aux,*newaux;
+	try {
+		if ( !fileName ){
+			throw runtime_error("FileName : is NULL");
+		}
+
+		//	graph *result=new graph();
+		line=(char *)malloc(sizeof(char)*STRING_LENGTH);
+		if((input=fopen(fileName,"rt"))==NULL){
+			char szPath[255];
+			if (!getwd(szPath)){
+				printf("Current path (%s)",szPath);
+			}
+			throw runtime_error("FileName : File Not Found");
+		}
+		line[0]='\0';
+		line=fgets(line,STRING_LENGTH,input);
+		while(line!=NULL){
+			if(line!=NULL && line[0]!='#'){
+				vertex_identifier=(int)strtol(&line[i],&aux,10);
+				this->addVertex(vertex_identifier);
+				newaux=aux;
+				do{
+					aux=newaux;
+					vertex_neighbour=(int)strtol(aux,&newaux,10);
+					if(newaux-aux!=0){
+						this->addVertexNeighbour(vertex_identifier,vertex_neighbour);
+					}
+				} while(aux!=newaux);
+			}
+			line[0]='\0';
+			line=fgets(line,STRING_LENGTH,input);
+		}
+		fclose(input);
+		free(line);
+		this->updateDistanceMatrix();
+		return this;
+	}
+	catch ( exception &e){
+		std::cout << e.what() <<std::endl;
+		throw;
+	}
+}
 
 

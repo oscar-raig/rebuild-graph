@@ -11,36 +11,36 @@
 
 using namespace boost::unit_test;
 
-//#define THROW_EXCEPTION
-//#define THROW_EXCEPTION_FILE_NOT_FOUND
+#define THROW_EXCEPTION
+#define THROW_EXCEPTION_FILE_NOT_FOUND
 
-//#define COMMUNICABILITY_BETWEENESS__TEST_4_NODES
-//#define COMMUNICABILITY_BETWEENESS__WHEEL4
-//#define COMMUNICABILITY_BETWEENESS__WHEEL10
-//#define COMMUNICABILITY_BETWEENESS__BARBASE_20_4
+#define COMMUNICABILITY_BETWEENESS__TEST_4_NODES
+#define COMMUNICABILITY_BETWEENESS__WHEEL4
+#define COMMUNICABILITY_BETWEENESS__WHEEL10
+#define COMMUNICABILITY_BETWEENESS__BARBASE_20_4
 //#define COMMUNICABILITY_BETWEENESS__PETERSEN
 
 
-//#define BETWEENNESS_CENTRALITY__WHEEL4
-//#define BETWEENNESS_CENTRALITY__WHEEL10
+#define BETWEENNESS_CENTRALITY__WHEEL4
+#define BETWEENNESS_CENTRALITY__WHEEL10
 //#define BETWEENNESS_CENTRALITY__WHEEL14
 //#define BETWEENNESS_CENTRALITY__PETERSEN
 
 
 
 
-//#define DEFAULT_ALGORITHM_BARBASE_20_4
+#define DEFAULT_ALGORITHM_BARBASE_20_4
 
 
 
-//#define TEST_BEEWEENESS_EXP
-//#define COMPARA
-//#define TEST_ANALIZA
-//#define DEFAULT_GRAPH_TEST_TNODES
+#define TEST_BEEWEENESS_EXP
+#define COMPARA
+#define TEST_ANALIZA
+#define DEFAULT_GRAPH_TEST_TNODES
 
 
 void testexceptionSettingSimulationIsNULL(){
-	//return ;
+	
 	//throw std::exception();
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	int graphOrder = 0;
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(Trow_excpetion){
 #endif
 
 void testexceptionFileNotFound(){
-	//return ;
+	
 	//throw std::exception();
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	int graphOrder = 0;
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE(test_wheel10_COMMUNICABILITY_BETWEENESS){
 
 #ifdef COMMUNICABILITY_BETWEENESS_WHEEL_14
 BOOST_AUTO_TEST_CASE(test_wheel14_COMMUNICABILITY_BETWEENESS){
-	return ;
+	
 	std::cout << " COMMUNICABILITY BETWEENESS with wheel 14 >>" << std::endl;
 		
 	double compareResult = 10.0;
@@ -151,7 +151,7 @@ BOOST_AUTO_TEST_CASE(regenerate_compare_barbase_20_4_COMMUNICABILITY_BETWEENESS)
 
 #ifdef COMMUNNICABILITY_BETWEENESS_PETERSEN
 BOOST_AUTO_TEST_CASE(test_petersen_COMMUNICABILITY_BETWEENESS){
-	return;
+	
 	std::cout << " COMMUNICABILITY BETWEENESS with petersen >>" << std::endl;
 	double compareResult = 10.0;
 	simulation(COMMUNICABILITY_BETWEENESS, "petersen.txt" ,100000,&compareResult);
@@ -187,7 +187,7 @@ BOOST_AUTO_TEST_CASE(test_wheel10_BETWEENNESS_CENTRALITY){
 
 #ifdef BETWEENNESS_CENTRALITY__WHEEL14
 BOOST_AUTO_TEST_CASE(test_wheel14_BETWEENNESS_CENTRALITY){
-	return ;
+	
 	std::cout << " BETWEENNESS CENTRALITY with wheel 14>>" << std::endl;
 	double compareResult = 10.0;
 	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,1000000,&compareResult);
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE(test_wheel14_BETWEENNESS_CENTRALITY){
 #ifdef BETWEENNESS_CENTRALITY__PETERSEN
 BOOST_AUTO_TEST_CASE(test_petersen_BETWEENNESS_CENTRALITY){
 	
-	return;
+	
 	std::cout << " BETWEENNESS CENTRALITY with petersen>>" << std::endl;
 	double compareResult = 10.0;
 	simulation(BETWEENNESS_CENTRALITY, "petersen.txt" ,100000,&compareResult);

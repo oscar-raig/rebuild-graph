@@ -11,6 +11,12 @@
 
 
 #include "CSettingsSumulation.h"
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_eigen.h>
+#include <gsl/gsl_sf_exp.h>
+#include <gsl/gsl_linalg.h>
+
+#define STRING_LENGTH 255
 ////////////////////////////////////////////////////////////////////////////////
 //////////                        GRAPH CLASS                         //////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -383,9 +389,14 @@ public:
     // Vertex Betweenness Centrality specfic operations
     void brandes_betweenness_centrality(double *bbc);
 	
-   
+    void
+	brandes_comunicability_centrality_exp( double *myCExp );
+	
+	void
+	communicability_betweenness_centrality( double *myCExp );
 	
     int graphNotConnected(int *unconnectedVertex);
+	int graphToGsl( gsl_matrix* target);
 	
 private:
 	
@@ -409,6 +420,21 @@ private:
 							  int middlepoint,
 							  int *matrix
 							  );
+	gsl_matrix * gslCopyGraph(const gsl_matrix* target);
+	
+	void gslDeleteNodeConnections( gsl_matrix* target, int i){
+		for (int iterator = 0; iterator < target->size1; iterator++){
+			gsl_matrix_set(target,i,iterator,0);
+			gsl_matrix_set(target,iterator,i,0);
+		}
+	};
+	int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
+	gsl_vector *getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
+public:
+    graph*	copyGraph();
+	void	copyGraph(graph *targetGraph);
+	graph *readPythonGraphFile(char *fileName);
+
 };
 
 int

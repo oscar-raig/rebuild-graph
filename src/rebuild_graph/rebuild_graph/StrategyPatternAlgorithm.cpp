@@ -1,0 +1,357 @@
+//
+//  SrategyPatternAlgorithm.cpp
+//  rebuild_graph
+//
+//  Created by Oscar Raig Colon on 27/07/14.
+//  Copyright (c) 2014 Oscar Raig Colon. All rights reserved.
+//
+
+#include "StrategyPatternAlgorithm.h"
+
+
+//-----------------------------------------------------------------------------
+// GLOBAL operation cost(double *tarjet,double *current,int count)
+// RETURNS the cost
+//-----------------------------------------------------------------------------
+double StrategyPatternAlgorithm::cost(double *tarjet,double *current,int count){
+	int i;
+	double result=0.0;
+	
+	for(i=0; i<count; i++) {
+		result+=pow((tarjet[i]-current[i]),2);
+	}
+	return pow(result,0.5);
+}
+
+
+//-----------------------------------------------------------------------------
+// GLOBAL operation modifyGraph(sourceGraph)
+// MODIFIES a randon sourceGraph vertex's connections
+//-----------------------------------------------------------------------------
+void StrategyPatternAlgorithm::modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
+	int i,j;
+	int vertex2change;
+	int myOrder=sourceGraph->getOrder();
+	int myNewNeighbour;
+	int myNewNumberOfNeighbours;
+	int newNeighbours[myOrder];
+	int found;
+	
+	// Select vertex to change
+	vertex2change=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
+	// vertex2change is in [0,n-1]
+	// Disconnect vertex2change
+	//printf("modifyGraph\n");
+	//sourceGraph->printGraph();
+	//printf("modifyGraph remove vertex %d\n",vertex2change);
+	sourceGraph->removeVertexNeighbours(vertex2change);
+	//sourceGraph->printGraph();
+	//printf("modifyGraph vertex removed\n");
+	do{
+		//Choose new vertex degree
+		myNewNumberOfNeighbours=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder-1));
+		// myNewNumberOfNeighbours is in [1,n-1]
+		// Connect new neighbours
+		for(i=0; i<myNewNumberOfNeighbours; i++){
+			//printf("modifyGraph3 vertex2change %d\n",vertex2change);
+			//printf("modifyGraph3 Newdegree %d\n",myNewNumberOfNeighbours);
+			do{
+				found=false;
+				//printf("modifyGraph4\n");
+				myNewNeighbour=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
+				// myNewNeighbour is in [0,n-1]
+				for(j=0;j<i;j++){
+					//printf("modifyGraph4 new=%d newNei[j]=%d\n",myNewNeighbour,newNeighbours[j]);
+					if((myNewNeighbour==newNeighbours[j])
+					   ||(myNewNeighbour==vertex2change)){
+						found=true;
+					}
+				}
+			} while(found||
+					(sourceGraph->vertexAreNeighbours(vertex2change,myNewNeighbour)));
+			newNeighbours[i]=myNewNeighbour;
+			//printf("modifyGraph5 vertex %d ADD neigh %d\n",vertex2change,myNewNeighbour);
+			sourceGraph->addNewVertexNeighbour(vertex2change,myNewNeighbour);
+		}
+		//    sourceGraph->printGraph();
+	} while (sourceGraph->graphNotConnected(&vertex2change));
+	//sourceGraph->printGraph();
+	//printf("modifyGraph vertex reconnected\n");
+}
+
+
+
+//-----------------------------------------------------------------------------
+// GLOBAL operation generateRandomNumber()
+// Wichmann-Hill method to generate random numbers (needs 3 seed numbers)
+// RETURNS a random double [0,1(
+//-----------------------------------------------------------------------------
+double
+StrategyPatternAlgorithm::generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z){
+	
+	double temp;
+	random_value_x=171*(random_value_x%177)-2*(random_value_x/177);
+	if(random_value_x<0)
+		random_value_x+=30269;
+	random_value_y=172*(random_value_y%176)-35*(random_value_y/176);
+	if(random_value_y<0)
+		random_value_y+=30307;
+	random_value_z=170*(random_value_z%178)-63*(random_value_z/178);
+	if(random_value_z<0)
+		random_value_z+=30323;
+	temp=random_value_x/30269.0+random_value_y/30307.0+random_value_z/30323.0;
+	return(temp-(int)temp);
+}
+
+//-----------------------------------------------------------------------------
+// GLOBAL operation generateInitialGraph(int sourceGraphOrder)
+// RETURNS a random graph with sourceGraphOrder vertex
+//-----------------------------------------------------------------------------
+graph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
+	int i,j;
+	int newNeighbour;
+	int newDegree;
+	graph *result=(graph *)new graph(sourceGraphOrder);
+	
+	for(i=0; i<sourceGraphOrder; i++){
+		// The new vertex degree is to be
+		//   at least 1 (the graphs needs to be connected)
+		//   at most n-1 (the vertex is connected to every other vertex
+		if(result->vertexArray[i]->degree==0){
+			// vertex i has no neighbours yet
+			newDegree=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(sourceGraphOrder-1));
+			// newDegre is in [1,n-1]
+		} else if(result->vertexArray[i]->degree<(sourceGraphOrder-1)){
+			// vertex i is connected to some other vertex
+			newDegree=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*
+							(sourceGraphOrder-result->vertexArray[i]->degree));
+			// newDegree is in [0,n-1-degree]
+		} else {
+			// vertex i is already connected to all possible neighbours
+			newDegree=0;
+		}
+		for(j=0;j<newDegree;j++){
+			do{
+				newNeighbour=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(sourceGraphOrder));
+				// newNeighbour is in [0,n-1]
+			} while(result->vertexAreNeighbours(i,newNeighbour));
+			result->addVertexNeighbour(i,newNeighbour);
+		}
+	}
+	return result;
+}
+
+
+
+void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphOrder,
+									   double *bestBC,double *targetBC,
+									   FILE *logFile,double &costBest,
+									   CSettingsSimulation settingSimulation){
+	
+	CFuncTrace lFuncTrace(false,"CRebuildGraph::AnnealingAlgorithm");
+	double temperMin=TEMPER_MIN_DEFAULT;
+	double k=K;
+	int iterations=0;
+	double tol=TOL;
+	int weAreDone=0;
+	costBest=0.0;
+	double costOld=0.0;
+	double costNew=0.0;
+	long int N=0;
+	graph * bestGraph= NULL;
+	double newBC [graphOrder];
+	graph *newGraph=NULL;
+	graph *oldGraph=NULL;
+	
+	for(int i=0;i<graphOrder;i++){
+		bestBC[i]=0.0;
+		newBC[i]=0.0;
+	}
+	
+	// STARTING SIMMULATED ANNEALING
+	Tk=settingSimulation.To;
+	bestGraph=generateInitialGraph(graphOrder,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
+	*pbestGraph= bestGraph;
+	bestGraph->setAllVertexNeighbours();
+	
+	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
+		bestGraph->brandes_betweenness_centrality(bestBC);
+	else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
+		bestGraph->brandes_comunicability_centrality_exp(bestBC);
+	else
+		bestGraph->communicability_betweenness_centrality(bestBC);
+	
+	costBest=cost(targetBC,bestBC,graphOrder);
+	costOld=2.0*costBest;
+	costNew=costOld;
+	oldGraph=bestGraph->copyGraph();
+	oldGraph->setAllVertexNeighbours();
+	newGraph=bestGraph->copyGraph();
+	newGraph->setAllVertexNeighbours();
+	
+	
+	int okTrue=0;
+	int okFalse=0;
+	int notOk=0;
+	do{
+		/* Repeat NMAX times */
+		for(N=0;(N<settingSimulation.nMax)&&(!weAreDone);N++){
+			// Slightly modify oldGraph to obtain newGraph
+			
+			modifyGraph(newGraph,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
+			// Evaluate newGraph's vertex betweenness centrality
+			if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
+				newGraph->brandes_betweenness_centrality(newBC);
+			else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
+				newGraph->brandes_comunicability_centrality_exp(newBC);
+			else
+				bestGraph->communicability_betweenness_centrality(newBC);
+			// Update cost variables (new and old graphs)
+			costOld=costNew;
+			costNew=cost(targetBC,newBC,graphOrder);
+			if(costNew<costBest){
+				costBest=costNew;
+				newGraph->copyGraph(bestGraph);
+				memcpy(bestBC,newBC,graphOrder*sizeof(double));
+				if(costBest<=tol){
+					weAreDone=true;
+					break;
+				}
+				okTrue++;
+				lFuncTrace.trace(".");
+				fprintf(logFile,".");
+			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber(settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z)){
+				// if newCost not is better than oldCost,
+				// we still accept it if exp(df/T_k)<rand()
+				okFalse++;
+				lFuncTrace.trace("o");
+				fprintf(logFile,"o");
+			} else {
+				//otherwise we don't accept the new graph
+				bestGraph->copyGraph(newGraph);
+				notOk++;
+				lFuncTrace.trace("x");
+				fprintf(logFile,"x");
+			}
+		}
+		lFuncTrace.trace("\n");
+		fprintf(logFile,"\n");
+		lFuncTrace.trace("Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
+						 Tk,costBest,weAreDone,iterations);
+		fprintf(logFile,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
+				Tk,costBest,weAreDone,iterations);
+		// Lower temperature: T(k)=k*T(k-1)
+		Tk*=k;
+		// Update number of iterations
+		iterations++;
+	}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!=settingSimulation.maxIterations));
+	
+	
+}
+
+
+int
+StrategyPatternAlgorithm::regenerateGraph(CSettingsSimulation *settingsSimulation,
+							   graph *targetGraph,
+							   char *inputFilename,
+							   double *&targetBC,
+							   double *&bestBC,
+							   int &graphOrder,
+							   double &compareResult,
+							  double *Tk,
+										  double *costBest,graph **bestGraph){
+	
+	try {
+		
+	
+		
+		
+			
+		char inputGraphFilename[STRING_LENGTH];
+		char logFilename[STRING_LENGTH];
+		FILE *logFile=NULL;
+		
+		
+		// Simmulated Annealing variables
+		double temperMin=TEMPER_MIN_DEFAULT;
+				double k=K;
+		
+		
+				
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		if ( settingsSimulation == NULL)
+			throw std::runtime_error("settingsSimulation is NULL");
+		
+		k = settingsSimulation->k;
+		temperMin = settingsSimulation->tMin;
+		
+		
+	
+		
+		graphOrder=0;
+		graphOrder=targetGraph->getOrder();
+		
+		targetBC =(double*) malloc(graphOrder*sizeof(double));
+		bestBC=(double*) malloc(graphOrder*sizeof(double));
+		
+		
+		
+		for(int i=0;i<graphOrder;i++){
+			targetBC[i]=0.0;
+			bestBC[i]=0.0;
+		}
+		
+		targetGraph->printGraph();
+		targetGraph->setAllVertexNeighbours();
+		
+		if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY )
+			targetGraph->brandes_betweenness_centrality(targetBC);
+		else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS )
+			targetGraph->brandes_comunicability_centrality_exp(targetBC);
+		else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY )
+			targetGraph->communicability_betweenness_centrality(targetBC);
+		else
+		{
+			std::cout << " graphProperty is not set" << std::endl;
+			return -1;
+		}
+		strcpy(inputGraphFilename,inputFilename);
+		strcat(inputGraphFilename,".in");
+		targetGraph->printMyGraph(inputGraphFilename);
+		
+		
+		
+		
+		
+		
+		strcpy(logFilename,inputFilename);
+		strcat(logFilename,".log");
+		logFile=fopen(logFilename,"w");
+		if(logFile==NULL){
+			printf("Cannot open log file %s for writting \n",logFilename);
+			exit(-1);
+		}
+		
+		AnnealingAlgorithm( *Tk, bestGraph,graphOrder,
+						   bestBC,targetBC, logFile,*costBest,*settingsSimulation);
+		
+
+	}
+	catch ( exception& e)
+	{
+		std::cout << "ERROR :" << e.what()<< std::endl;
+		throw;
+		return -1;
+	}
+    return 1;
+}
+
+

@@ -12,12 +12,15 @@
 #include <iostream>
 #include "CSettingsSumulation.h"
 #include "rebuildgraph.h"
+#include "StrategyPatternAlgorithm.h"
 
 class AbstractFactoryPatternRebuildGraph {
 	
 private:
 	CRebuildGraph *rebuildGraph;
 	CSettingsSimulation *settingSimulation;
+	StrategyPatternAlgorithm *strategyPatternAlgorithm;
+	
 public:
 	AbstractFactoryPatternRebuildGraph (int algorithm, std::string GraphName, int nMax, double * compareResult){
 		int graphOrder = 0;

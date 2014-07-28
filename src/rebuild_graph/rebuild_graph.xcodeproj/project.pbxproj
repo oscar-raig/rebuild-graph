@@ -14,6 +14,7 @@
 		360BA71218DD753600F54F2B /* graphs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA71118DD753600F54F2B /* graphs.cpp */; };
 		36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36133E1218FC7AC3000F7E09 /* rebuildgraph.cpp */; };
 		3625A35818EDBA400037F00D /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35618EDBA400037F00D /* CTrace.cpp */; };
+		365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */; };
 		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
 		36DC6DC718F4979D00CEFE98 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,13 @@
 			remoteGlobalIDString = 36207B8F18EC50590033A4DC;
 			remoteInfo = convert_graph_file;
 		};
+		365871B019859650000C40A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 365871A91985964F000C40A2 /* TestClass.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3658719D1985964F000C40A2;
+			remoteInfo = TestClass;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -78,6 +86,9 @@
 		36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = convert_graph_file.xcodeproj; path = convert_graph_file/convert_graph_file.xcodeproj; sourceTree = "<group>"; };
 		3625A35618EDBA400037F00D /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 		3625A35718EDBA400037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
+		365871A91985964F000C40A2 /* TestClass.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestClass.xcodeproj; path = TestClass/TestClass/TestClass.xcodeproj; sourceTree = "<group>"; };
+		365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StrategyPatternAlgorithm.cpp; sourceTree = "<group>"; };
+		365F8FA0198545C300E3A7CD /* StrategyPatternAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrategyPatternAlgorithm.h; sourceTree = "<group>"; };
 		36ABBBF718EF049D0042FE9C /* graphs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphs.h; sourceTree = "<group>"; };
 		36C4F4DD18E9E10C002B67FD /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 		36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../lib/libboost_program_options.a; sourceTree = "<group>"; };
@@ -116,6 +127,7 @@
 		360BA6FC18DD74E300F54F2B = {
 			isa = PBXGroup;
 			children = (
+				365871A91985964F000C40A2 /* TestClass.xcodeproj */,
 				36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */,
 				3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */,
 				3609206118ECAA0700BAE922 /* compara.xcodeproj */,
@@ -149,6 +161,8 @@
 				360854F118F731CC00033919 /* CSettingsSumulation.h */,
 				36133E1218FC7AC3000F7E09 /* rebuildgraph.cpp */,
 				36133E1818FC7C09000F7E09 /* rebuildgraph.h */,
+				365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */,
+				365F8FA0198545C300E3A7CD /* StrategyPatternAlgorithm.h */,
 			);
 			path = rebuild_graph;
 			sourceTree = "<group>";
@@ -165,6 +179,14 @@
 			isa = PBXGroup;
 			children = (
 				36207BA018EC505A0033A4DC /* convert_graph_file */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		365871AA1985964F000C40A2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				365871B119859650000C40A2 /* TestClass */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,6 +244,10 @@
 					ProjectRef = 36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */;
 				},
 				{
+					ProductGroup = 365871AA1985964F000C40A2 /* Products */;
+					ProjectRef = 365871A91985964F000C40A2 /* TestClass.xcodeproj */;
+				},
+				{
 					ProductGroup = 36207B7A18EC25A10033A4DC /* Products */;
 					ProjectRef = 36207B7918EC25A10033A4DC /* TestRebuildGraph.xcodeproj */;
 				},
@@ -262,6 +288,13 @@
 			remoteRef = 36207B9F18EC505A0033A4DC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		365871B119859650000C40A2 /* TestClass */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = TestClass;
+			remoteRef = 365871B019859650000C40A2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -269,6 +302,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */,
 				360BA71218DD753600F54F2B /* graphs.cpp in Sources */,
 				36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */,
 				360854F218F731CC00033919 /* CSettingsSumulation.cpp in Sources */,

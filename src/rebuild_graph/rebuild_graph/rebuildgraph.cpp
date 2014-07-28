@@ -10,226 +10,12 @@
 #include "graphs.h"
 #include "rebuildgraph.h"
 #include "CTrace.hpp"
-/*
-#include <gsl/gsl_cblas.h>
-#include <gsl/gsl_cblas.h> */
-//-----------------------------------------------------------------------------
-// GLOBAL operation readPythonGraphFile(char *fileName)
-// RETURNS a graph pointer
-//-----------------------------------------------------------------------------
-graph *CRebuildGraph::readPythonGraphFile(char *fileName){
-	FILE *input;
-	int i=0;
-	int vertex_identifier=0;
-	int vertex_neighbour=0;
-	char *line;
-	char *aux,*newaux;
-	
-	graph *result=new graph();
-	line=(char *)malloc(sizeof(char)*STRING_LENGTH);
-	if((input=fopen(fileName,"rt"))==NULL){
-		printf("file not found %s\n",fileName);
-		char szPath[255];
-		if (!getwd(szPath)){
-			printf("Current path (%s)",szPath);
-		}
-		throw runtime_error("File : Not Found");
-	}
-	line[0]='\0';
-	line=fgets(line,STRING_LENGTH,input);
-	while(line!=NULL){
-		if(line!=NULL && line[0]!='#'){
-			vertex_identifier=(int)strtol(&line[i],&aux,10);
-			result->addVertex(vertex_identifier);
-			newaux=aux;
-			do{
-				aux=newaux;
-				vertex_neighbour=(int)strtol(aux,&newaux,10);
-				if(newaux-aux!=0){
-					result->addVertexNeighbour(vertex_identifier,vertex_neighbour);
-				}
-			} while(aux!=newaux);
-		}
-		line[0]='\0';
-		line=fgets(line,STRING_LENGTH,input);
-	}
-	fclose(input);
-	free(line);
-	result->updateDistanceMatrix();
-	return result;
-}
-
-//-----------------------------------------------------------------------------
-// GLOBAL operation generateRandomNumber()
-// Wichmann-Hill method to generate random numbers (needs 3 seed numbers)
-// RETURNS a random double [0,1(
-//-----------------------------------------------------------------------------
-double
-CRebuildGraph::generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z){
-	
-	double temp;
-	random_value_x=171*(random_value_x%177)-2*(random_value_x/177);
-	if(random_value_x<0)
-		random_value_x+=30269;
-	random_value_y=172*(random_value_y%176)-35*(random_value_y/176);
-	if(random_value_y<0)
-		random_value_y+=30307;
-	random_value_z=170*(random_value_z%178)-63*(random_value_z/178);
-	if(random_value_z<0)
-		random_value_z+=30323;
-	temp=random_value_x/30269.0+random_value_y/30307.0+random_value_z/30323.0;
-	return(temp-(int)temp);
-}
 
 
-//-----------------------------------------------------------------------------
-// GLOBAL operation generateInitialGraph(int sourceGraphOrder)
-// RETURNS a random graph with sourceGraphOrder vertex
-//-----------------------------------------------------------------------------
-graph *CRebuildGraph::generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
-	int i,j;
-	int newNeighbour;
-	int newDegree;
-	graph *result=(graph *)new graph(sourceGraphOrder);
-	
-	for(i=0; i<sourceGraphOrder; i++){
-		// The new vertex degree is to be
-		//   at least 1 (the graphs needs to be connected)
-		//   at most n-1 (the vertex is connected to every other vertex
-		if(result->vertexArray[i]->degree==0){
-			// vertex i has no neighbours yet
-			newDegree=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(sourceGraphOrder-1));
-			// newDegre is in [1,n-1]
-		} else if(result->vertexArray[i]->degree<(sourceGraphOrder-1)){
-			// vertex i is connected to some other vertex
-			newDegree=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*
-							(sourceGraphOrder-result->vertexArray[i]->degree));
-			// newDegree is in [0,n-1-degree]
-		} else {
-			// vertex i is already connected to all possible neighbours
-			newDegree=0;
-		}
-		for(j=0;j<newDegree;j++){
-			do{
-				newNeighbour=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(sourceGraphOrder));
-				// newNeighbour is in [0,n-1]
-			} while(result->vertexAreNeighbours(i,newNeighbour));
-			result->addVertexNeighbour(i,newNeighbour);
-		}
-	}
-	return result;
-}
 
 
-//-----------------------------------------------------------------------------
-// GLOBAL operation copyGraph(sourceGraph)
-// RETURNS a copy of sourceGraph
-//-----------------------------------------------------------------------------
-graph *CRebuildGraph::copyGraph(graph *sourceGraph){
-	int i,myDegree,*myNeighbours;
-	int myOrder=sourceGraph->getOrder();
-	graph *result=(graph *)new graph(myOrder);
-	for(i=0;i<myOrder;i++){
-		myDegree=sourceGraph->getVertexNeighbours(i,&myNeighbours);
-		result->addVertexNeighbours(i,myNeighbours,myDegree);
-		free(myNeighbours);
-	}
-	return result;
-}
-
-//-----------------------------------------------------------------------------
-// GLOBAL operation copyGraph(sourceGraph,targetGraph)
-// COPIES sourceGraph to targetGraph
-//-----------------------------------------------------------------------------
-void CRebuildGraph::copyGraph(graph *sourceGraph,graph *targetGraph){
-	int i,j,aux;
-	int myOrder=sourceGraph->getOrder();
-	
-	for(i=0;i<myOrder;i++){
-		aux=sourceGraph->vertexArray[i]->degree;
-		targetGraph->vertexArray[i]->degree=aux;
-		for(j=0;j<aux;j++){
-			targetGraph->vertexArray[i]->neighbours[j]=
-			sourceGraph->vertexArray[i]->neighbours[j];
-		}
-		for(j=i+1;j<myOrder;j++){
-			aux=sourceGraph->distanceMatrix[i][j];
-			targetGraph->distanceMatrix[i][j]=aux;
-			targetGraph->distanceMatrix[j][i]=aux;
-		}
-	}
-	
-}
-
-//-----------------------------------------------------------------------------
-// GLOBAL operation modifyGraph(sourceGraph)
-// MODIFIES a randon sourceGraph vertex's connections
-//-----------------------------------------------------------------------------
-void CRebuildGraph::modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
-	int i,j;
-	int vertex2change;
-	int myOrder=sourceGraph->getOrder();
-	int myNewNeighbour;
-	int myNewNumberOfNeighbours;
-	int newNeighbours[myOrder];
-	int found;
-	
-	// Select vertex to change
-	vertex2change=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
-	// vertex2change is in [0,n-1]
-	// Disconnect vertex2change
-	//printf("modifyGraph\n");
-	//sourceGraph->printGraph();
-	//printf("modifyGraph remove vertex %d\n",vertex2change);
-	sourceGraph->removeVertexNeighbours(vertex2change);
-	//sourceGraph->printGraph();
-	//printf("modifyGraph vertex removed\n");
-	do{
-		//Choose new vertex degree
-		myNewNumberOfNeighbours=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder-1));
-		// myNewNumberOfNeighbours is in [1,n-1]
-		// Connect new neighbours
-		for(i=0; i<myNewNumberOfNeighbours; i++){
-			//printf("modifyGraph3 vertex2change %d\n",vertex2change);
-			//printf("modifyGraph3 Newdegree %d\n",myNewNumberOfNeighbours);
-			do{
-				found=false;
-				//printf("modifyGraph4\n");
-				myNewNeighbour=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
-				// myNewNeighbour is in [0,n-1]
-				for(j=0;j<i;j++){
-					//printf("modifyGraph4 new=%d newNei[j]=%d\n",myNewNeighbour,newNeighbours[j]);
-					if((myNewNeighbour==newNeighbours[j])
-					   ||(myNewNeighbour==vertex2change)){
-						found=true;
-					}
-				}
-			} while(found||
-					(sourceGraph->vertexAreNeighbours(vertex2change,myNewNeighbour)));
-			newNeighbours[i]=myNewNeighbour;
-			//printf("modifyGraph5 vertex %d ADD neigh %d\n",vertex2change,myNewNeighbour);
-			sourceGraph->addNewVertexNeighbour(vertex2change,myNewNeighbour);
-		}
-		//    sourceGraph->printGraph();
-	} while (sourceGraph->graphNotConnected(&vertex2change));
-	//sourceGraph->printGraph();
-	//printf("modifyGraph vertex reconnected\n");
-}
 
 
-//-----------------------------------------------------------------------------
-// GLOBAL operation cost(double *tarjet,double *current,int count)
-// RETURNS the cost
-//-----------------------------------------------------------------------------
-double CRebuildGraph::cost(double *tarjet,double *current,int count){
-	int i;
-	double result=0.0;
-	
-	for(i=0; i<count; i++) {
-		result+=pow((tarjet[i]-current[i]),2);
-	}
-	return pow(result,0.5);
-}
 
 void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inputFileName,double Tk,
 						double costBest,double *targetBC,
@@ -271,112 +57,6 @@ void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inp
 	
 }
 
-void CRebuildGraph::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphOrder,
-						double *bestBC,double *targetBC,
-						FILE *logFile,double &costBest,
-						CSettingsSimulation settingSimulation){
-	
-	CFuncTrace lFuncTrace(false,"CRebuildGraph::AnnealingAlgorithm");
-	double temperMin=TEMPER_MIN_DEFAULT;
-	double k=K;
-	int iterations=0;
-	double tol=TOL;
-	int weAreDone=0;
-	costBest=0.0;
-	double costOld=0.0;
-	double costNew=0.0;
-	long int N=0;
-	graph * bestGraph= NULL;
-	double newBC [graphOrder];
-	graph *newGraph=NULL;
-	graph *oldGraph=NULL;
-	
-	for(int i=0;i<graphOrder;i++){
-		bestBC[i]=0.0;
-		newBC[i]=0.0;
-	}
-	
-	// STARTING SIMMULATED ANNEALING
-	Tk=settingSimulation.To;
-	bestGraph=generateInitialGraph(graphOrder,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
-	*pbestGraph= bestGraph;
-	bestGraph->setAllVertexNeighbours();
-	
-	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
-			bestGraph->brandes_betweenness_centrality(bestBC);
-	else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
-		brandes_comunicability_centrality_exp(bestGraph,bestBC);
-	else
-		communicability_betweenness_centrality(bestGraph,bestBC);
-		
-	costBest=cost(targetBC,bestBC,graphOrder);
-	costOld=2.0*costBest;
-	costNew=costOld;
-	oldGraph=copyGraph(bestGraph);
-	oldGraph->setAllVertexNeighbours();
-	newGraph=copyGraph(bestGraph);
-	newGraph->setAllVertexNeighbours();
-
-	
-	int okTrue=0;
-	int okFalse=0;
-	int notOk=0;
-	do{
-		/* Repeat NMAX times */
-		for(N=0;(N<settingSimulation.nMax)&&(!weAreDone);N++){
-			// Slightly modify oldGraph to obtain newGraph
-
-			modifyGraph(newGraph,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
-			// Evaluate newGraph's vertex betweenness centrality
-			if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
-				newGraph->brandes_betweenness_centrality(newBC);
-			else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
-				brandes_comunicability_centrality_exp(newGraph,newBC);
-			else
-				communicability_betweenness_centrality(bestGraph,newBC);
-			// Update cost variables (new and old graphs)
-			costOld=costNew;
-			costNew=cost(targetBC,newBC,graphOrder);
-			if(costNew<costBest){
-				costBest=costNew;
-				copyGraph(newGraph,bestGraph);
-				memcpy(bestBC,newBC,graphOrder*sizeof(double));
-				if(costBest<=tol){
-					weAreDone=true;
-					break;
-				}
-				okTrue++;
-				lFuncTrace.trace(".");
-				fprintf(logFile,".");
-			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber(settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z)){
-				// if newCost not is better than oldCost,
-				// we still accept it if exp(df/T_k)<rand()
-				okFalse++;
-				lFuncTrace.trace("o");
-				fprintf(logFile,"o");
-			} else {
-				//otherwise we don't accept the new graph
-				copyGraph(bestGraph,newGraph);
-				notOk++;
-				lFuncTrace.trace("x");
-				fprintf(logFile,"x");
-			}
-		}
-		lFuncTrace.trace("\n");
-		fprintf(logFile,"\n");
-		lFuncTrace.trace("Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
-			   Tk,costBest,weAreDone,iterations);
-		fprintf(logFile,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
-				Tk,costBest,weAreDone,iterations);
-		// Lower temperature: T(k)=k*T(k-1)
-		Tk*=k;
-		// Update number of iterations
-		iterations++;
-	}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!=settingSimulation.maxIterations));
-	
-	
-}
-
 void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimulation,
 											  graph *targetGraph,
 											  graph *bestGraph,
@@ -393,8 +73,8 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 	gsl_matrix *targetGraphGsl = gsl_matrix_alloc(targetGraph->getOrder(), targetGraph->getOrder());
 	gsl_matrix *bestGraphGsl = gsl_matrix_alloc(bestGraph->getOrder(), bestGraph->getOrder());
 	
-	graphToGsl(targetGraph,targetGraphGsl);
-	graphToGsl(bestGraph,bestGraphGsl);
+	targetGraph->graphToGsl(targetGraphGsl);
+	bestGraph->graphToGsl(bestGraphGsl);
 	
 	
 	compareResult = compareMatrix(targetGraphGsl, bestGraphGsl);
@@ -419,114 +99,6 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 }
 
 
-int
-CRebuildGraph::regenerateGraph(CSettingsSimulation *settingsSimulation,
-							   double *&targetBC,
-							   double *&bestBC,
-							   int &graphOrder,
-							   double &compareResult){
-	
-	try {
-	
-	time_t timeStart;
-	
-	
-	char inputFilename[STRING_LENGTH];
-	char outputGraphFilename[STRING_LENGTH];
-	char inputGraphFilename[STRING_LENGTH];
-	char logFilename[STRING_LENGTH];
-	FILE *logFile=NULL;
-	
-	
-	// Simmulated Annealing variables
-	double temperMin=TEMPER_MIN_DEFAULT;
-	double Tk=TEMPER_INITIAL_DEFAULT;
-	double k=K;
-	
-	
-	double costBest=0.0;
-	
-	
-	graph *targetGraph=NULL;
-	graph *bestGraph=NULL;
-	
-	// Default value initialization
-	timeStart=time(NULL);
-	
-	
-	
-
-		
-	if ( settingsSimulation == NULL)
-		throw std::runtime_error("settingsSimulation is NULL");
-		
-	k = settingsSimulation->k;
-	temperMin = settingsSimulation->tMin;
-	strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
-	
-	targetGraph=readPythonGraphFile(inputFilename);
-	
-	graphOrder=0;
-	graphOrder=targetGraph->getOrder();
-	
-	targetBC =(double*) malloc(graphOrder*sizeof(double));
-	bestBC=(double*) malloc(graphOrder*sizeof(double));
-	
-	
-	
-	for(int i=0;i<graphOrder;i++){
-		targetBC[i]=0.0;
-		bestBC[i]=0.0;
-	}
-	
-	targetGraph->printGraph();
-	targetGraph->setAllVertexNeighbours();
-	
-	if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY )
-		targetGraph->brandes_betweenness_centrality(targetBC);
-    else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS )
-		brandes_comunicability_centrality_exp(targetGraph,targetBC);
-	else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY )
-		communicability_betweenness_centrality(targetGraph,targetBC);
-	else
-	{
-		std::cout << " graphProperty is not set" << std::endl;
-		return -1;
-	}
-	strcpy(inputGraphFilename,inputFilename);
-    strcat(inputGraphFilename,".in");
-	targetGraph->printMyGraph(inputGraphFilename);
-	
-	
-	
-	strcpy(outputGraphFilename,inputFilename);
-	strcat(outputGraphFilename,".res");
-	
-	
-	strcpy(logFilename,inputFilename);
-	strcat(logFilename,".log");
-	logFile=fopen(logFilename,"w");
-	if(logFile==NULL){
-		printf("Cannot open log file %s for writting \n",logFilename);
-		exit(-1);
-	}
-	
-		AnnealingAlgorithm( Tk, &bestGraph,graphOrder,
-						   bestBC,targetBC, logFile,costBest,*settingsSimulation);
-		
-		CompareAndGenerateResults(*settingsSimulation,targetGraph,bestGraph,inputFilename,timeStart,Tk,
-								targetBC,bestBC,costBest,compareResult,outputGraphFilename);
-	}
-	catch ( exception& e)
-	{
-		std::cout << "ERROR :" << e.what()<< std::endl;
-		throw;
-		return -1;
-	}
-    return 1;
-}
-
-
 #define RESULT_OK 1
 
 graph*
@@ -541,7 +113,8 @@ CRebuildGraph::GetGraphfromFile(const char *graphFileName)
 		return NULL;
 	}
 	strcpy(inputFilename,graphFileName);
-	targetGraph=readPythonGraphFile(inputFilename);
+	targetGraph = new (graph);
+	targetGraph->readPythonGraphFile(inputFilename);
 	
 	
 	return targetGraph;
@@ -617,36 +190,7 @@ CRebuildGraph::calculateEgeinval (gsl_matrix *target)
 	return eval;
 }
 
-gsl_matrix *
-CRebuildGraph::gslCopyGraph(const gsl_matrix* target){
-	
-	gsl_matrix *dest=gsl_matrix_alloc(target->size1,target->size1);
 
-	gsl_matrix_memcpy (dest, target);
-	return dest;
-}
-
-
-int
-CRebuildGraph::graphToGsl(graph * source, gsl_matrix* target){
-	
-	int i,j;
-	gsl_matrix_set_zero(target);
-	int graphOrder=source->getOrder();
-	int auxNNeighbours;
-	int *auxNeighbours;
-	
-	for(i=0;i<graphOrder;i++){
-		auxNNeighbours=source->vertexArray[i]->getNeighbours(&auxNeighbours);
-		//		printf("Vertex %3d(%d neighbours):",i,auxNNeighbours);
-		for(j=0;j<auxNNeighbours;j++){
-			//			printf(" %d",auxNeighbours[j]);
-			gsl_matrix_set (target, i, auxNeighbours[j], 1);
-		}
-		free(auxNeighbours);
-	}
-	return RESULT_OK;
-}
 
 int CRebuildGraph::printGslMatrix(gsl_matrix* gslMatrix,const char *format){
 	printf("\n");
@@ -660,15 +204,7 @@ int CRebuildGraph::printGslMatrix(gsl_matrix* gslMatrix,const char *format){
 	return RESULT_OK;
 }
 
-int CRebuildGraph::gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles)
-{
 
-	for (size_t i = 0; i < gslVector->size; i++) {
-		arrayDoubles[i]=  gsl_vector_get(gslVector, i);
-	
-	}
-	return RESULT_OK;
-}
 
 int CRebuildGraph::printGslVector(gsl_vector* gslVector){
 	printf("\n");
@@ -715,7 +251,7 @@ CRebuildGraph::calculateCommunicability(const char *argv[]){
 	
 	targetGraph->printGraph();
 	
-	graphToGsl(targetGraph,A1);
+	targetGraph->graphToGsl(A1);
 	
 	lFuncTrace.trace("Printing Home made Matrix\n");
 	printGslMatrix(A1);
@@ -729,126 +265,11 @@ CRebuildGraph::calculateCommunicability(const char *argv[]){
 	return RESULT_OK;
 }
 
-void
-CRebuildGraph::	communicability_betweenness_centrality(graph *targetGraph,double *myCExp)
-{
-	CFuncTrace lFuncTrace(false,"communicability_betweenness_centrality");
-	/* Step 1
-	 nodelist = G.nodes() # ordering of nodes in matrix
-	 n = len(nodelist)
-	 A = nx.to_numpy_matrix(G,nodelist)
-	 # convert to 0-1 matrix
-	 A[A!=0.0] = 1
-	 */
-	int graphOrder=targetGraph->getOrder();
-	
-	
-	gsl_vector * matrixFinalResult = gsl_vector_alloc(graphOrder);
-	
-	
-	// Get Numpy Matrix // Matriu d'adjacencia
-	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
-	
-	//	targetGraph->printGraph();
-	
-	graphToGsl(targetGraph,A1);
-		lFuncTrace.trace("\nPrinting Home made Matrix\n");
-//		printGslMatrix(A1," %g");
-	 
-	 /* Step 2
-	 expA = scipy.linalg.expm(A)
-	 mapping = dict(zip(nodelist,range(n)))
-	 sc = {}
-	 */
-	gsl_matrix *A1expm=gsl_matrix_alloc(graphOrder,graphOrder);
-	
-	gsl_linalg_exponential_ss(A1, A1expm, .01);
-	//	lFuncTrace.trace("Printing ExpmMatrix");
-//		printGslMatrix(A1expm);
-
-	for ( int iteratorNode = 0; iteratorNode < graphOrder; iteratorNode++){
-		gsl_matrix *copyA1 = gslCopyGraph(A1);
-		gslDeleteNodeConnections(copyA1,iteratorNode);
-//		printGslMatrix(copyA1);
-		/*
-		 B = (expA - scipy.linalg.expm(A)) / expA
-		*/
-		gsl_matrix *copyA1expm=gsl_matrix_alloc(graphOrder,graphOrder);
-		gsl_linalg_exponential_ss(copyA1, copyA1expm, .01);
-		
-		gsl_matrix *copyexpmAForSubstract  = gslCopyGraph(A1expm);
-		
-		gsl_matrix_sub(copyexpmAForSubstract,copyA1expm);
-		gsl_matrix_div_elements (copyexpmAForSubstract, A1expm);
-		lFuncTrace.trace("Printing expA- scip\n");
-//		printGslMatrix(copyexpmAForSubstract);
-		gslDeleteNodeConnections(copyexpmAForSubstract,iteratorNode);
-		
-		gsl_matrix *copyB = gslCopyGraph(copyexpmAForSubstract);
-		
-		for ( int col =0; col < graphOrder; col++){
-			for ( int row = 0; row< graphOrder ; row ++){
-				if ( row != col)
-					gsl_matrix_set(copyB,row,col,0);
-			}
-		}
-		gsl_matrix_sub(copyexpmAForSubstract,copyB);
-//		printGslMatrix(copyexpmAForSubstract);
-		double sum = 0;
-		for ( int col =0; col < graphOrder; col++){
-			for ( int row = 0; row< graphOrder ; row ++){
-				
-					sum +=gsl_matrix_get(copyexpmAForSubstract,row,col);
-			}
-		}
-		lFuncTrace.trace("Suma %f\n",sum);
-		gsl_vector_set(matrixFinalResult,iteratorNode,sum);
-
-	}
-	gslVectorToArray(matrixFinalResult,myCExp);
-}
 
 
-gsl_vector *
-CRebuildGraph::getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
-	
-	int nMatrixOrder = (int) gslMatrix->size1;
-	gsl_vector * gslvDiagonal = gsl_vector_alloc(nMatrixOrder);
-	
-	for (int i=0; i < nMatrixOrder;i++){
-		gsl_vector_set(gslvDiagonal,i,gsl_matrix_get(gslMatrix,i,i));
-	}
-	
-	return gslvDiagonal;
-}
 
 
-void
-CRebuildGraph::brandes_comunicability_centrality_exp(graph *targetGraph,double *myCExp){
-//	CFuncTrace lFuncTrace("CRebuildGraph::brandes_comunicability_centrality_exp");
-	
-	int graphOrder=targetGraph->getOrder();
-	// Get Numpy Matrix // Matriu d'adjacencia
-	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
-	
-//	targetGraph->printGraph();
-	
-	graphToGsl(targetGraph,A1);
-//	lFuncTrace.trace("\nPrinting Home made Matrix\n");
-//	printGslMatrix(A1," %g");
-	gsl_matrix *A1expm=gsl_matrix_alloc(graphOrder,graphOrder);
-	
-	gsl_linalg_exponential_ss(A1, A1expm, .01);
-//	lFuncTrace.trace("Printing ExpmMatrix");
-//	printGslMatrix(A1expm);
-	
-	gsl_vector * gslvDiagonal = getDiagonalFromGslMatrix(A1expm);
-	
-//	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
-//	printGslVector(gslvDiagonal);
-	
-	gslVectorToArray(gslvDiagonal,myCExp);
-}
+
 
 int
 CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
@@ -860,7 +281,7 @@ CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
 	lFuncTrace.trace("Graph Order %d",graphOrder);
 	double * bestCommCentExp = (double*)malloc(graphOrder * sizeof(double));
 	
-	brandes_comunicability_centrality_exp(targetGraph,bestCommCentExp);
+	targetGraph->brandes_comunicability_centrality_exp(bestCommCentExp);
 	return RESULT_OK;
 	
 }
