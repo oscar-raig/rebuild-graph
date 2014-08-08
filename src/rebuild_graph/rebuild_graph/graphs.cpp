@@ -28,11 +28,6 @@
 #define BETWEENNESS 3
 
 
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////
 //////////                     VERTEX OPERATIONS                      //////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +161,7 @@ void graph::vertex::getAllNeighbours(int *myListOfNeighbours[]){
 
 //-----------------------------------------------------------------------------
 // PUBLIC class vertex operation getNeighbours()
-// RETURNS a copy of the array of vertex identifiers with vertex's neighbours
+// RETURNS
 //-----------------------------------------------------------------------------
 void graph::vertex::setAllNeighbours(int *myListOfNeighbours){
 
@@ -181,10 +176,10 @@ void graph::vertex::setAllNeighbours(int *myListOfNeighbours){
 }
 
 //-----------------------------------------------------------------------------
-// PUBLIC class vertex operation getNeighbours()
-// RETURNS a copy of the array of vertex identifiers with vertex's neighbours
+// PUBLIC class vertex operation setAllNeighbours()
 //-----------------------------------------------------------------------------
 void graph::vertex::setAllNeighbours(int myOrder){
+//	printf("graph::vertex::setAllNeighbours\n");
   int i;
   int aux[myOrder];
 
@@ -200,6 +195,7 @@ void graph::vertex::setAllNeighbours(int myOrder){
       neighbours[i]=aux[i];
     }
     for(i=degree;i<myOrder;i++){
+//	printf("graph::vertex::setAllNeighbours my Order %d\n",i);
       neighbours[i]=myOrder;
     }
   }
@@ -257,7 +253,7 @@ double graph::vertex::addVertexBC(double newBC){
 // PUBLIC class graph operation getOrder()
 // RETURNS the value of de PRIVATE variable order
 //-----------------------------------------------------------------------------
-int graph::getOrder() const{
+int graph::getOrder() const {
   return order;
 }
 
@@ -379,7 +375,7 @@ myDegree){
 
 //-----------------------------------------------------------------------------
 // PUBLIC class graph operation removeVertexNeighbours(sourceVertex)
-// RETURNS the updated value of de PRIVATE variable order
+// RETURNS void
 //-----------------------------------------------------------------------------
 void graph::removeVertexNeighbours(int sourceVertex){
   int i,j;
@@ -431,7 +427,7 @@ int graph::getVertexNeighbours(int myVertex,int **myListOfNeighbours){
 
 
 // Get the vertex degree
-int graph::getDegree(int sourceVertex){
+ int graph::getDegree(int sourceVertex) const {
   return vertexArray[sourceVertex]->degree;
 }
 
@@ -450,7 +446,7 @@ int graph::vertexDistance(int vertexBegining,int vertexEnding){
 
 //-----------------------------------------------------------------------------
 // PUBLIC class graph operation vertexDistance(vertexBegining,vertexEnding)
-// RETURNS the length of any shortest path from vertexBegining to vertexEnding
+// RETURNS 1 two vertex are neighbours 0 instead
 //-----------------------------------------------------------------------------
 int graph::vertexAreNeighbours(int vertexBegining,int vertexEnding){
   return distanceMatrix[vertexBegining][vertexEnding]<2;
@@ -460,7 +456,7 @@ int graph::vertexAreNeighbours(int vertexBegining,int vertexEnding){
 // PUBLIC class graph operation getDegree()
 // RETURNS the value of de PRIVATE variable degree
 //-----------------------------------------------------------------------------
-int graph::getDegree(){
+int graph::getDegree() const{
   return degree;
 }
 
@@ -684,14 +680,14 @@ void graph::printGraph(){
   int auxNNeighbours;
   int *auxNeighbours;
 
-//  printf("The graph has %d vertex:\n",order);
+  printf("The graph has %d vertex:\n",order);
   for(i=0;i<order;i++){
     auxNNeighbours=vertexArray[i]->getNeighbours(&auxNeighbours);
-//    printf("Vertex %3d(%d neighbours):",i,auxNNeighbours);
+    printf("Vertex %3d(%d neighbours):",i,auxNNeighbours);
     for(j=0;j<auxNNeighbours;j++){
-//      printf(" %d",auxNeighbours[j]);
+      printf(" %d",auxNeighbours[j]);
     }
-//    printf("\n");
+    printf("\n");
     free(auxNeighbours);
   }
 }
@@ -780,10 +776,13 @@ graph::graphToGsl( gsl_matrix* target){
 // GLOBAL operation copyGraph(sourceGraph,targetGraph)
 // COPIES sourceGraph to targetGraph
 //-----------------------------------------------------------------------------
-void graph::copyGraph(graph *targetGraph){
+void graph::copyGraph( graph *targetGraph){
+	
 	int i,j,aux;
 	int myOrder=getOrder();
 	
+	if ( order != targetGraph->getOrder())
+		throw "Order are differents";
 	for(i=0;i<myOrder;i++){
 		aux=vertexArray[i]->degree;
 		targetGraph->vertexArray[i]->degree=aux;
@@ -798,6 +797,7 @@ void graph::copyGraph(graph *targetGraph){
 		}
 	}
 	
+
 }
 
 

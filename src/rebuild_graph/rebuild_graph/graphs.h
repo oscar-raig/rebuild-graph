@@ -15,13 +15,14 @@
 #include <gsl/gsl_eigen.h>
 #include <gsl/gsl_sf_exp.h>
 #include <gsl/gsl_linalg.h>
+#include "GeneralGraph.h"
 
 #define STRING_LENGTH 255
 ////////////////////////////////////////////////////////////////////////////////
 //////////                        GRAPH CLASS                         //////////
 ////////////////////////////////////////////////////////////////////////////////
 
-class graph{
+class graph : public GeneralGraph{
 public:
 	
     ////////////////////////////////////////////////////////////////////////////
@@ -97,7 +98,7 @@ public:
         int setVertexId(int newVertexId);
 		
         // Get the number of neighbours of the vertex
-        int getDegree();
+        int getDegree() const;
 		
         // Add vertex newNeighbourId to the vertex list of neighbours
         int addNeighbour(int newNeighbourId);
@@ -175,6 +176,7 @@ public:
 	vertexArray(NULL),
 	degree(0),
 	distanceMatrix(NULL) {
+		nType= GRAPH;
     }
 	
     //==========================================================================
@@ -191,6 +193,7 @@ public:
 	vertexArray(NULL),
 	degree(0),
 	distanceMatrix(NULL) {
+		nType = GRAPH;
 		int i,j;
 		// Allocate memory for vertexArray
 		vertexArray=(vertex **)malloc(sizeof(vertex *)*order);
@@ -224,7 +227,8 @@ public:
 	order(myOrder),
 	vertexArray(NULL),
 	degree(0),
-	distanceMatrix(NULL) {
+	distanceMatrix(NULL){
+		nType=GRAPH;
 		int i,j,k,l;
 		int repeat=1;
 		// Allocate memory for vertexArray
@@ -322,13 +326,13 @@ public:
     int  getVertexNeighbours(int sourceVertex,int **listOfNeighbours);
 	
     // Get vertex sourceVertex array of neighbours identifiers
-    void setAllVertexNeighbours();
+    virtual void setAllVertexNeighbours();
 	
     // Get vertex sourceVertex array of neighbours identifiers
     void setAllVertexNeighbours(int sourceVertex,int *listOfNeighbours);
 	
     // Get vertex sourceVertex degree
-    int getDegree(int sourceVertex);
+    virtual int getDegree(int sourceVertex) const;
 	
     // Get the shortest path length from vertexBegining to vertexEnding
     int vertexDistance(int vertexBegining,int vertexEnding);
@@ -353,7 +357,7 @@ public:
     void printGraph(FILE *myfile);
 	
     // Print the graph MY way to a file
-    void printMyGraph(const char*outputFileName);
+    virtual void printMyGraph(const char*outputFileName);
 	
     // Print the graph's betweenness centrality values
     void printGraphBetweenness();
@@ -366,10 +370,10 @@ public:
     ////////////////////////////////////////////////////////////////////////////
 	
     // Get the number of vertex (order) of the graph
-    int getOrder() const;
+	int getOrder() const;
 	
     // Get the graph degree
-    int getDegree();
+	virtual int getDegree() const;
 	
     int updateDistanceMatrix();
 	//    int updateDistanceMatrix(int myOrder);
@@ -387,12 +391,12 @@ public:
 	//    int *vertex_betweenness(double *bc);
 	
     // Vertex Betweenness Centrality specfic operations
-    void brandes_betweenness_centrality(double *bbc);
+    virtual void brandes_betweenness_centrality(double *bbc);
 	
-    void
+    virtual void
 	brandes_comunicability_centrality_exp( double *myCExp );
 	
-	void
+	virtual void
 	communicability_betweenness_centrality( double *myCExp );
 	
     int graphNotConnected(int *unconnectedVertex);
@@ -431,7 +435,7 @@ private:
 	int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
 	gsl_vector *getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
 public:
-    graph*	copyGraph();
+    virtual graph*	copyGraph();
 	void	copyGraph(graph *targetGraph);
 	graph *readPythonGraphFile(char *fileName);
 

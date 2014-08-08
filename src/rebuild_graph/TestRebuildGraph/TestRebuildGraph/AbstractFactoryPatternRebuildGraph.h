@@ -44,4 +44,5 @@ public:
 	}
 	
 };
+
 #endif /* defined(__TestRebuildGraph__AbstractFactoryPatternRebuildGraph__) */

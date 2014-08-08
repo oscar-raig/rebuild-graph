@@ -20,7 +20,10 @@
 #define K 0.9
 #define TOL 0.0001
 #define MAX_ITERATIONS 1000
+
+#ifndef STRING_LENGTH
 #define STRING_LENGTH 256
+#endif
 
 class StrategyPatternAlgorithm {
 	
@@ -30,21 +33,24 @@ public:
 	
 	double cost(double *tarjet,double *current,int count);
 
-	void modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
+	void modifyGraph(GeneralGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
 	double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
-	graph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
+	GeneralGraph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
 	
 	int
 	regenerateGraph(CSettingsSimulation *settingsSimulation,
-											  graph *targetGraph,
-											  char *inputFilename,
-											  double *&targetBC,
-											  double *&bestBC,
-											  int &graphOrder,
-					double &compareResult,double *Tk,double *costBest,graph **bestGraph);
+					GeneralGraph *targetGraph,
+					char *inputFilename,
+					double *&targetBC,
+					double *&bestBC,
+					int &graphOrder,
+					double &compareResult,
+					double *Tk,
+					double *costBest,
+					GeneralGraph **bestGraph);
 	// Rebuilding Graph Main Functions
 
-	void AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphOrder,
+	void AnnealingAlgorithm(double &Tk, GeneralGraph **pbestGraph,int graphOrder,
 							double *bestBC,double *targetBC,
 							FILE *logFile,double &costBest,
 							CSettingsSimulation settingSimulation);

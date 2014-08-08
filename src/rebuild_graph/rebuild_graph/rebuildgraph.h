@@ -15,12 +15,13 @@
 #include <gsl/gsl_linalg.h>
 
 #include "CTrace.hpp"
+#include "GraphFactory.h"
 
 // Simulated Annealing
 
-
+#ifndef STRING_LENGTH
 #define STRING_LENGTH 256
-
+#endif
 
 #include "StrategyPatternAlgorithm.h"
 #include "StrategyPatternAlgorithm.h"
@@ -31,33 +32,24 @@ private:
 
 public:
 	// Input Output File Functions
-	graph *readPythonGraphFile(char *fileName);
-	graph*GetGraphfromFile(const char *graphFileName);
+	GeneralGraph *readPythonGraphFile(char *fileName);
+	GeneralGraph *GetGraphfromFile(const char *graphFileName);
 
-	
-	
-	
-
-		
-	
-	
-		
-	
 	
 	// Printing Graphs and Results
 	int printGslMatrix(gsl_matrix* gslMatrix,const char *format="%.3f ");
 	int printGslVector(gsl_vector* gslVector);
 	
 	int calculateCommunicability_cent_exp(const char *argv[]);
-	void generateOutputFile(const  graph *targetGraph,const char *inputFileName,double Tk,
+	void generateOutputFile(const  GeneralGraph *targetGraph,const char *inputFileName,double Tk,
 							double costBest,double *targetBC,
 							double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation);
 	
 	
-	void printingCompareMatrixResults(float delta,
+	static void printingCompareMatrixResults(float delta,
 									  gsl_matrix *F,
 									  gsl_matrix* matrixA);
-	float compareMatrix(gsl_matrix* A, gsl_matrix*B);
+	static float compareMatrix(gsl_matrix* A, gsl_matrix*B);
 		
 
 	
@@ -76,8 +68,8 @@ public:
 		
 
 	void CompareAndGenerateResults(CSettingsSimulation settingsSimulation,
-												  graph *targetGraph,
-												  graph *bestGraph,
+												  GeneralGraph *targetGraph,
+												  GeneralGraph *bestGraph,
 												  char* inputFilename,
 												  time_t timeStart,
 												  double Tk,
@@ -93,10 +85,10 @@ public:
 						int &graphOrder,
 						double &compareResult)
 	{
-		graph *targetGraph= NULL;
+		GeneralGraph *targetGraph= NULL;
 		char inputFilename[250];
 		time_t timeStart;
-		graph *bestGraph = NULL;
+		GeneralGraph *bestGraph = NULL;
 		double costBest=0.0;
 			char outputGraphFilename[STRING_LENGTH];
 		double Tk=TEMPER_INITIAL_DEFAULT;
@@ -107,7 +99,7 @@ public:
 		strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
 		strcpy(outputGraphFilename,inputFilename);
 		strcat(outputGraphFilename,".res");
-		targetGraph = new graph();
+		targetGraph = GraphFactory::createGraph( GRAPH );
 		targetGraph->readPythonGraphFile(inputFilename);
 		SrategyPatternAlgorithm->regenerateGraph(settingsSimulation,targetGraph,inputFilename, targetBC, bestBC, graphOrder, compareResult,&Tk,&costBest,&bestGraph);
 		CompareAndGenerateResults(*settingsSimulation,targetGraph,bestGraph,inputFilename,timeStart,Tk,								  targetBC,bestBC,costBest,compareResult,outputGraphFilename);

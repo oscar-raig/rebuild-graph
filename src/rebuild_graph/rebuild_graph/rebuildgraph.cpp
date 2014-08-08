@@ -17,7 +17,7 @@
 
 
 
-void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inputFileName,double Tk,
+void CRebuildGraph::generateOutputFile(const  GeneralGraph *targetGraph,const char *inputFileName,double Tk,
 						double costBest,double *targetBC,
 						double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation){
 	
@@ -58,8 +58,8 @@ void CRebuildGraph::generateOutputFile(const  graph *targetGraph,const char *inp
 }
 
 void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimulation,
-											  graph *targetGraph,
-											  graph *bestGraph,
+											  GeneralGraph *targetGraph,
+											  GeneralGraph *bestGraph,
 											  char* inputFilename,
 											  time_t timeStart,
 											  double Tk,
@@ -77,7 +77,7 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 	bestGraph->graphToGsl(bestGraphGsl);
 	
 	
-	compareResult = compareMatrix(targetGraphGsl, bestGraphGsl);
+	compareResult = this->compareMatrix(targetGraphGsl, bestGraphGsl);
 	
 	// Processing tasks accomplished
 	// Showing results
@@ -92,7 +92,7 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 					   bestBC, timeStart, timeEnd,settingsSimulation);
 	
 	printf("\nReconstructed graph file: %s\n",outputGraphFilename);
-	bestGraph->printGraph();
+//	bestGraph->printGraph();
 	
 	bestGraph->printMyGraph(outputGraphFilename);
 	
@@ -101,7 +101,7 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 
 #define RESULT_OK 1
 
-graph*
+GeneralGraph*
 CRebuildGraph::GetGraphfromFile(const char *graphFileName)
 {
 	CFuncTrace lFuncTrace(false,string("GetGraphfromFile"));
@@ -122,7 +122,7 @@ CRebuildGraph::GetGraphfromFile(const char *graphFileName)
 
 int CRebuildGraph::calculateBeterness(const char *argv[]){
 	CFuncTrace lFuncTrace(false,"fCalculateBeterness");
-	graph *targetGraph=NULL;
+	GeneralGraph *targetGraph=NULL;
 	int graphOrder=0;
 	
 	targetGraph=GetGraphfromFile(argv[1]);
@@ -241,7 +241,7 @@ int
 CRebuildGraph::calculateCommunicability(const char *argv[]){
 	CFuncTrace lFuncTrace(false,"fCalculateConnectivity");
 	
-	graph *targetGraph=NULL;
+	GeneralGraph *targetGraph=NULL;
 	targetGraph=GetGraphfromFile(argv[1]);
 	int graphOrder=targetGraph->getOrder();
 	lFuncTrace.trace("Graph Order %d",graphOrder);
@@ -249,7 +249,7 @@ CRebuildGraph::calculateCommunicability(const char *argv[]){
 	// Get Numpy Matrix // Matriu d'adjacencia
 	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
 	
-	targetGraph->printGraph();
+	//targetGraph->printGraph();
 	
 	targetGraph->graphToGsl(A1);
 	
@@ -275,7 +275,7 @@ int
 CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
 	CFuncTrace lFuncTrace(false,"fCalculateCommunicability_cent_exp");
 	
-	graph *targetGraph=NULL;
+	GeneralGraph *targetGraph=NULL;
 	targetGraph=GetGraphfromFile(argv[1]);
 	int graphOrder=targetGraph->getOrder();
 	lFuncTrace.trace("Graph Order %d",graphOrder);
@@ -334,7 +334,6 @@ void FreeMatrix(gsl_vector **work,
 				gsl_matrix **U2,
 				gsl_matrix **V1,
 				gsl_matrix **V2,
-				gsl_matrix **matrixA,
 				gsl_matrix **F )
 {
 	gsl_vector_free(*s);
@@ -343,7 +342,6 @@ void FreeMatrix(gsl_vector **work,
 	gsl_matrix_free(*U2);
 	gsl_matrix_free(*V1);
 	gsl_matrix_free(*V2);
-	gsl_matrix_free(*matrixA);
 	gsl_matrix_free(*F);
 
 	
@@ -373,7 +371,7 @@ void CRebuildGraph::printingCompareMatrixResults(float delta,
 			}else if(gsl_matrix_get(matrixA,i,j)==1){
 				fprintf(out,"#");
 			}else{
-				printf("\nERROR-Matriu no valida");
+				printf("\nERROR-Matriu no valida %f",gsl_matrix_get(matrixA,i,j));
 				exit(1);
 			}
 		}
@@ -407,6 +405,10 @@ CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
 	
 	float delta;
 	gsl_vector *work ,*s;
+	
+	
+	if (matrixA->size1 != matrixB->size1)
+		throw runtime_error(" size 1 and size 2 are different");
 	
 	gsl_matrix *U1, *U2,*V1,*V2;
 	
@@ -446,7 +448,6 @@ CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
 			   &U2,
 			   &V1,
 			   &V2,
-			   &matrixA,
 			   &F );
 
 	return delta;

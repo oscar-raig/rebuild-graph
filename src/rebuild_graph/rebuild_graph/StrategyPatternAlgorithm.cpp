@@ -7,6 +7,7 @@
 //
 
 #include "StrategyPatternAlgorithm.h"
+#include "gslGraph.h"
 
 
 //-----------------------------------------------------------------------------
@@ -28,7 +29,7 @@ double StrategyPatternAlgorithm::cost(double *tarjet,double *current,int count){
 // GLOBAL operation modifyGraph(sourceGraph)
 // MODIFIES a randon sourceGraph vertex's connections
 //-----------------------------------------------------------------------------
-void StrategyPatternAlgorithm::modifyGraph(graph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
+void StrategyPatternAlgorithm::modifyGraph(GeneralGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
 	int i,j;
 	int vertex2change;
 	int myOrder=sourceGraph->getOrder();
@@ -107,7 +108,7 @@ StrategyPatternAlgorithm::generateRandomNumber(int &random_value_x,int &random_v
 // GLOBAL operation generateInitialGraph(int sourceGraphOrder)
 // RETURNS a random graph with sourceGraphOrder vertex
 //-----------------------------------------------------------------------------
-graph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
+GeneralGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
 	int i,j;
 	int newNeighbour;
 	int newDegree;
@@ -143,7 +144,7 @@ graph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder,int &
 
 
 
-void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, graph **pbestGraph,int graphOrder,
+void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbestGraph,int graphOrder,
 									   double *bestBC,double *targetBC,
 									   FILE *logFile,double &costBest,
 									   CSettingsSimulation settingSimulation){
@@ -158,10 +159,10 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, graph **pbestGraph
 	double costOld=0.0;
 	double costNew=0.0;
 	long int N=0;
-	graph * bestGraph= NULL;
+	GeneralGraph * bestGraph= NULL;
 	double newBC [graphOrder];
-	graph *newGraph=NULL;
-	graph *oldGraph=NULL;
+	GeneralGraph *newGraph=NULL;
+	GeneralGraph *oldGraph=NULL;
 	
 	for(int i=0;i<graphOrder;i++){
 		bestBC[i]=0.0;
@@ -211,7 +212,11 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, graph **pbestGraph
 			costNew=cost(targetBC,newBC,graphOrder);
 			if(costNew<costBest){
 				costBest=costNew;
-				newGraph->copyGraph(bestGraph);
+				if (newGraph->GetType() == GRAPH )
+					((graph *)newGraph)->copyGraph((graph*)bestGraph);
+				else
+					((gslGraph *)newGraph)->copyGraph((gslGraph*)bestGraph);
+				
 				memcpy(bestBC,newBC,graphOrder*sizeof(double));
 				if(costBest<=tol){
 					weAreDone=true;
@@ -228,7 +233,10 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, graph **pbestGraph
 				fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
-				bestGraph->copyGraph(newGraph);
+				if (newGraph->GetType() == GRAPH )
+					((graph*)bestGraph)->copyGraph((graph*)newGraph);
+				else
+					((gslGraph *)newGraph)->copyGraph((gslGraph*)bestGraph);
 				notOk++;
 				lFuncTrace.trace("x");
 				fprintf(logFile,"x");
@@ -252,64 +260,42 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, graph **pbestGraph
 
 int
 StrategyPatternAlgorithm::regenerateGraph(CSettingsSimulation *settingsSimulation,
-							   graph *targetGraph,
+							   GeneralGraph *targetGraph,
 							   char *inputFilename,
 							   double *&targetBC,
 							   double *&bestBC,
 							   int &graphOrder,
 							   double &compareResult,
 							  double *Tk,
-										  double *costBest,graph **bestGraph){
+								double *costBest,GeneralGraph **bestGraph){
 	
 	try {
-		
-	
-		
-		
-			
 		char inputGraphFilename[STRING_LENGTH];
 		char logFilename[STRING_LENGTH];
 		FILE *logFile=NULL;
 		
-		
 		// Simmulated Annealing variables
 		double temperMin=TEMPER_MIN_DEFAULT;
 				double k=K;
-		
-		
-				
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		if ( settingsSimulation == NULL)
 			throw std::runtime_error("settingsSimulation is NULL");
 		
 		k = settingsSimulation->k;
 		temperMin = settingsSimulation->tMin;
-		
-		
-	
-		
+
 		graphOrder=0;
 		graphOrder=targetGraph->getOrder();
 		
 		targetBC =(double*) malloc(graphOrder*sizeof(double));
 		bestBC=(double*) malloc(graphOrder*sizeof(double));
 		
-		
-		
 		for(int i=0;i<graphOrder;i++){
 			targetBC[i]=0.0;
 			bestBC[i]=0.0;
 		}
 		
-		targetGraph->printGraph();
+//		targetGraph->printGraph();
 		targetGraph->setAllVertexNeighbours();
 		
 		if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY )
@@ -326,12 +312,6 @@ StrategyPatternAlgorithm::regenerateGraph(CSettingsSimulation *settingsSimulatio
 		strcpy(inputGraphFilename,inputFilename);
 		strcat(inputGraphFilename,".in");
 		targetGraph->printMyGraph(inputGraphFilename);
-		
-		
-		
-		
-		
-		
 		strcpy(logFilename,inputFilename);
 		strcat(logFilename,".log");
 		logFile=fopen(logFilename,"w");
