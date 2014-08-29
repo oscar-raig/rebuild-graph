@@ -37,7 +37,7 @@ public:
 
 	
 	// Printing Graphs and Results
-	int printGslMatrix(gsl_matrix* gslMatrix,const char *format="%.3f ");
+	static int printGslMatrix(gsl_matrix* gslMatrix,const char *format="%.3f ");
 	int printGslVector(gsl_vector* gslVector);
 	
 	int calculateCommunicability_cent_exp(const char *argv[]);
@@ -49,6 +49,7 @@ public:
 	static void printingCompareMatrixResults(float delta,
 									  gsl_matrix *F,
 									  gsl_matrix* matrixA);
+	
 	static float compareMatrix(gsl_matrix* A, gsl_matrix*B);
 		
 
@@ -99,7 +100,7 @@ public:
 		strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
 		strcpy(outputGraphFilename,inputFilename);
 		strcat(outputGraphFilename,".res");
-		targetGraph = GraphFactory::createGraph( GRAPH );
+		targetGraph = GraphFactory::createGraph( GSL_GRAPH );
 		targetGraph->readPythonGraphFile(inputFilename);
 		SrategyPatternAlgorithm->regenerateGraph(settingsSimulation,targetGraph,inputFilename, targetBC, bestBC, graphOrder, compareResult,&Tk,&costBest,&bestGraph);
 		CompareAndGenerateResults(*settingsSimulation,targetGraph,bestGraph,inputFilename,timeStart,Tk,								  targetBC,bestBC,costBest,compareResult,outputGraphFilename);

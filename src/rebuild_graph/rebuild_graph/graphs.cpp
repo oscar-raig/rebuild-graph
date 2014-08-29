@@ -647,6 +647,7 @@ void graph::brandes_betweenness_centrality(double *myBBC){
             +(((double)(sigma[v])/(double)(sigma[w]))*(1.0+(double)(delta[w])));
       }
       if(w!=s){
+		//  if w != s then CB[w] ← CB[w] + δ[w];
         vertexArray[w]->addVertexBC(delta[w]);
       }
     }
@@ -654,6 +655,7 @@ void graph::brandes_betweenness_centrality(double *myBBC){
   for(i=0;i<order;i++){
     myBBC[i]=(vertexArray[i]->getVertexBC())/((order-1.0)*(order-2.0));
     vertexArray[i]->setVertexBC(myBBC[i]);
+//	  cout << "MyBBC: " << i << " : "<<  myBBC[i]<< std::endl;
   }
 }
 

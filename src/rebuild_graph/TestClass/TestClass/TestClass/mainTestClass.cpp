@@ -94,9 +94,57 @@ void test_brandes_comunicability_centrality_exp(){
 	double bcc_exp[generalGraph->getOrder()];
 	generalGraph->brandes_comunicability_centrality_exp(bcc_exp);
 	for (int i = 0; i < generalGraph->getOrder(); i++){
-		BOOST_CHECK(bcc_exp[i] -42.03 <0.1);
+//		std::cout << bcc_exp[i] << std::endl;
+		BOOST_CHECK(bcc_exp[i] != 0 );
+
+		if ( i == 0)
+			BOOST_CHECK(abs(bcc_exp[i] -42.03) <0.1);
+		else{
+			BOOST_CHECK(abs(bcc_exp[i] -7.29) <0.1);
+		}
 	}
 }
+
+
+void test_brandes_comunicability_centrality_wheel14(){
+	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	double bcc_exp[generalGraph->getOrder()];
+	
+	generalGraph->brandes_betweenness_centrality(bcc_exp);
+	for (int i = 0; i < generalGraph->getOrder(); i++){
+		std::cout << "Pos " << i << " : " << bcc_exp[i] << std::endl;
+		BOOST_CHECK(bcc_exp[i] != 0 );
+		if ( i == 0)
+			BOOST_CHECK(abs(bcc_exp[i] -0.75) <0.1);
+		else{
+			BOOST_CHECK(abs(bcc_exp[i] -0.00641) <0.1);
+		}
+	}
+}
+
+
+
+
+void test_brandes_comunicability_centrality_test_4nodes(){
+	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	generalGraph->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	double bcc_exp[generalGraph->getOrder()];
+	
+	generalGraph->brandes_betweenness_centrality(bcc_exp);
+	for (int i = 0; i < generalGraph->getOrder(); i++){
+		std::cout << "Pos " << i << " : " << bcc_exp[i] << std::endl;
+		if ( i == 0 || i == 3)
+			BOOST_CHECK(bcc_exp[i] == 0);
+		else{
+			BOOST_CHECK(bcc_exp[i] != 0 );
+			BOOST_CHECK(abs(bcc_exp[i] -0.66) <0.1);
+		}
+	}
+}
+
+
+
 void test_setAllVertexneigbours(){
 	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
@@ -145,6 +193,8 @@ void test_setAllVertexneigbours(){
 
 }
 
+
+
 typedef void (*func_type)(void);
 
 func_type functions[]={
@@ -154,7 +204,10 @@ func_type functions[]={
 	test_removeVertexNeighbours,
 	test_vertexAreNeighbours,
 	test_brandes_comunicability_centrality_exp,
-	test_setAllVertexneigbours
+	test_setAllVertexneigbours,
+	test_brandes_comunicability_centrality_wheel14,
+	test_brandes_comunicability_centrality_test_4nodes
+	
 };
 
 void getFirstTest(int * iTerator, func_type * test){

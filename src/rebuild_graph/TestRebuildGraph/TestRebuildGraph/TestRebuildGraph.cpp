@@ -30,6 +30,7 @@ using namespace boost::unit_test;
 
 
 #define DEFAULT_ALGORITHM_BARBASE_20_4
+#define COMPARA_THE_SAME_GRAPH
 
 
 
@@ -381,9 +382,9 @@ BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm){
 	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc>>" << std::endl;
 	double compareResult = 10.0;
 	simulation(0, "barabase_20_4.gpfc" ,100,&compareResult);
-	std::cout << "DEFAULT ALGORITHM test_4nodes.gpfc Result:" << compareResult << " <<" << std::endl;
+	std::cout << "DEFAULT ALGORITHM barabase_20_4.gpfc Result:" << compareResult << " <<" << std::endl;
 	
-	BOOST_CHECK(abs(compareResult-0.061915)< 0.1);
+	BOOST_CHECK(abs(compareResult-0.0467452)< 0.1);
 }
 #endif
 
@@ -393,16 +394,16 @@ BOOST_AUTO_TEST_CASE(compara){
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	gsl_matrix * matrixA;
 	gsl_matrix * matrixB;
-	graph* graph = NULL;
+	GeneralGraph* graph = NULL;
 	
 	const char *fileNameGraph="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc";
-	graph = rebuildGraph->GetGraphfromFile(largv);
+	graph = rebuildGraph->GetGraphfromFile(fileNameGraph);
 	
 	matrixA = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
 	matrixB = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
 	
-	rebuildGraph->graphToGsl(graph, matrixA );
-	rebuildGraph->graphToGsl(graph,matrixB);
+	graph->graphToGsl( matrixA );
+	graph->graphToGsl( matrixB );
 	
 	
 	float result = rebuildGraph->compareMatrix(matrixA,matrixB);

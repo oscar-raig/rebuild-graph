@@ -3,8 +3,12 @@ import networkx as nx
 import numpy
 
 import scipy.linalg
-G=nx.read_adjlist("test.gpfc",delimiter=" ",nodetype=int)
+G=nx.read_adjlist("wheel14.txt",delimiter=" ",nodetype=int)
+#G=nx.read_adjlist("test.gpfc",delimiter=" ",nodetype=int)
 sc = nx.communicability_centrality_exp(G)
+print sc
+exit
+
 # alternative implementation that calculates the matrix exponential
     
 nodelist = G.nodes() # ordering of nodes in matrix

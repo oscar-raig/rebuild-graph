@@ -36,7 +36,7 @@ public:
 	
 	// Get a vertex list of neighbours
 	virtual void setAllVertexNeighbours()=0;
-	virtual void brandes_betweenness_centrality(double *myBBC){};
+	virtual void brandes_betweenness_centrality(double *myBBC)=0;
 	virtual void brandes_comunicability_centrality_exp(double *myCExp){};
 	
 	virtual void communicability_betweenness_centrality(double *myCExp){};
