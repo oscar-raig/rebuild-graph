@@ -7,7 +7,7 @@
 //
 
 #include "StrategyPatternAlgorithm.h"
-#include "gslGraph.h"
+#include "GraphFactory.h"
 
 
 //-----------------------------------------------------------------------------
@@ -38,6 +38,8 @@ void StrategyPatternAlgorithm::modifyGraph(GeneralGraph *sourceGraph,int &random
 	int newNeighbours[myOrder];
 	int found;
 	
+	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::modifyGraph");
+	
 	// Select vertex to change
 	vertex2change=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
 	// vertex2change is in [0,n-1]
@@ -47,7 +49,7 @@ void StrategyPatternAlgorithm::modifyGraph(GeneralGraph *sourceGraph,int &random
 	//printf("modifyGraph remove vertex %d\n",vertex2change);
 	sourceGraph->removeVertexNeighbours(vertex2change);
 	//sourceGraph->printGraph();
-	//printf("modifyGraph vertex removed\n");
+	lFuncTrace.trace("modifyGraph vertex removed\n");
 	do{
 		//Choose new vertex degree
 		myNewNumberOfNeighbours=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder-1));
@@ -112,20 +114,20 @@ GeneralGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrde
 	int i,j;
 	int newNeighbour;
 	int newDegree;
-	graph *result=(graph *)new graph(sourceGraphOrder);
+	GeneralGraph *result=GraphFactory::createGraph(USED_GRAPH,sourceGraphOrder);
 	
 	for(i=0; i<sourceGraphOrder; i++){
 		// The new vertex degree is to be
 		//   at least 1 (the graphs needs to be connected)
 		//   at most n-1 (the vertex is connected to every other vertex
-		if(result->vertexArray[i]->degree==0){
+		if(result->getDegree(i)==0){
 			// vertex i has no neighbours yet
 			newDegree=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(sourceGraphOrder-1));
 			// newDegre is in [1,n-1]
-		} else if(result->vertexArray[i]->degree<(sourceGraphOrder-1)){
+		} else if(result->getDegree(i)<(sourceGraphOrder-1)){
 			// vertex i is connected to some other vertex
 			newDegree=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*
-							(sourceGraphOrder-result->vertexArray[i]->degree));
+							(sourceGraphOrder-result->getDegree(i)));
 			// newDegree is in [0,n-1-degree]
 		} else {
 			// vertex i is already connected to all possible neighbours
@@ -149,7 +151,8 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbe
 									   FILE *logFile,double &costBest,
 									   CSettingsSimulation settingSimulation){
 	
-	CFuncTrace lFuncTrace(false,"CRebuildGraph::AnnealingAlgorithm");
+	CFuncTrace lFuncTrace(true,"CRebuildGraph::AnnealingAlgorithm");
+//	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
 	double temperMin=TEMPER_MIN_DEFAULT;
 	double k=K;
 	int iterations=0;
@@ -172,6 +175,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbe
 	// STARTING SIMMULATED ANNEALING
 	Tk=settingSimulation.To;
 	bestGraph=generateInitialGraph(graphOrder,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
+	bestGraph->printGraph();
 	*pbestGraph= bestGraph;
 	bestGraph->setAllVertexNeighbours();
 	
@@ -235,8 +239,11 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbe
 				//otherwise we don't accept the new graph
 				if (newGraph->GetType() == GRAPH )
 					((graph*)bestGraph)->copyGraph((graph*)newGraph);
-				else
-					((gslGraph *)newGraph)->copyGraph((gslGraph*)bestGraph);
+				else{
+					
+				//	((gslGraph *)newGraph)->copyGraph((gslGraph*)bestGraph);
+					((gslGraph *)bestGraph)->copyGraph((gslGraph*)newGraph);
+				}
 				notOk++;
 				lFuncTrace.trace("x");
 				fprintf(logFile,"x");

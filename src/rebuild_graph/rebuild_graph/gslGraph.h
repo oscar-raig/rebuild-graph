@@ -30,6 +30,11 @@ public:
 	{
 		nType = GSL_GRAPH;
 	};
+	gslGraph(int sizeOfMatrix):order(sizeOfMatrix),degree(0)
+	{
+		nType = GSL_GRAPH;
+		matrix = gsl_matrix_alloc(sizeOfMatrix,sizeOfMatrix);
+	};
 	virtual GeneralGraph *readPythonGraphFile(char *fileName);
 	// Get the number of vertex (order) of the graph
 	virtual int getOrder() const { return order;};
@@ -101,7 +106,7 @@ public:
 		return RESULT_OK;
 	}
 	virtual gslGraph*	copyGraph(){
-		gslGraph *newgslGraph = new gslGraph();
+		gslGraph *newgslGraph = new gslGraph(order);
 		newgslGraph->order = order;
 		newgslGraph->degree = degree;
 		gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
@@ -110,11 +115,12 @@ public:
 	
 	virtual void copyGraph(gslGraph * newgslGraph)
 	{
-	//	*newgslGraph = copyGraph();
-		
+		newgslGraph = copyGraph();
+		return;
 		newgslGraph->order = order;
 		newgslGraph->degree = degree;
-		delete newgslGraph->matrix;
+		if ( newgslGraph->matrix)
+			delete newgslGraph->matrix;
 		gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
 	}
 	
@@ -182,7 +188,15 @@ public:
 		return result;
 	}
 	virtual void addNewVertexNeighbour(int sourceVertex,int newNeighbour){
-		
+		if(((order+1)>sourceVertex) &&
+		   ((order+1)>newNeighbour)) {
+			gsl_matrix_set(matrix,sourceVertex,newNeighbour,1);
+		}
+		else{
+			printf("Error source ore newNeigbour out of bounds");
+		}
+			
+	
 	}
 	virtual void brandes_betweenness_centrality(double *myBBC){
 		

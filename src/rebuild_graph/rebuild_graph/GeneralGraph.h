@@ -14,8 +14,10 @@
 #ifndef STRING_LENGTH
 #define STRING_LENGTH 256
 #endif
+
 #define GSL_GRAPH 0
 #define GRAPH 1
+#define USED_GRAPH	GSL_GRAPH
 class GeneralGraph{
 public:
 	int nType;
@@ -47,6 +49,9 @@ public:
 	virtual int  vertexAreNeighbours(int vertexBegining,int vertexEnding)=0;
 	virtual int  graphNotConnected(int *unconnectedVertex)=0;
 	virtual void addNewVertexNeighbour(int sourceVertex,int newNeighbour)=0;
+	// Add a vertex neighbour newNeighbour to vertex sourceVertex
+    virtual int addVertexNeighbour(int sourceVertex,int newNeighbour)=0;
+	
 };
 
 #endif /* defined(__rebuild_graph__GeneralGraph__) */

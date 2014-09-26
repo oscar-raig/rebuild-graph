@@ -27,6 +27,16 @@ public:
 //			return NULL;
 		}
 	}
+	static GeneralGraph * createGraph(int graphClass,int sizeOfMatrix){
+		if (graphClass== GRAPH){
+			return new graph(sizeOfMatrix);
+		}else{
+			
+	        return new gslGraph(sizeOfMatrix);
+			//			return NULL;
+		}
+	}
+	
 	
 };
 #endif /* defined(__rebuild_graph__GraphFactory__) */

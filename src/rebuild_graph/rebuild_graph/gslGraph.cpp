@@ -119,7 +119,7 @@ GeneralGraph *gslGraph::readPythonGraphFile(char *fileName){
 void gslGraph::printGraph(){
 	int i,j;
 		
-	//  printf("The graph has %d vertex:\n",order);
+	  printf("The graph has %d vertex:\n",order);
 	for(i=0;i<order;i++){
 		
 		
@@ -127,8 +127,8 @@ void gslGraph::printGraph(){
 		
 		//    printf("Vertex %3d(%d neighbours):",i,auxNNeighbours);
 		for(j=0;j<order;j++){
-			gsl_matrix_get (matrix, i,j);
+			printf(" Value %f ",gsl_matrix_get (matrix, i,j));
 		}
-		//    printf("\n");
+		   printf("\n");
 	}
 }

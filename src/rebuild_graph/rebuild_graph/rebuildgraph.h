@@ -100,7 +100,7 @@ public:
 		strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
 		strcpy(outputGraphFilename,inputFilename);
 		strcat(outputGraphFilename,".res");
-		targetGraph = GraphFactory::createGraph( GSL_GRAPH );
+		targetGraph = GraphFactory::createGraph( USED_GRAPH );
 		targetGraph->readPythonGraphFile(inputFilename);
 		SrategyPatternAlgorithm->regenerateGraph(settingsSimulation,targetGraph,inputFilename, targetBC, bestBC, graphOrder, compareResult,&Tk,&costBest,&bestGraph);
 		CompareAndGenerateResults(*settingsSimulation,targetGraph,bestGraph,inputFilename,timeStart,Tk,								  targetBC,bestBC,costBest,compareResult,outputGraphFilename);

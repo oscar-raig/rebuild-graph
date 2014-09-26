@@ -18,7 +18,7 @@
 using namespace boost::unit_test;
 
 
-#define USED_GRAPH	GSL_GRAPH
+
 
 #define DIR_GRAPHS "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/"
 /*
