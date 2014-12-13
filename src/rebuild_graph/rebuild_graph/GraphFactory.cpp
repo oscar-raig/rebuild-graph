@@ -8,3 +8,19 @@
 
 #include "GraphFactory.h"
 
+
+
+GeneralGraph * GraphFactory::createGraph(int graphClass){
+	if (graphClass== GRAPH){
+		return new graph();
+	}else{
+		return new gslGraph();
+	}
+}
+GeneralGraph *  GraphFactory::createGraph(int graphClass,int sizeOfMatrix){
+	if (graphClass== GRAPH){
+		return new graph(sizeOfMatrix);
+	}else{
+		return new gslGraph(sizeOfMatrix);
+	}
+}

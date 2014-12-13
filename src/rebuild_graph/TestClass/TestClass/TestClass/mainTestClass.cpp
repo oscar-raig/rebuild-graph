@@ -47,6 +47,21 @@ void test_readGraphFromFilewheel10(){
 }
 
 
+
+
+void test_readGraphFromFiletest_4nodes(){
+	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	generalGraph->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	int degree = generalGraph->getDegree();
+	int order = generalGraph->getOrder();
+	generalGraph->printGraph();
+	BOOST_CHECK(degree == 2);
+	BOOST_CHECK(order ==4);
+}
+
+
+
+
 void test_removeVertexNeighbours(){
 	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
@@ -65,6 +80,9 @@ void test_removeVertexNeighbours(){
 	generalGraph->removeVertexNeighbours(0);
 	
 	order = generalGraph->getOrder();
+	degree = generalGraph->getDegree();
+	BOOST_CHECK(degree == 2);
+	generalGraph->printGraph();
 
 	BOOST_CHECK(order ==14);
 	for (int i = 0; i< 14; i++) {
@@ -144,7 +162,68 @@ void test_brandes_comunicability_centrality_test_4nodes(){
 }
 
 
+// Code Complete
+// layout every test in a paragraph
 
+void test_adNewVertexNeighbour(){
+	GeneralGraph *graph = NULL;
+	int degree = 0;
+	int order = 0;
+	
+	graph = GraphFactory::createGraph(USED_GRAPH,5);
+	degree = graph->getDegree();
+	order = graph->getOrder();
+	BOOST_CHECK( degree == 0 );
+	BOOST_CHECK( order == 5);
+	
+	// adding a conection between 0 and 1
+	graph->addNewVertexNeighbour(0,1);
+	degree = graph->getDegree();
+	BOOST_CHECK( degree == 1);
+	order = graph->getOrder();
+	BOOST_CHECK( order == 5);
+	
+	// removing the connection between 0 and 1
+	graph->removeVertexNeighbours(0);
+	degree = graph->getDegree();
+	order = graph->getOrder();
+	BOOST_CHECK( degree == 0 );
+	BOOST_CHECK( order == 5);
+	
+	// removing a removed connection
+	graph->removeVertexNeighbours(1);
+	degree = graph->getDegree();
+	order = graph->getOrder();
+	BOOST_CHECK( degree == 0 );
+	BOOST_CHECK( order == 5);
+	
+	//removing a inexisting connection
+	graph->removeVertexNeighbours(1);
+	degree = graph->getDegree();
+	order = graph->getOrder();
+	BOOST_CHECK( degree == 0 );
+	BOOST_CHECK( order == 5);
+
+	// adding a triangle
+	graph->addNewVertexNeighbour(0,1);
+	graph->addNewVertexNeighbour(0,3);
+	graph->addNewVertexNeighbour(3,2);
+	degree = graph->getDegree();
+	order = graph->getOrder();
+	BOOST_CHECK( degree == 2 );
+	BOOST_CHECK( order == 5);
+	
+	// adding a new Vertex
+	graph->addNewVertexNeighbour(6, 0 );
+	degree = graph->getDegree();
+	order = graph->getOrder();
+	BOOST_CHECK( degree == 2 );
+	BOOST_CHECK( order == 5);
+
+	
+	
+	
+}
 void test_setAllVertexneigbours(){
 	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
@@ -201,12 +280,15 @@ func_type functions[]={
 	test_readGraphFromNULLFile,
 	test_readGraphFromFileNotExists,
 	test_readGraphFromFilewheel10,
+	test_readGraphFromFiletest_4nodes,
 	test_removeVertexNeighbours,
 	test_vertexAreNeighbours,
 	test_brandes_comunicability_centrality_exp,
 	test_setAllVertexneigbours,
 	test_brandes_comunicability_centrality_wheel14,
-	test_brandes_comunicability_centrality_test_4nodes
+	test_brandes_comunicability_centrality_test_4nodes,
+	test_adNewVertexNeighbour
+	
 	
 };
 

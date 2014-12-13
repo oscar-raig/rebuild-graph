@@ -28,7 +28,7 @@
 class CRebuildGraph{
 	
 private:
-	StrategyPatternAlgorithm *SrategyPatternAlgorithm;
+//	StrategyPatternAlgorithm *SrategyPatternAlgorithm;
 
 public:
 	// Input Output File Functions
@@ -63,6 +63,7 @@ public:
 		
 	// Auxiliar Calculations
 	gsl_vector_complex * calculateEgeinval (gsl_matrix *target);
+	// 2014-11-26 calculateExp, may be we should delete?
 	gsl_vector *calculateExp(const gsl_vector_complex *eval);
 	
 	// Others
@@ -91,7 +92,7 @@ public:
 		time_t timeStart;
 		GeneralGraph *bestGraph = NULL;
 		double costBest=0.0;
-			char outputGraphFilename[STRING_LENGTH];
+		char outputGraphFilename[STRING_LENGTH];
 		double Tk=TEMPER_INITIAL_DEFAULT;
 		// Default value initialization
 		timeStart=time(NULL);
@@ -102,8 +103,15 @@ public:
 		strcat(outputGraphFilename,".res");
 		targetGraph = GraphFactory::createGraph( USED_GRAPH );
 		targetGraph->readPythonGraphFile(inputFilename);
-		SrategyPatternAlgorithm->regenerateGraph(settingsSimulation,targetGraph,inputFilename, targetBC, bestBC, graphOrder, compareResult,&Tk,&costBest,&bestGraph);
-		CompareAndGenerateResults(*settingsSimulation,targetGraph,bestGraph,inputFilename,timeStart,Tk,								  targetBC,bestBC,costBest,compareResult,outputGraphFilename);
+		StrategyPatternAlgorithm::regenerateGraph(settingsSimulation,targetGraph,
+												 inputFilename, targetBC, bestBC, graphOrder,compareResult,&Tk,&costBest,&bestGraph);
+		CompareAndGenerateResults(*settingsSimulation,targetGraph,
+								  bestGraph,inputFilename,
+								  timeStart,Tk,
+								  targetBC,bestBC,costBest,
+								compareResult,outputGraphFilename);
+		
+		delete targetGraph;
 		
 	}
 	

@@ -108,14 +108,19 @@ int main(int argc, const char * argv[])
 	double *TargetBC = NULL;
 	double *BestBC = NULL;
 	int order = 0;
-    rebuildGraph->regenerateGraph(*settingsSimulation,TargetBC,BestBC,order,compareResult);
+    rebuildGraph->regenerateGraph(settingsSimulation,TargetBC,BestBC,order,compareResult);
 
-	
+	std::cout << "RegenerateGraph " <<compareResult << std::endl;
 	
 	if (settingsSimulation){
-		free(settingsSimulation);
+		delete settingsSimulation;
 		settingsSimulation= NULL;
 	}
+	if ( rebuildGraph ){
+		delete rebuildGraph;
+		rebuildGraph = NULL;
+	}
+	
 	return 0;
 }
 

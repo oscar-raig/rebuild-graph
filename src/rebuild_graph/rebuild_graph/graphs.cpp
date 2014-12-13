@@ -18,6 +18,15 @@
 #include "graphs.h"
 #include "CSettingsSumulation.h"
 
+
+//#define DEBUG_GRAPH CTrace::level::TRACE_INFO
+
+
+#define DEBUG_GRAPH CTrace::level::TRACE_DEBUG
+
+#define INFO_GRAPH CTrace::level::TRACE_INFO
+//#define INFO_GRAPH CTrace::level::TRACE_DEBUG
+
 // Defining constants
 
 // Just for convenience
@@ -300,7 +309,16 @@ int graph::addVertexNeighbour(int sourceVertex,int newNeighbour){
     if(vertexArray[sourceVertex]->degree>degree){
       degree++;
     }
+	// Added by oscar 2014-11-09
+	if(vertexArray[newNeighbour]->degree>degree){
+		  degree++;
+	}
   }
+// Delete next 3 lines 2104-11-27
+//	CFuncTrace trace (true,"graph::addNewVertexNeighbour");
+//	trace.trace(CTrace::level::TRACE_INFO,"ojooooooooo this line is new");
+//	updateDistanceMatrix();
+	
   return result;
 }
 
@@ -347,6 +365,11 @@ void graph::addNewVertexNeighbour(int sourceVertex,int newNeighbour){
         }
       }
     }
+	  // Delete next 3 lines 2104-11-27
+
+	//  CFuncTrace trace (true,"graph::addNewVertexNeighbour");
+	//  trace.trace(CTrace::level::TRACE_INFO,"ojooooooooo this line is new");
+//	  updateDistanceMatrix();
 //    myVertex=NULL;
 //    myNeighbour=NULL;
   }
@@ -421,7 +444,7 @@ void graph::setAllVertexNeighbours(){
 
 
 // Get myVertex list of neighbours
-int graph::getVertexNeighbours(int myVertex,int **myListOfNeighbours){
+int graph::getVertexNeighbours(int myVertex,int **myListOfNeighbours) const{
   return vertexArray[myVertex]->getNeighbours(myListOfNeighbours);
 }
 
@@ -677,19 +700,20 @@ int graph::graphNotConnected(int *unconnectedVertex){
 
 
 
-void graph::printGraph(){
+void graph::printGraph(int TRACE_LEVEL){
+  CFuncTrace trace(false,"graph::printGraph");
   int i,j;
   int auxNNeighbours;
   int *auxNeighbours;
 
-  printf("The graph has %d vertex:\n",order);
+  trace.trace(TRACE_LEVEL,"The graph has order %d degree %d: \n",order,degree);
   for(i=0;i<order;i++){
     auxNNeighbours=vertexArray[i]->getNeighbours(&auxNeighbours);
-    printf("Vertex %3d(%d neighbours):",i,auxNNeighbours);
+	  trace.trace(TRACE_LEVEL,"Vertex %3d(%d neighbours):",i,auxNNeighbours);
     for(j=0;j<auxNNeighbours;j++){
-      printf(" %d",auxNeighbours[j]);
+      trace.trace(TRACE_LEVEL," %d",auxNeighbours[j]);
     }
-    printf("\n");
+	  
     free(auxNeighbours);
   }
 }
@@ -721,7 +745,7 @@ void graph::printGraph(FILE *myFile){
 // 0 3
 // 2
 // 1
-void graph::printMyGraph(const char * outputGraphFilename){
+void graph::printMyGraph(const char * outputGraphFilename) const{
 	
 	FILE *outputGraph;
 	int i,j;
@@ -778,7 +802,7 @@ graph::graphToGsl( gsl_matrix* target){
 // GLOBAL operation copyGraph(sourceGraph,targetGraph)
 // COPIES sourceGraph to targetGraph
 //-----------------------------------------------------------------------------
-void graph::copyGraph( graph *targetGraph){
+void graph::copyGraph( graph *targetGraph) const {
 	
 	int i,j,aux;
 	int myOrder=getOrder();
@@ -807,7 +831,7 @@ void graph::copyGraph( graph *targetGraph){
 // GLOBAL operation copyGraph(sourceGraph)
 // RETURNS a copy of sourceGraph
 //-----------------------------------------------------------------------------
-graph *graph::copyGraph(){
+graph *graph::copyGraph() const{
 	int i,myDegree,*myNeighbours;
 	int myOrder=getOrder();
 	graph *result=(graph *)new graph(myOrder);
@@ -851,7 +875,7 @@ graph::	communicability_betweenness_centrality(double *myCExp)
 	//	targetGraph->printGraph();
 	
 	graphToGsl(A1);
-	lFuncTrace.trace("\nPrinting Home made Matrix\n");
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"\nPrinting Home made Matrix\n");
 	//		printGslMatrix(A1," %g");
 	
 	/* Step 2
@@ -879,7 +903,7 @@ graph::	communicability_betweenness_centrality(double *myCExp)
 		
 		gsl_matrix_sub(copyexpmAForSubstract,copyA1expm);
 		gsl_matrix_div_elements (copyexpmAForSubstract, A1expm);
-		lFuncTrace.trace("Printing expA- scip\n");
+		lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Printing expA- scip\n");
 		//		printGslMatrix(copyexpmAForSubstract);
 		gslDeleteNodeConnections(copyexpmAForSubstract,iteratorNode);
 		
@@ -900,7 +924,7 @@ graph::	communicability_betweenness_centrality(double *myCExp)
 				sum +=gsl_matrix_get(copyexpmAForSubstract,row,col);
 			}
 		}
-		lFuncTrace.trace("Suma %f\n",sum);
+		lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Suma %f\n",sum);
 		gsl_vector_set(matrixFinalResult,iteratorNode,sum);
 		
 	}

@@ -7,10 +7,47 @@
 //
 
 #include "gslGraph.h"
+#include "CTrace.hpp"
 #include <stdexcept>
 #include <iostream>
 using std::runtime_error;
 
+
+#ifndef STRING_LENGTH
+#define STRING_LENGTH 256
+#endif
+
+
+gslGraph::gslGraph():order(0),degree(0),matrix(NULL)
+{
+	nType = GSL_GRAPH;
+};
+
+gslGraph::gslGraph(int sizeOfMatrix):order(sizeOfMatrix),degree(0)
+{
+	nType = GSL_GRAPH;
+	matrix = gsl_matrix_alloc(sizeOfMatrix,sizeOfMatrix);
+};
+
+
+void gslGraph::printMyGraph(const char * outputGraphFilename)const{
+	CFuncTrace trace (false,"printMyGraph");
+	FILE *outputGraph = NULL;
+	outputGraph=fopen(outputGraphFilename,"w");
+	if(outputGraph==NULL){
+		printf("Cannot open out graph file %s for writting\n",outputGraphFilename);
+		exit(-1);
+	}
+	for (size_t i = 0; i < matrix->size1; i++) {
+		for (size_t j = 0; j < matrix->size2; j++) {
+			fprintf(outputGraph,"%d ",(int)
+					gsl_matrix_get(matrix, i, j));
+			if ( j == matrix->size2 -1 )
+				fprintf(outputGraph,"%d\n",(int)gsl_matrix_get(matrix, i, j));
+		}
+	}
+	fclose(outputGraph);
+}
 
 
 //-----------------------------------------------------------------------------
@@ -24,6 +61,7 @@ int gslGraph::addVertex(int newVertexId){
 	if ( order == 0){
 		matrix = gsl_matrix_alloc	(newVertexId+1,newVertexId+1);
 		order = newVertexId+1;
+		degree = getDegree();
 		return order;
 	}
 	
@@ -37,6 +75,7 @@ int gslGraph::addVertex(int newVertexId){
 		delete matrix;
 		matrix = new_matrix;
 		order = newVertexId+1;
+		degree = getDegree();
 	}
 	return order;
 }
@@ -58,9 +97,8 @@ int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
 
 		//result=vertexArray[sourceVertex]->addNeighbour(newNeighbour);
 		//result=vertexArray[newNeighbour]->addNeighbour(sourceVertex);
-		if( getDegree(sourceVertex)>degree){
-			degree++;
-		}
+		degree = getDegree();
+		
 	}
 	return result;
 }
@@ -116,19 +154,407 @@ GeneralGraph *gslGraph::readPythonGraphFile(char *fileName){
 	}
 }
 
-void gslGraph::printGraph(){
+void gslGraph::printGraph(int TRACE_LEVEL){
 	int i,j;
-		
-	  printf("The graph has %d vertex:\n",order);
+	CFuncTrace trace(false,"gslGraph::printGraph");
+	
+	trace.trace(DEBUG_GSL_GRAPH,"The graph has %d order %d degree:\n",order,degree);
 	for(i=0;i<order;i++){
-		
-		
-		
-		
-		//    printf("Vertex %3d(%d neighbours):",i,auxNNeighbours);
+		trace.trace(DEBUG_GSL_GRAPH,"Vertex %d",i);
 		for(j=0;j<order;j++){
-			printf(" Value %f ",gsl_matrix_get (matrix, i,j));
+			if (gsl_matrix_get (matrix, i,j)) {
+				trace.trace(DEBUG_GSL_GRAPH," %d ",j);
+			}
 		}
-		   printf("\n");
+		  	trace.trace(DEBUG_GSL_GRAPH,"\n");
 	}
 }
+
+
+
+void gslGraph::node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness,gsl_matrix* edge_betweenness) const {
+	CFuncTrace trace(false,"node_and_edge_betweenness_bin");
+	//	if (safe_mode) check_status(m, BINARY, "node_and_edge_betweenness_bin");
+	if (sourceGraph->size1 != sourceGraph->size2) {
+		//throw size_exception();
+	}
+	bool free_node_betweenness = false;
+	bool free_edge_betweenness = false;
+	
+	// BC=zeros(n,1);
+	if (node_betweenness == NULL) {
+		free_node_betweenness = true;
+		node_betweenness = gsl_vector_calloc(sourceGraph->size1);
+	} else {
+		gsl_vector_set_zero(node_betweenness);
+	}
+	if (edge_betweenness == NULL) {
+		free_edge_betweenness = true;
+		edge_betweenness = gsl_matrix_calloc(sourceGraph->size1, sourceGraph->size2);
+	} else {
+		gsl_matrix_set_zero(edge_betweenness);
+	}
+	
+	
+	// for u=1:n
+	for (int u = 0; u < (int)sourceGraph->size1; u++) {
+		
+		
+		gsl_vector* d = gsl_vector_calloc(sourceGraph->size1);
+		gsl_vector_set(d, u, 1.0);
+		
+		// NP=zeros(1,n); NP(u)=1;
+		gsl_vector* sigma = gsl_vector_calloc(sourceGraph->size1);
+		gsl_vector_set(sigma, u, 1.0);
+		
+		// P=false(n);
+		gsl_matrix* p = gsl_matrix_calloc(sourceGraph->size1, sourceGraph->size2);
+		
+		// Q=zeros(1,n); q=n;
+		gsl_vector* Q = gsl_vector_calloc(sourceGraph->size1);
+		int q = (int)sourceGraph->size1 - 1;
+		
+		gsl_matrix* copy_sourceGraph = copy(sourceGraph);
+		
+		// V=u;
+		gsl_vector* V = gsl_vector_alloc(1);
+		gsl_vector_set(V, 0, u);
+		
+		// while V
+		while (V != NULL) {
+			
+			// Gu(:,V)=0;
+			for (int V_index = 0; V_index < (int)V->size; V_index++) {
+				int v = (int)gsl_vector_get(V, V_index);
+				gsl_vector_view copy_m_column = gsl_matrix_column(copy_sourceGraph, v);
+				gsl_vector_set_zero(&copy_m_column.vector);
+			}
+			
+			// for v=V
+			for (int V_index = 0; V_index < (int)V->size; V_index++) {
+				int v = (int)gsl_vector_get(V, V_index);
+				gsl_vector_set(Q, q--, v);
+				
+				// W=find(Gu(v,:));
+				gsl_vector_view copy_m_row = gsl_matrix_row(copy_sourceGraph, v);
+				gsl_vector* W = find(&copy_m_row.vector);
+				
+				// For all the neighbours of v
+				for (int W_index = 0; W != NULL && W_index < (int)W->size; W_index++) {
+					int w = (int)gsl_vector_get(W, W_index);
+					// shortest path to w via v?
+					if (fp_nonzero(gsl_vector_get(d, w))) {
+						
+						double sigma_w = gsl_vector_get(sigma, w);
+						double sigma_v = gsl_vector_get(sigma, v);
+						gsl_vector_set(sigma, w, sigma_w + sigma_v);
+						
+						gsl_matrix_set(p, w, v, 1.0);
+						
+						// else
+					} else {
+						
+						gsl_vector_set(d, w, 1.0);
+						gsl_vector_set(sigma, w, gsl_vector_get(sigma, v));
+						gsl_matrix_set(p, w, v, 1.0);
+					}
+				}
+				if (W != NULL) {
+					gsl_vector_free(W);
+				}
+			}
+			
+			// V=find(any(Gu(V,:),1));
+			gsl_vector* column_indices = sequence(0, (int)sourceGraph->size2 - 1);
+			gsl_matrix* copy_m_rows = ordinal_index(copy_sourceGraph, V, column_indices);
+			gsl_vector* any_copy_m_rows = any(copy_m_rows);
+			gsl_vector_free(V);
+			V = find(any_copy_m_rows);
+			gsl_vector_free(any_copy_m_rows);
+			gsl_matrix_free(copy_m_rows);
+			gsl_vector_free(column_indices);
+		}
+		
+		// if ~all(D)
+		if (all(d) == 0) {
+			trace.trace(CTrace::level::TRACE_DEBUG,"All the distances are 0");
+			// Q(1:q)=find(~D);
+			gsl_vector* not_d = logical_not(d);
+			gsl_vector* not_d_indices = find(not_d);
+			gsl_vector_view Q_upto_q = gsl_vector_subvector(Q, 0, q + 1);
+			gsl_vector_memcpy(&Q_upto_q.vector, not_d_indices);
+			gsl_vector_free(not_d_indices);
+			gsl_vector_free(not_d);
+		}
+		
+		// S returns vertices in order of non-increasing distance from s
+		gsl_vector* delta = gsl_vector_calloc(sourceGraph->size1);
+		
+		// for w=Q(1:n-1);
+		for (int Q_index = 0; Q_index < (int)sourceGraph->size1 - 1; Q_index++) {
+			
+			int w = (int)gsl_vector_get(Q, Q_index);
+			// BC(w)=BC(w)+DP(w)
+			double bcw = gsl_vector_get(node_betweenness, w);
+			double delta_w = gsl_vector_get(delta, w);
+			gsl_vector_set(node_betweenness, w, bcw + delta_w);
+			
+			// for v=find(P(w,:))
+			gsl_vector_view p_row = gsl_matrix_row(p, w);
+			gsl_vector* found_p_row = find(&p_row.vector);
+			//			printGslMatrix(p);
+			for (int p_index = 0; found_p_row != NULL && p_index < (int)found_p_row->size; p_index++) {
+				int v = (int)gsl_vector_get(found_p_row, p_index);
+				//				std::cout << " v " << v << "Is connected with w" << w << std::endl;
+				// DPvw=(1+DP(w)).*NP(v)./NP(w);
+				double sigma_v = gsl_vector_get(sigma, v);
+				double sigma_w = gsl_vector_get(sigma, w);
+				double dpvw = (1 + delta_w) * sigma_v / sigma_w;
+				//				std::cout << " sigma_v " << sigma_v << "sigma_w" << sigma_w << std::endl;
+				// DP(v)=DP(v)+DPvw;
+				double dpv = gsl_vector_get(delta, v);
+				gsl_vector_set(delta, v, dpv + dpvw);
+				double ebcvw = gsl_matrix_get(edge_betweenness, v, w);
+				
+				gsl_matrix_set(edge_betweenness, v, w, ebcvw + dpvw);
+				
+			}
+			if (found_p_row != NULL) {
+				gsl_vector_free(found_p_row);
+			}
+		}
+		
+		gsl_vector_free(delta);
+		gsl_matrix_free(copy_sourceGraph);
+		gsl_vector_free(Q);
+		gsl_matrix_free(p);
+		gsl_vector_free(sigma);
+		gsl_vector_free(d);
+	}
+	if (free_node_betweenness) {
+		gsl_vector_free(node_betweenness);
+	}
+	if (free_edge_betweenness) {
+		gsl_matrix_free(edge_betweenness);
+	}
+	
+}
+
+gsl_vector* gslGraph::sequence(int start, int end) const {
+	return sequence(start, 1, end);
+}
+
+/*
+ * Emulates (start:step:end).
+ */
+gsl_vector* gslGraph::sequence(int start, int step, int end) const{
+	int n_seq = (end - start) / step + 1;
+	if (n_seq <= 0) {
+		return NULL;
+	}
+	gsl_vector* seq_v = gsl_vector_alloc(n_seq);
+	for (int i = 0, value = start; i < n_seq; i++, value += step) {
+		gsl_vector_set(seq_v, i, value);
+	}
+	return seq_v;
+}
+
+
+/*
+ * Computes node betweenness centrality for a binary graph.  Results are
+ * returned in a vector where each element is the betweenness centrality of the
+ * corresponding node.
+ */
+gsl_vector* gslGraph::betweenness_bin(const gsl_matrix* sourceGraph) const {
+	CFuncTrace trace(false,"gslGraph::betweenness_bin");
+	gsl_vector* betweenness = gsl_vector_alloc(sourceGraph->size1);
+	gsl_matrix* betweeness_edge = gsl_matrix_calloc( sourceGraph->size1, sourceGraph->size2);
+	int static num_traces = 0;
+	if ( num_traces++ % 1000 == 0){
+		trace.trace(CTrace::level::TRACE_ERROR,"REVEIW This code begin");
+		//	node_and_edge_betweenness_bin(sourceGraph, NULL ,betweeness_edge);
+		//	printGslMatrix(betweeness_edge);
+		trace.trace(CTrace::level::TRACE_ERROR,"REVEIW This code end");
+	}
+	node_and_edge_betweenness_bin(sourceGraph, betweenness, NULL );
+	return betweenness;
+}
+
+
+// Get the graph degree
+int  gslGraph::getDegree() const {
+	int local_degree = -1;
+	for (size_t i = 0; i < matrix->size1; i++) {
+		int degree_j = 0;
+		for (size_t j = 0; j < matrix->size2; j++) {
+			
+			
+			if (gsl_matrix_get(matrix, i, j) )
+				degree_j++;
+		}
+		if (degree_j> local_degree)
+			local_degree = degree_j;
+	}
+	return local_degree;
+};
+
+int gslGraph::getDegree(int vertex)const {
+	int vertexDegree = 0;
+	for ( int i =0;i < order; i++)
+		if ( gsl_matrix_get(matrix,vertex,i)){
+			vertexDegree++;
+		}
+	return vertexDegree;
+}
+
+
+void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
+	if ( vertexToRemoveNegighbours < order )
+	{
+		for (int i = 0; i < order ; i++ ){
+			
+			gsl_matrix_set(matrix,vertexToRemoveNegighbours,i,0);
+			gsl_matrix_set(matrix,i,vertexToRemoveNegighbours,0);
+			
+			
+			
+		}
+		this->degree = getDegree();
+		/*
+		 gsl_matrix *new_matrix=gsl_matrix_alloc(order -1,order -1);
+		 for ( int i = 0; i < order ; i ++)
+		 {
+		 if (i < vertexToRemoveNegighbours ) {
+		 for (int j = 0; j < order ; j++ ){
+		 if ( j < vertexToRemoveNegighbours){
+		 if (gsl_matrix_get(matrix, i, j)){
+		 gsl_matrix_set(new_matrix,i,j,1);
+		 }
+		 }else if (j > vertexToRemoveNegighbours ){
+		 if (gsl_matrix_get(matrix, i, j)){
+		 gsl_matrix_set(new_matrix,i,j-1,1);
+		 }
+		 }
+		 }
+		 
+		 }else if (i > vertexToRemoveNegighbours){
+		 for (int j = 0; j < order ; j++ ){
+		 if ( j < vertexToRemoveNegighbours){
+		 if (gsl_matrix_get(matrix, i, j)){
+		 gsl_matrix_set(new_matrix,i-1,j,1);
+		 }
+		 }else if (j > vertexToRemoveNegighbours ){
+		 if (gsl_matrix_get(matrix, i, j)){
+		 gsl_matrix_set(new_matrix,i-1,j-1,1);
+		 }
+		 }
+		 }
+		 
+		 }
+		 }
+			delete matrix;
+			matrix = new_matrix;
+			*/
+	}
+}
+
+
+void gslGraph::brandes_comunicability_centrality_exp(double *myCExp)
+{
+	
+	int graphOrder=getOrder();
+	// Get Numpy Matrix // Matriu d'adjacencia
+	//	lFuncTrace.trace("\nPrinting Home made Matrix\n");
+	//	printGslMatrix(A1," %g");
+	gsl_matrix *A1expm=gsl_matrix_alloc(graphOrder,graphOrder);
+	
+	gsl_linalg_exponential_ss(matrix
+							  , A1expm, .01);
+	//	lFuncTrace.trace("Printing ExpmMatrix");
+	//	printGslMatrix(A1expm);
+	
+	gsl_vector * gslvDiagonal = getDiagonalFromGslMatrix(A1expm);
+	
+	//	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
+	//	printGslVector(gslvDiagonal);
+	
+	gslVectorToArray(gslvDiagonal,myCExp);
+	
+};
+
+
+gsl_vector *
+ gslGraph::getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
+	
+	int nMatrixOrder = (int) gslMatrix->size1;
+	gsl_vector * gslvDiagonal = gsl_vector_alloc(nMatrixOrder);
+	
+	for (int i=0; i < nMatrixOrder;i++){
+		gsl_vector_set(gslvDiagonal,i,gsl_matrix_get(gslMatrix,i,i));
+	}
+	
+	return gslvDiagonal;
+}
+int  gslGraph::gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles)
+{
+	
+	for (size_t i = 0; i < gslVector->size; i++) {
+		arrayDoubles[i]=  gsl_vector_get(gslVector, i);
+		
+	}
+	return RESULT_OK;
+}
+gslGraph*	gslGraph::copyGraph()const{
+	gslGraph *newgslGraph = new gslGraph(order);
+	newgslGraph->order = order;
+	newgslGraph->degree = getDegree();
+	gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
+	return newgslGraph;
+}
+
+void gslGraph::copyGraph(gslGraph * newgslGraph)const{
+	//newgslGraph = copyGraph();
+	//return;
+	newgslGraph->order = order;
+	newgslGraph->degree = getDegree();
+	if ( newgslGraph->matrix)
+		delete newgslGraph->matrix;
+	newgslGraph->matrix = gsl_matrix_alloc(matrix->size1,matrix->size2);
+	gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
+}
+
+
+void  gslGraph::addNewVertexNeighbour(int sourceVertex,int newNeighbour){
+	CFuncTrace trace (false,"gslGraph::addNewVertexNeighbour");
+	if(((order+1)>sourceVertex) &&
+	   ((order+1)>newNeighbour)) {
+		gsl_matrix_set(matrix,sourceVertex,newNeighbour,1);
+		gsl_matrix_set(matrix,newNeighbour,sourceVertex,1);
+		this->degree = getDegree();
+	}
+	else{
+		trace.trace(ERROR_GSL_GRAPH,"Error: source ore newNeigbour out of bounds");
+	}
+}
+
+
+int gslGraph::vertexAreNeighbours(int vertexBegining,int vertexEnding){
+	if (vertexBegining == vertexEnding)
+		return 1;
+	return gsl_matrix_get(matrix, vertexBegining, vertexEnding);
+}
+
+int gslGraph::graphNotConnected (int *unconnectedVertex){
+	int i,result=false;
+	for(i=0;i<order;i++){
+		if(getDegree(i)==0){
+			result=true;
+			*unconnectedVertex=i;
+			//printf("NOT CONNECTED\n");//printGraph();
+			break;
+		}
+	}
+	return result;
+}
+
+

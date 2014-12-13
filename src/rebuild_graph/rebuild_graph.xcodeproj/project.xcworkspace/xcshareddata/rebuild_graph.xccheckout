@@ -10,33 +10,33 @@
 	<string>rebuild_graph</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>38D187C6-2F83-4B41-B5B2-5952EE3081CB</key>
-		<string>https://bitbucket.org/oraig/libcpp.git</string>
-		<key>E9F23C16-5514-4FEB-8404-DAA7FC42B502</key>
+		<key>10D98275DB61CE74AB61E44B3CA982C53F5EAF38</key>
 		<string>https://bitbucket.org/oraig/rebuild-graph.git</string>
+		<key>2DE6CBB3E0211AEB3FF47600DFF46159AF9623DE</key>
+		<string>https://bitbucket.org/oraig/libcpp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>src/rebuild_graph/rebuild_graph.xcodeproj/project.xcworkspace</string>
+	<string>src/rebuild_graph/rebuild_graph.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>38D187C6-2F83-4B41-B5B2-5952EE3081CB</key>
-		<string>../../../../../libcpp</string>
-		<key>E9F23C16-5514-4FEB-8404-DAA7FC42B502</key>
+		<key>10D98275DB61CE74AB61E44B3CA982C53F5EAF38</key>
 		<string>../../../..</string>
+		<key>2DE6CBB3E0211AEB3FF47600DFF46159AF9623DE</key>
+		<string>../../../../../libcpp</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://bitbucket.org/oraig/rebuild-graph.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E9F23C16-5514-4FEB-8404-DAA7FC42B502</string>
+	<string>10D98275DB61CE74AB61E44B3CA982C53F5EAF38</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>38D187C6-2F83-4B41-B5B2-5952EE3081CB</string>
+			<string>2DE6CBB3E0211AEB3FF47600DFF46159AF9623DE</string>
 			<key>IDESourceControlWCCName</key>
 			<string>libcpp</string>
 		</dict>
@@ -44,7 +44,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E9F23C16-5514-4FEB-8404-DAA7FC42B502</string>
+			<string>10D98275DB61CE74AB61E44B3CA982C53F5EAF38</string>
 			<key>IDESourceControlWCCName</key>
 			<string>rebuild-graph</string>
 		</dict>

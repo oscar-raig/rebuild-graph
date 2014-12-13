@@ -28,16 +28,19 @@
 class StrategyPatternAlgorithm {
 	
 public:
-	StrategyPatternAlgorithm(){};
+	StrategyPatternAlgorithm()
+	{
+		CFuncTrace trace(true,"StrategyPatternAlgorithm");
+	};
 	
 	
-	double cost(double *tarjet,double *current,int count);
+	static double cost(double *tarjet,double *current,int count);
 
-	void modifyGraph(GeneralGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
-	double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
-	GeneralGraph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
+	static void modifyGraph(GeneralGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
+	static double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
+	static GeneralGraph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
 	
-	int
+	static int
 	regenerateGraph(CSettingsSimulation *settingsSimulation,
 					GeneralGraph *targetGraph,
 					char *inputFilename,
@@ -50,7 +53,7 @@ public:
 					GeneralGraph **bestGraph);
 	// Rebuilding Graph Main Functions
 
-	void AnnealingAlgorithm(double &Tk, GeneralGraph **pbestGraph,int graphOrder,
+	static void AnnealingAlgorithm(double &Tk, GeneralGraph **pbestGraph,int graphOrder,
 							double *bestBC,double *targetBC,
 							FILE *logFile,double &costBest,
 							CSettingsSimulation settingSimulation);

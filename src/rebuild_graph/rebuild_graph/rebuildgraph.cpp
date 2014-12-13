@@ -69,6 +69,7 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 											double &compareResult,
 											char *outputGraphFilename
 											  ){
+	CFuncTrace lFuncTrace(false,string("CRebuildGraph::CompareAndGenerateResults"));
 	time_t timeEnd;
 	gsl_matrix *targetGraphGsl = gsl_matrix_alloc(targetGraph->getOrder(), targetGraph->getOrder());
 	gsl_matrix *bestGraphGsl = gsl_matrix_alloc(bestGraph->getOrder(), bestGraph->getOrder());
@@ -84,8 +85,8 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 	
 	timeEnd=time(NULL);
 	
-	printf("RESULTS:\n");
-	printf("CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"RESULTS:\n");
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
 	// printf("Output file: %s\n",outputFilename);
 	
 	generateOutputFile(targetGraph,inputFilename,  Tk, costBest,targetBC,
@@ -109,7 +110,7 @@ CRebuildGraph::GetGraphfromFile(const char *graphFileName)
 	char inputFilename[STRING_LENGTH];
 	
 	if (graphFileName==NULL){
-		lFuncTrace.trace("ERROR : argv[1] is NULL");
+		lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"ERROR : argv[1] is NULL");
 		return NULL;
 	}
 	strcpy(inputFilename,graphFileName);
@@ -134,7 +135,7 @@ int CRebuildGraph::calculateBeterness(const char *argv[]){
 	targetGraph->brandes_betweenness_centrality(targetBC);
 	
 	for (int i = 0; i < graphOrder; i++){
-		lFuncTrace.trace("%2.10f\n",targetBC[i]);
+		lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"%2.10f\n",targetBC[i]);
 	}
 	
 	return RESULT_OK;
@@ -215,13 +216,13 @@ int CRebuildGraph::printGslVector(gsl_vector* gslVector){
 	return RESULT_OK;
 }
 
-
+// 2014-11-26 calculateExp, may be we should delete?
 gsl_vector *
 CRebuildGraph::calculateExp(const gsl_vector_complex *eval){
 	CFuncTrace lFuncTrace(false,"calculateExp");
 	int order = (int)eval->size;
 	
-	lFuncTrace.trace("Ordre for Expo %d",order);
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Ordre for Expo %d",order);
 	
 	gsl_vector *evalexp = gsl_vector_alloc (order);
 	for ( int i = 0; i < order; i++){
@@ -244,7 +245,7 @@ CRebuildGraph::calculateCommunicability(const char *argv[]){
 	GeneralGraph *targetGraph=NULL;
 	targetGraph=GetGraphfromFile(argv[1]);
 	int graphOrder=targetGraph->getOrder();
-	lFuncTrace.trace("Graph Order %d",graphOrder);
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Graph Order %d",graphOrder);
 	
 	// Get Numpy Matrix // Matriu d'adjacencia
 	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
@@ -253,9 +254,9 @@ CRebuildGraph::calculateCommunicability(const char *argv[]){
 	
 	targetGraph->graphToGsl(A1);
 	
-	lFuncTrace.trace("Printing Home made Matrix\n");
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Printing Home made Matrix\n");
 	printGslMatrix(A1);
-	lFuncTrace.trace("Printing with gsl function\n");
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Printing with gsl function\n");
 	gsl_matrix_fprintf(stdout, A1, "%g");
 	
 	gsl_vector_complex *eval = calculateEgeinval(A1);
@@ -278,7 +279,7 @@ CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
 	GeneralGraph *targetGraph=NULL;
 	targetGraph=GetGraphfromFile(argv[1]);
 	int graphOrder=targetGraph->getOrder();
-	lFuncTrace.trace("Graph Order %d",graphOrder);
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Graph Order %d",graphOrder);
 	double * bestCommCentExp = (double*)malloc(graphOrder * sizeof(double));
 	
 	targetGraph->brandes_comunicability_centrality_exp(bestCommCentExp);
@@ -352,7 +353,7 @@ void CRebuildGraph::printingCompareMatrixResults(float delta,
 												 gsl_matrix* matrixA
 												 ){
 	CFuncTrace lFuncTrace(false,"CRebuildGraph::printingCompareMatrixResults");
-	lFuncTrace.trace("\nDIFERENCIA (delta) -> %f",delta);
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"DIFERENCIA (delta) -> %f",delta);
 	
 	//Per presentar-la, definim positiva i normalitzem la matriu F
 	if(gsl_matrix_min(F)<0)
@@ -362,7 +363,7 @@ void CRebuildGraph::printingCompareMatrixResults(float delta,
 	
 	FILE *out;
 	out=fopen("sortida.txt","w");
-	lFuncTrace.trace("\nResultats en sortida.txt");
+	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Resultats en sortida.txt");
 	fprintf(out, "DIFERENCIA (delta) -> %f\n\n",delta);
 	for(int i=0; i<matrixA->size1; i++){
 		for(int j=0; j<matrixA->size1; j++){
@@ -412,7 +413,7 @@ CRebuildGraph::compareMatrix(gsl_matrix* matrixA, gsl_matrix*matrixB){
 	
 	gsl_matrix *U1, *U2,*V1,*V2;
 	
-	InitMatrix(matrixA->size1,&work,&s,&U1,&U2,&V1,&V2);
+	InitMatrix((int)matrixA->size1,&work,&s,&U1,&U2,&V1,&V2);
 
 	gsl_matrix_memcpy (U1, matrixA);
 	//gsl_linalg_SV_decomp (gsl_matrix * A, gsl_matrix * V, gsl_vector * S, gsl_vector * work)

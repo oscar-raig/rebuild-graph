@@ -34,7 +34,8 @@ public:
 		this->rebuildGraph = new CRebuildGraph();
 		double *TargetBC = NULL;
 		double *BestBC = NULL;
-		settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS;
+		if (algorithm)
+			settingSimulation->graphProperty = algorithm;
 		rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,*compareResult);
 	}
 	

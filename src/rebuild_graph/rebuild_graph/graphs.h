@@ -323,7 +323,7 @@ public:
     void removeVertexNeighbours(int sourceVertex);
 	
     // Get vertex sourceVertex array of neighbours identifiers
-    int  getVertexNeighbours(int sourceVertex,int **listOfNeighbours);
+    int  getVertexNeighbours(int sourceVertex,int **listOfNeighbours) const;
 	
     // Get vertex sourceVertex array of neighbours identifiers
     virtual void setAllVertexNeighbours();
@@ -351,13 +351,13 @@ public:
 								 );
 	
     // Print the graph
-    void printGraph();
+	void printGraph(int TRACE_LEVEL = CTrace::level::TRACE_DEBUG);
 	
     // Print the graph to a file
     void printGraph(FILE *myfile);
 	
     // Print the graph MY way to a file
-    virtual void printMyGraph(const char*outputFileName);
+    virtual void printMyGraph(const char*outputFileName)const;
 	
     // Print the graph's betweenness centrality values
     void printGraphBetweenness();
@@ -435,8 +435,8 @@ private:
 	int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
 	gsl_vector *getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
 public:
-    virtual graph*	copyGraph();
-	void	copyGraph(graph *targetGraph);
+    virtual graph*	copyGraph() const;
+	void	copyGraph(graph *targetGraph) const;
 	graph *readPythonGraphFile(char *fileName);
 
 };

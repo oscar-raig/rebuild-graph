@@ -1,4 +1,4 @@
-#define BOOST_TEST_MODULE MyTest
+#define BOOST_TEST_MODULE TestingRebuildGraph
 #include <boost/test/unit_test.hpp>
 #include "analitza.h"
 #include <math.h>
@@ -11,37 +11,51 @@
 
 using namespace boost::unit_test;
 
+
+// Record 11/12 GRAPH
+// Record 11/2 GSL_GRAPH
+
 #define THROW_EXCEPTION
 #define THROW_EXCEPTION_FILE_NOT_FOUND
 
 #define COMMUNICABILITY_BETWEENESS_TEST_4_NODES
-//#define COMMUNICABILITY_BETWEENESS__WHEEL4
+#define COMMUNICABILITY_BETWEENESS__WHEEL4
+// 2014-12-09 GRAPH
 //#define COMMUNICABILITY_BETWEENESS__WHEEL10
+
+// 2014-11-09 GSL_GRAPH CB WHEEL14 NOT WORK
 //#define COMMUNICABILITY_BETWEENESS_WHEEL_14
-//#define COMMUNICABILITY_BETWEENESS__BARBASE_20_4
-//#define COMMUNICABILITY_BETWEENESS__PETERSEN
+#define COMMUNICABILITY_BETWEENESS__BARBASE_20_4
+#define COMMUNICABILITY_BETWEENESS__PETERSEN
 
 
-//#define BETWEENNESS_CENTRALITY__WHEEL4
-//GS#define BETWEENNESS_CENTRALITY__WHEEL10
+#define BETWEENNESS_CENTRALITY__WHEEL4
+// 2014-11-11 GRAPH BETWEENESS CENTRALITY WHEEL 10
+#define BETWEENNESS_CENTRALITY__WHEEL10
+       // 2014-11-09 GSL_GRAPH BC WHEEL14 NOT WORK
 //#define BETWEENNESS_CENTRALITY__WHEEL14
-//#define BETWEENNESS_CENTRALITY__PETERSEN
+
+// 2014-11-09 GRAPH/GSL_GRAPH BC PETERSON NOT WORK
+#define BETWEENNESS_CENTRALITY__PETERSEN
 
 
 
-
+// 2014-11-11 GRAPH DEFAULT_ALGORITHM_BARBASE_20_4
+// -- WORKING --> TOO SLOW
 //#define DEFAULT_ALGORITHM_BARBASE_20_4
-//#define COMPARA_THE_SAME_GRAPH
+#define COMPARA_THE_SAME_GRAPH
 
 
 
-//#define TEST_BEEWEENESS_EXP
-//#define COMPARA
-//#define TEST_ANALIZA
+#define TEST_BEEWEENESS_EXP
+#define COMPARA
+#define TEST_ANALIZA
+// 2014-11-11 GRAPH
 //#define DEFAULT_GRAPH_TEST_TNODES
 
 
 void testexceptionSettingSimulationIsNULL(){
+	CFuncTrace( false,"testexceptionSettingSimulationIsNULL");
 	
 	//throw std::exception();
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
@@ -62,7 +76,7 @@ BOOST_AUTO_TEST_CASE(Trow_excpetion){
 
 void testexceptionFileNotFound(){
 	
-	//throw std::exception();
+	CFuncTrace( false,"testexceptionFileNotFound");
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	int graphOrder = 0;
 	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
@@ -86,25 +100,27 @@ BOOST_AUTO_TEST_CASE(Trow_excpetion_file_not_found){
 void simulation( int algorithm, std::string GraphName, int nMax, double * compareResult){
 	
     AbstractFactoryPatternRebuildGraph * FactoryTest= new	AbstractFactoryPatternRebuildGraph(algorithm,GraphName,nMax,compareResult);
-
 	BOOST_CHECK(abs(*compareResult-0.000001)< 0.001);
 
 	delete FactoryTest;
 }
 
 #ifdef COMMUNICABILITY_BETWEENESS_TEST_4_NODES
-BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality){
-	std::cout << " COMMUNICABILITY_BETWEENESS_CENTRALITY with test_4nodes>>" << std::endl;
-	//	BOOST_CHECK(abs(compareResult-0.24459739029407501)< 0.1);
+BOOST_AUTO_TEST_CASE(Test_communicability_beetweeness_centrality_test_4nodes){
+	CFuncTrace trace (true,"test_communicability_beetweeness_centrality_test_4nodes");
+	trace.trace(CTrace::level::TRACE_DEBUG,"begin");
 	double compareResult = 10.0;
+	// 2014-11-09 compareResult == 0.29804, very different 0.000001 GSL_GRAPH
 	simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,1000,&compareResult);
+	
+	trace.trace(CTrace::level::TRACE_INFO,"test_4nodes.gpfc %f",compareResult);
 	std::cout << "COMMUNICABILITY_BETWEENESS_CENTRALITY test_4nodes.gpfc " << compareResult << " <<" << std::endl;
 	
 }
 #endif
 
 #ifdef COMMUNICABILITY_BETWEENESS__WHEEL4
-BOOST_AUTO_TEST_CASE(test_wheel4_COMMUNICABILITY_BETWEENESS){
+BOOST_AUTO_TEST_CASE(Test_wheel4_COMMUNICABILITY_BETWEENESS){
 	std::cout << " COMMUNICABILITY BETWEENESS with wheel 4 >>"  << std::endl;
 	double compareResult = 10.0;
 	simulation(COMMUNICABILITY_BETWEENESS, "wheel4.txt" ,100, &compareResult);
@@ -115,7 +131,7 @@ BOOST_AUTO_TEST_CASE(test_wheel4_COMMUNICABILITY_BETWEENESS){
 
 
 #ifdef COMMUNICABILITY_BETWEENESS__WHEEL10
-BOOST_AUTO_TEST_CASE(test_wheel10_COMMUNICABILITY_BETWEENESS){
+BOOST_AUTO_TEST_CASE(Test_wheel10_COMMUNICABILITY_BETWEENESS){
 	
 	std::cout << " COMMUNICABILITY BETWEENESS with wheel 10 >>" << std::endl;
 	double compareResult = 10.0;
@@ -141,9 +157,9 @@ BOOST_AUTO_TEST_CASE(test_wheel14_COMMUNICABILITY_BETWEENESS){
 #ifdef COMMUNICABILITY_BETWEENESS_BARBASE_20_4
 BOOST_AUTO_TEST_CASE(regenerate_compare_barbase_20_4_COMMUNICABILITY_BETWEENESS){
 	
-	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc>>" << std::endl;
+	std::cout << "COMMUNICABILITY_BETWEENESS barabase_20_4.gpfc>>" << std::endl;
 	double compareResult = 10.0;
-	simulation(COMMUNICABILITY_BETWEENESS, "barabase_20_4.gpfc" ,100,&compareResult);
+	simulation(COMMUNICABILITY_BETWEENESS, "barabase_20_4.gpfc" ,10,&compareResult);
 	std::cout << "COMMUNICABILITY_BETWEENESS barabase_20_4.gpfcResult:" << compareResult << " <<" << std::endl;
 	BOOST_REQUIRE(abs(compareResult-0.051123)< 0.1);
 	
@@ -163,22 +179,22 @@ BOOST_AUTO_TEST_CASE(test_petersen_COMMUNICABILITY_BETWEENESS){
 
 
 #ifdef BETWEENNESS_CENTRALITY__WHEEL4
-BOOST_AUTO_TEST_CASE(test_wheel4_BETWEENNESS_CENTRALITY){
+BOOST_AUTO_TEST_CASE(Test_wheel4_BETWEENNESS_CENTRALITY){
 	std::cout << " BETWEENNESS CENTRALITY with wheel 4>>" << std::endl;
 	double compareResult = 10.0;
 	simulation(BETWEENNESS_CENTRALITY, "wheel4.txt" ,100,&compareResult);
-	std::cout << "BETWEENNESS CENTRALITY with wheel 4" << compareResult << " <<" << std::endl;
+	std::cout << "BETWEENNESS CENTRALITY with wheel 4 " << compareResult << " <<" << std::endl;
 }
 #endif
 
 
 
-#ifdef BETWEENESS_CENTRALITY__WHEEL10
+#ifdef BETWEENNESS_CENTRALITY__WHEEL10
 BOOST_AUTO_TEST_CASE(test_wheel10_BETWEENNESS_CENTRALITY){
 	
 	std::cout << " BETWEENNESS CENTRALITY with wheel 10>>" << std::endl;
 	double compareResult = 10.0;
-	simulation(BETWEENNESS_CENTRALITY, "wheel10.txt" ,100,&compareResult);
+	simulation(BETWEENNESS_CENTRALITY, "wheel10.txt" ,10000,&compareResult);
 	std::cout << "BETWEENESS CENTRALITY wheel 10 Result:" << compareResult << " <<" << std::endl;
 	
 }
@@ -201,10 +217,10 @@ BOOST_AUTO_TEST_CASE(test_wheel14_BETWEENNESS_CENTRALITY){
 BOOST_AUTO_TEST_CASE(test_petersen_BETWEENNESS_CENTRALITY){
 	
 	
-	std::cout << " BETWEENNESS CENTRALITY with petersen>>" << std::endl;
+	std::cout << "BETWEENNESS_CENTRALITY__PETERSEN>>" << std::endl;
 	double compareResult = 10.0;
 	simulation(BETWEENNESS_CENTRALITY, "petersen.txt" ,100000,&compareResult);
-	std::cout << " test Petersen BETEENESS CENTRALITY " << compareResult << " <<" << std::endl;
+	std::cout << "BETWEENNESS_CENTRALITY__PETERSEN " << compareResult << " <<" << std::endl;
 	
 }
 #endif
@@ -253,6 +269,7 @@ BOOST_AUTO_TEST_CASE( Test_Beetweeness_exp)
 #ifdef  TEST_ANALIZA
 
 BOOST_AUTO_TEST_CASE( Test_analitza){
+	CFuncTrace trace (true,"Test_analitza");
 	
 	/* Begin analitza::llegir_dades -------------------------------------------*/
 	
@@ -296,7 +313,7 @@ BOOST_AUTO_TEST_CASE( Test_analitza){
 
 #ifdef DEFAULT_GRAPH_TEST_TNODES
 BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
-		
+		CFuncTrace trace (true,"graph_betweness_centrality");
 		const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
 		double *TargetBC = NULL;
 		double *BestBC = NULL;
@@ -381,7 +398,7 @@ BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm){
 	
 	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc>>" << std::endl;
 	double compareResult = 10.0;
-	simulation(0, "barabase_20_4.gpfc" ,100,&compareResult);
+	simulation(0, "barabase_20_4.gpfc" ,1000000,&compareResult);
 	std::cout << "DEFAULT ALGORITHM barabase_20_4.gpfc Result:" << compareResult << " <<" << std::endl;
 	
 	BOOST_CHECK(abs(compareResult-0.0467452)< 0.1);
@@ -390,7 +407,7 @@ BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm){
 
 #ifdef COMPARA_THE_SAME_GRAPH
 BOOST_AUTO_TEST_CASE(compara){
-	
+	CFuncTrace trace (true,"COMPARA_THE_SAME_GRAPH");
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	gsl_matrix * matrixA;
 	gsl_matrix * matrixB;
@@ -416,5 +433,224 @@ BOOST_AUTO_TEST_CASE(compara){
 }
 #endif
 
+
+BOOST_AUTO_TEST_CASE(test_generateInitialGraph){
+	CFuncTrace trace (true,"test_generateInitialGraph");
+	int random_value_x=11,random_value_y=92,random_value_z=37;
+	GeneralGraph *  generalGraph =
+	StrategyPatternAlgorithm::generateInitialGraph(4,
+												   random_value_x,random_value_y,random_value_z);
+	
+	int degree = generalGraph->getDegree();
+	int order = generalGraph->getOrder();
+	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degree,order);
+
+	generalGraph->printGraph(CTrace::level::TRACE_INFO);
+	BOOST_CHECK(degree == 3); // FAILED IN GRAPH
+	BOOST_CHECK(order ==4);
+	StrategyPatternAlgorithm::modifyGraph(generalGraph,
+												   random_value_x,random_value_y,random_value_z);
+	generalGraph->printGraph();
+	degree = generalGraph->getDegree();
+	order = generalGraph->getOrder();
+	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degree,order);
+	BOOST_CHECK(degree == 3);
+	BOOST_CHECK(order ==4);
+}
+
+#ifdef lol
+BOOST_AUTO_TEST_CASE(test_generateInitialGraph_order_10_){
+	CFuncTrace trace (true,"test_generateInitialGraph");
+	int random_value_x=11,random_value_y=92,random_value_z=37;
+	int c_random_value_x=11,c_random_value_y=92,c_random_value_z=37;
+	
+	GeneralGraph *  generalGraph =
+	StrategyPatternAlgorithm::generateInitialGraph(10,
+												   random_value_x,random_value_y,random_value_z);
+	
+	int degree = generalGraph->getDegree();
+	int order = generalGraph->getOrder();
+	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degree,order);
+	
+	generalGraph->printGraph(CTrace::level::TRACE_INFO);
+	BOOST_CHECK(degree == 3);
+	BOOST_CHECK(order ==10);
+	GeneralGraph *copyGraph = NULL;
+	
+	gsl_matrix * matrixA;
+	gsl_matrix * matrixB;
+	CRebuildGraph *rebuildGraph = NULL;
+	float result =0 ;
+	
+	matrixA = gsl_matrix_alloc(generalGraph->getOrder(),generalGraph->getOrder());
+	matrixB = gsl_matrix_alloc(generalGraph->getOrder(),generalGraph->getOrder());
+	copyGraph = generalGraph->copyGraph();
+	copyGraph->setAllVertexNeighbours();
+	copyGraph->graphToGsl( matrixA );
+	generalGraph->graphToGsl( matrixB );
+	
+	rebuildGraph = new CRebuildGraph();
+	
+	result = rebuildGraph->compareMatrix(matrixA,matrixB);
+	BOOST_CHECK( abs(result)  < 0.00001);
+
+	
+	copyGraph->printGraph();
+	generalGraph->printGraph();
+	
+	c_random_value_x = random_value_x;
+	c_random_value_y = random_value_y;
+	c_random_value_z = random_value_z;
+	StrategyPatternAlgorithm::modifyGraph(copyGraph,
+										  random_value_x,random_value_y,random_value_z);
+	double newBC [10];
+	double newBC2 [10];
+	copyGraph->brandes_comunicability_centrality_exp(newBC);
+	StrategyPatternAlgorithm::modifyGraph(generalGraph,
+										  c_random_value_x,c_random_value_y,c_random_value_z);
+	generalGraph->brandes_comunicability_centrality_exp(newBC2);
+	
+	for ( int j =0 ; j < 10; j++){
+		BOOST_CHECK( newBC[j] == newBC2[j]);
+		trace.trace(CTrace::TRACE_INFO,"NEWBC %f",newBC[j]);
+		
+	}
+	BOOST_CHECK(19.563079 - newBC[0] < 0.00001);
+	BOOST_CHECK(27.479907 - newBC[1] < 0.00001);
+	BOOST_CHECK(34.327844 - newBC[2] < 0.00001);
+	BOOST_CHECK(19.399584 - newBC[3] < 0.00001);
+	BOOST_CHECK(2.068966 - newBC[4] < 0.00001);
+	BOOST_CHECK(20.973092 - newBC[5] < 0.00001);
+	BOOST_CHECK(50.668183 - newBC[6] < 0.00001);
+	BOOST_CHECK(41.005052 - newBC[7] < 0.00001);
+	BOOST_CHECK(24.364700 - newBC[8] < 0.00001);
+	BOOST_CHECK(19.346583093959595 - newBC[9] < 0.00001);
+	
+	
+	matrixA = gsl_matrix_alloc(generalGraph->getOrder(),generalGraph->getOrder());
+	matrixB = gsl_matrix_alloc(generalGraph->getOrder(),generalGraph->getOrder());
+	
+	copyGraph->graphToGsl( matrixA );
+	generalGraph->graphToGsl( matrixB );
+	
+	rebuildGraph = new CRebuildGraph();
+
+	result = rebuildGraph->compareMatrix(matrixA,matrixB);
+	BOOST_CHECK( abs(result)  < 0.00001);
+
+	
+	generalGraph->printGraph();
+	degree = generalGraph->getDegree();
+	order = generalGraph->getOrder();
+	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degree,order);
+	BOOST_CHECK(degree == 3);
+	BOOST_CHECK(order ==10);
+}
+#endif
+
+BOOST_AUTO_TEST_CASE(test_1){
+	CFuncTrace trace (true,"test_1");
+	int random_value_x=11,random_value_y=92,random_value_z=37;
+	double newBC [10];
+	
+	GeneralGraph *  generalGraph =
+	StrategyPatternAlgorithm::generateInitialGraph(10,
+												   random_value_x,random_value_y,random_value_z);
+	generalGraph->brandes_comunicability_centrality_exp(newBC);
+	
+	for ( int j =0 ; j < 10; j++){
+		trace.trace(CTrace::TRACE_INFO,"NEWBC %f",newBC[j]);
+		
+	}
+	BOOST_CHECK(abs(19.780136 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(37.142999 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(27.733060 - newBC[2] )< 0.00001);
+	BOOST_CHECK(abs(18.014479 - newBC[3]) < 0.00001);
+	BOOST_CHECK(abs(2.071303 - newBC[4]) < 0.00001);
+	BOOST_CHECK(abs(20.609464 - newBC[5]) < 0.00001);
+	BOOST_CHECK(abs(53.250202 - newBC[6] )< 0.00001);
+	BOOST_CHECK(abs(33.859518 - newBC[7]) < 0.00001);
+	BOOST_CHECK(abs(34.453578 - newBC[8]) < 0.00001);
+	BOOST_CHECK(abs(28.560175 - newBC[9]) < 0.00001);
+	
+	GeneralGraph *newGraph=NULL;
+	newGraph=generalGraph->copyGraph();
+	newGraph->setAllVertexNeighbours();
+	
+	//
+	// 9-12-2014
+	// Si la brandes_comuncbiliy es diferent es perque els dos grafs son diferents, en alguna cosa
+	//
+	StrategyPatternAlgorithm::modifyGraph(newGraph,random_value_x,random_value_y,random_value_z);
+	// en aqest p
+    newGraph->brandes_comunicability_centrality_exp(newBC);
+	for ( int j =0 ; j < 10; j++){
+		trace.trace(CTrace::TRACE_INFO,"NEWBC 2 %f",newBC[j]);
+		
+	}
+	BOOST_CHECK(abs(20.251314 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(27.104859 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(32.967459 - newBC[2] )< 0.00001);
+	BOOST_CHECK(abs(19.221320 - newBC[3]) < 0.00001);
+	BOOST_CHECK(abs(3.946619 - newBC[4]) < 0.00001);
+	BOOST_CHECK(abs( 15.363911 - newBC[5]) < 0.00001);
+	BOOST_CHECK(abs(49.258089 - newBC[6] )< 0.00001);
+	BOOST_CHECK(abs(39.717238 - newBC[7]) < 0.00001);
+	BOOST_CHECK(abs(24.218654 - newBC[8]) < 0.00001);
+	BOOST_CHECK(abs(19.136546 - newBC[9]) < 0.00001);
+	
+}
+
+
+BOOST_AUTO_TEST_CASE(test_2){
+	CFuncTrace trace (true,"test_2");
+	int random_value_x=11,random_value_y=92,random_value_z=37;
+	double newBC [5];
+	
+	GeneralGraph *  generalGraph =
+	StrategyPatternAlgorithm::generateInitialGraph(5,
+												   random_value_x,random_value_y,random_value_z);
+	generalGraph->brandes_comunicability_centrality_exp(newBC);
+	
+	for ( int j =0 ; j < 5; j++){
+		trace.trace(CTrace::TRACE_INFO,"NEWBC %f",newBC[j]);
+		trace.trace(CTrace::TRACE_INFO,"BOOST_CHECK(abs( %f - newBC[0]) < 0.00001);",newBC[j]);
+		
+	}
+	/*
+	BOOST_CHECK(abs(2.782980 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(2.782980 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(3.492149 - newBC[2] )< 0.00001);
+	BOOST_CHECK(abs(1.661114 - newBC[3]) < 0.00001);*/
+
+BOOST_CHECK(abs(7.239877 - newBC[0]) < 0.00001);
+BOOST_CHECK(abs(5.154875 - newBC[1]) < 0.00001);
+BOOST_CHECK(abs(5.154875 - newBC[2]) < 0.00001);
+BOOST_CHECK(abs(5.154875 - newBC[3]) < 0.00001);
+BOOST_CHECK(abs(5.154875 - newBC[4]) < 0.00001);
+	
+	GeneralGraph *newGraph=NULL;
+	newGraph=generalGraph->copyGraph();
+	newGraph->setAllVertexNeighbours();
+	
+	//
+	// 9-12-2014
+	// Si la brandes_comuncbiliy es diferent es perque els dos grafs son diferents, en alguna cosa
+	//
+	StrategyPatternAlgorithm::modifyGraph(newGraph,random_value_x,random_value_y,random_value_z);
+	// en aqest p
+	newGraph->brandes_comunicability_centrality_exp(newBC);
+	for ( int j =0 ; j < 5; j++){
+		trace.trace(CTrace::TRACE_INFO,"NEWBC 2 %f",newBC[j]);
+		
+	}
+//	newGraph->printGraph();
+	BOOST_CHECK(abs(7.472245 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(5.820453 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(7.472245 - newBC[2] )< 0.00001);
+	BOOST_CHECK(abs(5.820453 - newBC[3]) < 0.00001);
+	BOOST_CHECK(abs(3.521522 - newBC[4]) < 0.00001);
+	
+}
 
 

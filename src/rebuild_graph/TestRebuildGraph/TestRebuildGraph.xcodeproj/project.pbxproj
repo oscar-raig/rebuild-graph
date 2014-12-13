@@ -278,6 +278,8 @@
 					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 					"-I",
 					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/src/rebuild_graph/rebuild_graph",
+					"-I",
+					/usr/local/include,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -299,6 +301,8 @@
 					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 					"-I",
 					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/src/rebuild_graph/rebuild_graph",
+					"-I",
+					/usr/local/include,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -18,25 +18,8 @@
 class GraphFactory {
 	
 public:
-	static GeneralGraph * createGraph(int graphClass){
-		if (graphClass== GRAPH){
-			return new graph();
-		}else{
-
-	        return new gslGraph();
-//			return NULL;
-		}
-	}
-	static GeneralGraph * createGraph(int graphClass,int sizeOfMatrix){
-		if (graphClass== GRAPH){
-			return new graph(sizeOfMatrix);
-		}else{
-			
-	        return new gslGraph(sizeOfMatrix);
-			//			return NULL;
-		}
-	}
-	
+	static GeneralGraph * createGraph(int graphClass);
+	static GeneralGraph * createGraph(int graphClass,int sizeOfMatrix);
 	
 };
 #endif /* defined(__rebuild_graph__GraphFactory__) */
