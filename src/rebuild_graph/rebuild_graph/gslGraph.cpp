@@ -18,15 +18,23 @@ using std::runtime_error;
 #endif
 
 
-gslGraph::gslGraph():order(0),degree(0),matrix(NULL)
-{
+gslGraph::gslGraph():
+		order(0),
+		degree(0),
+		matrix(NULL){
 	nType = GSL_GRAPH;
 };
 
-gslGraph::gslGraph(int sizeOfMatrix):order(sizeOfMatrix),degree(0)
-{
+gslGraph::gslGraph(int sizeOfMatrix):
+		order(sizeOfMatrix),
+		degree(0){
 	nType = GSL_GRAPH;
 	matrix = gsl_matrix_alloc(sizeOfMatrix,sizeOfMatrix);
+};
+
+gslGraph::~gslGraph(){
+	if( matrix )
+		free(matrix);
 };
 
 
@@ -174,6 +182,12 @@ void gslGraph::printGraph(int TRACE_LEVEL){
 
 void gslGraph::node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness,gsl_matrix* edge_betweenness) const {
 	CFuncTrace trace(false,"node_and_edge_betweenness_bin");
+	int static counter = 0;
+	if ( counter % 1000 == 0 )
+	{
+		trace.trace(CTrace::level::TRACE_ERROR,"Something smells safe_mod?");
+		
+	}
 	//	if (safe_mode) check_status(m, BINARY, "node_and_edge_betweenness_bin");
 	if (sourceGraph->size1 != sourceGraph->size2) {
 		//throw size_exception();
@@ -348,6 +362,7 @@ gsl_vector* gslGraph::sequence(int start, int end) const {
  * Emulates (start:step:end).
  */
 gsl_vector* gslGraph::sequence(int start, int step, int end) const{
+	//step =2;
 	int n_seq = (end - start) / step + 1;
 	if (n_seq <= 0) {
 		return NULL;
@@ -558,3 +573,149 @@ int gslGraph::graphNotConnected (int *unconnectedVertex){
 }
 
 
+/*
+ * Emulates (~v).
+ */
+gsl_vector * gslGraph::logical_not(const gsl_vector* v) const {
+	gsl_vector* not_v = gsl_vector_alloc(v->size);
+	for (int i = 0; i < (int)v->size; i++) {
+		bool z = fp_zero(gsl_vector_get(v, i));
+		gsl_vector_set(not_v, i, (double)z);
+	}
+	return not_v;
+}
+
+// Matrix-by-two-vectors indexing (non-mixed)
+
+gsl_matrix* gslGraph::ordinal_index(const gsl_matrix* m, const gsl_vector* rows,
+						  const gsl_vector* columns) const {
+	gsl_matrix* index_m = gsl_matrix_alloc(rows->size, columns->size);
+	for (int i = 0; i < (int)rows->size; i++) {
+		int row = (int)gsl_vector_get(rows, i);
+		for (int j = 0; j < (int)columns->size; j++) {
+			int column = (int)gsl_vector_get(columns, j);
+			double value = gsl_matrix_get(m, row, column);
+			gsl_matrix_set(index_m, i, j, value);
+		}
+	}
+	return index_m;
+}
+
+gsl_vector* gslGraph::find(const gsl_vector* v, int n ,
+				 const std::string& direction ) const {
+	int n_find = nnz(v);
+	if (n_find == 0 || n < 1) {
+		return NULL;
+	}
+	gsl_vector* find_v = gsl_vector_alloc((n < n_find) ? n : n_find);
+	if (direction == "first") {
+		int position = 0;
+		for (int i = 0; i < (int)v->size && position < (int)find_v->size; i++) {
+			if (fp_nonzero(gsl_vector_get(v, i))) {
+				gsl_vector_set(find_v, position, i);
+				position++;
+			}
+		}
+		return find_v;
+	} else if (direction == "last") {
+		int position = ((int)find_v->size) - 1;
+		for (int i = ((int)v->size) - 1; i >= 0 && position >= 0; i--) {
+			if (fp_nonzero(gsl_vector_get(v, i))) {
+				gsl_vector_set(find_v, position, i);
+				position--;
+			}
+		}
+		return find_v;
+	} else {
+		gsl_vector_free(find_v);
+		std::cout << "find::Returning NULL" << std::endl;
+		return NULL;
+	}
+}
+
+
+void gslGraph::brandes_betweenness_centrality(double *myBBC){
+	CFuncTrace trace (false,"brandes_betweenness_centrality");
+	gsl_vector * v =betweenness_bin(matrix);
+	gslVectorToArray(v,myBBC);
+	for(int i=0;i< order;i++){
+		myBBC[i]=(myBBC[i])/((order-1.0)*(order-2.0));
+		trace.trace(CTrace::level::TRACE_DEBUG," BC ",  myBBC[i]);
+	}
+}
+
+int gslGraph::printGslMatrix(const gsl_matrix* gslMatrix,const char *format){
+	printf("\n");
+	for (size_t i = 0; i < gslMatrix->size1; i++) {
+		for (size_t j = 0; j < gslMatrix->size2; j++) {
+			printf(format, gsl_matrix_get(gslMatrix, i, j));
+		}
+		
+		printf("\n");
+	}
+	return RESULT_OK;
+}
+
+
+
+gsl_vector* gslGraph::any(const gsl_matrix* m, int dim ) const {
+	if (dim == 1) {
+		gsl_vector* any_v = gsl_vector_alloc(m->size2);
+		for (int i = 0; i < (int)m->size2; i++) {
+			gsl_vector_const_view m_col_i = gsl_matrix_const_column(m, i);
+			gsl_vector_set(any_v, i, any(&m_col_i.vector));
+		}
+		return any_v;
+	} else if (dim == 2) {
+		gsl_vector* any_v = gsl_vector_alloc(m->size1);
+		for (int i = 0; i < (int)m->size1; i++) {
+			gsl_vector_const_view m_row_i = gsl_matrix_const_row(m, i);
+			gsl_vector_set(any_v, i, any(&m_row_i.vector));
+		}
+		return any_v;
+	} else {
+		return NULL;
+	}
+}
+
+
+int  gslGraph::nnz(const gsl_vector* v) const {
+	int nnz = 0;
+	for (int i = 0; i < (int)v->size; i++) {
+		if (fp_nonzero(gsl_vector_get(v, i))) {
+			nnz++;
+		}
+	}
+	return nnz;
+}
+
+
+int  gslGraph::any(const gsl_vector* v) const {
+	for (int i = 0; i < (int)v->size; i++) {
+		if (fp_nonzero(gsl_vector_get(v, i))) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int  gslGraph::all(const gsl_vector* v) const {
+	for (int i = 0; i < (int)v->size; i++) {
+		if (fp_zero(gsl_vector_get(v, i))) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
+
+int  gslGraph::graphToGsl( gsl_matrix* target){
+	gsl_matrix_memcpy(target,matrix);
+	return 1;
+}
+
+gsl_matrix *  gslGraph::copy ( const gsl_matrix *orig)const{
+	gsl_matrix * result = gsl_matrix_alloc(orig->size1,orig->size2);
+	gsl_matrix_memcpy ( result, orig );
+	return result;
+}
