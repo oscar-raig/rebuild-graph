@@ -207,7 +207,7 @@ BOOST_AUTO_TEST_CASE(test_wheel14_BETWEENNESS_CENTRALITY){
 	
 	std::cout << " BETWEENNESS CENTRALITY with wheel 14>>" << std::endl;
 	double compareResult = 10.0;
-	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,1000000,&compareResult);
+	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,10,&compareResult);
 	std::cout << "BETWEENESS CENTRALITY wheel 14 Result:" << compareResult << " <<" << std::endl;
 }
 #endif
@@ -219,7 +219,7 @@ BOOST_AUTO_TEST_CASE(test_petersen_BETWEENNESS_CENTRALITY){
 	
 	std::cout << "BETWEENNESS_CENTRALITY__PETERSEN>>" << std::endl;
 	double compareResult = 10.0;
-	simulation(BETWEENNESS_CENTRALITY, "petersen.txt" ,100000,&compareResult);
+	simulation(BETWEENNESS_CENTRALITY, "petersen.txt" ,10,&compareResult);
 	std::cout << "BETWEENNESS_CENTRALITY__PETERSEN " << compareResult << " <<" << std::endl;
 	
 }

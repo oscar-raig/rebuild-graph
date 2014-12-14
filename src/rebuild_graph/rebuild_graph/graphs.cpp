@@ -57,9 +57,9 @@ int graph::vertex::addNeighbour(int newNeighbourId){
   if(vertexId!=newNeighbourId){
     if(degree==0){
       if(neighbours==NULL){
-        neighbours=(int *)malloc(sizeof(int));
+        neighbours=(int *)malloc(sizeof(int ));
       } else {
-        neighbours=(int *)realloc(neighbours,sizeof(int));
+        neighbours=(int *)realloc(neighbours,sizeof(int ));
       }
       neighbours[0]=newNeighbourId;
       degree=1;

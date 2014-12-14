@@ -42,7 +42,7 @@ public:
 	virtual void communicability_betweenness_centrality(double *myCExp)=0;
 	virtual void printMyGraph(const char * outputGraphFilename)const =0;
 	virtual GeneralGraph* copyGraph()const =0;
-//	virtual GeneralGraph* copyGraph(GeneralGraph *targetGraph)=0;
+	//virtual GeneralGraph* copyGraph(GeneralGraph *targetGraph)const =0;
 	virtual void removeVertexNeighbours(int vertexToRemoveNegighbours)=0;
 	virtual int  vertexAreNeighbours(int vertexBegining,int vertexEnding)=0;
 	virtual int  graphNotConnected(int *unconnectedVertex)=0;

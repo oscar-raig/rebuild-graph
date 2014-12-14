@@ -48,7 +48,7 @@ public:
 	virtual GeneralGraph *readPythonGraphFile(char *fileName);
 	virtual gslGraph*	copyGraph() const ;
 	virtual void copyGraph(gslGraph * newgslGraph) const;
-	gsl_matrix * copy ( const gsl_matrix *orig)const;
+//	gsl_matrix * copy ( const gsl_matrix *orig)const;
 	
 	// Get the number of vertex (order) of the graph
 	virtual int getOrder() const { return order;};
@@ -112,7 +112,6 @@ public:
 	 * Emulates (start:step:end).
 	 */
 	gsl_vector* sequence(int start, int end) const;
-	gsl_vector* sequence(int start, int step, int end) const;
 	/*
 	 * Emulates (~v).
 	 */
@@ -128,8 +127,10 @@ public:
 	 * are stored in a vector (node betweenness) and a matrix (edge betweenness)
 	 * that are provided by the caller.
 	 */
-	int safe_mode =0 ;
+	
 	void node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness,gsl_matrix* edge_betweenness) const;
+	
+	static int compare(gslGraph * graph1, gslGraph * graph2);
 };
 
 #endif /* defined(__rebuild_graph__gslGraph__) */

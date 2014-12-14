@@ -237,6 +237,7 @@ void test_setAllVertexneigbours(){
 	else
 		((gslGraph *)generalGraph)->copyGraph((gslGraph*)newGraph);
 	
+//	generalGraph->copyGraph(newGraph);
 	gsl_matrix *targetGraphGsl = gsl_matrix_alloc(generalGraph->getOrder(), generalGraph->getOrder());
 	gsl_matrix *bestGraphGsl = gsl_matrix_alloc(newGraph->getOrder(), newGraph->getOrder());
 	
@@ -272,7 +273,23 @@ void test_setAllVertexneigbours(){
 
 }
 
+void test_2copy(){
+	
+	GeneralGraph *general = GraphFactory::createGraph(GSL_GRAPH);
+	general->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	GeneralGraph *copy1 = general->copyGraph();
+	GeneralGraph *copy2 =  GraphFactory::createGraph(GSL_GRAPH);
+	((gslGraph*)general)->copyGraph((gslGraph*)copy2);
+	gsl_matrix *copy1matrix = gsl_matrix_alloc(copy1->getOrder(), copy1->getOrder());
+	copy1->graphToGsl(copy1matrix);
+	gsl_matrix *copy2matrix = gsl_matrix_alloc(copy2->getOrder(), copy2->getOrder());
+	copy2->graphToGsl(copy2matrix);
+	copy1->printGraph();
+	copy2->printGraph();
+	double compare = CRebuildGraph::compareMatrix(copy1matrix, copy2matrix);
+	BOOST_CHECK(compare < 0.00001);
 
+}
 
 typedef void (*func_type)(void);
 
@@ -287,7 +304,8 @@ func_type functions[]={
 	test_setAllVertexneigbours,
 	test_brandes_comunicability_centrality_wheel14,
 	test_brandes_comunicability_centrality_test_4nodes,
-	test_adNewVertexNeighbour
+	test_adNewVertexNeighbour,
+	test_2copy
 	
 	
 };

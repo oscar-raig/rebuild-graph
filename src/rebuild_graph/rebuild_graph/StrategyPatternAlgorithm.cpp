@@ -236,15 +236,24 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbe
 			lFuncTrace.trace(STP_DEBUG,"Cost New %f Best Cost  %f",costNew,costBest);
 			if(costNew<costBest){
 				costBest=costNew;
-				
+			
 				if (newGraph->GetType() == GRAPH )
 					((graph *)newGraph)->copyGraph((graph*)bestGraph);
-				else
+				else{
 					((gslGraph *)newGraph)->copyGraph((gslGraph*)bestGraph);
+					//bestGraph = newGraph->copyGraph();
+									//	bestGraph->printGraph();
+					int res = gslGraph::compare((gslGraph*)bestGraph, (gslGraph*)newGraph);
+					if (!res )
+						res++;
+				}
 				
-				
+			 	//newGraph->copyGraph(bestGraph);
 				//bestGraph = newGraph->copyGraph();
-				
+				int res = gslGraph::compare((gslGraph*)bestGraph, (gslGraph*)newGraph);
+				if (!res )
+					res++;
+
 				
 				memcpy(bestBC,newBC,graphOrder*sizeof(double));
 				if(costBest<=tol){
@@ -263,13 +272,15 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbe
 				fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
-				if (newGraph->GetType() == GRAPH )
-					((graph*)bestGraph)->copyGraph((graph*)newGraph);
-				else{
+				if (newGraph->GetType() == GRAPH ){
+					 ((graph*)bestGraph)->copyGraph((graph*)newGraph);
+					//newGraph = ((graph*)bestGraph)->copyGraph();
+				}else{
 					
-				//	((gslGraph *)newGraph)->copyGraph((gslGraph*)bestGraph);
-					((gslGraph *)bestGraph)->copyGraph((gslGraph*)newGraph);
+					 ((gslGraph *)bestGraph)->copyGraph((gslGraph*)newGraph);
+				//	newGraph= ((gslGraph *)bestGraph)->copyGraph();
 				}
+			//	newGraph = bestGraph->copyGraph();
 				notOk++;
 				lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"x");
 				fprintf(logFile,"x");

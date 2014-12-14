@@ -30,12 +30,38 @@ gslGraph::gslGraph(int sizeOfMatrix):
 		degree(0){
 	nType = GSL_GRAPH;
 	matrix = gsl_matrix_alloc(sizeOfMatrix,sizeOfMatrix);
+	gsl_matrix_set_zero(matrix);
 };
 
 gslGraph::~gslGraph(){
 	if( matrix )
 		free(matrix);
 };
+
+
+gslGraph*	gslGraph::copyGraph()const{
+	gslGraph *newgslGraph = new gslGraph(order);
+
+	if ( order !=  matrix->size1)
+			throw runtime_error("Order and matrix size are different");
+	if ( order !=  matrix->size2)
+		throw runtime_error("Order and matrix size are different");
+
+	newgslGraph->order = getOrder();
+	newgslGraph->degree = getDegree();
+	gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
+	return newgslGraph;
+}
+
+
+void gslGraph::copyGraph(gslGraph * newgslGraph)const{
+	newgslGraph->order = order;
+	newgslGraph->degree = getDegree();
+	if ( newgslGraph->matrix)
+		delete newgslGraph->matrix;
+	newgslGraph->matrix = gsl_matrix_alloc(matrix->size1,matrix->size2);
+	gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
+}
 
 
 void gslGraph::printMyGraph(const char * outputGraphFilename)const{
@@ -180,17 +206,12 @@ void gslGraph::printGraph(int TRACE_LEVEL){
 
 
 
+
 void gslGraph::node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness,gsl_matrix* edge_betweenness) const {
 	CFuncTrace trace(false,"node_and_edge_betweenness_bin");
-	int static counter = 0;
-	if ( counter % 1000 == 0 )
-	{
-		trace.trace(CTrace::level::TRACE_ERROR,"Something smells safe_mod?");
-		
-	}
-	//	if (safe_mode) check_status(m, BINARY, "node_and_edge_betweenness_bin");
 	if (sourceGraph->size1 != sourceGraph->size2) {
-		//throw size_exception();
+		trace.trace(CTrace::level::TRACE_ERROR,"ERROR size2 and size2 different");
+		return;
 	}
 	bool free_node_betweenness = false;
 	bool free_edge_betweenness = false;
@@ -228,7 +249,9 @@ void gslGraph::node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_
 		gsl_vector* Q = gsl_vector_calloc(sourceGraph->size1);
 		int q = (int)sourceGraph->size1 - 1;
 		
-		gsl_matrix* copy_sourceGraph = copy(sourceGraph);
+		//gsl_matrix* copy_sourceGraph = copy(sourceGraph);
+		gsl_matrix * copy_sourceGraph = gsl_matrix_alloc(sourceGraph->size1,sourceGraph->size2);
+		gsl_matrix_memcpy ( copy_sourceGraph, sourceGraph );
 		
 		// V=u;
 		gsl_vector* V = gsl_vector_alloc(1);
@@ -354,15 +377,10 @@ void gslGraph::node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_
 	
 }
 
-gsl_vector* gslGraph::sequence(int start, int end) const {
-	return sequence(start, 1, end);
-}
 
-/*
- * Emulates (start:step:end).
- */
-gsl_vector* gslGraph::sequence(int start, int step, int end) const{
-	//step =2;
+
+gsl_vector* gslGraph::sequence(int start, int end) const{
+	int step =1;
 	int n_seq = (end - start) / step + 1;
 	if (n_seq <= 0) {
 		return NULL;
@@ -519,24 +537,7 @@ int  gslGraph::gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles)
 	}
 	return RESULT_OK;
 }
-gslGraph*	gslGraph::copyGraph()const{
-	gslGraph *newgslGraph = new gslGraph(order);
-	newgslGraph->order = order;
-	newgslGraph->degree = getDegree();
-	gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
-	return newgslGraph;
-}
 
-void gslGraph::copyGraph(gslGraph * newgslGraph)const{
-	//newgslGraph = copyGraph();
-	//return;
-	newgslGraph->order = order;
-	newgslGraph->degree = getDegree();
-	if ( newgslGraph->matrix)
-		delete newgslGraph->matrix;
-	newgslGraph->matrix = gsl_matrix_alloc(matrix->size1,matrix->size2);
-	gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
-}
 
 
 void  gslGraph::addNewVertexNeighbour(int sourceVertex,int newNeighbour){
@@ -713,9 +714,29 @@ int  gslGraph::graphToGsl( gsl_matrix* target){
 	gsl_matrix_memcpy(target,matrix);
 	return 1;
 }
-
+/*
 gsl_matrix *  gslGraph::copy ( const gsl_matrix *orig)const{
 	gsl_matrix * result = gsl_matrix_alloc(orig->size1,orig->size2);
 	gsl_matrix_memcpy ( result, orig );
 	return result;
+}
+ */
+
+int gslGraph::compare(gslGraph * graph1, gslGraph * graph2){
+	if ( graph1->getOrder() !=graph2->getOrder())
+		return 0;
+	if ( graph1->getDegree() !=graph2->getDegree())
+		return 0;
+	if ( graph1->GetType() != graph2->GetType())
+		return 0;
+	if ( graph1->matrix->size1 != graph2->matrix->size1)
+		return 0;
+	if ( graph1->matrix->size2 != graph2->matrix->size2)
+		return 0;
+	for ( int i =0; i < graph1->matrix->size1;i++)
+		for ( int j =0; j < graph1->matrix->size2;j++)
+				if ( gsl_matrix_get(graph1->matrix,i,j) != gsl_matrix_get(graph2->matrix,i,j))
+					return 0;
+	
+	return 1;
 }
