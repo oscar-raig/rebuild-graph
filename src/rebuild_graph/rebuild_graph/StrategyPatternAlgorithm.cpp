@@ -158,7 +158,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 									   FILE *logFile,double &costBest,
 									   CSettingsSimulation settingSimulation){
 	
-	CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::AnnealingAlgorithm");
+	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::AnnealingAlgorithm");
 //	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
 	double temperMin=TEMPER_MIN_DEFAULT;
 	double k=K;
@@ -182,8 +182,8 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 	Tk=settingSimulation.To;
 	bestGraph=generateInitialGraph(graphOrder,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
 	bestGraph->printGraph();
+	lFuncTrace.trace(CTrace::level::TRACE_ERROR,"Here is the error coping a pointer tha we detroy");
 	*pbestGraph= bestGraph;
-	bestGraph->setAllVertexNeighbours();
 	
 	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
 		bestGraph->brandes_betweenness_centrality(bestBC);
@@ -196,7 +196,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 	costOld=2.0*costBest;
 	costNew=costOld;
 	newGraph=bestGraph->copyGraph();
-	newGraph->setAllVertexNeighbours();
 	newGraph->printGraph();
 	int okTrue=0;
 	int okFalse=0;
@@ -219,11 +218,11 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 			// Update cost variables (new and old graphs)
 			costOld=costNew;
 			costNew=cost(targetBC,newBC,graphOrder);
-			lFuncTrace.trace(STP_DEBUG,"Cost New %f Best Cost  %f",costNew,costBest);
+			lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
 			if(costNew<costBest){
 				costBest=costNew;
 			
-					((gslGraph *)newGraph)->copyGraph((gslGraph*)bestGraph);
+					newGraph->copyGraph(bestGraph);
 					//bestGraph = newGraph->copyGraph();
 									//	bestGraph->printGraph();
 					int res = gslGraph::compare((gslGraph*)bestGraph, (gslGraph*)newGraph);
@@ -280,7 +279,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 	
 	lFuncTrace.trace(STP_DEBUG,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 					 Tk,costBest,weAreDone,iterations);
-
+	*pbestGraph= bestGraph;
 }
 
 int
@@ -322,8 +321,7 @@ StrategyPatternAlgorithm::regenerateGraph(CSettingsSimulation *settingsSimulatio
 		}
 		
 //		targetGraph->printGraph();
-		targetGraph->setAllVertexNeighbours();
-		
+			
 		if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY )
 			targetGraph->brandes_betweenness_centrality(targetBC);
 		else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS )

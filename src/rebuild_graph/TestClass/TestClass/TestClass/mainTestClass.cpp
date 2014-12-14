@@ -230,7 +230,6 @@ void test_setAllVertexneigbours(){
 	gslGraph * newGraph =   new gslGraph();
 	newGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
     newGraph->printGraph();
-	newGraph->setAllVertexNeighbours();
 	newGraph->printGraph();
 	
 		((gslGraph *)generalGraph)->copyGraph((gslGraph*)newGraph);
@@ -249,7 +248,6 @@ void test_setAllVertexneigbours(){
 	printf ("Compare  = %f",compare);
 	
 	newGraph->printGraph();
-	newGraph->setAllVertexNeighbours();
 	
 	newGraph->graphToGsl(bestGraphGsl);
 	compare = CRebuildGraph::compareMatrix(targetGraphGsl, bestGraphGsl);

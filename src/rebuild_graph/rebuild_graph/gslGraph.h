@@ -72,7 +72,7 @@ public:
 	getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
 	int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
 	
-	virtual void setAllVertexNeighbours(){};
+	
 	
 	
 	// Algorithm
