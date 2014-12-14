@@ -8,7 +8,6 @@
 
 #ifndef rebuild_graph_rebuildgraph_h
 #define rebuild_graph_rebuildgraph_h
-#include "graphs.h"
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_eigen.h>
 #include <gsl/gsl_sf_exp.h>
@@ -32,16 +31,14 @@ private:
 
 public:
 	// Input Output File Functions
-	GeneralGraph *readPythonGraphFile(char *fileName);
-	GeneralGraph *GetGraphfromFile(const char *graphFileName);
-
+	gslGraph *readPythonGraphFile(char *fileName);
 	
 	// Printing Graphs and Results
 	static int printGslMatrix(gsl_matrix* gslMatrix,const char *format="%.3f ");
 	int printGslVector(gsl_vector* gslVector);
 	
 	int calculateCommunicability_cent_exp(const char *argv[]);
-	void generateOutputFile(const  GeneralGraph *targetGraph,const char *inputFileName,double Tk,
+	void generateOutputFile(const  gslGraph *targetGraph,const char *inputFileName,double Tk,
 							double costBest,double *targetBC,
 							double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation);
 	
@@ -70,8 +67,8 @@ public:
 		
 
 	void CompareAndGenerateResults(CSettingsSimulation settingsSimulation,
-												  GeneralGraph *targetGraph,
-												  GeneralGraph *bestGraph,
+												  gslGraph *targetGraph,
+												  gslGraph *bestGraph,
 												  char* inputFilename,
 												  time_t timeStart,
 												  double Tk,
@@ -87,10 +84,10 @@ public:
 						int &graphOrder,
 						double &compareResult)
 	{
-		GeneralGraph *targetGraph= NULL;
+		gslGraph *targetGraph= NULL;
 		char inputFilename[250];
 		time_t timeStart;
-		GeneralGraph *bestGraph = NULL;
+		gslGraph *bestGraph = NULL;
 		double costBest=0.0;
 		char outputGraphFilename[STRING_LENGTH];
 		double Tk=TEMPER_INITIAL_DEFAULT;
@@ -101,7 +98,7 @@ public:
 		strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
 		strcpy(outputGraphFilename,inputFilename);
 		strcat(outputGraphFilename,".res");
-		targetGraph = GraphFactory::createGraph( USED_GRAPH );
+		targetGraph = new gslGraph();
 		targetGraph->readPythonGraphFile(inputFilename);
 		StrategyPatternAlgorithm::regenerateGraph(settingsSimulation,targetGraph,
 												 inputFilename, targetBC, bestBC, graphOrder,compareResult,&Tk,&costBest,&bestGraph);

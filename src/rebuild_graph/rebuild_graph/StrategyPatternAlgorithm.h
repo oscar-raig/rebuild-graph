@@ -11,8 +11,8 @@
 
 #include <iostream>
 #include "CSettingsSumulation.h"
-#include "graphs.h"
 #include "CTrace.hpp"
+#include "gslGraph.h"
 
 #define TEMPER_INITIAL_DEFAULT 10
 #define TEMPER_MIN_DEFAULT 0.0001
@@ -36,13 +36,13 @@ public:
 	
 	static double cost(double *tarjet,double *current,int count);
 
-	static void modifyGraph(GeneralGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
+	static void modifyGraph(gslGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
 	static double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
-	static GeneralGraph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
+	static gslGraph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
 	
 	static int
 	regenerateGraph(CSettingsSimulation *settingsSimulation,
-					GeneralGraph *targetGraph,
+					gslGraph *targetGraph,
 					char *inputFilename,
 					double *&targetBC,
 					double *&bestBC,
@@ -50,10 +50,10 @@ public:
 					double &compareResult,
 					double *Tk,
 					double *costBest,
-					GeneralGraph **bestGraph);
+					gslGraph **bestGraph);
 	// Rebuilding Graph Main Functions
 
-	static void AnnealingAlgorithm(double &Tk, GeneralGraph **pbestGraph,int graphOrder,
+	static void AnnealingAlgorithm(double &Tk, gslGraph **pbestGraph,int graphOrder,
 							double *bestBC,double *targetBC,
 							FILE *logFile,double &costBest,
 							CSettingsSimulation settingSimulation);

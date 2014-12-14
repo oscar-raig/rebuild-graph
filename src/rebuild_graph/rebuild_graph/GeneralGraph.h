@@ -1,13 +1,13 @@
 //
-//  GeneralGraph.h
+//  gslGraph.h
 //  rebuild_graph
 //
 //  Created by Oscar Raig Colon on 29/07/14.
 //  Copyright (c) 2014 Oscar Raig Colon. All rights reserved.
 //
 
-#ifndef __rebuild_graph__GeneralGraph__
-#define __rebuild_graph__GeneralGraph__
+#ifndef __rebuild_graph__gslGraph__
+#define __rebuild_graph__gslGraph__
 
 #include <iostream>
 #include <matrix/gsl_matrix.h>
@@ -16,13 +16,13 @@
 #define GSL_GRAPH 0
 #define GRAPH 1
 #define USED_GRAPH	GSL_GRAPH
-class GeneralGraph{
+class gslGraph{
 public:
 	int nType;
 public:
 	int GetType()const  { return nType;}
-	GeneralGraph(){};
-	virtual GeneralGraph *readPythonGraphFile(char *fileName) = 0;
+	gslGraph(){};
+	virtual gslGraph *readPythonGraphFile(char *fileName) = 0;
 	// Get the number of vertex (order) of the graph
     virtual int getOrder()const =0 ;
 	
@@ -41,15 +41,15 @@ public:
 	
 	virtual void communicability_betweenness_centrality(double *myCExp)=0;
 	virtual void printMyGraph(const char * outputGraphFilename)const =0;
-	virtual GeneralGraph* copyGraph()const =0;
-	//virtual GeneralGraph* copyGraph(GeneralGraph *targetGraph)const =0;
+	virtual gslGraph* copyGraph()const =0;
+	//virtual gslGraph* copyGraph(gslGraph *targetGraph)const =0;
 	virtual void removeVertexNeighbours(int vertexToRemoveNegighbours)=0;
 	virtual int  vertexAreNeighbours(int vertexBegining,int vertexEnding)=0;
 	virtual int  graphNotConnected(int *unconnectedVertex)=0;
 	virtual void addNewVertexNeighbour(int sourceVertex,int newNeighbour)=0;
 	// Add a vertex neighbour newNeighbour to vertex sourceVertex
     virtual int addVertexNeighbour(int sourceVertex,int newNeighbour)=0;
-	virtual ~GeneralGraph(){};
+	virtual ~gslGraph(){};
 };
 
-#endif /* defined(__rebuild_graph__GeneralGraph__) */
+#endif /* defined(__rebuild_graph__gslGraph__) */

@@ -11,7 +11,7 @@
 #include <iostream>
 #include <boost/test/unit_test.hpp>
 
-#include "GeneralGraph.h"
+#include "gslGraph.h"
 #include "rebuildgraph.h"
 #include "GraphFactory.h"
 
@@ -28,17 +28,17 @@ BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality){
 
 }*/
 void test_readGraphFromNULLFile(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph = new gslGraph();
 	BOOST_REQUIRE_THROW(generalGraph->readPythonGraphFile(NULL), std::exception);
 }
 
 void test_readGraphFromFileNotExists(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph =  new gslGraph();
 	BOOST_REQUIRE_THROW(generalGraph->readPythonGraphFile("filenotfound"), std::exception);
 }
 
 void test_readGraphFromFilewheel10(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph = new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "test.gpfc");
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
@@ -50,7 +50,7 @@ void test_readGraphFromFilewheel10(){
 
 
 void test_readGraphFromFiletest_4nodes(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
@@ -63,7 +63,7 @@ void test_readGraphFromFiletest_4nodes(){
 
 
 void test_removeVertexNeighbours(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph = new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
@@ -97,7 +97,7 @@ void test_removeVertexNeighbours(){
 	delete generalGraph;
 }
 void test_vertexAreNeighbours(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	for  ( int i = 1; i < 14; i++){
 		BOOST_CHECK(generalGraph->vertexAreNeighbours(0,i )==1);
@@ -107,7 +107,7 @@ void test_vertexAreNeighbours(){
 }
 
 void test_brandes_comunicability_centrality_exp(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	double bcc_exp[generalGraph->getOrder()];
 	generalGraph->brandes_comunicability_centrality_exp(bcc_exp);
@@ -125,7 +125,7 @@ void test_brandes_comunicability_centrality_exp(){
 
 
 void test_brandes_comunicability_centrality_wheel14(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	double bcc_exp[generalGraph->getOrder()];
 	
@@ -145,7 +145,7 @@ void test_brandes_comunicability_centrality_wheel14(){
 
 
 void test_brandes_comunicability_centrality_test_4nodes(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
 	double bcc_exp[generalGraph->getOrder()];
 	
@@ -166,11 +166,11 @@ void test_brandes_comunicability_centrality_test_4nodes(){
 // layout every test in a paragraph
 
 void test_adNewVertexNeighbour(){
-	GeneralGraph *graph = NULL;
+	gslGraph *graph = NULL;
 	int degree = 0;
 	int order = 0;
 	
-	graph = GraphFactory::createGraph(USED_GRAPH,5);
+	graph =  new gslGraph(5);
 	degree = graph->getDegree();
 	order = graph->getOrder();
 	BOOST_CHECK( degree == 0 );
@@ -225,16 +225,14 @@ void test_adNewVertexNeighbour(){
 	
 }
 void test_setAllVertexneigbours(){
-	GeneralGraph *  generalGraph = GraphFactory::createGraph(USED_GRAPH);
+	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
-	GeneralGraph * newGraph =  GraphFactory::createGraph(USED_GRAPH);
+	gslGraph * newGraph =   new gslGraph();
 	newGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
     newGraph->printGraph();
 	newGraph->setAllVertexNeighbours();
 	newGraph->printGraph();
-	if (generalGraph->GetType() == GRAPH )
-		((graph *)generalGraph)->copyGraph((graph*)newGraph);
-	else
+	
 		((gslGraph *)generalGraph)->copyGraph((gslGraph*)newGraph);
 	
 //	generalGraph->copyGraph(newGraph);
@@ -275,10 +273,10 @@ void test_setAllVertexneigbours(){
 
 void test_2copy(){
 	
-	GeneralGraph *general = GraphFactory::createGraph(GSL_GRAPH);
+	gslGraph *general =  new gslGraph();
 	general->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
-	GeneralGraph *copy1 = general->copyGraph();
-	GeneralGraph *copy2 =  GraphFactory::createGraph(GSL_GRAPH);
+	gslGraph *copy1 = general->copyGraph();
+	gslGraph *copy2 =  new gslGraph();
 	((gslGraph*)general)->copyGraph((gslGraph*)copy2);
 	gsl_matrix *copy1matrix = gsl_matrix_alloc(copy1->getOrder(), copy1->getOrder());
 	copy1->graphToGsl(copy1matrix);

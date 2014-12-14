@@ -12,7 +12,7 @@
 #include <iostream>
 #include <cmath>
 #include "CTrace.hpp"
-#include "GeneralGraph.h"
+#include "gslGraph.h"
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_vector.h>
 #include <limits>
@@ -34,7 +34,7 @@
 
 class CRebuildGraph;
 
-class gslGraph : public GeneralGraph {
+class gslGraph  {
 private:
 	int order;
 	int degree;
@@ -45,7 +45,7 @@ public:
 	gslGraph();
 	gslGraph(int sizeOfMatrix);
 	virtual ~gslGraph();
-	virtual GeneralGraph *readPythonGraphFile(char *fileName);
+	virtual gslGraph *readPythonGraphFile(char *fileName);
 	virtual gslGraph*	copyGraph() const ;
 	virtual void copyGraph(gslGraph * newgslGraph) const;
 //	gsl_matrix * copy ( const gsl_matrix *orig)const;

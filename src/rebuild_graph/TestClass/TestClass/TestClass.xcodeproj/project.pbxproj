@@ -7,14 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		360729781988515F000BBF7A /* GraphFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360729761988515F000BBF7A /* GraphFactory.cpp */; };
-		360729791988515F000BBF7A /* GeneralGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360729771988515F000BBF7A /* GeneralGraph.cpp */; };
 		3607297D1988526E000BBF7A /* gslGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3607297C1988526E000BBF7A /* gslGraph.cpp */; };
 		36099E7919900C0000903C25 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36099E7719900C0000903C25 /* rebuildgraph.cpp */; };
 		365871A11985964F000C40A2 /* mainTestClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365871A01985964F000C40A2 /* mainTestClass.cpp */; };
 		365871A31985964F000C40A2 /* TestClass.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 365871A21985964F000C40A2 /* TestClass.1 */; };
 		365871B41985973E000C40A2 /* libboost_unit_test_framework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 365871B31985973E000C40A2 /* libboost_unit_test_framework.a */; };
-		365871B619859E5B000C40A2 /* graphs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365871B519859E5B000C40A2 /* graphs.cpp */; };
 		365871BA1985A0DD000C40A2 /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365871B91985A0DD000C40A2 /* CTrace.cpp */; };
 		365871BC1985A1FE000C40A2 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 365871BB1985A1FE000C40A2 /* libgsl.a */; };
 		365871BE1985A219000C40A2 /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 365871BD1985A219000C40A2 /* libgslcblas.a */; };
@@ -35,8 +32,6 @@
 
 /* Begin PBXFileReference section */
 		360729751988515F000BBF7A /* GeneralGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeneralGraph.h; path = ../../../rebuild_graph/GeneralGraph.h; sourceTree = "<group>"; };
-		360729761988515F000BBF7A /* GraphFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GraphFactory.cpp; path = ../../../rebuild_graph/GraphFactory.cpp; sourceTree = "<group>"; };
-		360729771988515F000BBF7A /* GeneralGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GeneralGraph.cpp; path = ../../../rebuild_graph/GeneralGraph.cpp; sourceTree = "<group>"; };
 		3607297A1988526E000BBF7A /* GraphFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphFactory.h; path = ../../../rebuild_graph/GraphFactory.h; sourceTree = "<group>"; };
 		3607297B1988526E000BBF7A /* gslGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gslGraph.h; path = ../../../rebuild_graph/gslGraph.h; sourceTree = "<group>"; };
 		3607297C1988526E000BBF7A /* gslGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gslGraph.cpp; path = ../../../rebuild_graph/gslGraph.cpp; sourceTree = "<group>"; };
@@ -46,8 +41,6 @@
 		365871A01985964F000C40A2 /* mainTestClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mainTestClass.cpp; sourceTree = "<group>"; };
 		365871A21985964F000C40A2 /* TestClass.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestClass.1; sourceTree = "<group>"; };
 		365871B31985973E000C40A2 /* libboost_unit_test_framework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_unit_test_framework.a; path = ../../../../lib/libboost_unit_test_framework.a; sourceTree = "<group>"; };
-		365871B519859E5B000C40A2 /* graphs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphs.cpp; path = ../../../rebuild_graph/graphs.cpp; sourceTree = "<group>"; };
-		365871B719859ED4000C40A2 /* graphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphs.h; path = ../../../rebuild_graph/graphs.h; sourceTree = "<group>"; };
 		365871B81985A0DD000C40A2 /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
 		365871B91985A0DD000C40A2 /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 		365871BB1985A1FE000C40A2 /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../../lib/libgsl.a; sourceTree = "<group>"; };
@@ -98,10 +91,6 @@
 				3607297B1988526E000BBF7A /* gslGraph.h */,
 				3607297C1988526E000BBF7A /* gslGraph.cpp */,
 				360729751988515F000BBF7A /* GeneralGraph.h */,
-				360729761988515F000BBF7A /* GraphFactory.cpp */,
-				360729771988515F000BBF7A /* GeneralGraph.cpp */,
-				365871B719859ED4000C40A2 /* graphs.h */,
-				365871B519859E5B000C40A2 /* graphs.cpp */,
 				365871A01985964F000C40A2 /* mainTestClass.cpp */,
 				365871A21985964F000C40A2 /* TestClass.1 */,
 			);
@@ -159,11 +148,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				365871B619859E5B000C40A2 /* graphs.cpp in Sources */,
 				365871A11985964F000C40A2 /* mainTestClass.cpp in Sources */,
-				360729791988515F000BBF7A /* GeneralGraph.cpp in Sources */,
 				365871BA1985A0DD000C40A2 /* CTrace.cpp in Sources */,
-				360729781988515F000BBF7A /* GraphFactory.cpp in Sources */,
 				3607297D1988526E000BBF7A /* gslGraph.cpp in Sources */,
 				36099E7919900C0000903C25 /* rebuildgraph.cpp in Sources */,
 			);

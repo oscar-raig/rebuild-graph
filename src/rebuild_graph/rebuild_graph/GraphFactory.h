@@ -10,16 +10,16 @@
 #define __rebuild_graph__GraphFactory__
 
 #include <iostream>
-#include "GeneralGraph.h"
-#include "graphs.h"
+#include "gslGraph.h"
+
 #include "gslGraph.h"
 
 
 class GraphFactory {
 	
 public:
-	static GeneralGraph * createGraph(int graphClass);
-	static GeneralGraph * createGraph(int graphClass,int sizeOfMatrix);
+	static gslGraph * createGraph(int graphClass);
+	static gslGraph * createGraph(int graphClass,int sizeOfMatrix);
 	
 };
 #endif /* defined(__rebuild_graph__GraphFactory__) */

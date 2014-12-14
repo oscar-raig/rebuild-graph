@@ -2,7 +2,6 @@
 #include <boost/test/unit_test.hpp>
 #include "analitza.h"
 #include <math.h>
-#include "graphs.h"
 #include <fstream>
 #include <iterator>
 #include "CSettingsSumulation.h"
@@ -43,7 +42,9 @@ using namespace boost::unit_test;
 // 2014-11-11 GRAPH DEFAULT_ALGORITHM_BARBASE_20_4
 // -- WORKING --> TOO SLOW
 //#define DEFAULT_ALGORITHM_BARBASE_20_4
-#define COMPARA_THE_SAME_GRAPH
+
+// DELETE DUE NO GRAPH FROM FILE
+//#define COMPARA_THE_SAME_GRAPH
 
 
 
@@ -411,10 +412,10 @@ BOOST_AUTO_TEST_CASE(compara){
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	gsl_matrix * matrixA;
 	gsl_matrix * matrixB;
-	GeneralGraph* graph = NULL;
+	gslGraph* graph = NULL;
 	
 	const char *fileNameGraph="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc";
-	graph = rebuildGraph->GetGraphfromFile(fileNameGraph);
+//	graph = rebuildGraph->GetGraphfromFile(fileNameGraph);
 	
 	matrixA = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
 	matrixB = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
@@ -437,7 +438,7 @@ BOOST_AUTO_TEST_CASE(compara){
 BOOST_AUTO_TEST_CASE(test_generateInitialGraph){
 	CFuncTrace trace (true,"test_generateInitialGraph");
 	int random_value_x=11,random_value_y=92,random_value_z=37;
-	GeneralGraph *  generalGraph =
+	gslGraph *  generalGraph =
 	StrategyPatternAlgorithm::generateInitialGraph(4,
 												   random_value_x,random_value_y,random_value_z);
 	
@@ -464,7 +465,7 @@ BOOST_AUTO_TEST_CASE(test_generateInitialGraph_order_10_){
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	int c_random_value_x=11,c_random_value_y=92,c_random_value_z=37;
 	
-	GeneralGraph *  generalGraph =
+	gslGraph *  generalGraph =
 	StrategyPatternAlgorithm::generateInitialGraph(10,
 												   random_value_x,random_value_y,random_value_z);
 	
@@ -475,7 +476,7 @@ BOOST_AUTO_TEST_CASE(test_generateInitialGraph_order_10_){
 	generalGraph->printGraph(CTrace::level::TRACE_INFO);
 	BOOST_CHECK(degree == 3);
 	BOOST_CHECK(order ==10);
-	GeneralGraph *copyGraph = NULL;
+	gslGraph *copyGraph = NULL;
 	
 	gsl_matrix * matrixA;
 	gsl_matrix * matrixB;
@@ -553,7 +554,7 @@ BOOST_AUTO_TEST_CASE(test_1){
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	double newBC [10];
 	
-	GeneralGraph *  generalGraph =
+	gslGraph *  generalGraph =
 	StrategyPatternAlgorithm::generateInitialGraph(10,
 												   random_value_x,random_value_y,random_value_z);
 	generalGraph->brandes_comunicability_centrality_exp(newBC);
@@ -573,7 +574,7 @@ BOOST_AUTO_TEST_CASE(test_1){
 	BOOST_CHECK(abs(34.453578 - newBC[8]) < 0.00001);
 	BOOST_CHECK(abs(28.560175 - newBC[9]) < 0.00001);
 	
-	GeneralGraph *newGraph=NULL;
+	gslGraph *newGraph=NULL;
 	newGraph=generalGraph->copyGraph();
 	newGraph->setAllVertexNeighbours();
 	
@@ -607,7 +608,7 @@ BOOST_AUTO_TEST_CASE(test_2){
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	double newBC [5];
 	
-	GeneralGraph *  generalGraph =
+	gslGraph *  generalGraph =
 	StrategyPatternAlgorithm::generateInitialGraph(5,
 												   random_value_x,random_value_y,random_value_z);
 	generalGraph->brandes_comunicability_centrality_exp(newBC);
@@ -629,7 +630,7 @@ BOOST_CHECK(abs(5.154875 - newBC[2]) < 0.00001);
 BOOST_CHECK(abs(5.154875 - newBC[3]) < 0.00001);
 BOOST_CHECK(abs(5.154875 - newBC[4]) < 0.00001);
 	
-	GeneralGraph *newGraph=NULL;
+	gslGraph *newGraph=NULL;
 	newGraph=generalGraph->copyGraph();
 	newGraph->setAllVertexNeighbours();
 	

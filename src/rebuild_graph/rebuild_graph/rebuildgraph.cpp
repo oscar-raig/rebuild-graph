@@ -7,7 +7,6 @@
 //
 #include <math.h>
 #include <stdio.h>
-#include "graphs.h"
 #include "rebuildgraph.h"
 #include "CTrace.hpp"
 
@@ -17,7 +16,7 @@
 
 
 
-void CRebuildGraph::generateOutputFile(const  GeneralGraph *targetGraph,const char *inputFileName,double Tk,
+void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *inputFileName,double Tk,
 						double costBest,double *targetBC,
 						double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation){
 	
@@ -58,8 +57,8 @@ void CRebuildGraph::generateOutputFile(const  GeneralGraph *targetGraph,const ch
 }
 
 void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimulation,
-											  GeneralGraph *targetGraph,
-											  GeneralGraph *bestGraph,
+											  gslGraph *targetGraph,
+											  gslGraph *bestGraph,
 											  char* inputFilename,
 											  time_t timeStart,
 											  double Tk,
@@ -102,31 +101,14 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 
 #define RESULT_OK 1
 
-GeneralGraph*
-CRebuildGraph::GetGraphfromFile(const char *graphFileName)
-{
-	CFuncTrace lFuncTrace(false,string("GetGraphfromFile"));
-	graph *targetGraph=NULL;
-	char inputFilename[STRING_LENGTH];
-	
-	if (graphFileName==NULL){
-		lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"ERROR : argv[1] is NULL");
-		return NULL;
-	}
-	strcpy(inputFilename,graphFileName);
-	targetGraph = new (graph);
-	targetGraph->readPythonGraphFile(inputFilename);
-	
-	
-	return targetGraph;
-}
+
 
 int CRebuildGraph::calculateBeterness(const char *argv[]){
 	CFuncTrace lFuncTrace(false,"fCalculateBeterness");
-	GeneralGraph *targetGraph=NULL;
+	gslGraph *targetGraph=NULL;
 	int graphOrder=0;
 	
-	targetGraph=GetGraphfromFile(argv[1]);
+//	targetGraph=GetGraphfromFile(argv[1]);
 	graphOrder=targetGraph->getOrder();
 	
 	
@@ -242,8 +224,8 @@ int
 CRebuildGraph::calculateCommunicability(const char *argv[]){
 	CFuncTrace lFuncTrace(false,"fCalculateConnectivity");
 	
-	GeneralGraph *targetGraph=NULL;
-	targetGraph=GetGraphfromFile(argv[1]);
+	gslGraph *targetGraph=NULL;
+//	targetGraph=GetGraphfromFile(argv[1]);
 	int graphOrder=targetGraph->getOrder();
 	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Graph Order %d",graphOrder);
 	
@@ -276,8 +258,8 @@ int
 CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
 	CFuncTrace lFuncTrace(false,"fCalculateCommunicability_cent_exp");
 	
-	GeneralGraph *targetGraph=NULL;
-	targetGraph=GetGraphfromFile(argv[1]);
+	gslGraph *targetGraph=NULL;
+//	targetGraph=GetGraphfromFile(argv[1]);
 	int graphOrder=targetGraph->getOrder();
 	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Graph Order %d",graphOrder);
 	double * bestCommCentExp = (double*)malloc(graphOrder * sizeof(double));

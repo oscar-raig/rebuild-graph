@@ -22,13 +22,12 @@ gslGraph::gslGraph():
 		order(0),
 		degree(0),
 		matrix(NULL){
-	nType = GSL_GRAPH;
 };
 
 gslGraph::gslGraph(int sizeOfMatrix):
 		order(sizeOfMatrix),
 		degree(0){
-	nType = GSL_GRAPH;
+
 	matrix = gsl_matrix_alloc(sizeOfMatrix,sizeOfMatrix);
 	gsl_matrix_set_zero(matrix);
 };
@@ -55,10 +54,14 @@ gslGraph*	gslGraph::copyGraph()const{
 
 
 void gslGraph::copyGraph(gslGraph * newgslGraph)const{
-	newgslGraph->order = order;
+	newgslGraph->order = getOrder();
 	newgslGraph->degree = getDegree();
+	if ( order !=  matrix->size1)
+		throw runtime_error("Order and matrix size are different");
+	if ( order !=  matrix->size2)
+		throw runtime_error("Order and matrix size are different");
 	if ( newgslGraph->matrix)
-		delete newgslGraph->matrix;
+		free (newgslGraph->matrix);
 	newgslGraph->matrix = gsl_matrix_alloc(matrix->size1,matrix->size2);
 	gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
 }
@@ -90,12 +93,13 @@ void gslGraph::printMyGraph(const char * outputGraphFilename)const{
 // RETURNS the updated value of de PRIVATE variable order
 //-----------------------------------------------------------------------------
 int gslGraph::addVertex(int newVertexId){
-	//  int result=order;
 	
 	if ( order == 0){
+		if ( matrix)
+			gsl_matrix_free( matrix);
 		matrix = gsl_matrix_alloc	(newVertexId+1,newVertexId+1);
 		order = newVertexId+1;
-		degree = getDegree();
+		degree = 0;
 		return order;
 	}
 	
@@ -106,7 +110,7 @@ int gslGraph::addVertex(int newVertexId){
 				gsl_matrix_set (new_matrix, i,j, gsl_matrix_get(matrix,i,j));
 			}
 		}
-		delete matrix;
+		gsl_matrix_free(matrix);
 		matrix = new_matrix;
 		order = newVertexId+1;
 		degree = getDegree();
@@ -117,7 +121,7 @@ int gslGraph::addVertex(int newVertexId){
 
 
 int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
-	int result=-1;
+	int result=1;
 	
 	if(sourceVertex!=newNeighbour){
 		if(order<(sourceVertex+1)){
@@ -126,18 +130,19 @@ int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
 		if(order<(newNeighbour+1)){
 			addVertex(newNeighbour);
 		}
+		if ( sourceVertex> getOrder())
+			throw "ERROR:SourceVertex is greate than order";
+		if ( newNeighbour> getOrder())
+			throw "ERROR: newNeighbour is greate than order";
 		gsl_matrix_set (matrix, sourceVertex,newNeighbour, 1);
 		gsl_matrix_set (matrix, newNeighbour,sourceVertex, 1);
-
-		//result=vertexArray[sourceVertex]->addNeighbour(newNeighbour);
-		//result=vertexArray[newNeighbour]->addNeighbour(sourceVertex);
 		degree = getDegree();
 		
 	}
 	return result;
 }
 
-GeneralGraph *gslGraph::readPythonGraphFile(char *fileName){
+gslGraph *gslGraph::readPythonGraphFile(char *fileName){
 	
 	FILE *input;
 	int i=0;
@@ -442,8 +447,7 @@ int gslGraph::getDegree(int vertex)const {
 
 
 void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
-	if ( vertexToRemoveNegighbours < order )
-	{
+	if ( vertexToRemoveNegighbours < order ){
 		for (int i = 0; i < order ; i++ ){
 			
 			gsl_matrix_set(matrix,vertexToRemoveNegighbours,i,0);
@@ -453,42 +457,10 @@ void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
 			
 		}
 		this->degree = getDegree();
-		/*
-		 gsl_matrix *new_matrix=gsl_matrix_alloc(order -1,order -1);
-		 for ( int i = 0; i < order ; i ++)
-		 {
-		 if (i < vertexToRemoveNegighbours ) {
-		 for (int j = 0; j < order ; j++ ){
-		 if ( j < vertexToRemoveNegighbours){
-		 if (gsl_matrix_get(matrix, i, j)){
-		 gsl_matrix_set(new_matrix,i,j,1);
-		 }
-		 }else if (j > vertexToRemoveNegighbours ){
-		 if (gsl_matrix_get(matrix, i, j)){
-		 gsl_matrix_set(new_matrix,i,j-1,1);
-		 }
-		 }
-		 }
-		 
-		 }else if (i > vertexToRemoveNegighbours){
-		 for (int j = 0; j < order ; j++ ){
-		 if ( j < vertexToRemoveNegighbours){
-		 if (gsl_matrix_get(matrix, i, j)){
-		 gsl_matrix_set(new_matrix,i-1,j,1);
-		 }
-		 }else if (j > vertexToRemoveNegighbours ){
-		 if (gsl_matrix_get(matrix, i, j)){
-		 gsl_matrix_set(new_matrix,i-1,j-1,1);
-		 }
-		 }
-		 }
-		 
-		 }
-		 }
-			delete matrix;
-			matrix = new_matrix;
-			*/
+	}else{
+		throw "ERROR: Neighbour to remove greater than order";
 	}
+	
 }
 
 
@@ -727,8 +699,7 @@ int gslGraph::compare(gslGraph * graph1, gslGraph * graph2){
 		return 0;
 	if ( graph1->getDegree() !=graph2->getDegree())
 		return 0;
-	if ( graph1->GetType() != graph2->GetType())
-		return 0;
+	
 	if ( graph1->matrix->size1 != graph2->matrix->size1)
 		return 0;
 	if ( graph1->matrix->size2 != graph2->matrix->size2)

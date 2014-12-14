@@ -33,7 +33,7 @@ double StrategyPatternAlgorithm::cost(double *tarjet,double *current,int count){
 // GLOBAL operation modifyGraph(sourceGraph)
 // MODIFIES a randon sourceGraph vertex's connections
 //-----------------------------------------------------------------------------
-void StrategyPatternAlgorithm::modifyGraph(GeneralGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
+void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
 	int i,j;
 	int vertex2change;
 	int myOrder=sourceGraph->getOrder();
@@ -46,11 +46,6 @@ void StrategyPatternAlgorithm::modifyGraph(GeneralGraph *sourceGraph,int &random
 	
 	// Select vertex to change
 	vertex2change=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
-	// vertex2change is in [0,n-1]
-	// Disconnect vertex2change
-	//printf("modifyGraph\n");
-	//sourceGraph->printGraph();
-	//printf("modifyGraph remove vertex %d\n",vertex2change);
 	sourceGraph->removeVertexNeighbours(vertex2change);
 	sourceGraph->printGraph();
 	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"modifyGraph vertex removed\n");
@@ -60,15 +55,11 @@ void StrategyPatternAlgorithm::modifyGraph(GeneralGraph *sourceGraph,int &random
 		// myNewNumberOfNeighbours is in [1,n-1]
 		// Connect new neighbours
 		for(i=0; i<myNewNumberOfNeighbours; i++){
-			//printf("modifyGraph3 vertex2change %d\n",vertex2change);
-			//printf("modifyGraph3 Newdegree %d\n",myNewNumberOfNeighbours);
 			do{
 				found=false;
-				//printf("modifyGraph4\n");
 				myNewNeighbour=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
 				// myNewNeighbour is in [0,n-1]
 				for(j=0;j<i;j++){
-					//printf("modifyGraph4 new=%d newNei[j]=%d\n",myNewNeighbour,newNeighbours[j]);
 					if((myNewNeighbour==newNeighbours[j])
 					   ||(myNewNeighbour==vertex2change)){
 						found=true;
@@ -77,14 +68,9 @@ void StrategyPatternAlgorithm::modifyGraph(GeneralGraph *sourceGraph,int &random
 			} while(found||
 					(sourceGraph->vertexAreNeighbours(vertex2change,myNewNeighbour)));
 			newNeighbours[i]=myNewNeighbour;
-			//printf("modifyGraph5 vertex %d ADD neigh %d\n",vertex2change,myNewNeighbour);
 			sourceGraph->addNewVertexNeighbour(vertex2change,myNewNeighbour);
-			 sourceGraph->printGraph();
 		}
-		//    sourceGraph->printGraph();
 	} while (sourceGraph->graphNotConnected(&vertex2change));
-	//sourceGraph->printGraph();
-	//printf("modifyGraph vertex reconnected\n");
 }
 
 
@@ -115,12 +101,12 @@ StrategyPatternAlgorithm::generateRandomNumber(int &random_value_x,int &random_v
 // GLOBAL operation generateInitialGraph(int sourceGraphOrder)
 // RETURNS a random graph with sourceGraphOrder vertex
 //-----------------------------------------------------------------------------
-GeneralGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
+gslGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
 	int i,j;
 	int newNeighbour;
 	int newDegree;
 	CFuncTrace trace (false,"StrategyPatternAlgorithm::generateInitialGraph");
-	GeneralGraph *result=GraphFactory::createGraph(USED_GRAPH,sourceGraphOrder);
+	gslGraph *result=new gslGraph(sourceGraphOrder);
 	
 	for(i=0; i<sourceGraphOrder; i++){
 		trace.trace(STP_DEBUG,"Iteration %d",i);
@@ -167,7 +153,7 @@ GeneralGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrde
 
 
 
-void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbestGraph,int graphOrder,
+void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGraph,int graphOrder,
 									   double *bestBC,double *targetBC,
 									   FILE *logFile,double &costBest,
 									   CSettingsSimulation settingSimulation){
@@ -183,9 +169,9 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbe
 	double costOld=0.0;
 	double costNew=0.0;
 	long int N=0;
-	GeneralGraph * bestGraph= NULL;
+	gslGraph * bestGraph= NULL;
 	double newBC [graphOrder];
-	GeneralGraph *newGraph=NULL;
+	gslGraph *newGraph=NULL;
 	
 	for(int i=0;i<graphOrder;i++){
 		bestBC[i]=0.0;
@@ -237,23 +223,21 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbe
 			if(costNew<costBest){
 				costBest=costNew;
 			
-				if (newGraph->GetType() == GRAPH )
-					((graph *)newGraph)->copyGraph((graph*)bestGraph);
-				else{
 					((gslGraph *)newGraph)->copyGraph((gslGraph*)bestGraph);
 					//bestGraph = newGraph->copyGraph();
 									//	bestGraph->printGraph();
 					int res = gslGraph::compare((gslGraph*)bestGraph, (gslGraph*)newGraph);
 					if (!res )
 						res++;
-				}
+			
 				
 			 	//newGraph->copyGraph(bestGraph);
 				//bestGraph = newGraph->copyGraph();
+				{
 				int res = gslGraph::compare((gslGraph*)bestGraph, (gslGraph*)newGraph);
 				if (!res )
 					res++;
-
+				}
 				
 				memcpy(bestBC,newBC,graphOrder*sizeof(double));
 				if(costBest<=tol){
@@ -272,15 +256,12 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbe
 				fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
-				if (newGraph->GetType() == GRAPH ){
-					 ((graph*)bestGraph)->copyGraph((graph*)newGraph);
-					//newGraph = ((graph*)bestGraph)->copyGraph();
-				}else{
+				
 					
-					 ((gslGraph *)bestGraph)->copyGraph((gslGraph*)newGraph);
+					// ((gslGraph *)bestGraph)->copyGraph((gslGraph*)newGraph);
 				//	newGraph= ((gslGraph *)bestGraph)->copyGraph();
-				}
-			//	newGraph = bestGraph->copyGraph();
+				
+				newGraph = bestGraph->copyGraph();
 				notOk++;
 				lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"x");
 				fprintf(logFile,"x");
@@ -304,14 +285,14 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, GeneralGraph **pbe
 
 int
 StrategyPatternAlgorithm::regenerateGraph(CSettingsSimulation *settingsSimulation,
-							   GeneralGraph *targetGraph,
+							   gslGraph *targetGraph,
 							   char *inputFilename,
 							   double *&targetBC,
 							   double *&bestBC,
 							   int &graphOrder,
 							   double &compareResult,
 							  double *Tk,
-								double *costBest,GeneralGraph **bestGraph){
+								double *costBest,gslGraph **bestGraph){
 	CFuncTrace trace (true,"StrategyPatternAlgorithm::regenerateGraph");
 	
 	try {
