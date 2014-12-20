@@ -17,8 +17,8 @@
 
 using namespace boost::unit_test;
 
-
-
+int numberOfTests = 0;
+int numberOfTestExeccuted = 0;
 
 #define DIR_GRAPHS "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/"
 /*
@@ -27,104 +27,168 @@ BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality){
 	BOOST_CHECK(0 > 1);
 
 }*/
-void test_readGraphFromNULLFile(){
+void UTest_gslGraph_readPythonGraphFile_NULLFile(){
+	CFuncTrace trace(true,"UTest_readGraphFromNULLFile");
+	
 	gslGraph *  generalGraph = new gslGraph();
 	BOOST_REQUIRE_THROW(generalGraph->readPythonGraphFile(NULL), std::exception);
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+					++numberOfTestExeccuted,numberOfTests);
 }
 
-void test_readGraphFromFileNotExists(){
+void UTest_gslGraph_readPythonGraphFile_FileNotExists(){
+	CFuncTrace trace(true,"UTest_readGraphFromFileNotExists");
+	
 	gslGraph *  generalGraph =  new gslGraph();
 	BOOST_REQUIRE_THROW(generalGraph->readPythonGraphFile("filenotfound"), std::exception);
+	
+	delete generalGraph;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
 }
 
-void test_readGraphFromFilewheel10(){
+void UTest_gslGraph_readPythonGraphFile_wheel10(){
+	CFuncTrace trace(true,"test_readGraphFromFilewheel10");
+	
 	gslGraph *  generalGraph = new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "test.gpfc");
+	
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
+	
 	BOOST_CHECK(degree == 3);
 	BOOST_CHECK(order ==7);
+	
+	delete generalGraph;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
 }
 
 
 
 
-void test_readGraphFromFiletest_4nodes(){
+void Utest_gslGraph_readPythonGraphFile_4nodes(){
+	CFuncTrace trace(true,"test_readGraphFromFiletest_4nodes");
+	
 	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
+	
 	generalGraph->printGraph();
 	BOOST_CHECK(degree == 2);
-	BOOST_CHECK(order ==4);
+	BOOST_CHECK(order == 4);
+	
+	delete generalGraph;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
 }
 
 
+#define ORDER_WHEEL14 14
+#define DEGREE_CENTRAL_VERTEX_WHEEL14 13
+#define DEGREE_EXTERNAL_VERTEX_WHEEL14 3
 
-
-void test_removeVertexNeighbours(){
+void UTest_gslGraph_removeVertexNeighbours_wheel14(){
+	CFuncTrace trace(true,"test_removeVertexNeighbours");
+	
 	gslGraph *  generalGraph = new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
-	int degree = generalGraph->getDegree();
-	int order = generalGraph->getOrder();
+	
+	int graphdegree = generalGraph->getDegree();
+	int graphorder = generalGraph->getOrder();
+	
+	BOOST_CHECK( graphorder == ORDER_WHEEL14 );
+	BOOST_CHECK( graphdegree == DEGREE_CENTRAL_VERTEX_WHEEL14 );
 
-	for (int i = 0; i< 14; i++) {
+	for (int i = 0; i< ORDER_WHEEL14; i++) {
 		int degree = generalGraph->getDegree(i);
-		if ( i == 0)
-			BOOST_CHECK(degree == 13);
+		if ( i == 0 )
+			BOOST_CHECK(degree == DEGREE_CENTRAL_VERTEX_WHEEL14);
 		else
-			BOOST_CHECK(degree ==3);
+			BOOST_CHECK(degree == DEGREE_EXTERNAL_VERTEX_WHEEL14);
 	}
 	
-	BOOST_CHECK(order ==14);
+	
+	// Vertex 0 in wheel14 is connected to 13 vertex
+	// if we remove its neighbours, order remain equal
+	// degree becomes 2
 	generalGraph->removeVertexNeighbours(0);
 	
-	order = generalGraph->getOrder();
-	degree = generalGraph->getDegree();
-	BOOST_CHECK(degree == 2);
+	graphorder = generalGraph->getOrder();
+	graphdegree = generalGraph->getDegree();
+	
+	BOOST_CHECK(graphdegree == 2);
+	
 	generalGraph->printGraph();
 
-	BOOST_CHECK(order ==14);
-	for (int i = 0; i< 14; i++) {
+	BOOST_CHECK( graphorder == ORDER_WHEEL14 );
+	
+	for (int i = 0; i< ORDER_WHEEL14; i++) {
 		int degree = generalGraph->getDegree(i);
 		if ( i == 0)
-			BOOST_CHECK(degree == 0);
+			BOOST_CHECK( degree == 0 );
 		else
 
-		BOOST_CHECK(degree ==2);
+		BOOST_CHECK( degree == 2 );
 	}
 
 	delete generalGraph;
-}
-void test_vertexAreNeighbours(){
-	gslGraph *  generalGraph =  new gslGraph();
-	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
-	for  ( int i = 1; i < 14; i++){
-		BOOST_CHECK(generalGraph->vertexAreNeighbours(0,i )==1);
-		BOOST_CHECK(generalGraph->vertexAreNeighbours(i,0)==1);
-	}
-	BOOST_CHECK(generalGraph->vertexAreNeighbours(2,4)==0);
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
 }
 
-void test_brandes_comunicability_centrality_exp(){
+void UTest_gslGraph_vertexAreNeighbours(){
+	CFuncTrace trace(true,"test_vertexAreNeighbours");
+	
 	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	
+	for  ( int i = 1; i < 14; i++ ){
+		BOOST_CHECK( generalGraph->vertexAreNeighbours(0,i) == 1);
+		BOOST_CHECK( generalGraph->vertexAreNeighbours(i,0) == 1);
+	}
+	BOOST_CHECK( generalGraph->vertexAreNeighbours(2,4) == 0);
+	
+	delete generalGraph;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+}
+
+void UTest_brandes_comunicability_centrality_exp(){
+	CFuncTrace trace(true,"test_brandes_comunicability_centrality_exp");
+	
+	gslGraph *  generalGraph =  new gslGraph();
+	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	
 	double bcc_exp[generalGraph->getOrder()];
 	generalGraph->brandes_comunicability_centrality_exp(bcc_exp);
 	for (int i = 0; i < generalGraph->getOrder(); i++){
-//		std::cout << bcc_exp[i] << std::endl;
 		BOOST_CHECK(bcc_exp[i] != 0 );
-
 		if ( i == 0)
-			BOOST_CHECK(abs(bcc_exp[i] -42.03) <0.1);
+			BOOST_CHECK(abs(bcc_exp[i] -42.03) < 0.1);
 		else{
-			BOOST_CHECK(abs(bcc_exp[i] -7.29) <0.1);
+			BOOST_CHECK(abs(bcc_exp[i] -7.29) < 0.1);
 		}
 	}
+	
+	delete generalGraph;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
 }
 
 
 void test_brandes_comunicability_centrality_wheel14(){
+	CFuncTrace trace(true,"test_brandes_comunicability_centrality_wheel14");
+	
 	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	double bcc_exp[generalGraph->getOrder()];
@@ -139,12 +203,19 @@ void test_brandes_comunicability_centrality_wheel14(){
 			BOOST_CHECK(abs(bcc_exp[i] -0.00641) <0.1);
 		}
 	}
+	
+	delete generalGraph;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
 }
 
 
 
 
 void test_brandes_comunicability_centrality_test_4nodes(){
+	CFuncTrace trace(true,"test_brandes_comunicability_centrality_test_4nodes");
+	
 	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
 	double bcc_exp[generalGraph->getOrder()];
@@ -159,6 +230,36 @@ void test_brandes_comunicability_centrality_test_4nodes(){
 			BOOST_CHECK(abs(bcc_exp[i] -0.66) <0.1);
 		}
 	}
+	
+	delete generalGraph;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+}
+
+void addVertexAndTestDegreeAndOrder( gslGraph *graph,
+										  int vertexOrig,
+										  int vertexNeigbour,
+										  int ExpectedDegree,
+										  int ExpectedOrder)
+{
+	graph->addVertexNeighbour(vertexOrig,vertexNeigbour);
+	int graphDegree = graph->getDegree();
+	BOOST_CHECK( graphDegree == ExpectedDegree );
+	int graphOrder = graph->getOrder();
+	BOOST_CHECK( graphOrder == ExpectedOrder );
+}
+
+
+void removeVertexAndTestDegreeAndOrder( gslGraph *graph,
+										  int vertex, int ExpectedDegree,
+										  int ExpectedOrder)
+{
+	graph->removeVertexNeighbours(vertex);
+	int graphDegree = graph->getDegree();
+	BOOST_CHECK( graphDegree == ExpectedDegree );
+	int graphOrder = graph->getOrder();
+	BOOST_CHECK( graphOrder == ExpectedOrder );
 }
 
 
@@ -166,73 +267,60 @@ void test_brandes_comunicability_centrality_test_4nodes(){
 // layout every test in a paragraph
 
 void test_adNewVertexNeighbour(){
+	CFuncTrace trace( true,"test_adNewVertexNeighbour" );
+	
 	gslGraph *graph = NULL;
 	int degree = 0;
 	int order = 0;
 	
-	graph =  new gslGraph(5);
+	graph =  new gslGraph( 5 );
 	degree = graph->getDegree();
 	order = graph->getOrder();
 	BOOST_CHECK( degree == 0 );
-	BOOST_CHECK( order == 5);
+	BOOST_CHECK( order == 5 );
 	
 	// adding a conection between 0 and 1
-	graph->addNewVertexNeighbour(0,1);
-	degree = graph->getDegree();
-	BOOST_CHECK( degree == 1);
-	order = graph->getOrder();
-	BOOST_CHECK( order == 5);
+	addVertexAndTestDegreeAndOrder( graph,0,1,1,5 );
 	
 	// removing the connection between 0 and 1
-	graph->removeVertexNeighbours(0);
-	degree = graph->getDegree();
-	order = graph->getOrder();
-	BOOST_CHECK( degree == 0 );
-	BOOST_CHECK( order == 5);
+	removeVertexAndTestDegreeAndOrder(graph,0,0,5);
 	
 	// removing a removed connection
 	graph->removeVertexNeighbours(1);
+	
 	degree = graph->getDegree();
 	order = graph->getOrder();
 	BOOST_CHECK( degree == 0 );
-	BOOST_CHECK( order == 5);
+	BOOST_CHECK( order == 5 );
 	
 	//removing a inexisting connection
-	graph->removeVertexNeighbours(1);
-	degree = graph->getDegree();
-	order = graph->getOrder();
-	BOOST_CHECK( degree == 0 );
-	BOOST_CHECK( order == 5);
+	removeVertexAndTestDegreeAndOrder(graph,1,0,5);
+
 
 	// adding a triangle
-	graph->addNewVertexNeighbour(0,1);
-	graph->addNewVertexNeighbour(0,3);
-	graph->addNewVertexNeighbour(3,2);
-	degree = graph->getDegree();
-	order = graph->getOrder();
-	BOOST_CHECK( degree == 2 );
-	BOOST_CHECK( order == 5);
+	graph->addNewVertexNeighbour( 0,1 );
+	graph->addNewVertexNeighbour( 0,3 );
+	addVertexAndTestDegreeAndOrder( graph,3,1,2,5 );
 	
 	// adding a new Vertex
-	graph->addNewVertexNeighbour(6, 0 );
-	degree = graph->getDegree();
-	order = graph->getOrder();
-	BOOST_CHECK( degree == 2 );
-	BOOST_CHECK( order == 5);
+	addVertexAndTestDegreeAndOrder( graph,5,0,3,6 );
+	
+	
 
-	
-	
-	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
 }
 void test_setAllVertexneigbours(){
+	CFuncTrace trace(true,"test_setAllVertexneigbours");
+	
 	gslGraph *  generalGraph =  new gslGraph();
-	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	generalGraph->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
 	gslGraph * newGraph =   new gslGraph();
-	newGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	newGraph->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
     newGraph->printGraph();
 	newGraph->printGraph();
 	
-		((gslGraph *)generalGraph)->copyGraph((gslGraph*)newGraph);
+	newGraph =	generalGraph->copyGraph();
 	
 //	generalGraph->copyGraph(newGraph);
 	gsl_matrix *targetGraphGsl = gsl_matrix_alloc(generalGraph->getOrder(), generalGraph->getOrder());
@@ -266,42 +354,54 @@ void test_setAllVertexneigbours(){
 	BOOST_CHECK(compare > 0.00001);
 	printf ("Compare  = %f",compare);
 
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
 
 }
 
-void test_2copy(){
+void UTest_2copyGraph(){
+	CFuncTrace trace(true,"UTest_2copyGraph");
 	
 	gslGraph *general =  new gslGraph();
 	general->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	
 	gslGraph *copy1 = general->copyGraph();
-	gslGraph *copy2 =  new gslGraph();
-	((gslGraph*)general)->copyGraph((gslGraph*)copy2);
+	
+	gslGraph *copy2 = general->copyGraph();
+	
 	gsl_matrix *copy1matrix = gsl_matrix_alloc(copy1->getOrder(), copy1->getOrder());
 	copy1->graphToGsl(copy1matrix);
+	
 	gsl_matrix *copy2matrix = gsl_matrix_alloc(copy2->getOrder(), copy2->getOrder());
 	copy2->graphToGsl(copy2matrix);
-	copy1->printGraph();
-	copy2->printGraph();
+
 	double compare = CRebuildGraph::compareMatrix(copy1matrix, copy2matrix);
 	BOOST_CHECK(compare < 0.00001);
+	
+	delete general;
+	delete copy1;
+	delete copy2;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
 
 }
 
 typedef void (*func_type)(void);
 
 func_type functions[]={
-	test_readGraphFromNULLFile,
-	test_readGraphFromFileNotExists,
-	test_readGraphFromFilewheel10,
-	test_readGraphFromFiletest_4nodes,
-	test_removeVertexNeighbours,
-	test_vertexAreNeighbours,
-	test_brandes_comunicability_centrality_exp,
+	UTest_gslGraph_readPythonGraphFile_NULLFile,
+	UTest_gslGraph_readPythonGraphFile_FileNotExists,
+	UTest_gslGraph_readPythonGraphFile_wheel10,
+	Utest_gslGraph_readPythonGraphFile_4nodes,
+	UTest_gslGraph_removeVertexNeighbours_wheel14,
+	UTest_gslGraph_vertexAreNeighbours,
+	UTest_brandes_comunicability_centrality_exp,
 	test_setAllVertexneigbours,
 	test_brandes_comunicability_centrality_wheel14,
 	test_brandes_comunicability_centrality_test_4nodes,
 	test_adNewVertexNeighbour,
-	test_2copy
+	UTest_2copyGraph
 	
 	
 };
@@ -326,14 +426,17 @@ int isLastTest(int iTerator){
 	return iTerator < (sizeof(functions)/sizeof(func_type));
 }
 
+
 test_suite*
 init_unit_test_suite( int argc, char* argv[] )
 {
+	CFuncTrace trace(false,"init_unit_test_suite");
 	func_type  test;
 	int testIterator = 0;
 	getFirstTest(&testIterator,&test );
 	while(isLastTest (testIterator) ){
 		addTest(test);
+		trace.trace(CTrace::level::TRACE_DEBUG,"Adding test %d",numberOfTests++);
 		nextTest(&testIterator,&test);
 	
 	}

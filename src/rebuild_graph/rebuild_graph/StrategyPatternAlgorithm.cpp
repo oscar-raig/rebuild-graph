@@ -221,23 +221,8 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 			lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
 			if(costNew<costBest){
 				costBest=costNew;
-			
-					newGraph->copyGraph(bestGraph);
-					//bestGraph = newGraph->copyGraph();
-									//	bestGraph->printGraph();
-					int res = gslGraph::compare((gslGraph*)bestGraph, (gslGraph*)newGraph);
-					if (!res )
-						res++;
-			
-				
-			 	//newGraph->copyGraph(bestGraph);
-				//bestGraph = newGraph->copyGraph();
-				{
-				int res = gslGraph::compare((gslGraph*)bestGraph, (gslGraph*)newGraph);
-				if (!res )
-					res++;
-				}
-				
+				bestGraph = newGraph->copyGraph();
+
 				memcpy(bestBC,newBC,graphOrder*sizeof(double));
 				if(costBest<=tol){
 					lFuncTrace.trace(STP_INFO,"We are Done costBest < tol %d",N);

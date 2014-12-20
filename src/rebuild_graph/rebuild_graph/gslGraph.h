@@ -45,9 +45,9 @@ public:
 	gslGraph();
 	gslGraph(int sizeOfMatrix);
 	virtual ~gslGraph();
-	virtual gslGraph *readPythonGraphFile(char *fileName);
+	virtual gslGraph *readPythonGraphFile(std::string fileName);
 	virtual gslGraph*	copyGraph() const ;
-	virtual void copyGraph(gslGraph * newgslGraph) const;
+//	virtual void copyGraph(gslGraph * newgslGraph) const;
 //	gsl_matrix * copy ( const gsl_matrix *orig)const;
 	
 	// Get the number of vertex (order) of the graph

@@ -57,9 +57,6 @@ public:
 							double *bestBC,double *targetBC,
 							FILE *logFile,double &costBest,
 							CSettingsSimulation settingSimulation);
-	
-	
-	
 };
 
 #endif /* defined(__rebuild_graph__SrategyPatternAlgorithm__) */

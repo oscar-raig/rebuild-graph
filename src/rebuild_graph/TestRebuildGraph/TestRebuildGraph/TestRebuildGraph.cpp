@@ -70,7 +70,7 @@ void testexceptionSettingSimulationIsNULL(){
 }
 
 #ifdef THROW_EXCEPTION
-BOOST_AUTO_TEST_CASE(Trow_excpetion){
+BOOST_AUTO_TEST_CASE(UTest_Trow_excpetion){
 	BOOST_REQUIRE_THROW(testexceptionSettingSimulationIsNULL(), std::exception);
 	
 }
@@ -92,7 +92,7 @@ void testexceptionFileNotFound(){
 
 
 #ifdef THROW_EXCEPTION_FILE_NOT_FOUND
-BOOST_AUTO_TEST_CASE(Trow_excpetion_file_not_found){
+BOOST_AUTO_TEST_CASE(UTest_Trow_excpetion_file_not_found){
 	BOOST_REQUIRE_THROW(testexceptionFileNotFound(), std::exception);
 	
 }
@@ -108,7 +108,7 @@ void simulation( int algorithm, std::string GraphName, int nMax, double * compar
 }
 
 #ifdef COMMUNICABILITY_BETWEENESS_TEST_4_NODES
-BOOST_AUTO_TEST_CASE(Test_communicability_beetweeness_centrality_test_4nodes){
+BOOST_AUTO_TEST_CASE(UTest_communicability_beetweeness_centrality_test_4nodes){
 	CFuncTrace trace (true,"test_communicability_beetweeness_centrality_test_4nodes");
 	trace.trace(CTrace::level::TRACE_DEBUG,"begin");
 	double compareResult = 10.0;
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE(Test_communicability_beetweeness_centrality_test_4nodes){
 #endif
 
 #ifdef COMMUNICABILITY_BETWEENESS__WHEEL4
-BOOST_AUTO_TEST_CASE(Test_wheel4_COMMUNICABILITY_BETWEENESS){
+BOOST_AUTO_TEST_CASE(UTest_wheel4_COMMUNICABILITY_BETWEENESS){
 	std::cout << " COMMUNICABILITY BETWEENESS with wheel 4 >>"  << std::endl;
 	double compareResult = 10.0;
 	simulation(COMMUNICABILITY_BETWEENESS, "wheel4.txt" ,100, &compareResult);
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE(Test_wheel10_COMMUNICABILITY_BETWEENESS){
 
 
 #ifdef COMMUNICABILITY_BETWEENESS_WHEEL_14
-BOOST_AUTO_TEST_CASE(test_wheel14_COMMUNICABILITY_BETWEENESS){
+BOOST_AUTO_TEST_CASE(UTest_wheel14_COMMUNICABILITY_BETWEENESS){
 	
 	std::cout << " COMMUNICABILITY BETWEENESS with wheel 14 >>" << std::endl;
 		
@@ -181,7 +181,7 @@ BOOST_AUTO_TEST_CASE(test_petersen_COMMUNICABILITY_BETWEENESS){
 
 
 #ifdef BETWEENNESS_CENTRALITY__WHEEL4
-BOOST_AUTO_TEST_CASE(Test_wheel4_BETWEENNESS_CENTRALITY){
+BOOST_AUTO_TEST_CASE(UTest_wheel4_BETWEENNESS_CENTRALITY){
 	std::cout << " BETWEENNESS CENTRALITY with wheel 4>>" << std::endl;
 	double compareResult = 10.0;
 	simulation(BETWEENNESS_CENTRALITY, "wheel4.txt" ,100,&compareResult);
@@ -232,7 +232,7 @@ BOOST_AUTO_TEST_CASE(test_petersen_BETWEENNESS_CENTRALITY){
 
 #ifdef TEST_BEEWEENESS_EXP
 
-BOOST_AUTO_TEST_CASE( Test_Beetweeness_exp)
+BOOST_AUTO_TEST_CASE( UTest_Beetweeness_exp)
 {
 	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
 	largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc";
@@ -270,7 +270,7 @@ BOOST_AUTO_TEST_CASE( Test_Beetweeness_exp)
 
 #ifdef  TEST_ANALIZA
 
-BOOST_AUTO_TEST_CASE( Test_analitza){
+BOOST_AUTO_TEST_CASE( UTest_analitza){
 	CFuncTrace trace (true,"Test_analitza");
 	
 	/* Begin analitza::llegir_dades -------------------------------------------*/
@@ -436,7 +436,7 @@ BOOST_AUTO_TEST_CASE(compara){
 #endif
 
 
-BOOST_AUTO_TEST_CASE(test_generateInitialGraph){
+BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph){
 	CFuncTrace trace (true,"test_generateInitialGraph");
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	gslGraph *  generalGraph =
@@ -550,8 +550,8 @@ BOOST_AUTO_TEST_CASE(test_generateInitialGraph_order_10_){
 }
 #endif
 
-BOOST_AUTO_TEST_CASE(test_1){
-	CFuncTrace trace (true,"test_1");
+BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes){
+	CFuncTrace trace (true,"test_generateInitialGraph_brandes_communicability_10_nodes");
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	double newBC [10];
 	
@@ -578,10 +578,7 @@ BOOST_AUTO_TEST_CASE(test_1){
 	gslGraph *newGraph=NULL;
 	newGraph=generalGraph->copyGraph();
 	
-	//
-	// 9-12-2014
-	// Si la brandes_comuncbiliy es diferent es perque els dos grafs son diferents, en alguna cosa
-	//
+
 	StrategyPatternAlgorithm::modifyGraph(newGraph,random_value_x,random_value_y,random_value_z);
 	// en aqest p
     newGraph->brandes_comunicability_centrality_exp(newBC);
@@ -603,7 +600,7 @@ BOOST_AUTO_TEST_CASE(test_1){
 }
 
 
-BOOST_AUTO_TEST_CASE(test_2){
+BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes){
 	CFuncTrace trace (true,"test_2");
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	double newBC [5];
@@ -618,25 +615,16 @@ BOOST_AUTO_TEST_CASE(test_2){
 		trace.trace(CTrace::TRACE_INFO,"BOOST_CHECK(abs( %f - newBC[0]) < 0.00001);",newBC[j]);
 		
 	}
-	/*
-	BOOST_CHECK(abs(2.782980 - newBC[0]) < 0.00001);
-	BOOST_CHECK(abs(2.782980 - newBC[1]) < 0.00001);
-	BOOST_CHECK(abs(3.492149 - newBC[2] )< 0.00001);
-	BOOST_CHECK(abs(1.661114 - newBC[3]) < 0.00001);*/
-
-BOOST_CHECK(abs(7.239877 - newBC[0]) < 0.00001);
-BOOST_CHECK(abs(5.154875 - newBC[1]) < 0.00001);
-BOOST_CHECK(abs(5.154875 - newBC[2]) < 0.00001);
-BOOST_CHECK(abs(5.154875 - newBC[3]) < 0.00001);
-BOOST_CHECK(abs(5.154875 - newBC[4]) < 0.00001);
+	
+	BOOST_CHECK(abs(7.239877 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(5.154875 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(5.154875 - newBC[2]) < 0.00001);
+	BOOST_CHECK(abs(5.154875 - newBC[3]) < 0.00001);
+	BOOST_CHECK(abs(5.154875 - newBC[4]) < 0.00001);
 	
 	gslGraph *newGraph=NULL;
 	newGraph=generalGraph->copyGraph();
 	
-	//
-	// 9-12-2014
-	// Si la brandes_comuncbiliy es diferent es perque els dos grafs son diferents, en alguna cosa
-	//
 	StrategyPatternAlgorithm::modifyGraph(newGraph,random_value_x,random_value_y,random_value_z);
 	// en aqest p
 	newGraph->brandes_comunicability_centrality_exp(newBC);

@@ -52,7 +52,7 @@ gslGraph*	gslGraph::copyGraph()const{
 	return newgslGraph;
 }
 
-
+/*
 void gslGraph::copyGraph(gslGraph * newgslGraph)const{
 	newgslGraph->order = getOrder();
 	newgslGraph->degree = getDegree();
@@ -65,7 +65,7 @@ void gslGraph::copyGraph(gslGraph * newgslGraph)const{
 	newgslGraph->matrix = gsl_matrix_alloc(matrix->size1,matrix->size2);
 	gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
 }
-
+*/
 
 void gslGraph::printMyGraph(const char * outputGraphFilename)const{
 	CFuncTrace trace (false,"printMyGraph");
@@ -142,7 +142,7 @@ int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
 	return result;
 }
 
-gslGraph *gslGraph::readPythonGraphFile(char *fileName){
+gslGraph *gslGraph::readPythonGraphFile( std::string fileName){
 	
 	FILE *input;
 	int i=0;
@@ -151,13 +151,13 @@ gslGraph *gslGraph::readPythonGraphFile(char *fileName){
 	char *line;
 	char *endOfVertex,*newaux;
 	try {
-	if ( !fileName ){
+	if ( !fileName.c_str() ){
 		throw runtime_error("FileName : is NULL");
 	}
 
 	//	graph *result=new graph();
 	line=(char *)malloc(sizeof(char)*STRING_LENGTH);
-	if((input=fopen(fileName,"rt"))==NULL){
+	if((input=fopen(fileName.c_str(),"rt"))==NULL){
 		char szPath[255];
 		if (!getwd(szPath)){
 			printf("Current path (%s)",szPath);
