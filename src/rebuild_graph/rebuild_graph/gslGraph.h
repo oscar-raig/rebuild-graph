@@ -35,6 +35,12 @@
 class CRebuildGraph;
 
 class gslGraph  {
+public:
+	enum COMPARE
+	{
+		GRAPH_DIFFERENTS,
+		GRAPH_EQUALS,
+	};
 private:
 	int order;
 	int degree;
@@ -47,8 +53,7 @@ public:
 	virtual ~gslGraph();
 	virtual gslGraph *readPythonGraphFile(std::string fileName);
 	virtual gslGraph*	copyGraph() const ;
-//	virtual void copyGraph(gslGraph * newgslGraph) const;
-//	gsl_matrix * copy ( const gsl_matrix *orig)const;
+
 	
 	// Get the number of vertex (order) of the graph
 	virtual int getOrder() const { return order;};

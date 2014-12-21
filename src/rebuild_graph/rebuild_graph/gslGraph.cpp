@@ -686,15 +686,14 @@ int  gslGraph::graphToGsl( gsl_matrix* target){
 	gsl_matrix_memcpy(target,matrix);
 	return 1;
 }
-/*
-gsl_matrix *  gslGraph::copy ( const gsl_matrix *orig)const{
-	gsl_matrix * result = gsl_matrix_alloc(orig->size1,orig->size2);
-	gsl_matrix_memcpy ( result, orig );
-	return result;
-}
- */
+
 
 int gslGraph::compare(gslGraph * graph1, gslGraph * graph2){
+	
+	if ( graph1 == NULL) {
+		throw runtime_error("gsl_graph:compare: bad first graph for comparing");
+	}
+	
 	if ( graph1->getOrder() !=graph2->getOrder())
 		return 0;
 	if ( graph1->getDegree() !=graph2->getDegree())
@@ -704,6 +703,7 @@ int gslGraph::compare(gslGraph * graph1, gslGraph * graph2){
 		return 0;
 	if ( graph1->matrix->size2 != graph2->matrix->size2)
 		return 0;
+	
 	for ( int i =0; i < graph1->matrix->size1;i++)
 		for ( int j =0; j < graph1->matrix->size2;j++)
 				if ( gsl_matrix_get(graph1->matrix,i,j) != gsl_matrix_get(graph2->matrix,i,j))

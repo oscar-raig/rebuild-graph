@@ -14,6 +14,9 @@
 #include "rebuildgraph.h"
 #include "StrategyPatternAlgorithm.h"
 
+// Abstract Factory Pattern than handles the
+// three classes involved, rebuildgrAPH, settingSimulation, strategyPatternAlgorithm
+
 class AbstractFactoryPatternRebuildGraph {
 	
 private:

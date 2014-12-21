@@ -387,6 +387,83 @@ void UTest_2copyGraph(){
 
 }
 
+void
+UTest_gslGraph_compare_bad_parameter_1(void){
+	CFuncTrace trace(true,"UTest_gslGraph_compare_bad_parameter_1");
+	
+	gslGraph *general =  new gslGraph();
+	general->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+
+	BOOST_REQUIRE_THROW(general->compare(NULL, general), std::exception);
+	
+	delete general;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+	
+}
+void
+UTest_gslGraph_compare_bad_parameter_2(void){
+	CFuncTrace trace(true,"UTest_gslGraph_compare_bad_parameter_2");
+	
+	gslGraph *general =  new gslGraph();
+	general->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	
+	BOOST_REQUIRE_THROW( general->compare(NULL, general), std::exception);
+	
+	delete general;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+	
+}
+void
+UTest_gslGraph_compare_different_graphs(void){
+	
+	CFuncTrace trace(true,"UTest_gslGraph_compare_bad_parameter_2");
+	
+	gslGraph *graph1 =  new gslGraph();
+	graph1->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	
+	gslGraph *graph2 =   new gslGraph();
+	graph2->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
+	
+	int areGraphEquals = gslGraph::compare(graph1, graph2);
+	
+	BOOST_CHECK( areGraphEquals == 0 );
+	
+	
+	delete graph1;
+	delete graph2;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+}
+void
+UTest_gslGraph_compare_equal_graphs(void){
+	CFuncTrace trace(true,"UTest_gslGraph_compare_bad_parameter_2");
+	
+	gslGraph *graph1 =  new gslGraph();
+	graph1->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	
+	gslGraph *graph2 =   new gslGraph();
+	graph2->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
+	
+	int areGraphEquals = gslGraph::compare(graph1, graph2);
+	
+	BOOST_CHECK( areGraphEquals == gslGraph::COMPARE::GRAPH_EQUALS);
+	
+	
+	delete graph1;
+	delete graph2;
+	
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+
+	
+}
+
+
 typedef void (*func_type)(void);
 
 func_type functions[]={
@@ -401,7 +478,11 @@ func_type functions[]={
 	test_brandes_comunicability_centrality_wheel14,
 	test_brandes_comunicability_centrality_test_4nodes,
 	test_adNewVertexNeighbour,
-	UTest_2copyGraph
+	UTest_2copyGraph,
+	UTest_gslGraph_compare_bad_parameter_1,
+	UTest_gslGraph_compare_bad_parameter_2,
+	UTest_gslGraph_compare_different_graphs,
+	UTest_gslGraph_compare_equal_graphs
 	
 	
 };
