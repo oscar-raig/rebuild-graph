@@ -22,7 +22,6 @@ class AbstractFactoryPatternRebuildGraph {
 private:
 	CRebuildGraph *rebuildGraph;
 	CSettingsSimulation *settingSimulation;
-	StrategyPatternAlgorithm *strategyPatternAlgorithm;
 	
 public:
 	AbstractFactoryPatternRebuildGraph (int algorithm, std::string GraphName, int nMax, double * compareResult){
@@ -39,6 +38,9 @@ public:
 		double *BestBC = NULL;
 		if (algorithm)
 			settingSimulation->graphProperty = algorithm;
+		
+		
+		
 		rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,*compareResult);
 	}
 	

@@ -56,6 +56,9 @@ using namespace boost::unit_test;
 //#define DEFAULT_GRAPH_TEST_TNODES
 
 
+void simulation( int algorithm, std::string GraphName, int nMax,
+				double * compareResult,double valueToCompare = 0.000001);
+
 void testexceptionSettingSimulationIsNULL(){
 	CFuncTrace( false,"testexceptionSettingSimulationIsNULL");
 	
@@ -67,6 +70,9 @@ void testexceptionSettingSimulationIsNULL(){
 	double *BestBC = NULL;
 	double compareResult = 10.0;
 	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
+	
+	// simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,1000,&compareResult);
+
 }
 
 #ifdef THROW_EXCEPTION
@@ -79,14 +85,9 @@ BOOST_AUTO_TEST_CASE(UTest_Trow_excpetion){
 void testexceptionFileNotFound(){
 	
 	CFuncTrace( false,"testexceptionFileNotFound");
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
-	settingSimulation->inputFileName = "filenotfound.txt";
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
 	double compareResult = 10.0;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
+	simulation(BETWEENNESS_CENTRALITY, "filenotfound.txt" ,1000,&compareResult);
+
 }
 
 
@@ -99,10 +100,11 @@ BOOST_AUTO_TEST_CASE(UTest_Trow_excpetion_file_not_found){
 #endif
 
 
-void simulation( int algorithm, std::string GraphName, int nMax, double * compareResult){
+void simulation( int algorithm, std::string GraphName,
+				int nMax, double * compareResult,double valueToCompare){
 	
     AbstractFactoryPatternRebuildGraph * FactoryTest= new	AbstractFactoryPatternRebuildGraph(algorithm,GraphName,nMax,compareResult);
-	BOOST_CHECK(abs(*compareResult-0.000001)< 0.001);
+	BOOST_CHECK(abs(*compareResult-valueToCompare)< 0.001);
 
 	delete FactoryTest;
 }
@@ -232,38 +234,14 @@ BOOST_AUTO_TEST_CASE(test_petersen_BETWEENNESS_CENTRALITY){
 
 #ifdef TEST_BEEWEENESS_EXP
 
-BOOST_AUTO_TEST_CASE( UTest_Beetweeness_exp)
+BOOST_AUTO_TEST_CASE( UTest_Betweeness_centraliyt_4_nodes_and_communicabilt_betweeness_test)
 {
-	const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
-	largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc";
-	int graphOrder = 0;
-	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
 	
-	settingSimulation->inputFileName = largv[1];
-	settingSimulation->setNMax(100);
-	settingSimulation->setMaxIterations(100);
 	double compareResult = 0.0;
-	CRebuildGraph *rebuildGraph = new CRebuildGraph();
-	double *TargetBC = NULL;
-	double *BestBC = NULL;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	
-	BOOST_REQUIRE(abs(compareResult-0.061915)< 0.1);
-	
-	 graphOrder = 0;
-	 //largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
-	 largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test.gpfc";
-	 settingSimulation->inputFileName = largv[1];
-	 settingSimulation->graphProperty = COMMUNICABILITY_BETWEENESS;
-	 compareResult = 0.0;
-	 TargetBC = NULL;
-	 BestBC = NULL;
-	 rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
-	printf("Compare Result %f",compareResult);
-	// BOOST_CHECK(abs(compareResult-0.298288)< 0.1);
-	BOOST_REQUIRE(abs(compareResult-0.051123<0.1));
+	simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,100,&compareResult);
 	
 	
+	simulation(COMMUNICABILITY_BETWEENESS, "test.gpfc" ,100,&compareResult,0.1225730);
 }
 #endif
 

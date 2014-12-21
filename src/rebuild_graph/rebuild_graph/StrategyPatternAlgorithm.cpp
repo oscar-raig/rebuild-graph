@@ -268,8 +268,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 }
 
 int
-StrategyPatternAlgorithm::regenerateGraph(CSettingsSimulation *settingsSimulation,
-							   gslGraph *targetGraph,
+StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 							   char *inputFilename,
 							   double *&targetBC,
 							   double *&bestBC,

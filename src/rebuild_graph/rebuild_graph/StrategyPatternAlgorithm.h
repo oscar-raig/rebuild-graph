@@ -27,10 +27,14 @@
 
 class StrategyPatternAlgorithm {
 	
+private:
+	CSettingsSimulation *settingsSimulation;
+	
 public:
-	StrategyPatternAlgorithm()
+	StrategyPatternAlgorithm(CSettingsSimulation *argummentSettingsSimulation)
 	{
 		CFuncTrace trace(true,"StrategyPatternAlgorithm");
+		settingsSimulation = argummentSettingsSimulation;
 	};
 	
 	
@@ -40,9 +44,8 @@ public:
 	static double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
 	static gslGraph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
 	
-	static int
-	regenerateGraph(CSettingsSimulation *settingsSimulation,
-					gslGraph *targetGraph,
+	int
+	regenerateGraph(gslGraph *targetGraph,
 					char *inputFilename,
 					double *&targetBC,
 					double *&bestBC,

@@ -100,7 +100,8 @@ public:
 		strcat(outputGraphFilename,".res");
 		targetGraph = new gslGraph();
 		targetGraph->readPythonGraphFile(inputFilename);
-		StrategyPatternAlgorithm::regenerateGraph(settingsSimulation,targetGraph,
+		StrategyPatternAlgorithm *strategyPattern = new StrategyPatternAlgorithm( settingsSimulation );
+		strategyPattern->regenerateGraph(targetGraph,
 												 inputFilename, targetBC, bestBC, graphOrder,compareResult,&Tk,&costBest,&bestGraph);
 		CompareAndGenerateResults(*settingsSimulation,targetGraph,
 								  bestGraph,inputFilename,
