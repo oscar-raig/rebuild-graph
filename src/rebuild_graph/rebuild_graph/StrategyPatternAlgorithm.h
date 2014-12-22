@@ -34,15 +34,18 @@ public:
 	StrategyPatternAlgorithm(CSettingsSimulation *argummentSettingsSimulation)
 	{
 		CFuncTrace trace(true,"StrategyPatternAlgorithm");
-		settingsSimulation = argummentSettingsSimulation;
+		if ( argummentSettingsSimulation)
+			settingsSimulation = argummentSettingsSimulation;
+		else
+			settingsSimulation = new CSettingsSimulation();
 	};
 	
 	
 	static double cost(double *tarjet,double *current,int count);
 
-	static void modifyGraph(gslGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z);
-	static double generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z);
-	static gslGraph *generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z);
+	void modifyGraph(gslGraph *sourceGraph);
+	double generateRandomNumber();
+	gslGraph *generateInitialGraph(int sourceGraphOrder);
 	
 	int
 	regenerateGraph(gslGraph *targetGraph,
@@ -56,7 +59,7 @@ public:
 					gslGraph **bestGraph);
 	// Rebuilding Graph Main Functions
 
-	static void AnnealingAlgorithm(double &Tk, gslGraph **pbestGraph,int graphOrder,
+	void AnnealingAlgorithm(double &Tk, gslGraph **pbestGraph,int graphOrder,
 							double *bestBC,double *targetBC,
 							FILE *logFile,double &costBest,
 							CSettingsSimulation settingSimulation);

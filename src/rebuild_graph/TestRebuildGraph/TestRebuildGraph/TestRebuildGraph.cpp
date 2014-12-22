@@ -416,10 +416,11 @@ BOOST_AUTO_TEST_CASE(compara){
 
 BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph){
 	CFuncTrace trace (true,"test_generateInitialGraph");
-	int random_value_x=11,random_value_y=92,random_value_z=37;
+
+	StrategyPatternAlgorithm *strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
+	
 	gslGraph *  generalGraph =
-	StrategyPatternAlgorithm::generateInitialGraph(4,
-												   random_value_x,random_value_y,random_value_z);
+	strategyPatternAlgorithm->generateInitialGraph(4);
 	
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
@@ -428,8 +429,8 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph){
 	generalGraph->printGraph(CTrace::level::TRACE_INFO);
 	BOOST_CHECK(degree == 3); // FAILED IN GRAPH
 	BOOST_CHECK(order ==4);
-	StrategyPatternAlgorithm::modifyGraph(generalGraph,
-												   random_value_x,random_value_y,random_value_z);
+	StrategyPatternAlgorithm *strategy= new StrategyPatternAlgorithm(NULL);
+	strategy->modifyGraph(generalGraph);
 	generalGraph->printGraph();
 	degree = generalGraph->getDegree();
 	order = generalGraph->getOrder();
@@ -532,10 +533,9 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 	CFuncTrace trace (true,"test_generateInitialGraph_brandes_communicability_10_nodes");
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	double newBC [10];
-	
+	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
 	gslGraph *  generalGraph =
-	StrategyPatternAlgorithm::generateInitialGraph(10,
-												   random_value_x,random_value_y,random_value_z);
+	strategyPatternAlgorithm->generateInitialGraph(10);
 	generalGraph->brandes_comunicability_centrality_exp(newBC);
 	
 	for ( int j =0 ; j < 10; j++){
@@ -556,8 +556,9 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 	gslGraph *newGraph=NULL;
 	newGraph=generalGraph->copyGraph();
 	
-
-	StrategyPatternAlgorithm::modifyGraph(newGraph,random_value_x,random_value_y,random_value_z);
+	
+	
+	strategyPatternAlgorithm->modifyGraph(newGraph);
 	// en aqest p
     newGraph->brandes_comunicability_centrality_exp(newBC);
 	for ( int j =0 ; j < 10; j++){
@@ -582,10 +583,9 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes)
 	CFuncTrace trace (true,"test_2");
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	double newBC [5];
-	
+	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
 	gslGraph *  generalGraph =
-	StrategyPatternAlgorithm::generateInitialGraph(5,
-												   random_value_x,random_value_y,random_value_z);
+	strategyPatternAlgorithm->generateInitialGraph(5);
 	generalGraph->brandes_comunicability_centrality_exp(newBC);
 	
 	for ( int j =0 ; j < 5; j++){
@@ -603,7 +603,8 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes)
 	gslGraph *newGraph=NULL;
 	newGraph=generalGraph->copyGraph();
 	
-	StrategyPatternAlgorithm::modifyGraph(newGraph,random_value_x,random_value_y,random_value_z);
+//	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
+	strategyPatternAlgorithm->modifyGraph(newGraph);
 	// en aqest p
 	newGraph->brandes_comunicability_centrality_exp(newBC);
 	for ( int j =0 ; j < 5; j++){

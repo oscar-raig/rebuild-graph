@@ -33,7 +33,7 @@ double StrategyPatternAlgorithm::cost(double *tarjet,double *current,int count){
 // GLOBAL operation modifyGraph(sourceGraph)
 // MODIFIES a randon sourceGraph vertex's connections
 //-----------------------------------------------------------------------------
-void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph,int &random_value_x,int &random_value_y,int &random_value_z){
+void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph){
 	int i,j;
 	int vertex2change;
 	int myOrder=sourceGraph->getOrder();
@@ -45,19 +45,20 @@ void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph,int &random_val
 	CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::modifyGraph");
 	
 	// Select vertex to change
-	vertex2change=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
+
+	vertex2change=(int)(generateRandomNumber()*(myOrder));
 	sourceGraph->removeVertexNeighbours(vertex2change);
 	sourceGraph->printGraph();
 	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"modifyGraph vertex removed\n");
 	do{
 		//Choose new vertex degree
-		myNewNumberOfNeighbours=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder-1));
+		myNewNumberOfNeighbours=1+(int)(generateRandomNumber()*(myOrder-1));
 		// myNewNumberOfNeighbours is in [1,n-1]
 		// Connect new neighbours
 		for(i=0; i<myNewNumberOfNeighbours; i++){
 			do{
 				found=false;
-				myNewNeighbour=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(myOrder));
+				myNewNeighbour=(int)(generateRandomNumber()*(myOrder));
 				// myNewNeighbour is in [0,n-1]
 				for(j=0;j<i;j++){
 					if((myNewNeighbour==newNeighbours[j])
@@ -81,19 +82,19 @@ void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph,int &random_val
 // RETURNS a random double [0,1(
 //-----------------------------------------------------------------------------
 double
-StrategyPatternAlgorithm::generateRandomNumber(int &random_value_x,int &random_value_y, int &random_value_z){
+StrategyPatternAlgorithm::generateRandomNumber(){
 	
 	double temp;
-	random_value_x=171*(random_value_x%177)-2*(random_value_x/177);
-	if(random_value_x<0)
-		random_value_x+=30269;
-	random_value_y=172*(random_value_y%176)-35*(random_value_y/176);
-	if(random_value_y<0)
-		random_value_y+=30307;
-	random_value_z=170*(random_value_z%178)-63*(random_value_z/178);
-	if(random_value_z<0)
-		random_value_z+=30323;
-	temp=random_value_x/30269.0+random_value_y/30307.0+random_value_z/30323.0;
+	settingsSimulation->random_value_x=171*(settingsSimulation->random_value_x%177)-2*(settingsSimulation->random_value_x/177);
+	if(settingsSimulation->random_value_x<0)
+		settingsSimulation->random_value_x+=30269;
+	settingsSimulation->random_value_y=172*(settingsSimulation->random_value_y%176)-35*(settingsSimulation->random_value_y/176);
+	if(settingsSimulation->random_value_y<0)
+		settingsSimulation->random_value_y+=30307;
+	settingsSimulation->random_value_z=170*(settingsSimulation->random_value_z%178)-63*(settingsSimulation->random_value_z/178);
+	if(settingsSimulation->random_value_z<0)
+		settingsSimulation->random_value_z+=30323;
+	temp=settingsSimulation->random_value_x/30269.0+settingsSimulation->random_value_y/30307.0+settingsSimulation->random_value_z/30323.0;
 	return(temp-(int)temp);
 }
 
@@ -101,7 +102,7 @@ StrategyPatternAlgorithm::generateRandomNumber(int &random_value_x,int &random_v
 // GLOBAL operation generateInitialGraph(int sourceGraphOrder)
 // RETURNS a random graph with sourceGraphOrder vertex
 //-----------------------------------------------------------------------------
-gslGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder,int &random_value_x,int &random_value_y,int &random_value_z){
+gslGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 	int i,j;
 	int newNeighbour;
 	int newDegree;
@@ -117,11 +118,12 @@ gslGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder,in
 		//   at most n-1 (the vertex is connected to every other vertex
 		if(result->getDegree(i)==0){
 			// vertex i has no neighbours yet
-			newDegree=1+(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(sourceGraphOrder-1));
+//			settingsSimulation->random_value_z = settingsSimulation->random_value_z->
+			newDegree=1+(int)(generateRandomNumber()*(sourceGraphOrder-1));
 			// newDegre is in [1,n-1]
 		} else if(result->getDegree(i)<(sourceGraphOrder-1)){
 			// vertex i is connected to some other vertex
-			newDegree=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*
+			newDegree=(int)(generateRandomNumber()*
 							(sourceGraphOrder-result->getDegree(i)));
 			// newDegree is in [0,n-1-degree]
 		} else {
@@ -133,7 +135,7 @@ gslGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder,in
 		int vertexAreNighbours = 0;
 		for(j=0;j<newDegree;j++){
 			do{
-				newNeighbour=(int)(generateRandomNumber(random_value_x,random_value_y,random_value_z)*(sourceGraphOrder));
+				newNeighbour=(int)(generateRandomNumber()*(sourceGraphOrder));
 				// newNeighbour is in [0,n-1]
 				trace.trace(STP_DEBUG,"Is Neighbour %d to %d",
 							newNeighbour,i);
@@ -180,7 +182,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 	
 	// STARTING SIMMULATED ANNEALING
 	Tk=settingSimulation.To;
-	bestGraph=generateInitialGraph(graphOrder,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
+	bestGraph=generateInitialGraph(graphOrder);
 	bestGraph->printGraph();
 	lFuncTrace.trace(CTrace::level::TRACE_ERROR,"Here is the error coping a pointer tha we detroy");
 	*pbestGraph= bestGraph;
@@ -207,7 +209,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 		for(N=0;(N<settingSimulation.nMax)&&(!weAreDone);N++){
 			lFuncTrace.trace(STP_DEBUG,"Iteration N %d",N);
 			
-			modifyGraph(newGraph,settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
+			modifyGraph(newGraph);
 			// Evaluate newGraph's vertex betweenness centrality
 			if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
 				newGraph->brandes_betweenness_centrality(newBC);
@@ -232,7 +234,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 				okTrue++;
 				lFuncTrace.trace(CTrace::level::TRACE_DEBUG,".");
 				fprintf(logFile,".");
-			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber(settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z)){
+			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
 				// if newCost not is better than oldCost,
 				// we still accept it if exp(df/T_k)<rand()
 				okFalse++;
