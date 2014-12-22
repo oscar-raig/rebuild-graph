@@ -7,7 +7,7 @@
 //
 
 #include "StrategyPatternAlgorithm.h"
-#include "GraphFactory.h"
+
 
 #define STP_DEBUG CTrace::level::TRACE_DEBUG
 #define STP_INFO CTrace::level::TRACE_INFO
@@ -102,29 +102,30 @@ StrategyPatternAlgorithm::generateRandomNumber(){
 // GLOBAL operation generateInitialGraph(int sourceGraphOrder)
 // RETURNS a random graph with sourceGraphOrder vertex
 //-----------------------------------------------------------------------------
-gslGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
+void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 	int i,j;
 	int newNeighbour;
 	int newDegree;
 	CFuncTrace trace (false,"StrategyPatternAlgorithm::generateInitialGraph");
-	gslGraph *result=new gslGraph(sourceGraphOrder);
+	
+	this->sourceGraph=new gslGraph(sourceGraphOrder);
 	
 	for(i=0; i<sourceGraphOrder; i++){
 		trace.trace(STP_DEBUG,"Iteration %d",i);
 		trace.trace(STP_DEBUG,"Iteration %d sourceGraphOrder %d Degree %d",
-						i,sourceGraphOrder,result->getDegree(i));
+						i,sourceGraphOrder,this->sourceGraph->getDegree(i));
 		// The new vertex degree is to be
 		//   at least 1 (the graphs needs to be connected)
 		//   at most n-1 (the vertex is connected to every other vertex
-		if(result->getDegree(i)==0){
+		if(this->sourceGraph->getDegree(i)==0){
 			// vertex i has no neighbours yet
 //			settingsSimulation->random_value_z = settingsSimulation->random_value_z->
 			newDegree=1+(int)(generateRandomNumber()*(sourceGraphOrder-1));
 			// newDegre is in [1,n-1]
-		} else if(result->getDegree(i)<(sourceGraphOrder-1)){
+		} else if(this->sourceGraph->getDegree(i)<(sourceGraphOrder-1)){
 			// vertex i is connected to some other vertex
 			newDegree=(int)(generateRandomNumber()*
-							(sourceGraphOrder-result->getDegree(i)));
+							(sourceGraphOrder-this->sourceGraph->getDegree(i)));
 			// newDegree is in [0,n-1-degree]
 		} else {
 			// vertex i is already connected to all possible neighbours
@@ -139,7 +140,7 @@ gslGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 				// newNeighbour is in [0,n-1]
 				trace.trace(STP_DEBUG,"Is Neighbour %d to %d",
 							newNeighbour,i);
-				vertexAreNighbours = result->vertexAreNeighbours(i,newNeighbour);
+				vertexAreNighbours = this->sourceGraph->vertexAreNeighbours(i,newNeighbour);
 				if (vertexAreNighbours)
 					trace.trace(STP_DEBUG,"ATT : VERTEX Are Nighbours");
 				// Added linia 2014-11-27
@@ -147,15 +148,15 @@ gslGraph *StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 			} while(vertexAreNighbours);
 			trace.trace(STP_DEBUG,"Adding newNeighbour %d to %d", i,
 						newNeighbour);
-			result->addVertexNeighbour(i,newNeighbour);
+			this->sourceGraph->addVertexNeighbour(i,newNeighbour);
 		}
 	}
-	return result;
+	
 }
 
 
 
-void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGraph,int graphOrder,
+void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 									   double *bestBC,double *targetBC,
 									   FILE *logFile,double &costBest,
 									   CSettingsSimulation settingSimulation){
@@ -171,7 +172,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 	double costOld=0.0;
 	double costNew=0.0;
 	long int N=0;
-	gslGraph * bestGraph= NULL;
 	double newBC [graphOrder];
 	gslGraph *newGraph=NULL;
 	
@@ -182,22 +182,20 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 	
 	// STARTING SIMMULATED ANNEALING
 	Tk=settingSimulation.To;
-	bestGraph=generateInitialGraph(graphOrder);
-	bestGraph->printGraph();
+	generateInitialGraph(graphOrder);
 	lFuncTrace.trace(CTrace::level::TRACE_ERROR,"Here is the error coping a pointer tha we detroy");
-	*pbestGraph= bestGraph;
 	
 	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
-		bestGraph->brandes_betweenness_centrality(bestBC);
+		sourceGraph->brandes_betweenness_centrality(bestBC);
 	else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
-		bestGraph->brandes_comunicability_centrality_exp(bestBC);
+		sourceGraph->brandes_comunicability_centrality_exp(bestBC);
 	else
-		bestGraph->communicability_betweenness_centrality(bestBC);
+		sourceGraph->communicability_betweenness_centrality(bestBC);
 	
 	costBest=cost(targetBC,bestBC,graphOrder);
 	costOld=2.0*costBest;
 	costNew=costOld;
-	newGraph=bestGraph->copyGraph();
+	newGraph=sourceGraph->copyGraph();
 	newGraph->printGraph();
 	int okTrue=0;
 	int okFalse=0;
@@ -223,7 +221,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 			lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
 			if(costNew<costBest){
 				costBest=costNew;
-				bestGraph = newGraph->copyGraph();
+				this->setGraph( newGraph->copyGraph() );
 
 				memcpy(bestBC,newBC,graphOrder*sizeof(double));
 				if(costBest<=tol){
@@ -247,7 +245,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 					// ((gslGraph *)bestGraph)->copyGraph((gslGraph*)newGraph);
 				//	newGraph= ((gslGraph *)bestGraph)->copyGraph();
 				
-				newGraph = bestGraph->copyGraph();
+				newGraph = sourceGraph->copyGraph();
 				notOk++;
 				lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"x");
 				fprintf(logFile,"x");
@@ -266,7 +264,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk, gslGraph **pbestGr
 	
 	lFuncTrace.trace(STP_DEBUG,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 					 Tk,costBest,weAreDone,iterations);
-	*pbestGraph= bestGraph;
 }
 
 int
@@ -277,7 +274,7 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 							   int &graphOrder,
 							   double &compareResult,
 							  double *Tk,
-								double *costBest,gslGraph **bestGraph){
+								double *costBest){
 	CFuncTrace trace (true,"StrategyPatternAlgorithm::regenerateGraph");
 	
 	try {
@@ -330,7 +327,7 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 			exit(-1);
 		}
 		
-		AnnealingAlgorithm( *Tk, bestGraph,graphOrder,
+		AnnealingAlgorithm( *Tk, graphOrder,
 						   bestBC,targetBC, logFile,*costBest,*settingsSimulation);
 		
 

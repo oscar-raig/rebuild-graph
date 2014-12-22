@@ -71,7 +71,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3607296819881BB0000BBF7A /* GraphFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphFactory.h; sourceTree = "<group>"; };
 		3607297019881C22000BBF7A /* GeneralGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralGraph.h; sourceTree = "<group>"; };
 		3607297219881DDB000BBF7A /* gslGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gslGraph.cpp; sourceTree = "<group>"; };
 		3607297319881DDB000BBF7A /* gslGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gslGraph.h; sourceTree = "<group>"; };
@@ -152,7 +151,6 @@
 			isa = PBXGroup;
 			children = (
 				3607297019881C22000BBF7A /* GeneralGraph.h */,
-				3607296819881BB0000BBF7A /* GraphFactory.h */,
 				3625A35618EDBA400037F00D /* CTrace.cpp */,
 				3625A35718EDBA400037F00D /* CTrace.hpp */,
 				36C4F4DD18E9E10C002B67FD /* libgslcblas.a */,

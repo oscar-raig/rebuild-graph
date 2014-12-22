@@ -13,7 +13,7 @@
 
 #include "gslGraph.h"
 #include "rebuildgraph.h"
-#include "GraphFactory.h"
+
 
 using namespace boost::unit_test;
 

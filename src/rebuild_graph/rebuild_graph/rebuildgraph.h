@@ -14,7 +14,7 @@
 #include <gsl/gsl_linalg.h>
 
 #include "CTrace.hpp"
-#include "GraphFactory.h"
+
 
 // Simulated Annealing
 
@@ -87,24 +87,23 @@ public:
 		gslGraph *targetGraph= NULL;
 		char inputFilename[250];
 		time_t timeStart;
-		gslGraph *bestGraph = NULL;
 		double costBest=0.0;
 		char outputGraphFilename[STRING_LENGTH];
 		double Tk=TEMPER_INITIAL_DEFAULT;
 		// Default value initialization
 		timeStart=time(NULL);
-		if ( settingsSimulation == NULL)
+		if ( settingsSimulation == NULL )
 			throw std::runtime_error("settingsSimulation is NULL");
 		strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
 		strcpy(outputGraphFilename,inputFilename);
 		strcat(outputGraphFilename,".res");
 		targetGraph = new gslGraph();
-		targetGraph->readPythonGraphFile(inputFilename);
+		targetGraph->readPythonGraphFile( inputFilename );
 		StrategyPatternAlgorithm *strategyPattern = new StrategyPatternAlgorithm( settingsSimulation );
 		strategyPattern->regenerateGraph(targetGraph,
-												 inputFilename, targetBC, bestBC, graphOrder,compareResult,&Tk,&costBest,&bestGraph);
+												 inputFilename, targetBC, bestBC, graphOrder,compareResult,&Tk,&costBest);
 		CompareAndGenerateResults(*settingsSimulation,targetGraph,
-								  bestGraph,inputFilename,
+								  strategyPattern->getGraph(),inputFilename,
 								  timeStart,Tk,
 								  targetBC,bestBC,costBest,
 								compareResult,outputGraphFilename);

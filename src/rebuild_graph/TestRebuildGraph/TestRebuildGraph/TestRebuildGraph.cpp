@@ -419,9 +419,9 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph){
 
 	StrategyPatternAlgorithm *strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
 	
-	gslGraph *  generalGraph =
+	//gslGraph *  generalGraph =
 	strategyPatternAlgorithm->generateInitialGraph(4);
-	
+	gslGraph *  generalGraph = strategyPatternAlgorithm->getGraph();
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
 	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degree,order);
@@ -534,8 +534,9 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	double newBC [10];
 	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
-	gslGraph *  generalGraph =
+	
 	strategyPatternAlgorithm->generateInitialGraph(10);
+	gslGraph *  generalGraph = strategyPatternAlgorithm->getGraph();
 	generalGraph->brandes_comunicability_centrality_exp(newBC);
 	
 	for ( int j =0 ; j < 10; j++){
@@ -584,8 +585,11 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes)
 	int random_value_x=11,random_value_y=92,random_value_z=37;
 	double newBC [5];
 	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
-	gslGraph *  generalGraph =
+	
+	
 	strategyPatternAlgorithm->generateInitialGraph(5);
+	gslGraph *  generalGraph = strategyPatternAlgorithm->getGraph();
+	
 	generalGraph->brandes_comunicability_centrality_exp(newBC);
 	
 	for ( int j =0 ; j < 5; j++){

@@ -29,6 +29,7 @@ class StrategyPatternAlgorithm {
 	
 private:
 	CSettingsSimulation *settingsSimulation;
+	gslGraph *sourceGraph;
 	
 public:
 	StrategyPatternAlgorithm(CSettingsSimulation *argummentSettingsSimulation)
@@ -40,12 +41,23 @@ public:
 			settingsSimulation = new CSettingsSimulation();
 	};
 	
+	gslGraph * getGraph(){
+		return sourceGraph;
+	}
+	
+	void setGraph(gslGraph * graph){
+		if ( sourceGraph ){
+			delete sourceGraph;
+		}
+		sourceGraph = graph;
+	}
+	
 	
 	static double cost(double *tarjet,double *current,int count);
 
 	void modifyGraph(gslGraph *sourceGraph);
 	double generateRandomNumber();
-	gslGraph *generateInitialGraph(int sourceGraphOrder);
+	void generateInitialGraph(int sourceGraphOrder);
 	
 	int
 	regenerateGraph(gslGraph *targetGraph,
@@ -55,11 +67,10 @@ public:
 					int &graphOrder,
 					double &compareResult,
 					double *Tk,
-					double *costBest,
-					gslGraph **bestGraph);
+					double *costBest);
 	// Rebuilding Graph Main Functions
 
-	void AnnealingAlgorithm(double &Tk, gslGraph **pbestGraph,int graphOrder,
+	void AnnealingAlgorithm(double &Tk,int graphOrder,
 							double *bestBC,double *targetBC,
 							FILE *logFile,double &costBest,
 							CSettingsSimulation settingSimulation);
