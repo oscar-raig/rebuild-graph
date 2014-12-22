@@ -17,6 +17,8 @@
 		365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */; };
 		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
 		36DC6DC718F4979D00CEFE98 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */; };
+		36DF6D091A484B3D004A0C99 /* graphIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DF6D071A484B3D004A0C99 /* graphIndicator.cpp */; };
+		36DF6D111A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DF6D0F1A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +73,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3607297019881C22000BBF7A /* GeneralGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralGraph.h; sourceTree = "<group>"; };
 		3607297219881DDB000BBF7A /* gslGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gslGraph.cpp; sourceTree = "<group>"; };
 		3607297319881DDB000BBF7A /* gslGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gslGraph.h; sourceTree = "<group>"; };
 		360854F018F731CC00033919 /* CSettingsSumulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSettingsSumulation.cpp; sourceTree = "<group>"; };
@@ -93,6 +94,10 @@
 		365F8FA0198545C300E3A7CD /* StrategyPatternAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrategyPatternAlgorithm.h; sourceTree = "<group>"; };
 		36C4F4DD18E9E10C002B67FD /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 		36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../lib/libboost_program_options.a; sourceTree = "<group>"; };
+		36DF6D071A484B3D004A0C99 /* graphIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphIndicator.cpp; sourceTree = "<group>"; };
+		36DF6D081A484B3D004A0C99 /* graphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphIndicator.h; sourceTree = "<group>"; };
+		36DF6D0F1A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphIndicatorBetweennessCentrality.cpp; sourceTree = "<group>"; };
+		36DF6D101A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphIndicatorBetweennessCentrality.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +155,6 @@
 		360BA70718DD74E300F54F2B /* rebuild_graph */ = {
 			isa = PBXGroup;
 			children = (
-				3607297019881C22000BBF7A /* GeneralGraph.h */,
 				3625A35618EDBA400037F00D /* CTrace.cpp */,
 				3625A35718EDBA400037F00D /* CTrace.hpp */,
 				36C4F4DD18E9E10C002B67FD /* libgslcblas.a */,
@@ -165,6 +169,10 @@
 				365F8FA0198545C300E3A7CD /* StrategyPatternAlgorithm.h */,
 				3607297219881DDB000BBF7A /* gslGraph.cpp */,
 				3607297319881DDB000BBF7A /* gslGraph.h */,
+				36DF6D071A484B3D004A0C99 /* graphIndicator.cpp */,
+				36DF6D081A484B3D004A0C99 /* graphIndicator.h */,
+				36DF6D0F1A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp */,
+				36DF6D101A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.h */,
 			);
 			path = rebuild_graph;
 			sourceTree = "<group>";
@@ -304,6 +312,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36DF6D091A484B3D004A0C99 /* graphIndicator.cpp in Sources */,
+				36DF6D111A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp in Sources */,
 				365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */,
 				36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */,
 				360854F218F731CC00033919 /* CSettingsSumulation.cpp in Sources */,

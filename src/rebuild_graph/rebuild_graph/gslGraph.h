@@ -75,7 +75,7 @@ public:
 	virtual int graphToGsl( gsl_matrix* target);
 	gsl_vector *
 	getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
-	int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
+	static int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
 	
 	
 	
@@ -93,7 +93,7 @@ public:
 	
 	
 	virtual void brandes_betweenness_centrality(double *myBBC);
-	int printGslMatrix(const gsl_matrix* gslMatrix,const char *format);
+	static int printGslMatrix(const gsl_matrix* gslMatrix,const char *format);
 
 	/*
 	 * Computes node betweenness centrality for a binary graph.  Results are

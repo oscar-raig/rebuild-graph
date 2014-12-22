@@ -13,6 +13,8 @@
 
 #include "gslGraph.h"
 #include "rebuildgraph.h"
+#include "graphIndicatorBetweennessCentrality.h"
+
 
 
 using namespace boost::unit_test;
@@ -191,16 +193,22 @@ void test_brandes_comunicability_centrality_wheel14(){
 	
 	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
-	double bcc_exp[generalGraph->getOrder()];
 	
-	generalGraph->brandes_betweenness_centrality(bcc_exp);
+	
+	double *betweeness_centrality = NULL;
+	
+	graphIndicatorBetweennessCentrality *betweennessCentrality =
+	new graphIndicatorBetweennessCentrality ( generalGraph );
+	
+	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	
 	for (int i = 0; i < generalGraph->getOrder(); i++){
-		std::cout << "Pos " << i << " : " << bcc_exp[i] << std::endl;
-		BOOST_CHECK(bcc_exp[i] != 0 );
+		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
+		BOOST_CHECK(betweeness_centrality[i] != 0 );
 		if ( i == 0)
-			BOOST_CHECK(abs(bcc_exp[i] -0.75) <0.1);
+			BOOST_CHECK(abs(betweeness_centrality[i] -0.75) <0.1);
 		else{
-			BOOST_CHECK(abs(bcc_exp[i] -0.00641) <0.1);
+			BOOST_CHECK(abs(betweeness_centrality[i] -0.00641) <0.1);
 		}
 	}
 	
@@ -218,16 +226,19 @@ void test_brandes_comunicability_centrality_test_4nodes(){
 	
 	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
-	double bcc_exp[generalGraph->getOrder()];
+	double *betweeness_centrality = NULL;
 	
-	generalGraph->brandes_betweenness_centrality(bcc_exp);
+	graphIndicatorBetweennessCentrality *betweennessCentrality =
+		new graphIndicatorBetweennessCentrality ( generalGraph );
+	
+	betweeness_centrality = betweennessCentrality->calculateIndicator();
 	for (int i = 0; i < generalGraph->getOrder(); i++){
-		std::cout << "Pos " << i << " : " << bcc_exp[i] << std::endl;
+		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
 		if ( i == 0 || i == 3)
-			BOOST_CHECK(bcc_exp[i] == 0);
+			BOOST_CHECK(betweeness_centrality[i] == 0);
 		else{
-			BOOST_CHECK(bcc_exp[i] != 0 );
-			BOOST_CHECK(abs(bcc_exp[i] -0.66) <0.1);
+			BOOST_CHECK(betweeness_centrality[i] != 0 );
+			BOOST_CHECK(abs(betweeness_centrality[i] -0.66) <0.1);
 		}
 	}
 	
@@ -464,6 +475,73 @@ UTest_gslGraph_compare_equal_graphs(void){
 }
 
 
+void UTest_graphIndicatorBetweennessCentrality_ordinal_index(){
+	CFuncTrace trace(true,"UTest_graphIndicatorBetweennessCentrality_ordinal_index");
+
+	graphIndicatorBetweennessCentrality *BetweennessCentrality =
+	new graphIndicatorBetweennessCentrality(NULL);
+	
+	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(NULL,NULL,NULL), std::exception);
+	
+	gslGraph *graphwheel =   new gslGraph();
+	graphwheel->readPythonGraphFile( DIR_GRAPHS "wheel4.txt" );
+	
+	gsl_matrix *matrix = NULL;
+	matrix = gsl_matrix_alloc(graphwheel->getOrder(), graphwheel->getOrder());
+	graphwheel->graphToGsl( matrix );
+	
+//	BetweennessCentrality->submatrix(matrix,NULL,NULL); // for test the exception
+	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(matrix,NULL,NULL), std::exception);
+	
+	gsl_vector *rows = gsl_vector_alloc(3);
+	
+	//BetweennessCentrality->submatrix(matrix,rows,NULL); // for test the exception
+	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(matrix,rows,NULL), std::exception);
+
+	gsl_vector *columns = gsl_vector_alloc(3);
+	
+	gsl_vector_set(rows,0,0);
+	gsl_vector_set(rows,1,1);
+	gsl_vector_set(rows,2,2);
+	
+	gsl_vector_set(columns,0,0);
+	gsl_vector_set(columns,1,1);
+	gsl_vector_set(columns,2,2);
+	
+	
+	gsl_matrix *result_3x3_up_left = BetweennessCentrality->submatrix(matrix,rows,columns);
+	
+	
+	
+	CRebuildGraph::printGslMatrix( matrix );
+	CRebuildGraph::printGslMatrix( result_3x3_up_left );
+	
+	
+	
+	gsl_vector_free(rows);
+	gsl_vector_free(columns);
+	gsl_matrix_free(result_3x3_up_left);
+	
+	rows = gsl_vector_alloc(2);
+	columns = gsl_vector_alloc(2);
+	
+	gsl_vector_set(rows,0,1);
+	gsl_vector_set(rows,1,2);
+	
+	gsl_vector_set(columns,0,0);
+	gsl_vector_set(columns,1,1);
+	
+	gsl_matrix *result_2x2_middle_left = BetweennessCentrality->submatrix(matrix,rows,columns);
+	
+	
+	CRebuildGraph::printGslMatrix( matrix );
+	CRebuildGraph::printGslMatrix( result_2x2_middle_left );
+
+	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+}
+
+
 typedef void (*func_type)(void);
 
 func_type functions[]={
@@ -482,7 +560,8 @@ func_type functions[]={
 	UTest_gslGraph_compare_bad_parameter_1,
 	UTest_gslGraph_compare_bad_parameter_2,
 	UTest_gslGraph_compare_different_graphs,
-	UTest_gslGraph_compare_equal_graphs
+	UTest_gslGraph_compare_equal_graphs,
+	UTest_graphIndicatorBetweennessCentrality_ordinal_index
 	
 	
 };

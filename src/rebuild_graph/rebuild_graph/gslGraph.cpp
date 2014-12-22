@@ -500,12 +500,11 @@ gsl_vector *
 	
 	return gslvDiagonal;
 }
+
 int  gslGraph::gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles)
 {
-	
 	for (size_t i = 0; i < gslVector->size; i++) {
 		arrayDoubles[i]=  gsl_vector_get(gslVector, i);
-		
 	}
 	return RESULT_OK;
 }
@@ -631,6 +630,19 @@ int gslGraph::printGslMatrix(const gsl_matrix* gslMatrix,const char *format){
 
 
 
+
+
+int  gslGraph::nnz(const gsl_vector* v) const {
+	int nnz = 0;
+	for (int i = 0; i < (int)v->size; i++) {
+		if (fp_nonzero(gsl_vector_get(v, i))) {
+			nnz++;
+		}
+	}
+	return nnz;
+}
+
+
 gsl_vector* gslGraph::any(const gsl_matrix* m, int dim ) const {
 	if (dim == 1) {
 		gsl_vector* any_v = gsl_vector_alloc(m->size2);
@@ -649,17 +661,6 @@ gsl_vector* gslGraph::any(const gsl_matrix* m, int dim ) const {
 	} else {
 		return NULL;
 	}
-}
-
-
-int  gslGraph::nnz(const gsl_vector* v) const {
-	int nnz = 0;
-	for (int i = 0; i < (int)v->size; i++) {
-		if (fp_nonzero(gsl_vector_get(v, i))) {
-			nnz++;
-		}
-	}
-	return nnz;
 }
 
 
