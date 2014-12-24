@@ -10,5 +10,19 @@
 #define __rebuild_graph__graphIndicator__
 
 #include <stdio.h>
+#include "gslGraph.h"
+
+class graphIndicator {
+public:
+	gslGraph *graph;
+public:
+	void setGraph( gslGraph *graph){
+		this->graph = graph;
+	}
+	gslGraph * getGraph( ){
+		return graph;
+	}
+	virtual double *calculateIndicator() = 0;
+};
 
 #endif /* defined(__rebuild_graph__graphIndicator__) */

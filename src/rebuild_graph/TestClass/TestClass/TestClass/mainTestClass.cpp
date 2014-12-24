@@ -6,6 +6,12 @@
 //  Copyright (c) 2014 Oscar Raig Colon. All rights reserved.
 //
 
+// SUMMARY:
+// Test gslGraph class
+//		rebuildGraph class
+//		graphindicatorBetweenessCentrality
+
+
 //#define BOOST_TEST_MODULE MyTest
 
 #include <iostream>
@@ -168,9 +174,10 @@ void UTest_brandes_comunicability_centrality_exp(){
 	CFuncTrace trace(true,"test_brandes_comunicability_centrality_exp");
 	
 	gslGraph *  generalGraph =  new gslGraph();
+	
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	
-	double bcc_exp[generalGraph->getOrder()];
+	double *bcc_exp = new double[generalGraph->getOrder()];
 	generalGraph->brandes_comunicability_centrality_exp(bcc_exp);
 	for (int i = 0; i < generalGraph->getOrder(); i++){
 		BOOST_CHECK(bcc_exp[i] != 0 );
@@ -277,8 +284,8 @@ void removeVertexAndTestDegreeAndOrder( gslGraph *graph,
 // Code Complete
 // layout every test in a paragraph
 
-void test_adNewVertexNeighbour(){
-	CFuncTrace trace( true,"test_adNewVertexNeighbour" );
+void UTest_gslGraph_adNewVertexNeighbour_and_check_order_and_degree(){
+	CFuncTrace trace( true, "UTest_gslGraph_adNewVertexNeighbour_and_check_order_and_degree");
 	
 	gslGraph *graph = NULL;
 	int degree = 0;
@@ -551,16 +558,18 @@ func_type functions[]={
 	Utest_gslGraph_readPythonGraphFile_4nodes,
 	UTest_gslGraph_removeVertexNeighbours_wheel14,
 	UTest_gslGraph_vertexAreNeighbours,
-	UTest_brandes_comunicability_centrality_exp,
-	test_setAllVertexneigbours,
-	test_brandes_comunicability_centrality_wheel14,
-	test_brandes_comunicability_centrality_test_4nodes,
-	test_adNewVertexNeighbour,
-	UTest_2copyGraph,
 	UTest_gslGraph_compare_bad_parameter_1,
 	UTest_gslGraph_compare_bad_parameter_2,
 	UTest_gslGraph_compare_different_graphs,
 	UTest_gslGraph_compare_equal_graphs,
+	UTest_gslGraph_adNewVertexNeighbour_and_check_order_and_degree,
+
+	UTest_brandes_comunicability_centrality_exp,
+	test_setAllVertexneigbours,
+	test_brandes_comunicability_centrality_wheel14,
+	test_brandes_comunicability_centrality_test_4nodes,
+		UTest_2copyGraph,
+	
 	UTest_graphIndicatorBetweennessCentrality_ordinal_index
 	
 	

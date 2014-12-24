@@ -15,6 +15,7 @@
 		36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36133E1218FC7AC3000F7E09 /* rebuildgraph.cpp */; };
 		3625A35818EDBA400037F00D /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35618EDBA400037F00D /* CTrace.cpp */; };
 		365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */; };
+		36842EC31A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36842EC11A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp */; };
 		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
 		36DC6DC718F4979D00CEFE98 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */; };
 		36DF6D091A484B3D004A0C99 /* graphIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DF6D071A484B3D004A0C99 /* graphIndicator.cpp */; };
@@ -92,6 +93,8 @@
 		365871A91985964F000C40A2 /* TestClass.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestClass.xcodeproj; path = TestClass/TestClass/TestClass.xcodeproj; sourceTree = "<group>"; };
 		365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StrategyPatternAlgorithm.cpp; sourceTree = "<group>"; };
 		365F8FA0198545C300E3A7CD /* StrategyPatternAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrategyPatternAlgorithm.h; sourceTree = "<group>"; };
+		36842EC11A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp; sourceTree = "<group>"; };
+		36842EC21A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h; sourceTree = "<group>"; };
 		36C4F4DD18E9E10C002B67FD /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 		36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../lib/libboost_program_options.a; sourceTree = "<group>"; };
 		36DF6D071A484B3D004A0C99 /* graphIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphIndicator.cpp; sourceTree = "<group>"; };
@@ -173,6 +176,8 @@
 				36DF6D081A484B3D004A0C99 /* graphIndicator.h */,
 				36DF6D0F1A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp */,
 				36DF6D101A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.h */,
+				36842EC11A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp */,
+				36842EC21A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h */,
 			);
 			path = rebuild_graph;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				360854F218F731CC00033919 /* CSettingsSumulation.cpp in Sources */,
 				360BA70918DD74E300F54F2B /* main.cpp in Sources */,
 				3625A35818EDBA400037F00D /* CTrace.cpp in Sources */,
+				36842EC31A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp in Sources */,
 				3607297419881DDB000BBF7A /* gslGraph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,20 +11,16 @@
 
 #include <stdio.h>
 #include "gslGraph.h"
+#include "graphIndicator.h"
 
-class graphIndicatorBetweennessCentrality{
-	gslGraph *graph;
+class graphIndicatorBetweennessCentrality: graphIndicator{
+	
 	
 public:
 	graphIndicatorBetweennessCentrality(gslGraph *graph){
 		this->graph =  graph;
 	}
-	void setGraph( gslGraph *graph){
-		this->graph = graph;
-	}
-	gslGraph * getGraph( ){
-		return graph;
-	}
+
 	
 	double * calculateIndicator( ){
 		int graphOrder = getGraph()->getOrder();
