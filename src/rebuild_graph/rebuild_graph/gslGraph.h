@@ -76,64 +76,18 @@ public:
 	gsl_vector *
 	getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
 	static int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
-	
-	
-	
-	
-	// Algorithm
-	virtual void
-		communicability_betweenness_centrality(double *myCExp){
-			CFuncTrace trace (true,"communicability_betweenness_centrality");
-			trace.trace(CTrace::level::TRACE_ERROR,"Not implemented");
+	virtual void  communicability_betweenness_centrality(double *myCExp){
+					CFuncTrace trace (true,"communicability_betweenness_centrality");
+		            trace.trace(CTrace::level::TRACE_ERROR,"Not implemented");
 	}
-	
+
 	virtual void brandes_comunicability_centrality_exp(double *myCExp);
 	virtual int vertexAreNeighbours(int vertexBegining,int vertexEnding);
 	virtual int graphNotConnected (int *unconnectedVertex);
 	
 	
-	virtual void brandes_betweenness_centrality(double *myBBC);
 	static int printGslMatrix(const gsl_matrix* gslMatrix,const char *format);
 
-	/*
-	 * Computes node betweenness centrality for a binary graph.  Results are
-	 * returned in a vector where each element is the betweenness centrality of the
-	 * corresponding node.
-	 */
-	gsl_vector* betweenness_bin(const gsl_matrix* sourceGraph)const;
-	
-	double  epsilon = std::numeric_limits<double>::epsilon();
-		
-	bool fp_nonzero(double x) const { return abs(x) > epsilon; }
-	bool fp_zero(double x) const { return abs(x) < epsilon; }
-	int nnz(const gsl_vector* v) const ;
-	int any(const gsl_vector* v) const ;
-	gsl_vector* any(const gsl_matrix* m, int dim=1 ) const ;
-	int all(const gsl_vector* v) const ;
-	gsl_vector* find(const gsl_vector* v, int n = std::numeric_limits<int>::max(),
-					 const std::string& direction = "first") const ;
-	
-	/*
-	 * Emulates (start:step:end).
-	 */
-	gsl_vector* sequence(int start, int end) const;
-	/*
-	 * Emulates (~v).
-	 */
-	gsl_vector * logical_not(const gsl_vector* v) const ;
-	// Matrix-by-two-vectors indexing (non-mixed)
-	
-	gsl_matrix* ordinal_index(const gsl_matrix* m, const gsl_vector* rows,
-							  const gsl_vector* columns) const ;
-
-	
-	/*
-	 * Computes node and edge betweenness centrality for a binary graph.  Results
-	 * are stored in a vector (node betweenness) and a matrix (edge betweenness)
-	 * that are provided by the caller.
-	 */
-	
-	void node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness,gsl_matrix* edge_betweenness) const;
 	
 	static int compare(gslGraph * graph1, gslGraph * graph2);
 };

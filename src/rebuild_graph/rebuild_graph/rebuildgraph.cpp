@@ -10,6 +10,8 @@
 #include "rebuildgraph.h"
 #include "CTrace.hpp"
 
+#include "graphIndicatorBetweennessCentrality.h"
+
 
 
 
@@ -112,9 +114,15 @@ int CRebuildGraph::calculateBeterness(const char *argv[]){
 	graphOrder=targetGraph->getOrder();
 	
 	
-	double targetBC [graphOrder];
+	double *targetBC  = NULL;
 	
-	targetGraph->brandes_betweenness_centrality(targetBC);
+//	targetGraph->brandes_betweenness_centrality(targetBC);
+
+	graphIndicatorBetweennessCentrality *betweennessCentrality =
+	new graphIndicatorBetweennessCentrality ( targetGraph );
+	
+	targetBC = betweennessCentrality->calculateIndicator();
+	
 	
 	for (int i = 0; i < graphOrder; i++){
 		lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"%2.10f\n",targetBC[i]);

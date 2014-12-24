@@ -7,6 +7,7 @@
 //
 
 #include "StrategyPatternAlgorithm.h"
+#include "graphIndicatorBetweennessCentrality.h"
 
 
 #define STP_DEBUG CTrace::level::TRACE_DEBUG
@@ -172,7 +173,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 	double costOld=0.0;
 	double costNew=0.0;
 	long int N=0;
-	double newBC [graphOrder];
+	double * newBC = new double [graphOrder];
 	gslGraph *newGraph=NULL;
 	
 	for(int i=0;i<graphOrder;i++){
@@ -185,9 +186,13 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 	generateInitialGraph(graphOrder);
 	lFuncTrace.trace(CTrace::level::TRACE_ERROR,"Here is the error coping a pointer tha we detroy");
 	
-	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
-		sourceGraph->brandes_betweenness_centrality(bestBC);
-	else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
+	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY ){
+		graphIndicatorBetweennessCentrality *betweennessCentrality =
+		new graphIndicatorBetweennessCentrality ( sourceGraph );
+		
+		bestBC = betweennessCentrality->calculateIndicator();
+		// sourceGraph->brandes_betweenness_centrality(bestBC);
+	}else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
 		sourceGraph->brandes_comunicability_centrality_exp(bestBC);
 	else
 		sourceGraph->communicability_betweenness_centrality(bestBC);
@@ -209,9 +214,15 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 			
 			modifyGraph(newGraph);
 			// Evaluate newGraph's vertex betweenness centrality
-			if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY )
-				newGraph->brandes_betweenness_centrality(newBC);
-			else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
+			if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY ){
+				//newGraph->brandes_betweenness_centrality(newBC);
+				graphIndicatorBetweennessCentrality *betweennessCentrality =
+				new graphIndicatorBetweennessCentrality ( newGraph );
+				
+				newBC = betweennessCentrality->calculateIndicator();
+
+			
+			}else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS )
 				newGraph->brandes_comunicability_centrality_exp(newBC);
 			else
 				newGraph->communicability_betweenness_centrality(newBC);
@@ -305,9 +316,14 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 		
 //		targetGraph->printGraph();
 			
-		if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY )
-			targetGraph->brandes_betweenness_centrality(targetBC);
-		else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS )
+		if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY ){
+		//	targetGraph->brandes_betweenness_centrality(targetBC);
+			graphIndicatorBetweennessCentrality *betweennessCentrality =
+			new graphIndicatorBetweennessCentrality ( targetGraph );
+			
+			targetBC = betweennessCentrality->calculateIndicator();
+		
+		}else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS )
 			targetGraph->brandes_comunicability_centrality_exp(targetBC);
 		else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY )
 			targetGraph->communicability_betweenness_centrality(targetBC);
