@@ -20,6 +20,7 @@
 #include "gslGraph.h"
 #include "rebuildgraph.h"
 #include "graphIndicatorBetweennessCentrality.h"
+#include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 
 
 
@@ -177,8 +178,14 @@ void UTest_brandes_comunicability_centrality_exp(){
 	
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	
+	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
+	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(generalGraph);
+	
+	
 	double *bcc_exp = new double[generalGraph->getOrder()];
-	generalGraph->brandes_comunicability_centrality_exp(bcc_exp);
+	//generalGraph->brandes_comunicability_centrality_exp(bcc_exp);
+	bcc_exp = communicabilityCentrality->calculateIndicator();
+	
 	for (int i = 0; i < generalGraph->getOrder(); i++){
 		BOOST_CHECK(bcc_exp[i] != 0 );
 		if ( i == 0)
@@ -482,7 +489,7 @@ UTest_gslGraph_compare_equal_graphs(void){
 }
 
 
-void UTest_graphIndicatorBetweennessCentrality_ordinal_index(){
+void UTest_graphIndicatorBetweennessCentrality_submatrix(){
 	CFuncTrace trace(true,"UTest_graphIndicatorBetweennessCentrality_ordinal_index");
 
 	graphIndicatorBetweennessCentrality *BetweennessCentrality =
@@ -570,7 +577,7 @@ func_type functions[]={
 	test_brandes_comunicability_centrality_test_4nodes,
 		UTest_2copyGraph,
 	
-	UTest_graphIndicatorBetweennessCentrality_ordinal_index
+	UTest_graphIndicatorBetweennessCentrality_submatrix
 	
 	
 };

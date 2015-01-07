@@ -16,6 +16,7 @@ class graphIndicator {
 public:
 	gslGraph *graph;
 public:
+	graphIndicator( gslGraph *argGraph ):graph(argGraph){};
 	void setGraph( gslGraph *graph){
 		this->graph = graph;
 	}

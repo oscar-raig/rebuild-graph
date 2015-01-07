@@ -17,7 +17,7 @@ class graphIndicatorBetweennessCentrality: graphIndicator{
 	
 	
 public:
-	graphIndicatorBetweennessCentrality(gslGraph *graph){
+	graphIndicatorBetweennessCentrality(gslGraph *graph):graphIndicator(graph){
 		this->graph =  graph;
 	}
 
