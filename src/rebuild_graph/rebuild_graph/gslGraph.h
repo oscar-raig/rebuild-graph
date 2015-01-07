@@ -81,7 +81,6 @@ public:
 		            trace.trace(CTrace::level::TRACE_ERROR,"Not implemented");
 	}
 
-	virtual void brandes_comunicability_centrality_exp(double *myCExp);
 	virtual int vertexAreNeighbours(int vertexBegining,int vertexEnding);
 	virtual int graphNotConnected (int *unconnectedVertex);
 	

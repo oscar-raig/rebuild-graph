@@ -258,28 +258,7 @@ void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
 }
 
 
-void gslGraph::brandes_comunicability_centrality_exp(double *myCExp)
-{
-	
-	int graphOrder=getOrder();
-	// Get Numpy Matrix // Matriu d'adjacencia
-	//	lFuncTrace.trace("\nPrinting Home made Matrix\n");
-	//	printGslMatrix(A1," %g");
-	gsl_matrix *A1expm=gsl_matrix_alloc(graphOrder,graphOrder);
-	
-	gsl_linalg_exponential_ss(matrix
-							  , A1expm, .01);
-	//	lFuncTrace.trace("Printing ExpmMatrix");
-	//	printGslMatrix(A1expm);
-	
-	gsl_vector * gslvDiagonal = getDiagonalFromGslMatrix(A1expm);
-	
-	//	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
-	//	printGslVector(gslvDiagonal);
-	
-	gslVectorToArray(gslvDiagonal,myCExp);
-	
-};
+
 
 
 gsl_vector *

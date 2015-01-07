@@ -7,6 +7,7 @@
 #include "CSettingsSumulation.h"
 #include "rebuildgraph.h"
 #include "AbstractFactoryPatternRebuildGraph.h"
+#include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 
 using namespace boost::unit_test;
 
@@ -532,12 +533,19 @@ BOOST_AUTO_TEST_CASE(test_generateInitialGraph_order_10_){
 BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes){
 	CFuncTrace trace (true,"test_generateInitialGraph_brandes_communicability_10_nodes");
 	int random_value_x=11,random_value_y=92,random_value_z=37;
-	double newBC [10];
+	double *newBC = NULL;
 	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
 	
 	strategyPatternAlgorithm->generateInitialGraph(10);
 	gslGraph *  generalGraph = strategyPatternAlgorithm->getGraph();
-	generalGraph->brandes_comunicability_centrality_exp(newBC);
+	// generalGraph->brandes_comunicability_centrality_exp(newBC);
+	
+	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
+	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(generalGraph);
+	
+	newBC = communicabilityCentrality->calculateIndicator();
+
+	
 	
 	for ( int j =0 ; j < 10; j++){
 		trace.trace(CTrace::TRACE_INFO,"NEWBC %f",newBC[j]);
@@ -561,7 +569,14 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 	
 	strategyPatternAlgorithm->modifyGraph(newGraph);
 	// en aqest p
-    newGraph->brandes_comunicability_centrality_exp(newBC);
+	
+    //newGraph->brandes_comunicability_centrality_exp(newBC);
+	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentralityCopy =
+	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(newGraph);
+	
+	
+	newBC = communicabilityCentralityCopy->calculateIndicator();
+	
 	for ( int j =0 ; j < 10; j++){
 		trace.trace(CTrace::TRACE_INFO,"NEWBC 2 %f",newBC[j]);
 		
@@ -583,14 +598,19 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes){
 	CFuncTrace trace (true,"test_2");
 	int random_value_x=11,random_value_y=92,random_value_z=37;
-	double newBC [5];
+	double *newBC = NULL;
 	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
 	
 	
 	strategyPatternAlgorithm->generateInitialGraph(5);
 	gslGraph *  generalGraph = strategyPatternAlgorithm->getGraph();
 	
-	generalGraph->brandes_comunicability_centrality_exp(newBC);
+	// generalGraph->brandes_comunicability_centrality_exp(newBC);
+	
+	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
+	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(generalGraph);
+	
+	newBC = communicabilityCentrality->calculateIndicator();
 	
 	for ( int j =0 ; j < 5; j++){
 		trace.trace(CTrace::TRACE_INFO,"NEWBC %f",newBC[j]);
@@ -610,7 +630,14 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes)
 //	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
 	strategyPatternAlgorithm->modifyGraph(newGraph);
 	// en aqest p
-	newGraph->brandes_comunicability_centrality_exp(newBC);
+	//newGraph->brandes_comunicability_centrality_exp(newBC);
+	
+	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentralityCopy =
+	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(newGraph);
+	
+	
+	newBC = communicabilityCentralityCopy->calculateIndicator();
+	
 	for ( int j =0 ; j < 5; j++){
 		trace.trace(CTrace::TRACE_INFO,"NEWBC 2 %f",newBC[j]);
 		

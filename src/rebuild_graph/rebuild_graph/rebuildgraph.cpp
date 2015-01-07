@@ -11,6 +11,7 @@
 #include "CTrace.hpp"
 
 #include "graphIndicatorBetweennessCentrality.h"
+#include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 
 
 
@@ -270,9 +271,15 @@ CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
 //	targetGraph=GetGraphfromFile(argv[1]);
 	int graphOrder=targetGraph->getOrder();
 	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"Graph Order %d",graphOrder);
-	double * bestCommCentExp = (double*)malloc(graphOrder * sizeof(double));
+//	double * bestCommCentExp = (double*)malloc(graphOrder * sizeof(double));
 	
-	targetGraph->brandes_comunicability_centrality_exp(bestCommCentExp);
+//	targetGraph->brandes_comunicability_centrality_exp(bestCommCentExp);
+
+	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
+	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(targetGraph);
+	
+	double * bestCommCentExp = communicabilityCentrality->calculateIndicator();
+
 	return RESULT_OK;
 	
 }

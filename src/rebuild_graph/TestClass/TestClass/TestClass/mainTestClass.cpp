@@ -182,8 +182,8 @@ void UTest_brandes_comunicability_centrality_exp(){
 	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(generalGraph);
 	
 	
-	double *bcc_exp = new double[generalGraph->getOrder()];
-	//generalGraph->brandes_comunicability_centrality_exp(bcc_exp);
+	double *bcc_exp = NULL;
+	
 	bcc_exp = communicabilityCentrality->calculateIndicator();
 	
 	for (int i = 0; i < generalGraph->getOrder(); i++){
