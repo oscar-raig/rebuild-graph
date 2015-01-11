@@ -36,10 +36,14 @@ class CRebuildGraph;
 
 class gslGraph  {
 public:
-	enum COMPARE
+	enum COMPARE_GRAPH
 	{
 		GRAPH_DIFFERENTS,
 		GRAPH_EQUALS,
+	};
+	enum VERTEX_CONNECTED{
+		VERTEX_DISCONNECTED,
+		VERTEX_CONNCTED,
 	};
 private:
 	int order;

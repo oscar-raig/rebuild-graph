@@ -37,10 +37,13 @@ BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality){
 
 }*/
 void UTest_gslGraph_readPythonGraphFile_NULLFile(){
-	CFuncTrace trace(true,"UTest_readGraphFromNULLFile");
+	CFuncTrace trace(true,"UTest_gslGraph_readPythonGraphFile_NULLFile");
 	
 	gslGraph *  generalGraph = new gslGraph();
+	
 	BOOST_REQUIRE_THROW(generalGraph->readPythonGraphFile(NULL), std::exception);
+	
+	delete generalGraph;
 	
 	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
 					++numberOfTestExeccuted,numberOfTests);
@@ -156,16 +159,17 @@ void UTest_gslGraph_removeVertexNeighbours_wheel14(){
 void UTest_gslGraph_vertexAreNeighbours(){
 	CFuncTrace trace(true,"test_vertexAreNeighbours");
 	
-	gslGraph *  generalGraph =  new gslGraph();
-	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	gslGraph *  wheel14Graph =  new gslGraph();
+	wheel14Graph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	
-	for  ( int i = 1; i < 14; i++ ){
-		BOOST_CHECK( generalGraph->vertexAreNeighbours(0,i) == 1);
-		BOOST_CHECK( generalGraph->vertexAreNeighbours(i,0) == 1);
+	int numberOfVertexForWheel14Graph = 14;
+	for  ( int i = 1; i < numberOfVertexForWheel14Graph; i++ ){
+		BOOST_CHECK( wheel14Graph->vertexAreNeighbours(0,i) == gslGraph::VERTEX_CONNECTED::VERTEX_CONNCTED);
+		BOOST_CHECK( wheel14Graph->vertexAreNeighbours(i,0) == gslGraph::VERTEX_CONNECTED::VERTEX_CONNCTED);
 	}
-	BOOST_CHECK( generalGraph->vertexAreNeighbours(2,4) == 0);
+					BOOST_CHECK( wheel14Graph->vertexAreNeighbours(2,4) == gslGraph::VERTEX_CONNECTED::VERTEX_DISCONNECTED);
 	
-	delete generalGraph;
+	delete wheel14Graph;
 	
 	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
@@ -185,13 +189,14 @@ void UTest_brandes_comunicability_centrality_exp(){
 	double *bcc_exp = NULL;
 	
 	bcc_exp = communicabilityCentrality->calculateIndicator();
-	
+	double expectedCommunicabilityForNode0OfWheelGraph = 42.03;
+	double expectedCommunicabilityCentralityForRestOfWheelGraphNodes = 7.29;
 	for (int i = 0; i < generalGraph->getOrder(); i++){
 		BOOST_CHECK(bcc_exp[i] != 0 );
 		if ( i == 0)
-			BOOST_CHECK(abs(bcc_exp[i] -42.03) < 0.1);
+			BOOST_CHECK(abs(bcc_exp[i] - expectedCommunicabilityForNode0OfWheelGraph) < 0.1);
 		else{
-			BOOST_CHECK(abs(bcc_exp[i] -7.29) < 0.1);
+			BOOST_CHECK(abs(bcc_exp[i] -expectedCommunicabilityCentralityForRestOfWheelGraphNodes) < 0.1);
 		}
 	}
 	
@@ -215,14 +220,15 @@ void test_brandes_comunicability_centrality_wheel14(){
 	new graphIndicatorBetweennessCentrality ( generalGraph );
 	
 	betweeness_centrality = betweennessCentrality->calculateIndicator();
-	
+	double expectedBetweenessCentralityForNode0OfWheelGraph = 0.75;
+	double expectedBetweenessCentralityForRestOfWheelGraphNodes = 0.00641;
 	for (int i = 0; i < generalGraph->getOrder(); i++){
 		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
 		BOOST_CHECK(betweeness_centrality[i] != 0 );
 		if ( i == 0)
-			BOOST_CHECK(abs(betweeness_centrality[i] -0.75) <0.1);
+			BOOST_CHECK(abs(betweeness_centrality[i] - expectedBetweenessCentralityForNode0OfWheelGraph) <0.1);
 		else{
-			BOOST_CHECK(abs(betweeness_centrality[i] -0.00641) <0.1);
+			BOOST_CHECK(abs(betweeness_centrality[i] - expectedBetweenessCentralityForRestOfWheelGraphNodes) <0.1);
 		}
 	}
 	
@@ -304,20 +310,33 @@ void UTest_gslGraph_adNewVertexNeighbour_and_check_order_and_degree(){
 	BOOST_CHECK( degree == 0 );
 	BOOST_CHECK( order == 5 );
 	
-	// adding a conection between 0 and 1
-	addVertexAndTestDegreeAndOrder( graph,0,1,1,5 );
 	
-	// removing the connection between 0 and 1
-	removeVertexAndTestDegreeAndOrder(graph,0,0,5);
+	{
+		// adding a conection between vertex 0 and 1
+		int expectedDegree = 1;
+		int expectedOrder = 5;
+		addVertexAndTestDegreeAndOrder( graph,0,1,expectedDegree,expectedOrder );
 	
-	// removing a removed connection
-	graph->removeVertexNeighbours(1);
+	}
+	{
+		int expectedDegree = 0;
+		int expectedOrder = 5;
+		int  vertexToDelete = 0;
+		// removing the connection between 0 and 1
+		removeVertexAndTestDegreeAndOrder(graph,vertexToDelete,expectedDegree,expectedOrder);
+	}
+	{
+		int vertexToRemove = 1;
+		// removing a removed connection
+		graph->removeVertexNeighbours(vertexToRemove);
 	
-	degree = graph->getDegree();
-	order = graph->getOrder();
-	BOOST_CHECK( degree == 0 );
-	BOOST_CHECK( order == 5 );
-	
+		degree = graph->getDegree();
+		order = graph->getOrder();
+		int expectedDegree = 0;
+		int expectedOrder = 5;
+		BOOST_CHECK( degree == expectedDegree );
+		BOOST_CHECK( order == expectedOrder);
+	}
 	//removing a inexisting connection
 	removeVertexAndTestDegreeAndOrder(graph,1,0,5);
 
@@ -455,7 +474,7 @@ UTest_gslGraph_compare_different_graphs(void){
 	
 	int areGraphEquals = gslGraph::compare(graph1, graph2);
 	
-	BOOST_CHECK( areGraphEquals == 0 );
+	BOOST_CHECK( areGraphEquals == gslGraph::COMPARE_GRAPH::GRAPH_DIFFERENTS );
 	
 	
 	delete graph1;
@@ -464,9 +483,11 @@ UTest_gslGraph_compare_different_graphs(void){
 	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
+
 void
 UTest_gslGraph_compare_equal_graphs(void){
-	CFuncTrace trace(true,"UTest_gslGraph_compare_bad_parameter_2");
+	
+	CFuncTrace trace(true,"UTest_gslGraph_compare_equal_graphs");
 	
 	gslGraph *graph1 =  new gslGraph();
 	graph1->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
@@ -476,7 +497,7 @@ UTest_gslGraph_compare_equal_graphs(void){
 	
 	int areGraphEquals = gslGraph::compare(graph1, graph2);
 	
-	BOOST_CHECK( areGraphEquals == gslGraph::COMPARE::GRAPH_EQUALS);
+	BOOST_CHECK( areGraphEquals == gslGraph::COMPARE_GRAPH::GRAPH_EQUALS);
 	
 	
 	delete graph1;
@@ -484,7 +505,6 @@ UTest_gslGraph_compare_equal_graphs(void){
 	
 	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
-
 	
 }
 
