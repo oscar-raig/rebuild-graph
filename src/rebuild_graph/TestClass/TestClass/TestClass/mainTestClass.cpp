@@ -164,10 +164,10 @@ void UTest_gslGraph_vertexAreNeighbours(){
 	
 	int numberOfVertexForWheel14Graph = 14;
 	for  ( int i = 1; i < numberOfVertexForWheel14Graph; i++ ){
-		BOOST_CHECK( wheel14Graph->vertexAreNeighbours(0,i) == gslGraph::VERTEX_CONNECTED::VERTEX_CONNCTED);
-		BOOST_CHECK( wheel14Graph->vertexAreNeighbours(i,0) == gslGraph::VERTEX_CONNECTED::VERTEX_CONNCTED);
+		BOOST_CHECK( wheel14Graph->vertexAreNeighbours(0,i) == gslGraph::VERTEX_CONNCTED);
+		BOOST_CHECK( wheel14Graph->vertexAreNeighbours(i,0) == gslGraph::VERTEX_CONNCTED);
 	}
-					BOOST_CHECK( wheel14Graph->vertexAreNeighbours(2,4) == gslGraph::VERTEX_CONNECTED::VERTEX_DISCONNECTED);
+					BOOST_CHECK( wheel14Graph->vertexAreNeighbours(2,4) == gslGraph::VERTEX_DISCONNECTED);
 	
 	delete wheel14Graph;
 	
@@ -474,7 +474,7 @@ UTest_gslGraph_compare_different_graphs(void){
 	
 	int areGraphEquals = gslGraph::compare(graph1, graph2);
 	
-	BOOST_CHECK( areGraphEquals == gslGraph::COMPARE_GRAPH::GRAPH_DIFFERENTS );
+	BOOST_CHECK( areGraphEquals == gslGraph::GRAPH_DIFFERENTS );
 	
 	
 	delete graph1;
@@ -497,7 +497,7 @@ UTest_gslGraph_compare_equal_graphs(void){
 	
 	int areGraphEquals = gslGraph::compare(graph1, graph2);
 	
-	BOOST_CHECK( areGraphEquals == gslGraph::COMPARE_GRAPH::GRAPH_EQUALS);
+	BOOST_CHECK( areGraphEquals == gslGraph::GRAPH_EQUALS);
 	
 	
 	delete graph1;
