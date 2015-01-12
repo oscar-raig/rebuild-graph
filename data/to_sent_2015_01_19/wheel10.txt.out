@@ -1,0 +1,23 @@
+Graph reconstruction via  vertex betweenness centrality
+	Original graph description file-> wheel10.txt		Ordre-> 10
+	Pseudorandom generator seeds-> 11,92,37
+SIMULATED ANNEALING:
+	Initial Temperature-> 10.000000
+	Tk final-> 9.000000
+	Minimum Temperature-> 0.000000
+	Geometric cooling rate: T[k]=0.990000 * T[k-1]
+	Number Maxim of Combinations-> 1000000
+RESULTS:
+	Best cost -> 0.00000000000006190546
+	Betweenness centrality
+	 Desired BC  |  Closest BC  | Difference^2
+	22.0308378456 | 22.0308378456 | 0.0000000000
+	6.1587903772 | 6.1587903772 | 0.0000000000
+	6.1587903772 | 6.1587903772 | 0.0000000000
+	6.1587903772 | 6.1587903772 | 0.0000000000
+	6.1587903772 | 6.1587903772 | 0.0000000000
+	6.1587903772 | 6.1587903772 | 0.0000000000
+	6.1587903772 | 6.1587903772 | 0.0000000000
+	6.1587903772 | 6.1587903772 | 0.0000000000
+	6.1587903772 | 6.1587903772 | 0.0000000000
+	6.1587903772 | 6.1587903772 | 0.0000000000
