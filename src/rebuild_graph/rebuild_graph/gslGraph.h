@@ -24,12 +24,12 @@
 
 
 
-//#define DEBUG_GSL_GRAPH CTrace::level::TRACE_INFO
-#define DEBUG_GSL_GRAPH CTrace::level::TRACE_DEBUG
+//#define DEBUG_GSL_GRAPH CTrace::TRACE_INFO
+#define DEBUG_GSL_GRAPH CTrace::TRACE_DEBUG
 
-#define INFO_GSL_GRAPH CTrace::level::TRACE_INFO
-//#define INFO_GSL_GRAPH CTrace::level::TRACE_DEBUG
-#define ERROR_GSL_GRAPH CTrace::level::TRACE_ERROR
+#define INFO_GSL_GRAPH CTrace::TRACE_INFO
+//#define INFO_GSL_GRAPH CTrace::TRACE_DEBUG
+#define ERROR_GSL_GRAPH CTrace::TRACE_ERROR
 
 
 class CRebuildGraph;
@@ -66,7 +66,7 @@ public:
 	virtual int getDegree(int vertex)const;
 	
 	virtual void printMyGraph(const char * outputGraphFilename) const;
-	void printGraph(int TRACE_LEVEL = CTrace::level::TRACE_DEBUG);
+	void printGraph(int TRACE_LEVEL = CTrace::TRACE_DEBUG);
 	
 	
 	
@@ -82,7 +82,7 @@ public:
 	static int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
 	virtual void  communicability_betweenness_centrality(double *myCExp){
 					CFuncTrace trace (true,"communicability_betweenness_centrality");
-		            trace.trace(CTrace::level::TRACE_ERROR,"Not implemented");
+		            trace.trace(CTrace::TRACE_ERROR,"Not implemented");
 	}
 
 	virtual int vertexAreNeighbours(int vertexBegining,int vertexEnding);

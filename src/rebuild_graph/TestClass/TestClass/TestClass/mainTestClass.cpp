@@ -45,7 +45,7 @@ void UTest_gslGraph_readPythonGraphFile_NULLFile(){
 	
 	delete generalGraph;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 					++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -57,7 +57,7 @@ void UTest_gslGraph_readPythonGraphFile_FileNotExists(){
 	
 	delete generalGraph;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -75,7 +75,7 @@ void UTest_gslGraph_readPythonGraphFile_wheel10(){
 	
 	delete generalGraph;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -97,7 +97,7 @@ void Utest_gslGraph_readPythonGraphFile_4nodes(){
 	
 	delete generalGraph;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -152,7 +152,7 @@ void UTest_gslGraph_removeVertexNeighbours_wheel14(){
 
 	delete generalGraph;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -171,7 +171,7 @@ void UTest_gslGraph_vertexAreNeighbours(){
 	
 	delete wheel14Graph;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -202,7 +202,7 @@ void UTest_brandes_comunicability_centrality_exp(){
 	
 	delete generalGraph;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -234,7 +234,7 @@ void test_brandes_comunicability_centrality_wheel14(){
 	
 	delete generalGraph;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -264,7 +264,7 @@ void test_brandes_comunicability_centrality_test_4nodes(){
 	
 	delete generalGraph;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -351,7 +351,7 @@ void UTest_gslGraph_adNewVertexNeighbour_and_check_order_and_degree(){
 	
 	
 
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 void test_setAllVertexneigbours(){
@@ -398,7 +398,7 @@ void test_setAllVertexneigbours(){
 	BOOST_CHECK(compare > 0.00001);
 	printf ("Compare  = %f",compare);
 
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 
 }
@@ -426,7 +426,7 @@ void UTest_2copyGraph(){
 	delete copy1;
 	delete copy2;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 
 }
@@ -442,7 +442,7 @@ UTest_gslGraph_compare_bad_parameter_1(void){
 	
 	delete general;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 	
 }
@@ -457,7 +457,7 @@ UTest_gslGraph_compare_bad_parameter_2(void){
 	
 	delete general;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 	
 }
@@ -480,7 +480,7 @@ UTest_gslGraph_compare_different_graphs(void){
 	delete graph1;
 	delete graph2;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -503,7 +503,7 @@ UTest_gslGraph_compare_equal_graphs(void){
 	delete graph1;
 	delete graph2;
 	
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 	
 }
@@ -571,7 +571,7 @@ void UTest_graphIndicatorBetweennessCentrality_submatrix(){
 	CRebuildGraph::printGslMatrix( matrix );
 	CRebuildGraph::printGslMatrix( result_2x2_middle_left );
 
-	trace.trace(CTrace::level::TRACE_INFO,"Executing test %d/%d",
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
 }
 
@@ -632,7 +632,7 @@ init_unit_test_suite( int argc, char* argv[] )
 	getFirstTest(&testIterator,&test );
 	while(isLastTest (testIterator) ){
 		addTest(test);
-		trace.trace(CTrace::level::TRACE_DEBUG,"Adding test %d",numberOfTests++);
+		trace.trace(CTrace::TRACE_DEBUG,"Adding test %d",numberOfTests++);
 		nextTest(&testIterator,&test);
 	
 	}

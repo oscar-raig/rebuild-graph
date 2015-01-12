@@ -113,12 +113,12 @@ void simulation( int algorithm, std::string GraphName,
 #ifdef COMMUNICABILITY_BETWEENESS_TEST_4_NODES
 BOOST_AUTO_TEST_CASE(UTest_communicability_beetweeness_centrality_test_4nodes){
 	CFuncTrace trace (true,"test_communicability_beetweeness_centrality_test_4nodes");
-	trace.trace(CTrace::level::TRACE_DEBUG,"begin");
+	trace.trace(CTrace::TRACE_DEBUG,"begin");
 	double compareResult = 10.0;
 	// 2014-11-09 compareResult == 0.29804, very different 0.000001 GSL_GRAPH
 	simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,1000,&compareResult);
 	
-	trace.trace(CTrace::level::TRACE_INFO,"test_4nodes.gpfc %f",compareResult);
+	trace.trace(CTrace::TRACE_INFO,"test_4nodes.gpfc %f",compareResult);
 	std::cout << "COMMUNICABILITY_BETWEENESS_CENTRALITY test_4nodes.gpfc " << compareResult << " <<" << std::endl;
 	
 }
@@ -427,7 +427,7 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph){
 	int order = generalGraph->getOrder();
 	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degree,order);
 
-	generalGraph->printGraph(CTrace::level::TRACE_INFO);
+	generalGraph->printGraph(CTrace::TRACE_INFO);
 	BOOST_CHECK(degree == 3); // FAILED IN GRAPH
 	BOOST_CHECK(order ==4);
 	StrategyPatternAlgorithm *strategy= new StrategyPatternAlgorithm(NULL);
@@ -454,7 +454,7 @@ BOOST_AUTO_TEST_CASE(test_generateInitialGraph_order_10_){
 	int order = generalGraph->getOrder();
 	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degree,order);
 	
-	generalGraph->printGraph(CTrace::level::TRACE_INFO);
+	generalGraph->printGraph(CTrace::TRACE_INFO);
 	BOOST_CHECK(degree == 3);
 	BOOST_CHECK(order ==10);
 	gslGraph *copyGraph = NULL;

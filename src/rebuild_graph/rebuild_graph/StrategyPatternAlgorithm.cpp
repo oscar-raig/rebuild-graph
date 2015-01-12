@@ -11,8 +11,8 @@
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 
 
-#define STP_DEBUG CTrace::level::TRACE_DEBUG
-#define STP_INFO CTrace::level::TRACE_INFO
+#define STP_DEBUG CTrace::TRACE_DEBUG
+#define STP_INFO CTrace::TRACE_INFO
 
 
 
@@ -51,7 +51,7 @@ void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph){
 	vertex2change=(int)(generateRandomNumber()*(myOrder));
 	sourceGraph->removeVertexNeighbours(vertex2change);
 	sourceGraph->printGraph();
-	lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"modifyGraph vertex removed\n");
+	lFuncTrace.trace(CTrace::TRACE_DEBUG,"modifyGraph vertex removed\n");
 	do{
 		//Choose new vertex degree
 		myNewNumberOfNeighbours=1+(int)(generateRandomNumber()*(myOrder-1));
@@ -185,7 +185,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 	// STARTING SIMMULATED ANNEALING
 	Tk=settingSimulation.To;
 	generateInitialGraph(graphOrder);
-	lFuncTrace.trace(CTrace::level::TRACE_ERROR,"Here is the error coping a pointer tha we detroy");
+	lFuncTrace.trace(CTrace::TRACE_ERROR,"Here is the error coping a pointer tha we detroy");
 	
 	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY ){
 		graphIndicatorBetweennessCentrality *betweennessCentrality =
@@ -250,13 +250,13 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 					break;
 				}
 				okTrue++;
-				lFuncTrace.trace(CTrace::level::TRACE_DEBUG,".");
+				lFuncTrace.trace(CTrace::TRACE_DEBUG,".");
 				fprintf(logFile,".");
 			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
 				// if newCost not is better than oldCost,
 				// we still accept it if exp(df/T_k)<rand()
 				okFalse++;
-				lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"o");
+				lFuncTrace.trace(CTrace::TRACE_DEBUG,"o");
 				fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
@@ -267,7 +267,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 				
 				newGraph = sourceGraph->copyGraph();
 				notOk++;
-				lFuncTrace.trace(CTrace::level::TRACE_DEBUG,"x");
+				lFuncTrace.trace(CTrace::TRACE_DEBUG,"x");
 				fprintf(logFile,"x");
 			}
 		}

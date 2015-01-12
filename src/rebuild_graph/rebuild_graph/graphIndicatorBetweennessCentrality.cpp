@@ -23,7 +23,7 @@ void graphIndicatorBetweennessCentrality::brandes_betweenness_centrality(double 
 	for(int i=0;i< this->graph->getOrder();i++){
 		arrayIndicatorBetweennesscentrality[i]=
 		(arrayIndicatorBetweennesscentrality[i])/((this->graph->getOrder()-1.0)*(this->graph->getOrder()-2.0));
-		trace.trace(CTrace::level::TRACE_DEBUG," BC ",  arrayIndicatorBetweennesscentrality[i]);
+		trace.trace(CTrace::TRACE_DEBUG," BC ",  arrayIndicatorBetweennesscentrality[i]);
 	}
 }
 
@@ -39,10 +39,10 @@ gsl_vector* graphIndicatorBetweennessCentrality::betweenness_bin(const gsl_matri
 	gsl_matrix* betweeness_edge = gsl_matrix_calloc( sourceGraph->size1, sourceGraph->size2);
 	int static num_traces = 0;
 	if ( num_traces++ % 1000 == 0){
-		trace.trace(CTrace::level::TRACE_ERROR,"REVEIW This code begin");
+		trace.trace(CTrace::TRACE_ERROR,"REVEIW This code begin");
 		//	node_and_edge_betweenness_bin(sourceGraph, NULL ,betweeness_edge);
 		//	printGslMatrix(betweeness_edge);
-		trace.trace(CTrace::level::TRACE_ERROR,"REVEIW This code end");
+		trace.trace(CTrace::TRACE_ERROR,"REVEIW This code end");
 	}
 	node_and_edge_betweenness_bin(sourceGraph, betweenness, NULL );
 	return betweenness;
@@ -107,7 +107,7 @@ gsl_vector* graphIndicatorBetweennessCentrality::find(const gsl_vector* v, int n
 void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness,gsl_matrix* edge_betweenness) const {
 	CFuncTrace trace(false,"node_and_edge_betweenness_bin");
 	if (sourceGraph->size1 != sourceGraph->size2) {
-		trace.trace(CTrace::level::TRACE_ERROR,"ERROR size2 and size2 different");
+		trace.trace(CTrace::TRACE_ERROR,"ERROR size2 and size2 different");
 		return;
 	}
 	bool free_node_betweenness = false;
@@ -211,7 +211,7 @@ void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gs
 		
 		// if ~all(D)
 		if (all(d) == 0) {
-			trace.trace(CTrace::level::TRACE_DEBUG,"All the distances are 0");
+			trace.trace(CTrace::TRACE_DEBUG,"All the distances are 0");
 			// Q(1:q)=find(~D);
 			gsl_vector* not_d = logical_not(d);
 			gsl_vector* not_d_indices = find(not_d);
