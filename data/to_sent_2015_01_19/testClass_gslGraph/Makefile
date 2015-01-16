@@ -5,8 +5,8 @@ CPPFILES+= gslGraph.cpp
 CPPOPTIONS =-I gsl-1.16/  -I. -I../gsl_include/
 LINKOPTIONS= -L. -lgsl -lgslcblas -stdlib=libstdc++ -lboost_program_options -lboost_unit_test_framework 
 
-TestClass: $(CPPFILES)
-	g++ -stdlib=libstdc++ $(CPPFILES) $(LINKOPTIONS) $(CPPOPTIONS) -o TestClass
+TestClassgslGraph: $(CPPFILES)
+	g++ -stdlib=libstdc++ $(CPPFILES) $(LINKOPTIONS) $(CPPOPTIONS) -o TestClassgslGraph
 
 clean:
 	rm -f *.log
