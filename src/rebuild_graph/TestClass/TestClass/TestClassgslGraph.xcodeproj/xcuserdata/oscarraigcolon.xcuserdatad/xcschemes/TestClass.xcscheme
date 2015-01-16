@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3658719C1985964F000C40A2"
-               BuildableName = "TestClass"
-               BlueprintName = "TestClass"
-               ReferencedContainer = "container:TestClass.xcodeproj">
+               BuildableName = "TestClassgslGraph"
+               BlueprintName = "TestClassgslGraph"
+               ReferencedContainer = "container:TestClassgslGraph.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3658719C1985964F000C40A2"
-            BuildableName = "TestClass"
-            BlueprintName = "TestClass"
-            ReferencedContainer = "container:TestClass.xcodeproj">
+            BuildableName = "TestClassgslGraph"
+            BlueprintName = "TestClassgslGraph"
+            ReferencedContainer = "container:TestClassgslGraph.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3658719C1985964F000C40A2"
-            BuildableName = "TestClass"
-            BlueprintName = "TestClass"
-            ReferencedContainer = "container:TestClass.xcodeproj">
+            BuildableName = "TestClassgslGraph"
+            BlueprintName = "TestClassgslGraph"
+            ReferencedContainer = "container:TestClassgslGraph.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3658719C1985964F000C40A2"
-            BuildableName = "TestClass"
-            BlueprintName = "TestClass"
-            ReferencedContainer = "container:TestClass.xcodeproj">
+            BuildableName = "TestClassgslGraph"
+            BlueprintName = "TestClassgslGraph"
+            ReferencedContainer = "container:TestClassgslGraph.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

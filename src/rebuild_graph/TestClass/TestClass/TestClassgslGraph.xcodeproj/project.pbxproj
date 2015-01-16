@@ -38,7 +38,7 @@
 		3607297C1988526E000BBF7A /* gslGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gslGraph.cpp; path = ../../../rebuild_graph/gslGraph.cpp; sourceTree = "<group>"; };
 		36099E7719900C0000903C25 /* rebuildgraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rebuildgraph.cpp; path = ../../../rebuild_graph/rebuildgraph.cpp; sourceTree = "<group>"; };
 		36099E7819900C0000903C25 /* rebuildgraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rebuildgraph.h; path = ../../../rebuild_graph/rebuildgraph.h; sourceTree = "<group>"; };
-		3658719D1985964F000C40A2 /* TestClass */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestClass; sourceTree = BUILT_PRODUCTS_DIR; };
+		3658719D1985964F000C40A2 /* TestClassgslGraph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestClassgslGraph; sourceTree = BUILT_PRODUCTS_DIR; };
 		365871A01985964F000C40A2 /* mainTestClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mainTestClass.cpp; sourceTree = "<group>"; };
 		365871A21985964F000C40A2 /* TestClass.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestClass.1; sourceTree = "<group>"; };
 		365871B31985973E000C40A2 /* libboost_unit_test_framework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_unit_test_framework.a; path = ../../../../lib/libboost_unit_test_framework.a; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 		3658719E1985964F000C40A2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3658719D1985964F000C40A2 /* TestClass */,
+				3658719D1985964F000C40A2 /* TestClassgslGraph */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -111,9 +111,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3658719C1985964F000C40A2 /* TestClass */ = {
+		3658719C1985964F000C40A2 /* TestClassgslGraph */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 365871A61985964F000C40A2 /* Build configuration list for PBXNativeTarget "TestClass" */;
+			buildConfigurationList = 365871A61985964F000C40A2 /* Build configuration list for PBXNativeTarget "TestClassgslGraph" */;
 			buildPhases = (
 				365871991985964F000C40A2 /* Sources */,
 				3658719A1985964F000C40A2 /* Frameworks */,
@@ -123,9 +123,9 @@
 			);
 			dependencies = (
 			);
-			name = TestClass;
+			name = TestClassgslGraph;
 			productName = TestClass;
-			productReference = 3658719D1985964F000C40A2 /* TestClass */;
+			productReference = 3658719D1985964F000C40A2 /* TestClassgslGraph */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -137,7 +137,7 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 			};
-			buildConfigurationList = 365871981985964F000C40A2 /* Build configuration list for PBXProject "TestClass" */;
+			buildConfigurationList = 365871981985964F000C40A2 /* Build configuration list for PBXProject "TestClassgslGraph" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -149,7 +149,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3658719C1985964F000C40A2 /* TestClass */,
+				3658719C1985964F000C40A2 /* TestClassgslGraph */,
 			);
 		};
 /* End PBXProject section */
@@ -256,7 +256,7 @@
 					"-I",
 					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TestClassgslGraph;
 			};
 			name = Debug;
 		};
@@ -273,14 +273,14 @@
 					"-I",
 					/opt/local/include/,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TestClassgslGraph;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		365871981985964F000C40A2 /* Build configuration list for PBXProject "TestClass" */ = {
+		365871981985964F000C40A2 /* Build configuration list for PBXProject "TestClassgslGraph" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				365871A41985964F000C40A2 /* Debug */,
@@ -289,7 +289,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		365871A61985964F000C40A2 /* Build configuration list for PBXNativeTarget "TestClass" */ = {
+		365871A61985964F000C40A2 /* Build configuration list for PBXNativeTarget "TestClassgslGraph" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				365871A71985964F000C40A2 /* Debug */,

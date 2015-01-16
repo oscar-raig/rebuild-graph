@@ -51,12 +51,12 @@
 			remoteGlobalIDString = 36207B8F18EC50590033A4DC;
 			remoteInfo = convert_graph_file;
 		};
-		365871B019859650000C40A2 /* PBXContainerItemProxy */ = {
+		362E55F81A6977CD005AB3AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 365871A91985964F000C40A2 /* TestClass.xcodeproj */;
+			containerPortal = 365871A91985964F000C40A2 /* TestClassgslGraph.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3658719D1985964F000C40A2;
-			remoteInfo = TestClass;
+			remoteInfo = TestClassgslGraph;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -90,7 +90,7 @@
 		36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = convert_graph_file.xcodeproj; path = convert_graph_file/convert_graph_file.xcodeproj; sourceTree = "<group>"; };
 		3625A35618EDBA400037F00D /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 		3625A35718EDBA400037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
-		365871A91985964F000C40A2 /* TestClass.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestClass.xcodeproj; path = TestClass/TestClass/TestClass.xcodeproj; sourceTree = "<group>"; };
+		365871A91985964F000C40A2 /* TestClassgslGraph.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestClassgslGraph.xcodeproj; path = TestClass/TestClass/TestClassgslGraph.xcodeproj; sourceTree = "<group>"; };
 		365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StrategyPatternAlgorithm.cpp; sourceTree = "<group>"; };
 		365F8FA0198545C300E3A7CD /* StrategyPatternAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrategyPatternAlgorithm.h; sourceTree = "<group>"; };
 		36842EC11A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 		360BA6FC18DD74E300F54F2B = {
 			isa = PBXGroup;
 			children = (
-				365871A91985964F000C40A2 /* TestClass.xcodeproj */,
+				365871A91985964F000C40A2 /* TestClassgslGraph.xcodeproj */,
 				36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */,
 				3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */,
 				3609206118ECAA0700BAE922 /* compara.xcodeproj */,
@@ -198,10 +198,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		365871AA1985964F000C40A2 /* Products */ = {
+		362E55F21A6977CD005AB3AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				365871B119859650000C40A2 /* TestClass */,
+				362E55F91A6977CD005AB3AA /* TestClassgslGraph */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -259,8 +259,8 @@
 					ProjectRef = 36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */;
 				},
 				{
-					ProductGroup = 365871AA1985964F000C40A2 /* Products */;
-					ProjectRef = 365871A91985964F000C40A2 /* TestClass.xcodeproj */;
+					ProductGroup = 362E55F21A6977CD005AB3AA /* Products */;
+					ProjectRef = 365871A91985964F000C40A2 /* TestClassgslGraph.xcodeproj */;
 				},
 				{
 					ProductGroup = 36207B7A18EC25A10033A4DC /* Products */;
@@ -303,11 +303,11 @@
 			remoteRef = 36207B9F18EC505A0033A4DC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		365871B119859650000C40A2 /* TestClass */ = {
+		362E55F91A6977CD005AB3AA /* TestClassgslGraph */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = TestClass;
-			remoteRef = 365871B019859650000C40A2 /* PBXContainerItemProxy */;
+			path = TestClassgslGraph;
+			remoteRef = 362E55F81A6977CD005AB3AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
