@@ -265,8 +265,6 @@
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-I",
-					/opt/local/include/,
-					"-I",
 					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 					"-I",
 					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/src/rebuild_graph/rebuild_graph",
@@ -287,8 +285,6 @@
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
-					"-I",
-					/opt/local/include/,
 					"-I",
 					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 					"-I",

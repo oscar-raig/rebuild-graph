@@ -13,7 +13,7 @@
 #include <cmath>
 #include "CTrace.hpp"
 #include "gslGraph.h"
-#include <gsl/gsl_matrix.h>
+#include <matrix/gsl_matrix.h>
 #include <gsl/gsl_vector.h>
 #include <limits>
 #include <matrix/gsl_matrix.h>

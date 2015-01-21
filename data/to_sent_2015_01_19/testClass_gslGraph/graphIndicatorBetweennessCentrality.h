@@ -19,6 +19,7 @@ class graphIndicatorBetweennessCentrality: graphIndicator{
 public:
 	graphIndicatorBetweennessCentrality(gslGraph *graph):graphIndicator(graph){
 		this->graph =  graph;
+		this->epsilon =  std::numeric_limits<double>::epsilon();
 	}
 
 	
@@ -38,7 +39,7 @@ public:
 	gsl_vector* find(const gsl_vector* v, int n = std::numeric_limits<int>::max(),
 					 const std::string& direction = "first") const ;
 	gsl_vector * logical_not(const gsl_vector* v) const ;
-	double  epsilon = std::numeric_limits<double>::epsilon();
+	double  epsilon;
 	int  nnz(const gsl_vector* v) const ;
 	bool fp_nonzero(double x) const { return abs(x) > epsilon; }
 	bool fp_zero(double x) const { return abs(x) < epsilon; }

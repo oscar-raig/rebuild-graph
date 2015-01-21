@@ -8,7 +8,7 @@
 
 #ifndef rebuild_graph_rebuildgraph_h
 #define rebuild_graph_rebuildgraph_h
-#include <gsl/gsl_matrix.h>
+#include <matrix/gsl_matrix.h>
 #include <gsl/gsl_eigen.h>
 #include <gsl/gsl_sf_exp.h>
 #include <gsl/gsl_linalg.h>
