@@ -72,8 +72,7 @@ public:
 
 	void AnnealingAlgorithm(double &Tk,int graphOrder,
 							double *bestBC,double *targetBC,
-							FILE *logFile,double &costBest,
-							CSettingsSimulation settingSimulation);
+							FILE *logFile,double &costBest);
 };
 
 #endif /* defined(__rebuild_graph__SrategyPatternAlgorithm__) */

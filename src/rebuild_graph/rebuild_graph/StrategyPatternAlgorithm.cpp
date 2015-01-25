@@ -162,8 +162,7 @@ void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 
 void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 									   double *bestBC,double *targetBC,
-									   FILE *logFile,double &costBest,
-									   CSettingsSimulation settingSimulation){
+									   FILE *logFile,double &costBest){
 	
 	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::AnnealingAlgorithm");
 //	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
@@ -185,13 +184,13 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 	}
 	
 	// STARTING SIMMULATED ANNEALING
-	Tk=settingSimulation.To;
+	Tk=settingsSimulation->To;
 	generateInitialGraph(graphOrder);
 	lFuncTrace.trace(CTrace::TRACE_ERROR,"Here is the error coping a pointer tha we detroy");
 	
 
 	{
-		graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingSimulation.graphProperty,sourceGraph);
+		graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,sourceGraph);
 		bestBC = graphIndicator->calculateIndicator();
 		delete  graphIndicator;
 	}
@@ -207,13 +206,13 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 					 costBest,costNew,costOld);
 	do{
 		/* Repeat NMAX times */
-		for(N=0;(N<settingSimulation.nMax)&&(!weAreDone);N++){
+		for(N=0;(N<settingsSimulation->nMax)&&(!weAreDone);N++){
 			lFuncTrace.trace(STP_DEBUG,"Iteration N %d",N);
 			
 			modifyGraph(newGraph);
 
 			{
-				graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingSimulation.graphProperty,newGraph);
+				graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,newGraph);
 				newBC = graphIndicator->calculateIndicator();
 				delete  graphIndicator;
 			}
@@ -318,7 +317,7 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 		}
 		
 		AnnealingAlgorithm( *Tk, graphOrder,
-						   bestBC,targetBC, logFile,*costBest,*settingsSimulation);
+						   bestBC,targetBC, logFile,*costBest);
 		
 
 	}
