@@ -39,8 +39,6 @@ public:
 		if (algorithm)
 			settingSimulation->graphProperty = algorithm;
 		
-		
-		
 		rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,*compareResult);
 	}
 	

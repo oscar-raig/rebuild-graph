@@ -13,7 +13,7 @@
 #include "gslGraph.h"
 #include "graphIndicator.h"
 
-class graphIndicatorBetweennessCentrality: graphIndicator{
+class graphIndicatorBetweennessCentrality: public graphIndicator{
 	
 	
 public:

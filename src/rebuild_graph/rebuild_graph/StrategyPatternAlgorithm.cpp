@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Oscar Raig Colon. All rights reserved.
 //
 
+#include "FactoryGraphIndicator.h"
 #include "StrategyPatternAlgorithm.h"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
@@ -188,23 +189,11 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 	generateInitialGraph(graphOrder);
 	lFuncTrace.trace(CTrace::TRACE_ERROR,"Here is the error coping a pointer tha we detroy");
 	
-	if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY ){
-		graphIndicatorBetweennessCentrality *betweennessCentrality =
-		new graphIndicatorBetweennessCentrality ( sourceGraph );
-		
-		bestBC = betweennessCentrality->calculateIndicator();
-		// sourceGraph->brandes_betweenness_centrality(bestBC);
-	}else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS ){
-		
-	//	sourceGraph->brandes_comunicability_centrality_exp(bestBC);
-		graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
-		new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(sourceGraph);
-		bestBC = communicabilityCentrality->calculateIndicator();
-	}else{
-		//sourceGraph->communicability_betweenness_centrality(bestBC);
-		graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
-		new graphIndicatorCommunicabilityBetweennessCentrality(sourceGraph);
-		bestBC = communicabilityBetweennessCentrality->calculateIndicator();
+
+	{
+		graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingSimulation.graphProperty,sourceGraph);
+		bestBC = graphIndicator->calculateIndicator();
+		delete  graphIndicator;
 	}
 	costBest=cost(targetBC,bestBC,graphOrder);
 	costOld=2.0*costBest;
@@ -222,28 +211,11 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 			lFuncTrace.trace(STP_DEBUG,"Iteration N %d",N);
 			
 			modifyGraph(newGraph);
-			// Evaluate newGraph's vertex betweenness centrality
-			if( settingSimulation.graphProperty == BETWEENNESS_CENTRALITY ){
-				//newGraph->brandes_betweenness_centrality(newBC);
-				graphIndicatorBetweennessCentrality *betweennessCentrality =
-				new graphIndicatorBetweennessCentrality ( newGraph );
-				
-				newBC = betweennessCentrality->calculateIndicator();
 
-			
-			}else if ( settingSimulation.graphProperty == COMMUNICABILITY_BETWEENESS ){
-				
-				// newGraph->brandes_comunicability_centrality_exp(newBC);
-				graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
-				new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(newGraph);
-				newBC = communicabilityCentrality->calculateIndicator();
-			}else{
-				// newGraph->communicability_betweenness_centrality(newBC);
-				graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
-				new graphIndicatorCommunicabilityBetweennessCentrality(newGraph);
-				newBC = communicabilityBetweennessCentrality->calculateIndicator();
-
-				
+			{
+				graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingSimulation.graphProperty,newGraph);
+				newBC = graphIndicator->calculateIndicator();
+				delete  graphIndicator;
 			}
 			// Update cost variables (new and old graphs)
 			costOld=costNew;
@@ -270,11 +242,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 				fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
-				
-					
-					// ((gslGraph *)bestGraph)->copyGraph((gslGraph*)newGraph);
-				//	newGraph= ((gslGraph *)bestGraph)->copyGraph();
-				
 				newGraph = sourceGraph->copyGraph();
 				notOk++;
 				lFuncTrace.trace(CTrace::TRACE_DEBUG,"x");
@@ -333,33 +300,12 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 			bestBC[i]=0.0;
 		}
 		
-//		targetGraph->printGraph();
-			
-		if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY ){
-		//	targetGraph->brandes_betweenness_centrality(targetBC);
-			graphIndicatorBetweennessCentrality *betweennessCentrality =
-			new graphIndicatorBetweennessCentrality ( targetGraph );
-			
-			targetBC = betweennessCentrality->calculateIndicator();
-		
-		}else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS ){
-			
-			//targetGraph->brandes_comunicability_centrality_exp(targetBC);
-			graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
-			new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(targetGraph);
-			targetBC = communicabilityCentrality->calculateIndicator();
-			
-		}else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY ){
-			// targetGraph->communicability_betweenness_centrality(targetBC);
-			graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
-			new graphIndicatorCommunicabilityBetweennessCentrality(targetGraph);
-			targetBC = communicabilityBetweennessCentrality->calculateIndicator();
-		}
-		else
 		{
-			std::cout << " graphProperty is not set" << std::endl;
-			return -1;
+			graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,targetGraph);
+			targetBC = graphIndicator->calculateIndicator();
+			delete  graphIndicator;
 		}
+		
 		strcpy(inputGraphFilename,inputFilename);
 		strcat(inputGraphFilename,".in");
 		targetGraph->printMyGraph(inputGraphFilename);

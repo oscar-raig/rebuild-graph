@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include "graphIndicator.h"
 
-class graphIndicatorCommunicabilityBetweennessCentrality : graphIndicator{
+class graphIndicatorCommunicabilityBetweennessCentrality : public graphIndicator{
 	
 public:
 	graphIndicatorCommunicabilityBetweennessCentrality( gslGraph *argGraph ):graphIndicator( argGraph ){};

@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "graphIndicator.h"
 
-class graphIndicatorCommunicabilityCentralityUsingMatrixExponential : graphIndicator{
+class graphIndicatorCommunicabilityCentralityUsingMatrixExponential : public graphIndicator{
 	
 public:
 	graphIndicatorCommunicabilityCentralityUsingMatrixExponential( gslGraph *argGraph):graphIndicator(argGraph){};

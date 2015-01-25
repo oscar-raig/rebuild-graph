@@ -18,6 +18,7 @@
 		3625A36118EDC9980037F00D /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625A35F18EDC9980037F00D /* libgsl.a */; };
 		3625A36218EDC9980037F00D /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625A36018EDC9980037F00D /* libgslcblas.a */; };
 		3636C7181A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C7171A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */; };
+		3636C7291A75AFEB006EE086 /* FactoryGraphIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C7281A75AFEB006EE086 /* FactoryGraphIndicator.cpp */; };
 		365F8FA819854D4300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365F8FA619854D4300E3A7CD /* StrategyPatternAlgorithm.cpp */; };
 		36DB1610198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DB160E198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp */; };
 		36DF6D141A48531D004A0C99 /* graphIndicatorBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DF6D131A48531D004A0C99 /* graphIndicatorBetweennessCentrality.cpp */; };
@@ -55,6 +56,8 @@
 		3625A36018EDC9980037F00D /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 		3636C7161A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphIndicatorCommunicabilityBetweennessCentrality.h; path = ../../graphIndicatorCommunicabilityBetweennessCentrality.h; sourceTree = "<group>"; };
 		3636C7171A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphIndicatorCommunicabilityBetweennessCentrality.cpp; path = ../../graphIndicatorCommunicabilityBetweennessCentrality.cpp; sourceTree = "<group>"; };
+		3636C7271A75AFEB006EE086 /* FactoryGraphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FactoryGraphIndicator.h; path = ../../rebuild_graph/FactoryGraphIndicator.h; sourceTree = "<group>"; };
+		3636C7281A75AFEB006EE086 /* FactoryGraphIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FactoryGraphIndicator.cpp; path = ../../rebuild_graph/FactoryGraphIndicator.cpp; sourceTree = "<group>"; };
 		365F8FA619854D4300E3A7CD /* StrategyPatternAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StrategyPatternAlgorithm.cpp; path = ../../rebuild_graph/StrategyPatternAlgorithm.cpp; sourceTree = "<group>"; };
 		365F8FA719854D4300E3A7CD /* StrategyPatternAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StrategyPatternAlgorithm.h; path = ../../rebuild_graph/StrategyPatternAlgorithm.h; sourceTree = "<group>"; };
 		36DB160E198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractFactoryPatternRebuildGraph.cpp; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 		36207B6F18EC25A10033A4DC /* TestRebuildGraph */ = {
 			isa = PBXGroup;
 			children = (
+				3636C7271A75AFEB006EE086 /* FactoryGraphIndicator.h */,
+				3636C7281A75AFEB006EE086 /* FactoryGraphIndicator.cpp */,
 				3636C7161A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */,
 				3636C7171A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */,
 				36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */,
@@ -176,6 +181,7 @@
 			files = (
 				36133E1B18FCE0F9000F7E09 /* rebuildgraph.cpp in Sources */,
 				3636C7181A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */,
+				3636C7291A75AFEB006EE086 /* FactoryGraphIndicator.cpp in Sources */,
 				360854F518F7489100033919 /* CSettingsSumulation.cpp in Sources */,
 				3609DCF418F5F83B00AC64B9 /* CTrace.cpp in Sources */,
 				36DB1610198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp in Sources */,

@@ -10,6 +10,7 @@
 		3607297D1988526E000BBF7A /* gslGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3607297C1988526E000BBF7A /* gslGraph.cpp */; };
 		36099E7919900C0000903C25 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36099E7719900C0000903C25 /* rebuildgraph.cpp */; };
 		3636C7151A756BEB006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C7141A756BEB006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */; };
+		3636C7261A75AB1D006EE086 /* FactoryGraphIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C7251A75AB1D006EE086 /* FactoryGraphIndicator.cpp */; };
 		365871A11985964F000C40A2 /* mainTestClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365871A01985964F000C40A2 /* mainTestClass.cpp */; };
 		365871A31985964F000C40A2 /* TestClassgslGraph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 365871A21985964F000C40A2 /* TestClassgslGraph.1 */; };
 		365871B41985973E000C40A2 /* libboost_unit_test_framework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 365871B31985973E000C40A2 /* libboost_unit_test_framework.a */; };
@@ -41,6 +42,8 @@
 		36099E7819900C0000903C25 /* rebuildgraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rebuildgraph.h; path = ../../../rebuild_graph/rebuildgraph.h; sourceTree = "<group>"; };
 		3636C7131A756BEB006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphIndicatorCommunicabilityBetweennessCentrality.h; path = ../../../graphIndicatorCommunicabilityBetweennessCentrality.h; sourceTree = "<group>"; };
 		3636C7141A756BEB006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphIndicatorCommunicabilityBetweennessCentrality.cpp; path = ../../../graphIndicatorCommunicabilityBetweennessCentrality.cpp; sourceTree = "<group>"; };
+		3636C7241A75AB1D006EE086 /* FactoryGraphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FactoryGraphIndicator.h; path = ../../../rebuild_graph/FactoryGraphIndicator.h; sourceTree = "<group>"; };
+		3636C7251A75AB1D006EE086 /* FactoryGraphIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FactoryGraphIndicator.cpp; path = ../../../rebuild_graph/FactoryGraphIndicator.cpp; sourceTree = "<group>"; };
 		3658719D1985964F000C40A2 /* TestClassgslGraph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestClassgslGraph; sourceTree = BUILT_PRODUCTS_DIR; };
 		365871A01985964F000C40A2 /* mainTestClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mainTestClass.cpp; sourceTree = "<group>"; };
 		365871A21985964F000C40A2 /* TestClassgslGraph.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestClassgslGraph.1; sourceTree = "<group>"; };
@@ -95,6 +98,8 @@
 		3658719F1985964F000C40A2 /* TestClassgslGraph */ = {
 			isa = PBXGroup;
 			children = (
+				3636C7241A75AB1D006EE086 /* FactoryGraphIndicator.h */,
+				3636C7251A75AB1D006EE086 /* FactoryGraphIndicator.cpp */,
 				3636C7131A756BEB006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */,
 				3636C7141A756BEB006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */,
 				36842EC91A4B2310000F633E /* graphIndicator.h */,
@@ -164,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3636C7261A75AB1D006EE086 /* FactoryGraphIndicator.cpp in Sources */,
 				365871A11985964F000C40A2 /* mainTestClass.cpp in Sources */,
 				3636C7151A756BEB006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */,
 				365871BA1985A0DD000C40A2 /* CTrace.cpp in Sources */,
