@@ -19,11 +19,12 @@ def _rescale(sc,normalized):
     return sc
 
 
-G=nx.read_adjlist("test_4nodes.gpfc",delimiter=" ",nodetype=int)
-sc = nx.communicability_betweenness_centrality(G)
-print "Communicability Betweenness Centrality"
-print sc
-sys.exit()
+#G=nx.read_adjlist("test_4nodes.gpfc",delimiter=" ",nodetype=int)
+G=nx.read_adjlist("krackhardt_kite_grap.adjlist",delimiter=" ",nodetype=int)
+#sc = nx.communicability_betweenness_centrality(G)
+#print "Communicability Betweenness Centrality"
+#print sc
+#sys.exit()
 
 normalized = True
 nodelist = G.nodes() # ordering of nodes in matrix

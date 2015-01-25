@@ -21,6 +21,7 @@
 #include "rebuildgraph.h"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
+#include "graphIndicatorCommunicabilityBetweennessCentrality.h"
 
 
 
@@ -263,6 +264,8 @@ void test_brandes_comunicability_centrality_test_4nodes(){
 	}
 	
 	delete generalGraph;
+	delete betweeness_centrality;
+	delete betweennessCentrality;
 	
 	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
@@ -575,6 +578,132 @@ void UTest_graphIndicatorBetweennessCentrality_submatrix(){
 				++numberOfTestExeccuted,numberOfTests);
 }
 
+void UTest_gslGraph_BetweennessCentrality_krackhardt_kite(){
+
+	CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
+	
+	gslGraph *krackhardtKiteGraph =   new gslGraph();
+	krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
+	
+	
+	double *betweeness_centrality = NULL;
+	double expectedbetweenessCentrality[10]={ 0.023,0.023,0.000,0.102,
+					0.000,0.231,0.231,0.389,0.222,0.000};
+
+	
+	graphIndicatorBetweennessCentrality *betweennessCentrality =
+	new graphIndicatorBetweennessCentrality ( krackhardtKiteGraph );
+	
+	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
+		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
+		std::cout << "Pos " << i << " : " << expectedbetweenessCentrality[i] << std::endl;
+		BOOST_CHECK( abs(betweeness_centrality[i] - expectedbetweenessCentrality[i])< 0.01);
+	}
+	
+	delete krackhardtKiteGraph;
+	delete betweeness_centrality;
+	delete betweennessCentrality;
+	
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+}
+
+
+
+void UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite(){
+	
+	CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
+	
+	gslGraph *krackhardtKiteGraph =   new gslGraph();
+	krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
+	
+	
+	double *betweeness_centrality = NULL;
+	double expectedbetweenessCentrality[10]={ 10.254,10.254,7.402,17.518,
+		7.402,12.703,12.703,4.880,2.333,1.593};
+	
+	
+	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
+	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential ( krackhardtKiteGraph );
+	
+	betweeness_centrality = communicabilityCentrality->calculateIndicator();
+	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
+		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
+		std::cout << "Pos " << i << " : " << expectedbetweenessCentrality[i] << std::endl;
+		BOOST_CHECK( abs(betweeness_centrality[i] - expectedbetweenessCentrality[i])< 0.01);
+	}
+	
+	delete krackhardtKiteGraph;
+	delete betweeness_centrality;
+	delete communicabilityCentrality;
+	
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+}
+
+
+void UTest_gslGraph_CommunicabilityBetweennessCentrality_krackhardt_kite(){
+	
+	CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
+	
+	gslGraph *krackhardtKiteGraph =   new gslGraph();
+	krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
+	
+	
+	double *communicability_betweeness_centrality = NULL;
+	double expectedCommunicabilitybetweenessCentrality[10]={ 0.259,0.259,0.164,0.497,
+		0.164,0.497,0.497,0.451,0.233,0.010};
+	
+	
+	graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
+	new graphIndicatorCommunicabilityBetweennessCentrality ( krackhardtKiteGraph );
+	
+	communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicator();
+	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
+		std::cout << "Pos " << i << " : " << communicability_betweeness_centrality[i] << std::endl;
+		std::cout << "Pos " << i << " : " << expectedCommunicabilitybetweenessCentrality[i] << std::endl;
+		BOOST_CHECK( abs(communicability_betweeness_centrality[i] - expectedCommunicabilitybetweenessCentrality[i])< 0.01);
+	}
+	
+	delete krackhardtKiteGraph;
+	delete communicability_betweeness_centrality;
+	delete communicabilityBetweennessCentrality;
+	
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+}
+
+void UTest_gslGraph_CommunicabilityBetweennessCentrality_test_4nodes(){
+	
+	CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
+	
+	gslGraph *krackhardtKiteGraph =   new gslGraph();
+	krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "test_4nodes.gpfc" );
+	
+	
+	double *communicability_betweeness_centrality = NULL;
+	double expectedCommunicabilitybetweenessCentrality[4]={ 0.07017,0.71565,0.71565,0.07017};
+	
+	
+	graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
+	new graphIndicatorCommunicabilityBetweennessCentrality ( krackhardtKiteGraph );
+	
+	communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicator();
+	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
+		std::cout << "Pos " << i << " : " << communicability_betweeness_centrality[i] << std::endl;
+		std::cout << "Pos " << i << " : " << expectedCommunicabilitybetweenessCentrality[i] << std::endl;
+		BOOST_CHECK( abs(communicability_betweeness_centrality[i] - expectedCommunicabilitybetweenessCentrality[i])< 0.01);
+	}
+	
+	delete krackhardtKiteGraph;
+	delete communicability_betweeness_centrality;
+	delete communicabilityBetweennessCentrality;
+	
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+	
+}
 
 typedef void (*func_type)(void);
 
@@ -597,7 +726,12 @@ func_type functions[]={
 	test_brandes_comunicability_centrality_test_4nodes,
 		UTest_2copyGraph,
 	
-	UTest_graphIndicatorBetweennessCentrality_submatrix
+	UTest_graphIndicatorBetweennessCentrality_submatrix,
+	
+	UTest_gslGraph_BetweennessCentrality_krackhardt_kite,
+	UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite,
+	UTest_gslGraph_CommunicabilityBetweennessCentrality_krackhardt_kite,
+	UTest_gslGraph_CommunicabilityBetweennessCentrality_test_4nodes
 	
 	
 };
