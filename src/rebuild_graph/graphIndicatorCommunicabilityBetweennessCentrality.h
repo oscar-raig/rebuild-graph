@@ -67,7 +67,7 @@ public:
 		//	targetGraph->printGraph();
 		
 		graph->graphToGsl(A1);
-		lFuncTrace.trace(CTrace::TRACE_INFO,"\nPrinting Home made Matrix\n");
+		lFuncTrace.trace(CTrace::TRACE_DEBUG,"\nPrinting Home made Matrix\n");
 		//		printGslMatrix(A1," %g");
 	 
 	 /* Step 2
@@ -95,7 +95,7 @@ public:
 			
 			gsl_matrix_sub(copyexpmAForSubstract,copyA1expm);
 			gsl_matrix_div_elements (copyexpmAForSubstract, A1expm);
-			lFuncTrace.trace(CTrace::TRACE_INFO,"Printing expA- scip\n");
+			lFuncTrace.trace(CTrace::TRACE_DEBUG,"Printing expA- scip\n");
 			//		printGslMatrix(copyexpmAForSubstract);
 			gslDeleteNodeConnections(copyexpmAForSubstract,iteratorNode);
 			
@@ -116,7 +116,7 @@ public:
 					sum +=gsl_matrix_get(copyexpmAForSubstract,row,col);
 				}
 			}
-			lFuncTrace.trace(CTrace::TRACE_INFO,"Suma %f\n",sum);
+			lFuncTrace.trace(CTrace::TRACE_DEBUG,"Suma %f\n",sum);
 			gsl_vector_set(matrixFinalResult,iteratorNode,sum);
 			
 		}

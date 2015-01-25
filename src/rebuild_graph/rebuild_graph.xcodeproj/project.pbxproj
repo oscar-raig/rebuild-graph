@@ -14,6 +14,7 @@
 		360BA70B18DD74E300F54F2B /* rebuild_graph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 360BA70A18DD74E300F54F2B /* rebuild_graph.1 */; };
 		36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36133E1218FC7AC3000F7E09 /* rebuildgraph.cpp */; };
 		3625A35818EDBA400037F00D /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35618EDBA400037F00D /* CTrace.cpp */; };
+		3636C71B1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C71A1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */; };
 		365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */; };
 		36842EC31A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36842EC11A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp */; };
 		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
@@ -90,6 +91,8 @@
 		36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = convert_graph_file.xcodeproj; path = convert_graph_file/convert_graph_file.xcodeproj; sourceTree = "<group>"; };
 		3625A35618EDBA400037F00D /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 		3625A35718EDBA400037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
+		3636C7191A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphIndicatorCommunicabilityBetweennessCentrality.h; sourceTree = SOURCE_ROOT; };
+		3636C71A1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphIndicatorCommunicabilityBetweennessCentrality.cpp; sourceTree = SOURCE_ROOT; };
 		365871A91985964F000C40A2 /* TestClassgslGraph.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestClassgslGraph.xcodeproj; path = TestClassgslGraph/TestClassgslGraph/TestClassgslGraph.xcodeproj; sourceTree = "<group>"; };
 		365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StrategyPatternAlgorithm.cpp; sourceTree = "<group>"; };
 		365F8FA0198545C300E3A7CD /* StrategyPatternAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrategyPatternAlgorithm.h; sourceTree = "<group>"; };
@@ -158,6 +161,8 @@
 		360BA70718DD74E300F54F2B /* rebuild_graph */ = {
 			isa = PBXGroup;
 			children = (
+				3636C7191A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */,
+				3636C71A1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */,
 				3625A35618EDBA400037F00D /* CTrace.cpp */,
 				3625A35718EDBA400037F00D /* CTrace.hpp */,
 				36C4F4DD18E9E10C002B67FD /* libgslcblas.a */,
@@ -318,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36DF6D091A484B3D004A0C99 /* graphIndicator.cpp in Sources */,
+				3636C71B1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */,
 				36DF6D111A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp in Sources */,
 				365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */,
 				36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */,

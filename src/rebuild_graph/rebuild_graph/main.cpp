@@ -12,6 +12,13 @@
 #include "rebuildgraph.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "graphIndicatorBetweennessCentrality.h"
+#include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
+#include "graphIndicatorCommunicabilityBetweennessCentrality.h"
+
+
+bool only_calculate = false;
+
 int
 fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&ptargetBC, double *&pbestBC,int *order);
 int fCalculateBeterness(const char *argv[]);
@@ -54,6 +61,7 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 	("help", "Print help messages")
 	("graphFile", po::value< std::string >(),"graph file in python format")
 	("k","k description")
+	("only-calculate-indicator","only calculates the BC, CB or CBC of the input file")
 	("algorithm",po::value<int>(),"algorithm 1:BETWEENESS CENTRALITY, 2:COMMUNICABILITY BETWEENESS, 3: COMMUNICABILITY BETWEENESS CENTRALITY ");
 	
 	
@@ -72,7 +80,11 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 		std::cout << "graphFile" <<  argumentMap["graphFile"].as<std::string>() << std::endl;
 		return NULL;
 	}
-	
+	if ( argumentMap.count("only-calculate-indicator")  )
+	{
+		std::cout << "We only calculate  the algorithm" << std::endl;
+		only_calculate = true;
+	}
 	
 	po::notify(argumentMap); // throws on error, so do after help in case
 	
@@ -103,6 +115,37 @@ int main(int argc, const char * argv[])
 		std::cout << "ERROR: Reading the configuration";
 		return -1;
 	}
+	
+	if (only_calculate ){
+		gslGraph *gsl_Graph = new gslGraph();
+		gsl_Graph->readPythonGraphFile(settingsSimulation->inputFileName);
+		double *arrayIndicator = new double[gsl_Graph->getOrder()];
+		
+		if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY ){
+			graphIndicatorBetweennessCentrality *betweennessCentrality =
+			new graphIndicatorBetweennessCentrality ( gsl_Graph );
+			
+			arrayIndicator = betweennessCentrality->calculateIndicator();
+			// sourceGraph->brandes_betweenness_centrality(bestBC);
+		}else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS ){
+			
+			//	sourceGraph->brandes_comunicability_centrality_exp(bestBC);
+			graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
+			new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(gsl_Graph);
+			arrayIndicator = communicabilityCentrality->calculateIndicator();
+		}else{
+			//sourceGraph->communicability_betweenness_centrality(bestBC);
+			graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
+			new graphIndicatorCommunicabilityBetweennessCentrality(gsl_Graph);
+			arrayIndicator = communicabilityBetweennessCentrality->calculateIndicator();
+		}
+		
+		for ( int i=0; i < gsl_Graph->getOrder(); i++){
+			std::cout << " Result pos : " << i << " = " << arrayIndicator[i]<< std::endl;
+		}
+		return 0;
+	}
+	
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	double compareResult = 0.0;
 	double *TargetBC = NULL;

@@ -9,6 +9,7 @@
 #include "StrategyPatternAlgorithm.h"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
+#include "graphIndicatorCommunicabilityBetweennessCentrality.h"
 
 
 #define STP_DEBUG CTrace::TRACE_DEBUG
@@ -199,9 +200,12 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 		graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
 		new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(sourceGraph);
 		bestBC = communicabilityCentrality->calculateIndicator();
-	}else
-		sourceGraph->communicability_betweenness_centrality(bestBC);
-	
+	}else{
+		//sourceGraph->communicability_betweenness_centrality(bestBC);
+		graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
+		new graphIndicatorCommunicabilityBetweennessCentrality(sourceGraph);
+		bestBC = communicabilityBetweennessCentrality->calculateIndicator();
+	}
 	costBest=cost(targetBC,bestBC,graphOrder);
 	costOld=2.0*costBest;
 	costNew=costOld;
@@ -233,8 +237,14 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 				graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
 				new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(newGraph);
 				newBC = communicabilityCentrality->calculateIndicator();
-			}else
-				newGraph->communicability_betweenness_centrality(newBC);
+			}else{
+				// newGraph->communicability_betweenness_centrality(newBC);
+				graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
+				new graphIndicatorCommunicabilityBetweennessCentrality(newGraph);
+				newBC = communicabilityBetweennessCentrality->calculateIndicator();
+
+				
+			}
 			// Update cost variables (new and old graphs)
 			costOld=costNew;
 			costNew=cost(targetBC,newBC,graphOrder);
@@ -339,8 +349,12 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 			new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(targetGraph);
 			targetBC = communicabilityCentrality->calculateIndicator();
 			
-		}else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY )
-			targetGraph->communicability_betweenness_centrality(targetBC);
+		}else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS_CENTRALITY ){
+			// targetGraph->communicability_betweenness_centrality(targetBC);
+			graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
+			new graphIndicatorCommunicabilityBetweennessCentrality(targetGraph);
+			targetBC = communicabilityBetweennessCentrality->calculateIndicator();
+		}
 		else
 		{
 			std::cout << " graphProperty is not set" << std::endl;

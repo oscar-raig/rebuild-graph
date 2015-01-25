@@ -10,6 +10,8 @@
 #include "CTrace.hpp"
 #include <stdexcept>
 #include <iostream>
+#include <unistd.h>
+
 using std::runtime_error;
 
 
