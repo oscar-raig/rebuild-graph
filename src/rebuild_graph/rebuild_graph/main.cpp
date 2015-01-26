@@ -94,23 +94,13 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 	CSettingsSimulation *settingsSimulation = new CSettingsSimulation() ;
 	settingsSimulation->inputFileName =argumentMap["graphFile"].as<std::string>();
 	
-	
-	
-	
-	
 	// CSettingsSimulation *settingsSimulation = new CSettingsSimulation(argumentMap);
-	
-
-	
 	settingsSimulation->graphProperty = Algorithm;
 	return settingsSimulation;
 }
 
 int main(int argc, const char * argv[])
 {
-
-	
-	
 	CSettingsSimulation * settingsSimulation=  readConfiguration(argc,argv);
 	if (!settingsSimulation){
 		std::cout << "ERROR: Reading the configuration";
@@ -122,26 +112,7 @@ int main(int argc, const char * argv[])
 		gsl_Graph->readPythonGraphFile(settingsSimulation->inputFileName);
 		double *arrayIndicator = NULL;
 		
-/*
-		if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY ){
-			graphIndicatorBetweennessCentrality *betweennessCentrality =
-			new graphIndicatorBetweennessCentrality ( gsl_Graph );
-			
-			arrayIndicator = betweennessCentrality->calculateIndicator();
-			// sourceGraph->brandes_betweenness_centrality(bestBC);
-		}else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS ){
-			
-			//	sourceGraph->brandes_comunicability_centrality_exp(bestBC);
-			graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
-			new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(gsl_Graph);
-			arrayIndicator = communicabilityCentrality->calculateIndicator();
-		}else{
-			//sourceGraph->communicability_betweenness_centrality(bestBC);
-			graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
-			new graphIndicatorCommunicabilityBetweennessCentrality(gsl_Graph);
-			arrayIndicator = communicabilityBetweennessCentrality->calculateIndicator();
-		}
-*/
+
 		 graphIndicator *graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty, gsl_Graph);
 		arrayIndicator = graphIndicator->calculateIndicator();
 		for ( int i=0; i < gsl_Graph->getOrder(); i++){
