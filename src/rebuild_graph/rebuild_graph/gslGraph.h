@@ -65,7 +65,7 @@ public:
 	virtual int getDegree() const;
 	virtual int getDegree(int vertex)const;
 	
-	virtual void printMyGraph(const char * outputGraphFilename) const;
+	virtual void printMyGraph(const char * outputGraphFilename,bool outputAsAdjacencyList) const;
 	void printGraph(int TRACE_LEVEL = CTrace::TRACE_DEBUG);
 	
 	

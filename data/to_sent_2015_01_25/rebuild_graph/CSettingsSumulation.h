@@ -31,6 +31,10 @@ namespace po = boost::program_options;
 #define BETWEENNESS_CENTRALITY     1
 #define COMMUNICABILITY_BETWEENESS 2
 #define COMMUNICABILITY_BETWEENESS_CENTRALITY 3
+
+
+#define OUTPUT_BINARY false
+#define OUTPUT_ADJACENCY_LIST true
 class CSettingsSimulation{
 	
 public:
@@ -44,6 +48,7 @@ public:
 	int random_value_z;
 	int graphProperty;
 	int maxIterations;
+	int outputFormatGraphResultAdjList;
 	
 	CSettingsSimulation():
 	k(DEFAULT_K),nMax(DEFAULT_N_MAX),
@@ -52,7 +57,8 @@ public:
 	random_value_y(DEFAULT_SEED_Y),
 	random_value_z(DEFAULT_SEED_Z),
 	graphProperty(BETWEENNESS_CENTRALITY),
-	maxIterations(DEFAULT_MAX_ITERATIONS)
+	maxIterations(DEFAULT_MAX_ITERATIONS),
+	outputFormatGraphResultAdjList(OUTPUT_ADJACENCY_LIST)
 	{
 	}
 	
@@ -63,7 +69,8 @@ public:
 		random_value_y(DEFAULT_SEED_Y),
 		random_value_z(DEFAULT_SEED_Z),
 		graphProperty(BETWEENNESS_CENTRALITY),
-		maxIterations(DEFAULT_MAX_ITERATIONS)
+		maxIterations(DEFAULT_MAX_ITERATIONS),
+		outputFormatGraphResultAdjList(OUTPUT_ADJACENCY_LIST)
 	{
 		if (argumentMap.count("graphFile")){
 			inputFileName = argumentMap["graphFile"].as<std::string>();

@@ -61,7 +61,6 @@ public:
 	
 	int
 	regenerateGraph(gslGraph *targetGraph,
-					char *inputFilename,
 					double *&targetBC,
 					double *&bestBC,
 					int &graphOrder,
@@ -71,7 +70,7 @@ public:
 	// Rebuilding Graph Main Functions
 
 	void AnnealingAlgorithm(double &Tk,int graphOrder,
-							double *bestBC,double *targetBC,
+							double *&bestBC,double *targetBC,
 							FILE *logFile,double &costBest);
 };
 

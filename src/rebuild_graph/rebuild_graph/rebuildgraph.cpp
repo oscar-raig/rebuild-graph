@@ -14,11 +14,6 @@
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 
 
-
-
-
-
-
 void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *inputFileName,double Tk,
 						double costBest,double *targetBC,
 						double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation){
@@ -97,7 +92,7 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 	printf("\nReconstructed graph file: %s\n",outputGraphFilename);
 //	bestGraph->printGraph();
 	
-	bestGraph->printMyGraph(outputGraphFilename);
+	bestGraph->printMyGraph(outputGraphFilename,settingsSimulation.outputFormatGraphResultAdjList);
 	
 }
 

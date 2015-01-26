@@ -61,7 +61,11 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
     argumentDescription.add_options()
 	("help", "Print help messages")
 	("graphFile", po::value< std::string >(),"graph file in python format")
-	("k","k description")
+	("k",po::value<double>(),"k description")
+	("nIteration",po::value<int>(),"nIteration")
+	("nMax",po::value<int>(),"nMax")
+	
+	("output-format-adjlist","output format adjlist")
 	("only-calculate-indicator","only calculates the BC, CB or CBC of the input file")
 	("algorithm",po::value<int>(),"algorithm 1:BETWEENESS CENTRALITY, 2:COMMUNICABILITY BETWEENESS, 3: COMMUNICABILITY BETWEENESS CENTRALITY ");
 	
@@ -86,6 +90,12 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 		std::cout << "We only calculate  the algorithm" << std::endl;
 		only_calculate = true;
 	}
+	bool outputFormatDefaultAdjacencyList = false;
+	if ( argumentMap.count("output-format-adjlist")  )
+	{
+		outputFormatDefaultAdjacencyList = true;
+		std::cout << "Output Format Ajdacency list" << std::endl;
+	}
 	
 	po::notify(argumentMap); // throws on error, so do after help in case
 	
@@ -94,23 +104,34 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 	CSettingsSimulation *settingsSimulation = new CSettingsSimulation() ;
 	settingsSimulation->inputFileName =argumentMap["graphFile"].as<std::string>();
 	
-	
-	
-	
+	if (argumentMap.count("k"))
+	{
+		settingsSimulation->k = argumentMap["k"].as<double>();
+		std::cout << "k " << settingsSimulation->k  << std::endl;
+		
+	}
+	if (argumentMap.count("nIteration"))
+	{
+		settingsSimulation->maxIterations = argumentMap["nIteration"].as<int>();
+		std::cout << "nIteration " << settingsSimulation->maxIterations  << std::endl;
+		
+	}
+	if (argumentMap.count("nMax"))
+	{
+		settingsSimulation->nMax = argumentMap["nMax"].as<int>();
+		std::cout << "nMax " << settingsSimulation->nMax  << std::endl;
+		
+	}
 	
 	// CSettingsSimulation *settingsSimulation = new CSettingsSimulation(argumentMap);
-	
-
-	
 	settingsSimulation->graphProperty = Algorithm;
+	settingsSimulation->outputFormatGraphResultAdjList = outputFormatDefaultAdjacencyList;
+	
 	return settingsSimulation;
 }
 
 int main(int argc, const char * argv[])
 {
-
-	
-	
 	CSettingsSimulation * settingsSimulation=  readConfiguration(argc,argv);
 	if (!settingsSimulation){
 		std::cout << "ERROR: Reading the configuration";
@@ -122,26 +143,7 @@ int main(int argc, const char * argv[])
 		gsl_Graph->readPythonGraphFile(settingsSimulation->inputFileName);
 		double *arrayIndicator = NULL;
 		
-/*
-		if( settingsSimulation->graphProperty == BETWEENNESS_CENTRALITY ){
-			graphIndicatorBetweennessCentrality *betweennessCentrality =
-			new graphIndicatorBetweennessCentrality ( gsl_Graph );
-			
-			arrayIndicator = betweennessCentrality->calculateIndicator();
-			// sourceGraph->brandes_betweenness_centrality(bestBC);
-		}else if ( settingsSimulation->graphProperty == COMMUNICABILITY_BETWEENESS ){
-			
-			//	sourceGraph->brandes_comunicability_centrality_exp(bestBC);
-			graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
-			new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(gsl_Graph);
-			arrayIndicator = communicabilityCentrality->calculateIndicator();
-		}else{
-			//sourceGraph->communicability_betweenness_centrality(bestBC);
-			graphIndicatorCommunicabilityBetweennessCentrality *communicabilityBetweennessCentrality =
-			new graphIndicatorCommunicabilityBetweennessCentrality(gsl_Graph);
-			arrayIndicator = communicabilityBetweennessCentrality->calculateIndicator();
-		}
-*/
+
 		 graphIndicator *graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty, gsl_Graph);
 		arrayIndicator = graphIndicator->calculateIndicator();
 		for ( int i=0; i < gsl_Graph->getOrder(); i++){

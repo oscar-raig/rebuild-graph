@@ -69,7 +69,9 @@ void gslGraph::copyGraph(gslGraph * newgslGraph)const{
 }
 */
 
-void gslGraph::printMyGraph(const char * outputGraphFilename)const{
+void gslGraph::printMyGraph(const char * outputGraphFilename,
+							bool outputAsAdjacencyList
+							)const{
 	CFuncTrace trace (false,"printMyGraph");
 	FILE *outputGraph = NULL;
 	outputGraph=fopen(outputGraphFilename,"w");
@@ -77,12 +79,27 @@ void gslGraph::printMyGraph(const char * outputGraphFilename)const{
 		printf("Cannot open out graph file %s for writting\n",outputGraphFilename);
 		exit(-1);
 	}
-	for (size_t i = 0; i < matrix->size1; i++) {
-		for (size_t j = 0; j < matrix->size2; j++) {
-			fprintf(outputGraph,"%d ",(int)
-					gsl_matrix_get(matrix, i, j));
-			if ( j == matrix->size2 -1 )
-				fprintf(outputGraph,"%d\n",(int)gsl_matrix_get(matrix, i, j));
+	if ( outputAsAdjacencyList ){
+		for (size_t i = 0; i < matrix->size1; i++) {
+			size_t j = 0;
+			fprintf(outputGraph,"%d ",(int)i);
+			for (j = i; j < matrix->size2-1; j++) {
+				if ( gsl_matrix_get(matrix, i, j) )
+					fprintf(outputGraph,"%d ",(int)j	);
+			}
+			if ( gsl_matrix_get(matrix, i, j) )
+				fprintf(outputGraph,"%d ",(int)j	);
+			fprintf(outputGraph,"\n");
+		}
+	}
+	else{
+		for (size_t i = 0; i < matrix->size1; i++) {
+			size_t j = 0;
+			for (j = 0; j < matrix->size2-1; j++) {
+				fprintf(outputGraph,"%d ",(int)
+						gsl_matrix_get(matrix, i, j));
+			}
+			fprintf(outputGraph,"%d\n",(int)gsl_matrix_get(matrix, i, j));
 		}
 	}
 	fclose(outputGraph);

@@ -161,7 +161,7 @@ void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 
 
 void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
-									   double *bestBC,double *targetBC,
+									   double *&bestBC,double *targetBC,
 									   FILE *logFile,double &costBest){
 	
 	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::AnnealingAlgorithm");
@@ -264,7 +264,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 
 int
 StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
-							   char *inputFilename,
 							   double *&targetBC,
 							   double *&bestBC,
 							   int &graphOrder,
@@ -305,10 +304,11 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 			delete  graphIndicator;
 		}
 		
-		strcpy(inputGraphFilename,inputFilename);
+		strcpy(inputGraphFilename,settingsSimulation->inputFileName.c_str());
 		strcat(inputGraphFilename,".in");
-		targetGraph->printMyGraph(inputGraphFilename);
-		strcpy(logFilename,inputFilename);
+		targetGraph->printMyGraph(inputGraphFilename,
+								  settingsSimulation->outputFormatGraphResultAdjList);
+		strcpy(logFilename,settingsSimulation->inputFileName.c_str());
 		strcat(logFilename,".log");
 		logFile=fopen(logFilename,"w");
 		if(logFile==NULL){
