@@ -108,6 +108,7 @@ public:
 								compareResult,outputGraphFilename);
 		
 		delete targetGraph;
+		delete strategyPattern;
 		
 	}
 	

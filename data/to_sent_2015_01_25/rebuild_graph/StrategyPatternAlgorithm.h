@@ -40,6 +40,13 @@ public:
 		else
 			settingsSimulation = new CSettingsSimulation();
 	};
+
+	~StrategyPatternAlgorithm(){
+		if (sourceGraph)
+			delete sourceGraph;
+		if (settingsSimulation)
+			delete settingsSimulation;
+	}
 	
 	gslGraph * getGraph(){
 		return sourceGraph;

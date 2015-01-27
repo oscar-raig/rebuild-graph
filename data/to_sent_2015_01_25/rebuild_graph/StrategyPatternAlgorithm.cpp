@@ -213,6 +213,8 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 
 			{
 				graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,newGraph);
+				if ( newBC)
+					delete newBC;
 				newBC = graphIndicator->calculateIndicator();
 				delete  graphIndicator;
 			}
@@ -241,6 +243,8 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 				fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
+				if (newGraph)
+					delete newGraph;
 				newGraph = sourceGraph->copyGraph();
 				notOk++;
 				lFuncTrace.trace(CTrace::TRACE_DEBUG,"x");
@@ -260,6 +264,10 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 	
 	lFuncTrace.trace(STP_DEBUG,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 					 Tk,costBest,weAreDone,iterations);
+	if (newGraph)
+    		delete newGraph;
+	if ( newBC)
+                delete newBC;
 }
 
 int
@@ -300,6 +308,8 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 		
 		{
 			graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,targetGraph);
+			if ( targetBC)
+				delete targetBC;
 			targetBC = graphIndicator->calculateIndicator();
 			delete  graphIndicator;
 		}

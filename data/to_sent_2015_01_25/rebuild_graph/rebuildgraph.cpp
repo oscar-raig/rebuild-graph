@@ -93,6 +93,9 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 //	bestGraph->printGraph();
 	
 	bestGraph->printMyGraph(outputGraphFilename,settingsSimulation.outputFormatGraphResultAdjList);
+
+	gsl_matrix_free(bestGraphGsl);
+	gsl_matrix_free(targetGraphGsl);
 	
 }
 
@@ -303,6 +306,7 @@ void multiplica(gsl_matrix *result, gsl_matrix *m1, gsl_matrix *m2){
 				   CblasNoTrans,
 				   CblasNoTrans,
 				   1.0, A, B, 0.0, C);*/
+	gsl_matrix_free(temp);
 }
 
 void InitMatrix(int size,

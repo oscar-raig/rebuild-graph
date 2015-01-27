@@ -90,10 +90,12 @@ public:
 			 */
 			gsl_matrix *copyA1expm=gsl_matrix_alloc(graphOrder,graphOrder);
 			gsl_linalg_exponential_ss(copyA1, copyA1expm, .01);
-			
+			gsl_matrix_free(copyA1);		
+	
 			gsl_matrix *copyexpmAForSubstract  = gslCopyGraph(A1expm);
 			
 			gsl_matrix_sub(copyexpmAForSubstract,copyA1expm);
+			gsl_matrix_free(copyA1expm);
 			gsl_matrix_div_elements (copyexpmAForSubstract, A1expm);
 			lFuncTrace.trace(CTrace::TRACE_DEBUG,"Printing expA- scip\n");
 			//		printGslMatrix(copyexpmAForSubstract);
@@ -108,6 +110,7 @@ public:
 				}
 			}
 			gsl_matrix_sub(copyexpmAForSubstract,copyB);
+
 			//		printGslMatrix(copyexpmAForSubstract);
 			double sum = 0;
 			for ( int col =0; col < graphOrder; col++){
@@ -118,10 +121,14 @@ public:
 			}
 			lFuncTrace.trace(CTrace::TRACE_DEBUG,"Suma %f\n",sum);
 			gsl_vector_set(matrixFinalResult,iteratorNode,sum);
-			
+			gsl_matrix_free(copyB); 
+			gsl_matrix_free(copyexpmAForSubstract);			
 		}
+		gsl_matrix_free(A1expm);
+		gsl_matrix_free(A1);
 		this->graph->gslVectorToArray(matrixFinalResult,myCExp);
 		rescale(myCExp,this->graph->getOrder());
+		gsl_vector_free(matrixFinalResult);
 	}
 
 	double * calculateIndicator( ){

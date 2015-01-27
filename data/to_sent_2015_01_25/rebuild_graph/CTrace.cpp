@@ -1,6 +1,6 @@
 
 #include "CTrace.hpp"
-
+#include<stdio.h>
 
 void CFuncTrace::trace(const char *Format, va_list  vaArguments){
 	char szOutput[10000];

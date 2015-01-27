@@ -1,6 +1,6 @@
 
 #include <iostream>
-
+#include <cstdarg>
 #ifndef CTRACE_H
 #define CTRACE_H
 
