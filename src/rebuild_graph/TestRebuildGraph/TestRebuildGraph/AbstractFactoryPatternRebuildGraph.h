@@ -26,7 +26,7 @@ private:
 public:
 	AbstractFactoryPatternRebuildGraph (int algorithm, std::string GraphName, int nMax, double * compareResult){
 		int graphOrder = 0;
-		settingSimulation= new CSettingsSimulation() ;
+		this->settingSimulation= new CSettingsSimulation() ;
 		
 		settingSimulation->inputFileName = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/" + GraphName;
 		
@@ -43,8 +43,10 @@ public:
 	}
 	
 	~AbstractFactoryPatternRebuildGraph(){
-		delete settingSimulation;
-		delete rebuildGraph;
+		if (settingSimulation)
+			delete settingSimulation;
+		if (rebuildGraph)
+			delete rebuildGraph;
 	}
 	
 };

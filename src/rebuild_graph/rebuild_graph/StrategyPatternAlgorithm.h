@@ -29,17 +29,30 @@ class StrategyPatternAlgorithm {
 	
 private:
 	CSettingsSimulation *settingsSimulation;
+	bool settingsSimulationAllocated;
 	gslGraph *sourceGraph;
 	
 public:
 	StrategyPatternAlgorithm(CSettingsSimulation *argummentSettingsSimulation)
 	{
 		CFuncTrace trace(true,"StrategyPatternAlgorithm");
-		if ( argummentSettingsSimulation)
+		
+		if ( argummentSettingsSimulation){
+			settingsSimulationAllocated= false;
 			settingsSimulation = argummentSettingsSimulation;
-		else
+		}
+		else{
+			settingsSimulationAllocated = true;
 			settingsSimulation = new CSettingsSimulation();
+		}
 	};
+
+	~StrategyPatternAlgorithm(){
+		if (sourceGraph)
+			delete sourceGraph;
+		if (settingsSimulation && settingsSimulationAllocated )
+			delete settingsSimulation;
+	}
 	
 	gslGraph * getGraph(){
 		return sourceGraph;

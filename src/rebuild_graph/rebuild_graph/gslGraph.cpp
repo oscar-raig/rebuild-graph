@@ -36,7 +36,7 @@ gslGraph::gslGraph(int sizeOfMatrix):
 
 gslGraph::~gslGraph(){
 	if( matrix )
-		free(matrix);
+		gsl_matrix_free(matrix);
 };
 
 
@@ -184,8 +184,9 @@ gslGraph *gslGraph::readPythonGraphFile( std::string fileName){
 		throw runtime_error("FileName : File Not Found");
 	}
 	line[0]='\0';
-	line=fgets(line,STRING_LENGTH,input);
-	while(line!=NULL){
+	char * lineReadResult = NULL;
+	lineReadResult=fgets(line,STRING_LENGTH,input);
+	while(lineReadResult!=NULL){
 		if(line!=NULL && line[0]!='#'){
 			vertex_identifier=(int)strtol(&line[i],&endOfVertex,10);
 			addVertex(vertex_identifier);
@@ -199,7 +200,7 @@ gslGraph *gslGraph::readPythonGraphFile( std::string fileName){
 			} while(endOfVertex!=newaux);
 		}
 		line[0]='\0';
-		line=fgets(line,STRING_LENGTH,input);
+		lineReadResult=fgets(line,STRING_LENGTH,input);
 	}
 	fclose(input);
 	free(line);

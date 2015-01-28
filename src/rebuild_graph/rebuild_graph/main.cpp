@@ -169,7 +169,11 @@ int main(int argc, const char * argv[])
 		delete rebuildGraph;
 		rebuildGraph = NULL;
 	}
-	
+	if ( BestBC )
+		delete BestBC;
+	if ( TargetBC)
+		delete TargetBC;
+			
 	return 0;
 }
 
