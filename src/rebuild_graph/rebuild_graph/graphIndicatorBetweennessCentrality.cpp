@@ -36,14 +36,6 @@ void graphIndicatorBetweennessCentrality::brandes_betweenness_centrality(double 
 gsl_vector* graphIndicatorBetweennessCentrality::betweenness_bin(const gsl_matrix* sourceGraph) const {
 	CFuncTrace trace(false,"gslGraph::betweenness_bin");
 	gsl_vector* betweenness = gsl_vector_alloc(sourceGraph->size1);
-	gsl_matrix* betweeness_edge = gsl_matrix_calloc( sourceGraph->size1, sourceGraph->size2);
-	int static num_traces = 0;
-	if ( num_traces++ % 1000 == 0){
-		trace.trace(CTrace::TRACE_ERROR,"REVEIW This code begin");
-		//	node_and_edge_betweenness_bin(sourceGraph, NULL ,betweeness_edge);
-		//	printGslMatrix(betweeness_edge);
-		trace.trace(CTrace::TRACE_ERROR,"REVEIW This code end");
-	}
 	node_and_edge_betweenness_bin(sourceGraph, betweenness, NULL );
 	return betweenness;
 }

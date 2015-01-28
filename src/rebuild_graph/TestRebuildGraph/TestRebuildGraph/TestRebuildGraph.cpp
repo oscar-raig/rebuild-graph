@@ -22,7 +22,7 @@ using namespace boost::unit_test;
 #define COMMUNICABILITY_BETWEENESS_TEST_4_NODES
 #define COMMUNICABILITY_BETWEENESS__WHEEL4
 // 2014-12-09 GRAPH
-//#define COMMUNICABILITY_BETWEENESS__WHEEL10
+#define COMMUNICABILITY_BETWEENESS__WHEEL10
 
 
 #define COMMUNICABILITY_BETWEENESS_WHEEL_14
@@ -32,9 +32,9 @@ using namespace boost::unit_test;
 
 #define BETWEENNESS_CENTRALITY__WHEEL4
 // 2014-11-11 GSL_GRAPH BETWEENESS CENTRALITY WHEEL 10
-//#define BETWEENNESS_CENTRALITY__WHEEL10
+#define BETWEENNESS_CENTRALITY__WHEEL10
        // 2014-11-09 GSL_GRAPH BC WHEEL14 NOT WORK
-//#define BETWEENNESS_CENTRALITY__WHEEL14
+#define BETWEENNESS_CENTRALITY__WHEEL14
 
 // 2014-11-09 GRAPH/GSL_GRAPH BC PETERSON NOT WORK
 //#define BETWEENNESS_CENTRALITY__PETERSEN
@@ -211,8 +211,8 @@ BOOST_AUTO_TEST_CASE(test_wheel10_BETWEENNESS_CENTRALITY){
 BOOST_AUTO_TEST_CASE(test_wheel14_BETWEENNESS_CENTRALITY){
 	
 	std::cout << " BETWEENNESS CENTRALITY with wheel 14>>" << std::endl;
-	double compareResult = 10.0;
-	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,10,&compareResult);
+	double compareResult = 10;
+	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,1000,&compareResult,0.0478094);
 	std::cout << "BETWEENESS CENTRALITY wheel 14 Result:" << compareResult << " <<" << std::endl;
 }
 #endif
@@ -237,12 +237,12 @@ BOOST_AUTO_TEST_CASE(test_petersen_BETWEENNESS_CENTRALITY){
 
 BOOST_AUTO_TEST_CASE( UTest_Betweeness_centraliyt_4_nodes_and_communicabilt_betweeness_test)
 {
-	
+	CFuncTrace trace (true,"UTest_Betweeness_centraliyt_4_nodes_and_communicabilt_betweeness_test");
 	double compareResult = 0.0;
 	simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,100,&compareResult);
 	
 	
-	simulation(COMMUNICABILITY_BETWEENESS, "test.gpfc" ,100,&compareResult,0.1225730);
+	simulation(COMMUNICABILITY_BETWEENESS, "test.gpfc" ,100,&compareResult,0.047794677317142487);
 }
 #endif
 

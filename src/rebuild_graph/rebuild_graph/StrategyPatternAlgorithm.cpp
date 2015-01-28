@@ -260,7 +260,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 		Tk*=k;
 		// Update number of iterations
 		iterations++;
-	}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!= 1 /*settingSimulation.maxIterations*/));
+	}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!= settingsSimulation->maxIterations));
 	
 	lFuncTrace.trace(STP_DEBUG,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 					 Tk,costBest,weAreDone,iterations);
