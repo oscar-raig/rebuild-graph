@@ -54,17 +54,28 @@ int GetAlgorithmFromArgument( po::variables_map argumentMap ){
 	return Algorithm;
 }
 
+/*
+ #define DEFAULT_TO		10
+ #define DEFAULT_T_MIN	0.0001
+ #define DEFAULT_N_MAX	1000
+ #define DEFAULT_K 0.9
+ #define DEFAULT_TOL 0.0001
+ #define DEFAULT_MAX_ITERATIONS 1000
+ 
+ */
+
 CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 	
 	namespace po = boost::program_options;
     po::options_description argumentDescription("Options");
     argumentDescription.add_options()
-	("help", "Print help messages")
+	("help", "Print help messages" )
 	("graphFile", po::value< std::string >(),"graph file in python format")
-	("k",po::value<double>(),"k description")
+	("k",po::value<double>(),"k description" )
 	("nIteration",po::value<int>(),"nIteration")
 	("nMax",po::value<int>(),"nMax")
-	
+	("To",po::value<int>(),"To")
+	("TMin",po::value<double>(),"TMin")
 	("output-format-adjlist","output format adjlist")
 	("only-calculate-indicator","only calculates the BC, CB or CBC of the input file")
 	("algorithm",po::value<int>(),"algorithm 1:BETWEENESS CENTRALITY, 2:COMMUNICABILITY BETWEENESS, 3: COMMUNICABILITY BETWEENESS CENTRALITY ");
@@ -120,6 +131,18 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 	{
 		settingsSimulation->nMax = argumentMap["nMax"].as<int>();
 		std::cout << "nMax " << settingsSimulation->nMax  << std::endl;
+		
+	}
+	if (argumentMap.count("To"))
+	{
+		settingsSimulation->nMax = argumentMap["To"].as<int>();
+		std::cout << "To " << settingsSimulation->To  << std::endl;
+		
+	}
+	if (argumentMap.count("TMin"))
+	{
+		settingsSimulation->nMax = argumentMap["TMin"].as<double>();
+		std::cout << "TMin " << settingsSimulation->tMin  << std::endl;
 		
 	}
 	

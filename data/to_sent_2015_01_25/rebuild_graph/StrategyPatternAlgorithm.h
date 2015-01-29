@@ -35,7 +35,7 @@ private:
 public:
 	StrategyPatternAlgorithm(CSettingsSimulation *argummentSettingsSimulation)
 	{
-		CFuncTrace trace(true,"StrategyPatternAlgorithm");
+		CFuncTrace trace(false,"StrategyPatternAlgorithm");
 		
 		if ( argummentSettingsSimulation){
 			settingsSimulationAllocated= false;
