@@ -12,6 +12,9 @@
 		3609206A18ECAAFF00BAE922 /* compara.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3609206918ECAAFF00BAE922 /* compara.cpp */; };
 		3609206D18ECB0C000BAE922 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3609206C18ECB0C000BAE922 /* libgsl.a */; };
 		3609206F18ECB0D900BAE922 /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3609206E18ECB0D900BAE922 /* libgslcblas.a */; };
+		3625201E1A7AF311005E3625 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625201D1A7AF311005E3625 /* libboost_program_options.a */; };
+		36361DDC1A7D2E9500F27A29 /* gslGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36361DDA1A7D2E9500F27A29 /* gslGraph.cpp */; };
+		36361DDF1A7D324000F27A29 /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36361DDE1A7D324000F27A29 /* CTrace.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +38,11 @@
 		3609206B18ECAD8500BAE922 /* compara.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = compara.h; sourceTree = "<group>"; };
 		3609206C18ECB0C000BAE922 /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
 		3609206E18ECB0D900BAE922 /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../lib/libgslcblas.a; sourceTree = "<group>"; };
+		3625201D1A7AF311005E3625 /* libboost_program_options.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_program_options.a; path = ../../../lib/libboost_program_options.a; sourceTree = "<group>"; };
+		36361DDA1A7D2E9500F27A29 /* gslGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gslGraph.cpp; path = ../../rebuild_graph/gslGraph.cpp; sourceTree = "<group>"; };
+		36361DDB1A7D2E9500F27A29 /* gslGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gslGraph.h; path = ../../rebuild_graph/gslGraph.h; sourceTree = "<group>"; };
+		36361DDD1A7D324000F27A29 /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
+		36361DDE1A7D324000F27A29 /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3625201E1A7AF311005E3625 /* libboost_program_options.a in Frameworks */,
 				3609206F18ECB0D900BAE922 /* libgslcblas.a in Frameworks */,
 				3609206D18ECB0C000BAE922 /* libgsl.a in Frameworks */,
 			);
@@ -53,6 +62,7 @@
 		3609204C18ECAA0700BAE922 = {
 			isa = PBXGroup;
 			children = (
+				3625201D1A7AF311005E3625 /* libboost_program_options.a */,
 				3609866F18ED4B2200A0F6F8 /* libs */,
 				3609205718ECAA0700BAE922 /* compara */,
 				3609205618ECAA0700BAE922 /* Products */,
@@ -70,6 +80,10 @@
 		3609205718ECAA0700BAE922 /* compara */ = {
 			isa = PBXGroup;
 			children = (
+				36361DDD1A7D324000F27A29 /* CTrace.hpp */,
+				36361DDE1A7D324000F27A29 /* CTrace.cpp */,
+				36361DDA1A7D2E9500F27A29 /* gslGraph.cpp */,
+				36361DDB1A7D2E9500F27A29 /* gslGraph.h */,
 				3609206918ECAAFF00BAE922 /* compara.cpp */,
 				3609205818ECAA0700BAE922 /* compara_main.cpp */,
 				3609205A18ECAA0700BAE922 /* compara.1 */,
@@ -139,7 +153,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3609205918ECAA0700BAE922 /* compara_main.cpp in Sources */,
+				36361DDF1A7D324000F27A29 /* CTrace.cpp in Sources */,
 				3609206A18ECAAFF00BAE922 /* compara.cpp in Sources */,
+				36361DDC1A7D2E9500F27A29 /* gslGraph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +235,7 @@
 		3609205F18ECAA0700BAE922 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
@@ -237,6 +254,7 @@
 		3609206018ECAA0700BAE922 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",

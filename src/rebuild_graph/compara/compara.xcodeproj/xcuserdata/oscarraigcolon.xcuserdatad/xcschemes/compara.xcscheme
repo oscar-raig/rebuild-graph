@@ -57,6 +57,12 @@
             ReferencedContainer = "container:compara.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "--graphFile1 /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/to_sent_2015_01_25/compara/wheel14.txt --graphFile2 /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/to_sent_2015_01_25/compara/wheel14.txt.res --format 1"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

@@ -46,7 +46,7 @@ using namespace boost::unit_test;
 //#define DEFAULT_ALGORITHM_BARBASE_20_4
 
 // DELETE DUE NO GRAPH FROM FILE
-//#define COMPARA_THE_SAME_GRAPH
+#define COMPARA_THE_SAME_GRAPH
 
 
 
@@ -392,11 +392,10 @@ BOOST_AUTO_TEST_CASE(compara){
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	gsl_matrix * matrixA;
 	gsl_matrix * matrixB;
-	gslGraph* graph = NULL;
+	gslGraph* graph = new gslGraph();
 	
 	const char *fileNameGraph="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc";
-//	graph = rebuildGraph->GetGraphfromFile(fileNameGraph);
-	
+	graph->readPythonGraphFile((char*)fileNameGraph);
 	matrixA = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
 	matrixB = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
 	
