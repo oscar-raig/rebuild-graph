@@ -1,0 +1,23 @@
+Graph reconstruction via  vertex betweenness centrality
+	Original graph description file-> ../example_graphs/krackhardt_kite_grap.adjlist		Ordre-> 10
+	Pseudorandom generator seeds-> 3852,308,1536
+SIMULATED ANNEALING:
+	Initial Temperature-> 10.000000
+	Tk final-> 0.000093
+	Minimum Temperature-> 0.000100
+	Geometric cooling rate: T[k]=0.900000 * T[k-1]
+	Number Maxim of Combinations-> 1000
+RESULTS:
+	Best cost -> 0.06141897759917407107
+	Betweenness centrality
+	 Desired BC  |  Closest BC  | Difference^2
+	0.0231481481 | 0.0069444444 | 0.0002625600
+	0.0231481481 | 0.0138888889 | 0.0000857339
+	0.0000000000 | 0.0138888889 | 0.0001929012
+	0.1018518519 | 0.1111111111 | 0.0000857339
+	0.0000000000 | 0.0069444444 | 0.0000482253
+	0.2314814815 | 0.2083333333 | 0.0005358368
+	0.2314814815 | 0.2291666667 | 0.0000053584
+	0.3888888889 | 0.3402777778 | 0.0023630401
+	0.2222222222 | 0.2083333333 | 0.0001929012
+	0.0000000000 | 0.0000000000 | 0.0000000000
