@@ -77,6 +77,71 @@ int  readConfiguration(int argc, const char * argv[] ){
 	return 1;
 }
 
+void printGslMatrix(const char*FileName,gsl_matrix* gslMatrix,const char *format){
+	FILE *out;
+	out=fopen(FileName,"w");
+
+	printf("\n");
+	for (size_t i = 0; i < gslMatrix->size1; i++) {
+		for (size_t j = 0; j < gslMatrix->size2; j++) {
+			fprintf(out,format, gsl_matrix_get(gslMatrix, i, j));
+		}
+		
+		fprintf(out,"\n");
+	}
+}
+
+void printGraph1(gsl_matrix * F){
+	printGslMatrix("sortida.ini.txt",F,"%.0f ");
+}
+
+void printGraph2(gsl_matrix * F){
+	printGslMatrix("sortida.res.txt",F,"%.0f ");
+}
+
+void printComparasion(gsl_matrix *F,int order1){
+		printGslMatrix("sortida.cmp.txt",F,"%.2f ");
+}
+
+void printGraph1Graph2AndComparasionInVisualMode(gsl_matrix* A1, gsl_matrix *F,int order1){
+	float delta;
+	FILE *out;
+	out=fopen("sortida.txt","w");
+	printf("\nResultats en sortida.txt");
+	fprintf(out, "DIFERENCIA (delta) -> %f\n\n",delta);
+	
+	int i,j;
+	for(i=0; i<order1; i++){
+		for(j=0; j<order1; j++){
+			if(gsl_matrix_get(A1,i,j)==0)
+				fprintf(out," ");
+			else if(gsl_matrix_get(A1,i,j)==1)
+				fprintf(out,"#");
+			else{
+				printf("\nERROR-Matriu no valida");
+				exit(1);
+			}
+		}
+		fprintf(out,"\t|\t");
+		for(j=0; j<order1; j++){
+			if(gsl_matrix_get(F,i,j)<0.2)
+				fprintf(out," ");
+			else if(gsl_matrix_get(F,i,j)<0.4)
+				fprintf(out,"∑");
+			else if(gsl_matrix_get(F,i,j)<0.6)
+				fprintf(out,"^");
+			else if(gsl_matrix_get(F,i,j)<0.8)
+				fprintf(out,"-");
+			else if(gsl_matrix_get(F,i,j)<0.95)
+				fprintf(out,"/");
+			else
+				fprintf(out,"#");
+		}
+		fprintf(out,"\n");
+	}
+	fclose(out);
+
+}
 
 
 int main(int argc, const char *argv[])
@@ -135,7 +200,7 @@ int main(int argc, const char *argv[])
 		gsl_matrix *U2=gsl_matrix_alloc(order1,order1);
 		gsl_matrix *V1=gsl_matrix_alloc(order1,order1);
 		gsl_matrix *V2=gsl_matrix_alloc(order1,order1);
-			
+		
 
 		gsl_matrix_memcpy (U1, A1);
 		//gsl_linalg_SV_decomp (gsl_matrix * A, gsl_matrix * V, gsl_vector * S, gsl_vector * work)
@@ -172,41 +237,12 @@ int main(int argc, const char *argv[])
 		if(gsl_matrix_max(F)>0)
 			gsl_matrix_scale (F, 1/gsl_matrix_max(F));
 
-		FILE *out;
-		out=fopen("sortida.txt","w");
-		printf("\nResultats en sortida.txt");
-		fprintf(out, "DIFERENCIA (delta) -> %f\n\n",delta);
-		for(i=0; i<order1; i++){
-			for(j=0; j<order1; j++){
-				if(gsl_matrix_get(A1,i,j)==0)
-					fprintf(out," ");
-				else if(gsl_matrix_get(A1,i,j)==1)
-					fprintf(out,"#");
-				else{
-					printf("\nERROR-Matriu no valida");
-					exit(1);
-				}
-			}
-			fprintf(out,"\t|\t");
-			for(j=0; j<order1; j++){
-				if(gsl_matrix_get(F,i,j)<0.2)
-					fprintf(out," ");
-				else if(gsl_matrix_get(F,i,j)<0.4)
-					fprintf(out,"∑");
-				else if(gsl_matrix_get(F,i,j)<0.6)
-					fprintf(out,"^");
-				else if(gsl_matrix_get(F,i,j)<0.8)
-					fprintf(out,"-");
-				else if(gsl_matrix_get(F,i,j)<0.95)
-					fprintf(out,"/");
-				else
-					fprintf(out,"#");
-			}
-			fprintf(out,"\n");
-		}
-		fclose(out);
-
-
+		printGraph1Graph2AndComparasionInVisualMode(A1,F,order1);
+		printComparasion(F,order1);
+		printGraph1(A1);
+		printGraph2(A2);
+		
+					
 		gsl_vector_free(work);
 		gsl_matrix_free(U1);
 		gsl_matrix_free(U2);

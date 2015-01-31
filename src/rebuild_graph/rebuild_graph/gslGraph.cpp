@@ -181,7 +181,7 @@ gslGraph *gslGraph::readPythonGraphFile( std::string fileName){
 		if (!getwd(szPath)){
 			printf("Current path (%s)",szPath);
 		}
-		throw runtime_error("FileName : File Not Found");
+		throw runtime_error("FileName : File Not Found" + fileName);
 	}
 	line[0]='\0';
 	char * lineReadResult = NULL;
