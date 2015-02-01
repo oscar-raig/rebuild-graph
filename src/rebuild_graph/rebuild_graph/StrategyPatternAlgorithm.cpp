@@ -198,9 +198,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 	costNew=costOld;
 	newGraph=sourceGraph->copyGraph();
 	newGraph->printGraph();
-	int okTrue=0;
-	int okFalse=0;
-	int notOk=0;
 	lFuncTrace.trace(STP_INFO,"Cost Best=%2.15f Cost New %2.15f Cost Old %2.15f\n",
 					 costBest,costNew,costOld);
 	do{
@@ -231,13 +228,11 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 					weAreDone=true;
 					break;
 				}
-				okTrue++;
 				lFuncTrace.trace(CTrace::TRACE_DEBUG,".");
 				fprintf(logFile,".");
 			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
 				// if newCost not is better than oldCost,
 				// we still accept it if exp(df/T_k)<rand()
-				okFalse++;
 				lFuncTrace.trace(CTrace::TRACE_DEBUG,"o");
 				fprintf(logFile,"o");
 			} else {
@@ -245,7 +240,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 				if (newGraph)
 					delete newGraph;
 				newGraph = sourceGraph->copyGraph();
-				notOk++;
 				lFuncTrace.trace(CTrace::TRACE_DEBUG,"x");
 				fprintf(logFile,"x");
 			}
