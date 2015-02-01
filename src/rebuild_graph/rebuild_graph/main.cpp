@@ -232,10 +232,9 @@ int main(int argc, const char * argv[])
 	
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	double compareResult = 0.0;
-	double *TargetBC = NULL;
 	double *BestBC = NULL;
 	int order = 0;
-    rebuildGraph->regenerateGraph(settingsSimulation,TargetBC,BestBC,order,compareResult);
+    rebuildGraph->regenerateGraph(settingsSimulation,BestBC,order,compareResult);
 
 	std::cout << "RegenerateGraph " <<compareResult << std::endl;
 	

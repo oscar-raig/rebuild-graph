@@ -34,12 +34,11 @@ public:
 		settingSimulation->setMaxIterations(100);
 		*compareResult = 10.0;
 		this->rebuildGraph = new CRebuildGraph();
-		double *TargetBC = NULL;
 		double *BestBC = NULL;
 		if (algorithm)
 			settingSimulation->graphProperty = algorithm;
 		
-		rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,*compareResult);
+		rebuildGraph->regenerateGraph(settingSimulation,BestBC,graphOrder,*compareResult);
 	}
 	
 	~AbstractFactoryPatternRebuildGraph(){

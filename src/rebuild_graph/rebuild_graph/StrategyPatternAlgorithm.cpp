@@ -160,9 +160,9 @@ void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 
 
 
-void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
-									   double *&bestBC,double *targetBC,
-									   FILE *logFile,double &costBest){
+void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
+									   double *&bestBC,double * targetBC,
+									   double &costBest){
 	
 	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::AnnealingAlgorithm");
 //	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
@@ -176,6 +176,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 	double costNew=0.0;
 	long int N=0;
 	double * newBC = new double [graphOrder];
+	double Tk;
 	gslGraph *newGraph=NULL;
 	
 	for(int i=0;i<graphOrder;i++){
@@ -186,8 +187,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 	// STARTING SIMMULATED ANNEALING
 	Tk=settingsSimulation->To;
 	generateInitialGraph(graphOrder);
-	lFuncTrace.trace(CTrace::TRACE_ERROR,"Here is the error coping a pointer tha we detroy");
-	
 
 	{
 		graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,sourceGraph);
@@ -272,7 +271,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(double &Tk,int graphOrder,
 
 int
 StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
-							   double *&targetBC,
 							   double *&bestBC,
 							   int &graphOrder,
 							   double &compareResult,
@@ -283,7 +281,7 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 	try {
 		char inputGraphFilename[STRING_LENGTH];
 		char logFilename[STRING_LENGTH];
-		FILE *logFile=NULL;
+		
 		
 		// Simmulated Annealing variables
 		double temperMin=TEMPER_MIN_DEFAULT;
@@ -297,22 +295,23 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 
 		graphOrder=0;
 		graphOrder=targetGraph->getOrder();
-		
+		double * targetBC = NULL;
 		targetBC =(double*) malloc(graphOrder*sizeof(double));
 		bestBC=(double*) malloc(graphOrder*sizeof(double));
 		
 		for(int i=0;i<graphOrder;i++){
-			targetBC[i]=0.0;
 			bestBC[i]=0.0;
+			targetBC[i]=0.0;
 		}
 		
 		{
 			graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,targetGraph);
 			if ( targetBC)
-				delete targetBC;
+			     delete targetBC;
 			targetBC = graphIndicator->calculateIndicator();
 			delete  graphIndicator;
 		}
+
 		
 		strcpy(inputGraphFilename,settingsSimulation->inputFileName.c_str());
 		strcat(inputGraphFilename,".in");
@@ -326,8 +325,8 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 			exit(-1);
 		}
 		
-		AnnealingAlgorithm( *Tk, graphOrder,
-						   bestBC,targetBC, logFile,*costBest);
+		AnnealingAlgorithm( graphOrder,
+						   bestBC,targetBC, *costBest);
 		
 
 	}

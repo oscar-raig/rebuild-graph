@@ -70,7 +70,7 @@ void testexceptionSettingSimulationIsNULL(){
 	double *TargetBC = NULL;
 	double *BestBC = NULL;
 	double compareResult = 10.0;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
+	rebuildGraph->regenerateGraph(settingSimulation,BestBC,graphOrder,compareResult);
 	
 	// simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,1000,&compareResult);
 
