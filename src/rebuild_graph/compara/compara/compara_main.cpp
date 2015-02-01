@@ -71,8 +71,8 @@ int  readConfiguration(int argc, const char * argv[] ){
 		formatFile = argumentMap["format"].as<int>();
 	}
 	
-	graphFile1 =  argumentMap["graphFile1"].as<std::string>().c_str() ;
-	graphFile2 =  argumentMap["graphFile2"].as<std::string>().c_str() ;
+	graphFile1 =  strdup(argumentMap["graphFile1"].as<std::string>().c_str()) ;
+	graphFile2 =  strdup(argumentMap["graphFile2"].as<std::string>().c_str()) ;
 	
 	return 1;
 }
@@ -175,6 +175,7 @@ int main(int argc, const char *argv[])
 			trace.trace(CTrace::TRACE_INFO,"Reading adjlist file"); 
 			gslGraph * graph1 = new gslGraph();
 			gslGraph * graph2 = new gslGraph();
+			
 			graph1->readPythonGraphFile(graphFile1);
 			graph2->readPythonGraphFile(graphFile2);
 			order1 = graph1->getOrder();
