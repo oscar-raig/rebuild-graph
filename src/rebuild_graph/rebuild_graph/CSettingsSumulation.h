@@ -18,7 +18,6 @@ namespace po = boost::program_options;
 #define DEFAULT_T_MIN	0.0001
 #define DEFAULT_N_MAX	1000
 #define DEFAULT_K 0.9
-#define DEFAULT_TOL 0.0001
 #define DEFAULT_MAX_ITERATIONS 1000
 
 // Park-Miller pseudo random  number generator

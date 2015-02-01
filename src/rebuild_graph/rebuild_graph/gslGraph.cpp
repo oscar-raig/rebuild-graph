@@ -54,20 +54,7 @@ gslGraph*	gslGraph::copyGraph()const{
 	return newgslGraph;
 }
 
-/*
-void gslGraph::copyGraph(gslGraph * newgslGraph)const{
-	newgslGraph->order = getOrder();
-	newgslGraph->degree = getDegree();
-	if ( order !=  matrix->size1)
-		throw runtime_error("Order and matrix size are different");
-	if ( order !=  matrix->size2)
-		throw runtime_error("Order and matrix size are different");
-	if ( newgslGraph->matrix)
-		free (newgslGraph->matrix);
-	newgslGraph->matrix = gsl_matrix_alloc(matrix->size1,matrix->size2);
-	gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
-}
-*/
+
 
 void gslGraph::printMyGraph(const char * outputGraphFilename,
 							bool outputAsAdjacencyList

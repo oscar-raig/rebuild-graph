@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include "boost/program_options.hpp"
+#include <boost/format.hpp>
 #include "CSettingsSumulation.h"
 #include "rebuildgraph.h"
 #include <stdio.h>
@@ -59,27 +60,58 @@ int GetAlgorithmFromArgument( po::variables_map argumentMap ){
  #define DEFAULT_T_MIN	0.0001
  #define DEFAULT_N_MAX	1000
  #define DEFAULT_K 0.9
- #define DEFAULT_TOL 0.0001
  #define DEFAULT_MAX_ITERATIONS 1000
+ #define DEFAULT_SEED_X 11
+ #define DEFAULT_SEED_Y 92
+ #define DEFAULT_SEED_Z 37
  
  */
 
-CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
+po::options_description GetOptionsDescription(){
+
+	string k_argument_description = "k description, default value: "
+		+ boost::str(boost::format("%.2f") % DEFAULT_K);
+	string nIteration_argument_description = "nIteration, default value: "
+		+ boost::lexical_cast<string>(DEFAULT_MAX_ITERATIONS);
+	string nMax_argument_description = "nMax, default value: "
+		+ boost::lexical_cast<string>(DEFAULT_N_MAX);
+	string To_argument_description = "To, default value: "
+		+ boost::lexical_cast<string>(DEFAULT_TO);
+	string seed_x_argument_description = "seed x, default value: "
+	+ boost::lexical_cast<string>(DEFAULT_SEED_X);
 	
-	namespace po = boost::program_options;
-    po::options_description argumentDescription("Options");
-    argumentDescription.add_options()
+	string seed_y_argument_description = "seed y, default value: "
+	+ boost::lexical_cast<string>(DEFAULT_SEED_Y);
+	
+	string seed_z_argument_description = "seed z, default value: "
+	+ boost::lexical_cast<string>(DEFAULT_SEED_Z);
+	
+	
+	
+	po::options_description argumentDescription("Options");
+	argumentDescription.add_options()
 	("help", "Print help messages" )
 	("graphFile", po::value< std::string >(),"graph file in python format")
-	("k",po::value<double>(),"k description" )
-	("nIteration",po::value<int>(),"nIteration")
-	("nMax",po::value<int>(),"nMax")
-	("To",po::value<int>(),"To")
+	("k",po::value<double>(),k_argument_description.c_str() )
+	("nIteration",po::value<int>(),nIteration_argument_description.c_str())
+	("nMax",po::value<int>(),nMax_argument_description.c_str())
+	("To",po::value<int>(),To_argument_description.c_str())
+
+	("seed_x",po::value<int>(),seed_x_argument_description.c_str())
+	("seed_y",po::value<int>(),seed_y_argument_description.c_str())
+	("seed_z",po::value<int>(),seed_z_argument_description.c_str())
+	
 	("TMin",po::value<double>(),"TMin")
 	("output-format-adjlist","output format adjlist")
 	("only-calculate-indicator","only calculates the BC, CB or CBC of the input file")
 	("algorithm",po::value<int>(),"algorithm 1:BETWEENESS CENTRALITY, 2:COMMUNICABILITY BETWEENESS, 3: COMMUNICABILITY BETWEENESS CENTRALITY ");
+	return argumentDescription;
+}
+
+
+CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 	
+	po::options_description argumentDescription = GetOptionsDescription();
 	
 	po::variables_map argumentMap;
 	po::store(po::parse_command_line(argc, argv, argumentDescription),
@@ -121,6 +153,7 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 		std::cout << "k " << settingsSimulation->k  << std::endl;
 		
 	}
+
 	if (argumentMap.count("nIteration"))
 	{
 		settingsSimulation->maxIterations = argumentMap["nIteration"].as<int>();
@@ -145,6 +178,28 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 		std::cout << "TMin " << settingsSimulation->tMin  << std::endl;
 		
 	}
+	
+	
+	if (argumentMap.count("seed_x"))
+	{
+		settingsSimulation->random_value_x = argumentMap["seed_x"].as<int>();
+		std::cout << "seed_x " << settingsSimulation->random_value_x  << std::endl;
+		
+	}
+	if (argumentMap.count("seed_y"))
+	{
+		settingsSimulation->random_value_y = argumentMap["seed_y"].as<int>();
+		std::cout << "seed_y " << settingsSimulation->random_value_y  << std::endl;
+		
+	}
+	if (argumentMap.count("seed_z"))
+	{
+		settingsSimulation->random_value_z = argumentMap["seed_z"].as<int>();
+		std::cout << "seed_z " << settingsSimulation->random_value_z  << std::endl;
+		
+	}
+	
+	
 	
 	// CSettingsSimulation *settingsSimulation = new CSettingsSimulation(argumentMap);
 	settingsSimulation->graphProperty = Algorithm;
