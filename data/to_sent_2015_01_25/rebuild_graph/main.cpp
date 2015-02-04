@@ -36,8 +36,8 @@ int GetAlgorithmFromArgument( po::variables_map argumentMap ){
 				printf("Option BETWEENESS CENTRALITY\n");
 				break;
 				
-			case COMMUNICABILITY_BETWEENESS:
-				printf("Option COMMUNICABILITY BETWEENESS\n");
+			case COMMUNICABILITY_CENTRALITY:
+				printf("Option COMMUNICABILITY CENTRALITY\n");
 				break;
 				
 			case COMMUNICABILITY_BETWEENESS_CENTRALITY:

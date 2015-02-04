@@ -87,11 +87,12 @@ public:
 		time_t timeStart;
 		double costBest=0.0;
 		char outputGraphFilename[STRING_LENGTH];
-		double Tk=TEMPER_INITIAL_DEFAULT;
+		
 		// Default value initialization
 		timeStart=time(NULL);
 		if ( settingsSimulation == NULL )
 			throw std::runtime_error("settingsSimulation is NULL");
+		double Tk=TEMPER_INITIAL_DEFAULT;
 		strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
 		strcpy(outputGraphFilename,inputFilename);
 		strcat(outputGraphFilename,".res");

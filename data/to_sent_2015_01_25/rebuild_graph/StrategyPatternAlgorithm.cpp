@@ -166,7 +166,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 	
 	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::AnnealingAlgorithm");
 //	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
-	double temperMin=TEMPER_MIN_DEFAULT;
+	double temperMin=this->settingsSimulation->tMin;
 	double k=K;
 	int iterations=0;
 	double tol=TOL;
