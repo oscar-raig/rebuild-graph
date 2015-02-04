@@ -36,8 +36,8 @@ int GetAlgorithmFromArgument( po::variables_map argumentMap ){
 				printf("Option BETWEENESS CENTRALITY\n");
 				break;
 				
-			case COMMUNICABILITY_BETWEENESS:
-				printf("Option COMMUNICABILITY BETWEENESS\n");
+			case COMMUNICABILITY_CENTRALITY:
+				printf("Option COMMUNICABILITY CENTRALITY\n");
 				break;
 				
 			case COMMUNICABILITY_BETWEENESS_CENTRALITY:
@@ -168,13 +168,13 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 	}
 	if (argumentMap.count("To"))
 	{
-		settingsSimulation->nMax = argumentMap["To"].as<int>();
+		settingsSimulation->To = argumentMap["To"].as<int>();
 		std::cout << "To " << settingsSimulation->To  << std::endl;
 		
 	}
 	if (argumentMap.count("TMin"))
 	{
-		settingsSimulation->nMax = argumentMap["TMin"].as<double>();
+		settingsSimulation->tMin = argumentMap["TMin"].as<double>();
 		std::cout << "TMin " << settingsSimulation->tMin  << std::endl;
 		
 	}
@@ -248,8 +248,8 @@ int main(int argc, const char * argv[])
 	}
 	if ( BestBC )
 		delete BestBC;
-	if ( TargetBC)
-		delete TargetBC;
+//	if ( TargetBC)
+//		delete TargetBC;
 			
 	return 0;
 }

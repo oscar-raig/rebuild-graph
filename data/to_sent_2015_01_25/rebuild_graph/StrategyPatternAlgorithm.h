@@ -31,6 +31,7 @@ private:
 	CSettingsSimulation *settingsSimulation;
 	bool settingsSimulationAllocated;
 	gslGraph *sourceGraph;
+	FILE *logFile;
 	
 public:
 	StrategyPatternAlgorithm(CSettingsSimulation *argummentSettingsSimulation)
@@ -74,7 +75,6 @@ public:
 	
 	int
 	regenerateGraph(gslGraph *targetGraph,
-					double *&targetBC,
 					double *&bestBC,
 					int &graphOrder,
 					double &compareResult,
@@ -82,9 +82,9 @@ public:
 					double *costBest);
 	// Rebuilding Graph Main Functions
 
-	void AnnealingAlgorithm(double &Tk,int graphOrder,
-							double *&bestBC,double *targetBC,
-							FILE *logFile,double &costBest);
+	void AnnealingAlgorithm(int graphOrder,
+							double *&bestBC,double * targetBC,
+							double &costBest);
 };
 
 #endif /* defined(__rebuild_graph__SrategyPatternAlgorithm__) */

@@ -168,13 +168,13 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 	}
 	if (argumentMap.count("To"))
 	{
-		settingsSimulation->nMax = argumentMap["To"].as<int>();
+		settingsSimulation->To = argumentMap["To"].as<int>();
 		std::cout << "To " << settingsSimulation->To  << std::endl;
 		
 	}
 	if (argumentMap.count("TMin"))
 	{
-		settingsSimulation->nMax = argumentMap["TMin"].as<double>();
+		settingsSimulation->tMin = argumentMap["TMin"].as<double>();
 		std::cout << "TMin " << settingsSimulation->tMin  << std::endl;
 		
 	}
@@ -232,10 +232,9 @@ int main(int argc, const char * argv[])
 	
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	double compareResult = 0.0;
-	double *TargetBC = NULL;
 	double *BestBC = NULL;
 	int order = 0;
-    rebuildGraph->regenerateGraph(settingsSimulation,TargetBC,BestBC,order,compareResult);
+    rebuildGraph->regenerateGraph(settingsSimulation,BestBC,order,compareResult);
 
 	std::cout << "RegenerateGraph " <<compareResult << std::endl;
 	
@@ -249,8 +248,8 @@ int main(int argc, const char * argv[])
 	}
 	if ( BestBC )
 		delete BestBC;
-	if ( TargetBC)
-		delete TargetBC;
+//	if ( TargetBC)
+//		delete TargetBC;
 			
 	return 0;
 }

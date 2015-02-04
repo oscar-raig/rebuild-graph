@@ -10,6 +10,7 @@
 #include "rebuildgraph.h"
 #include "CTrace.hpp"
 
+#include  "FactoryGraphIndicator.h"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 
@@ -60,7 +61,6 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 											  char* inputFilename,
 											  time_t timeStart,
 											  double Tk,
-											  double *&targetBC,
 											    double *&bestBC,
 											  double costBest,
 											double &compareResult,
@@ -85,6 +85,14 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 	lFuncTrace.trace(CTrace::TRACE_DEBUG,"RESULTS:\n");
 	lFuncTrace.trace(CTrace::TRACE_DEBUG,"CPU time needed: %f seconds\n",difftime(timeEnd,timeStart));
 	// printf("Output file: %s\n",outputFilename);
+	
+	double *targetBC = NULL;
+	{
+		graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation.graphProperty,targetGraph);
+		      targetBC = graphIndicator->calculateIndicator();
+		delete  graphIndicator;
+	}
+	
 	
 	generateOutputFile(targetGraph,inputFilename,  Tk, costBest,targetBC,
 					   bestBC, timeStart, timeEnd,settingsSimulation);

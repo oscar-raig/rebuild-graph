@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE(UTest_communicability_beetweeness_centrality_test_4nodes){
 BOOST_AUTO_TEST_CASE(UTest_wheel4_COMMUNICABILITY_BETWEENESS){
 	std::cout << " COMMUNICABILITY BETWEENESS with wheel 4 >>"  << std::endl;
 	double compareResult = 10.0;
-	simulation(COMMUNICABILITY_BETWEENESS, "wheel4.txt" ,100, &compareResult);
+	simulation(COMMUNICABILITY_CENTRALITY, "wheel4.txt" ,100, &compareResult);
 	std::cout << "COMMUNICABILITY BETWEENESS wheel 4 Result:" << compareResult << " <<" << std::endl;
 }
 #endif
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE(Test_wheel10_COMMUNICABILITY_BETWEENESS){
 	
 	std::cout << " COMMUNICABILITY BETWEENESS with wheel 10 >>" << std::endl;
 	double compareResult = 10.0;
-	simulation(COMMUNICABILITY_BETWEENESS, "wheel10.txt" ,100,&compareResult);
+	simulation(COMMUNICABILITY_CENTRALITY, "wheel10.txt" ,100,&compareResult);
 	std::cout << "COMMUNICABILITY BETWEENESS wheel 10 Result:" << compareResult << " <<" << std::endl;
 }
 #endif
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE(UTest_wheel14_COMMUNICABILITY_BETWEENESS){
 	std::cout << " COMMUNICABILITY BETWEENESS with wheel 14 >>" << std::endl;
 		
 	double compareResult = 10.0;
-	simulation(COMMUNICABILITY_BETWEENESS, "wheel14.txt" ,1000000,&compareResult);
+	simulation(COMMUNICABILITY_CENTRALITY, "wheel14.txt" ,1000000,&compareResult);
 
 	std::cout << "COMMUNICABILITY BETWEENESS wheel 14 Result:" << compareResult << " <<" << std::endl;
 	
@@ -242,7 +242,7 @@ BOOST_AUTO_TEST_CASE( UTest_Betweeness_centraliyt_4_nodes_and_communicabilt_betw
 	simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,100,&compareResult);
 	
 	
-	simulation(COMMUNICABILITY_BETWEENESS, "test.gpfc" ,100,&compareResult,0.047794677317142487);
+	simulation(COMMUNICABILITY_CENTRALITY, "test.gpfc" ,100,&compareResult,0.047794677317142487);
 }
 #endif
 

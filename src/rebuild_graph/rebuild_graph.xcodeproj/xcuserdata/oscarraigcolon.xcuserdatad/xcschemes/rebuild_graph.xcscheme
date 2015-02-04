@@ -59,7 +59,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--graphFile /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc --algorithm 1  "
+            argument = "--graphFile /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/to_sent_2015_01_25/example_graphs/circ-inipy.txt --algorithm 2  "
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

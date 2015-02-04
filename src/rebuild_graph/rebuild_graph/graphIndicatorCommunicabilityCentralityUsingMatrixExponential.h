@@ -52,8 +52,12 @@ public:
 		
 		//	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
 		//	printGslVector(gslvDiagonal);
+				
 		
 		gslGraph::gslVectorToArray(gslvDiagonal,myCExp);
+		gsl_matrix_free(matrix);
+		gsl_matrix_free(A1expm);
+		gsl_vector_free(gslvDiagonal);
 		
 	};
 	double * calculateIndicator( ){

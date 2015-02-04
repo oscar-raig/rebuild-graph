@@ -72,14 +72,12 @@ public:
 												  char* inputFilename,
 												  time_t timeStart,
 												  double Tk,
-												  double *&targetBC,
 												  double *&bestBC,
 												  double costBest,
 												  double &compareResult,
 												  char *outputGraphFilename
 												  );
 	void regenerateGraph(CSettingsSimulation *settingsSimulation,
-						double *&targetBC,
 						double *&bestBC,
 						int &graphOrder,
 						double &compareResult)
@@ -100,11 +98,11 @@ public:
 		targetGraph = new gslGraph();
 		targetGraph->readPythonGraphFile( inputFilename );
 		StrategyPatternAlgorithm *strategyPattern = new StrategyPatternAlgorithm( settingsSimulation );
-		strategyPattern->regenerateGraph(targetGraph, targetBC, bestBC, graphOrder,compareResult,&Tk,&costBest);
+		strategyPattern->regenerateGraph(targetGraph,  bestBC, graphOrder,compareResult,&Tk,&costBest);
 		CompareAndGenerateResults(*settingsSimulation,targetGraph,
 								  strategyPattern->getGraph(),inputFilename,
 								  timeStart,Tk,
-								  targetBC,bestBC,costBest,
+								  bestBC,costBest,
 								compareResult,outputGraphFilename);
 		
 		delete targetGraph;
