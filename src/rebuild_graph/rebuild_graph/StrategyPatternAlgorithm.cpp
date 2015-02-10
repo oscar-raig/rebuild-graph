@@ -239,7 +239,9 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 				//otherwise we don't accept the new graph
 				if (newGraph)
 					delete newGraph;
-				newGraph = sourceGraph->copyGraph();
+				//newGraph = sourceGraph->copyGraph();
+				newGraph = this->getGraph()->copyGraph();
+				lFuncTrace.trace(CTrace::TRACE_DEBUG,"Al loro que hi havia aqui un erro, copiant to newgraph sourcegrAPH");
 				lFuncTrace.trace(CTrace::TRACE_DEBUG,"x");
 				fprintf(logFile,"x");
 			}

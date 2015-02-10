@@ -24,6 +24,7 @@
 
 #include "StrategyPatternAlgorithm.h"
 #include "StrategyPatternAlgorithm.h"
+#include "FactoryStrategyPatternAlgorithm.h"
 class CRebuildGraph{
 	
 private:
@@ -98,7 +99,8 @@ public:
 		strcat(outputGraphFilename,".res");
 		targetGraph = new gslGraph();
 		targetGraph->readPythonGraphFile( inputFilename );
-		StrategyPatternAlgorithm *strategyPattern = new StrategyPatternAlgorithm( settingsSimulation );
+		StrategyPatternAlgorithm *strategyPattern = FactoryStrategyPatternAlgorithm::CreateStrategyPatternAlgorithm (
+			settingsSimulation->thresholdAccepting, settingsSimulation );
 		strategyPattern->regenerateGraph(targetGraph,  bestBC, graphOrder,compareResult,&Tk,&costBest);
 		CompareAndGenerateResults(*settingsSimulation,targetGraph,
 								  strategyPattern->getGraph(),inputFilename,

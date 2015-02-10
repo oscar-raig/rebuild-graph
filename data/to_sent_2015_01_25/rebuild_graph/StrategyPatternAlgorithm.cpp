@@ -228,20 +228,22 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 					weAreDone=true;
 					break;
 				}
-				lFuncTrace.trace(CTrace::TRACE_DEBUG,".");
-				fprintf(logFile,".");
+			//	lFuncTrace.trace(CTrace::TRACE_DEBUG,".");
+			//	fprintf(logFile,".");
 			} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
 				// if newCost not is better than oldCost,
 				// we still accept it if exp(df/T_k)<rand()
-				lFuncTrace.trace(CTrace::TRACE_DEBUG,"o");
-				fprintf(logFile,"o");
+			//	lFuncTrace.trace(CTrace::TRACE_DEBUG,"o");
+			//	fprintf(logFile,"o");
 			} else {
 				//otherwise we don't accept the new graph
 				if (newGraph)
 					delete newGraph;
-				newGraph = sourceGraph->copyGraph();
-				lFuncTrace.trace(CTrace::TRACE_DEBUG,"x");
-				fprintf(logFile,"x");
+				//newGraph = sourceGraph->copyGraph();
+				newGraph = this->getGraph()->copyGraph();
+			//	lFuncTrace.trace(CTrace::TRACE_DEBUG,"Al loro que hi havia aqui un erro, copiant to newgraph sourcegrAPH");
+			//	lFuncTrace.trace(CTrace::TRACE_DEBUG,"x");
+			//	fprintf(logFile,"x");
 			}
 		}
 		fprintf(logFile,"\n");
