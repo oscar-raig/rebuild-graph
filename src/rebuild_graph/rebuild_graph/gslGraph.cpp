@@ -204,15 +204,15 @@ void gslGraph::printGraph(int TRACE_LEVEL){
 	int i,j;
 	CFuncTrace trace(false,"gslGraph::printGraph");
 	
-	trace.trace(DEBUG_GSL_GRAPH,"The graph has %d order %d degree:\n",order,degree);
+	trace.trace(TRACE_LEVEL,"The graph has %d order %d degree:\n",order,degree);
 	for(i=0;i<order;i++){
-		trace.trace(DEBUG_GSL_GRAPH,"Vertex %d",i);
+		trace.trace(TRACE_LEVEL,"Vertex %d",i);
 		for(j=0;j<order;j++){
 			if (gsl_matrix_get (matrix, i,j)) {
-				trace.trace(DEBUG_GSL_GRAPH," %d ",j);
+				trace.trace(TRACE_LEVEL," %d ",j);
 			}
 		}
-		  	trace.trace(DEBUG_GSL_GRAPH,"\n");
+		  	trace.trace(TRACE_LEVEL,"\n");
 	}
 }
 

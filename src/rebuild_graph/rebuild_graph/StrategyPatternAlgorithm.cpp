@@ -13,8 +13,7 @@
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"
 
 
-#define STP_DEBUG CTrace::TRACE_DEBUG
-#define STP_INFO CTrace::TRACE_INFO
+
 
 
 
@@ -37,7 +36,7 @@ double StrategyPatternAlgorithm::cost(double *tarjet,double *current,int count){
 // GLOBAL operation modifyGraph(sourceGraph)
 // MODIFIES a randon sourceGraph vertex's connections
 //-----------------------------------------------------------------------------
-void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph){
+void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph, int LevelGraph){
 	int i,j;
 	int vertex2change;
 	int myOrder=sourceGraph->getOrder();
@@ -52,11 +51,12 @@ void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph){
 
 	vertex2change=(int)(generateRandomNumber()*(myOrder));
 	sourceGraph->removeVertexNeighbours(vertex2change);
-	sourceGraph->printGraph();
-	lFuncTrace.trace(CTrace::TRACE_DEBUG,"modifyGraph vertex removed\n");
+	sourceGraph->printGraph(LevelGraph);
+	lFuncTrace.trace(LevelGraph,"modifyGraph vertex removed %d\n",vertex2change);
 	do{
 		//Choose new vertex degree
 		myNewNumberOfNeighbours=1+(int)(generateRandomNumber()*(myOrder-1));
+		lFuncTrace.trace(LevelGraph,"New Degree %d for vertex   %d\n",myNewNumberOfNeighbours,vertex2change);
 		// myNewNumberOfNeighbours is in [1,n-1]
 		// Connect new neighbours
 		for(i=0; i<myNewNumberOfNeighbours; i++){
@@ -148,7 +148,7 @@ void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 				if (vertexAreNighbours)
 					trace.trace(STP_DEBUG,"ATT : VERTEX Are Nighbours");
 				// Added linia 2014-11-27
-				vertexAreNighbours = ( i == newNeighbour);
+				//vertexAreNighbours = ( i == newNeighbour);
 			} while(vertexAreNighbours);
 			trace.trace(STP_DEBUG,"Adding newNeighbour %d to %d", i,
 						newNeighbour);
