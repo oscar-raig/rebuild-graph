@@ -8,6 +8,7 @@
 #include "rebuildgraph.h"
 #include "AbstractFactoryPatternRebuildGraph.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
+#include <ctime>
 
 using namespace boost::unit_test;
 
@@ -681,7 +682,7 @@ BOOST_AUTO_TEST_CASE(UTEST_GENErateRandomNumbers){
 	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
 	int values_random[10];
 	memset(values_random,0,10*sizeof(int));
-	for ( int i = 0; i < 10000 ; i++){
+	for ( int i = 0; i < 10 ; i++){
 		double value =strategyPatternAlgorithm->generateRandomNumber();
 		trace.trace(CTrace::TRACE_INFO,"%f",value);
 		values_random[(int)(value*10.0)]++;
@@ -689,5 +690,31 @@ BOOST_AUTO_TEST_CASE(UTEST_GENErateRandomNumbers){
 	for ( int i = 0; i < 10 ; i++){
 		trace.trace(CTrace::TRACE_INFO," %d %d",i, values_random[i]);
 	}
-
+	
+	BOOST_CHECK(values_random[0] == 0);
+	BOOST_CHECK(values_random[1] == 0);
+	BOOST_CHECK(values_random[2] == 0);
+	BOOST_CHECK(values_random[3] == 2);
+	BOOST_CHECK(values_random[4] == 1);
+	BOOST_CHECK(values_random[5] == 0);
+	BOOST_CHECK(values_random[6] == 3);
+	BOOST_CHECK(values_random[7] == 3);
+	BOOST_CHECK(values_random[8] == 1);
+	BOOST_CHECK(values_random[9] == 0);
+	
 }
+
+BOOST_AUTO_TEST_CASE(UTest_Betweeness_centraliyt_wheel14_execution_time){
+	CFuncTrace trace (true,"UTest_Betweeness_centraliyt_wheel14_execution_time");
+	using namespace std;
+	clock_t begin = clock();
+	double compareResult = 10;
+	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,1000,&compareResult,0.0458888);
+	clock_t end = clock();
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	trace.trace(CTrace::TRACE_INFO,"Elapsed time %f %f",elapsed_secs,compareResult);
+	// 56.893174 seconds 69.096907 72.344237
+	BOOST_CHECK((elapsed_secs ) < ( 72.344237 + (elapsed_secs / 10)));
+	
+}
+

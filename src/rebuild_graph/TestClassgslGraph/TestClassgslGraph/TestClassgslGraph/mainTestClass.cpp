@@ -72,6 +72,9 @@ void UTest_gslGraph_readPythonGraphFile_wheel10(){
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
 	
+	trace.trace(CTrace::TRACE_INFO,"Degree and Order %d - %d",
+				degree,order);
+	
 	BOOST_CHECK(degree == 3);
 	BOOST_CHECK(order ==7);
 	
