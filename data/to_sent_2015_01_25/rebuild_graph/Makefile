@@ -11,12 +11,14 @@ CPPFILES+=main.cpp
 
 #CPPOPTIONS = -I/Users/oscarraigcolon/Downloads/gsl-1.16/   -I. 
 CPPOPTIONS=  -I. -I ../gsl_include/ -I/opt/local/include
+CPPOPTIONS+= -DHAVE_INLINE -DGSL_RANGE_CHECK_OFF
+CPPOPTIONS+= -O3
 LINKOPTIONS= -L. -lgsl   -lboost_program_options  
 LINKOPTIONS+=-lgslcblas
 CPP_HOME_OSCAR_OPTIONS=-stdlib=libstdc++
 
 rebuild_graph: $(CPPFILES)
-	g++  $(CPP_HOME_OSCAR_OPTIONS)  $(CPPFILES) $(LINKOPTIONS) $(CPPOPTIONS) -o rebuild_graph
+	g++  $(CPPOPTIONS) $(CPP_HOME_OSCAR_OPTIONS)  $(CPPFILES) $(LINKOPTIONS)  -o rebuild_graph
 
 clean:
 	rm -f *.log

@@ -49,6 +49,7 @@ private:
 	int order;
 	int degree;
 	gsl_matrix * matrix;
+	int *vertex_degree;
 	
 public:
 	
@@ -67,7 +68,13 @@ public:
 	
 	virtual void printMyGraph(const char * outputGraphFilename,bool outputAsAdjacencyList) const;
 	void printGraph(int TRACE_LEVEL = CTrace::TRACE_DEBUG);
-	
+	void printVertexDegree(){
+		
+		for (int i =0 ; i < order;i++){
+			std::cout << vertex_degree[i] << std::endl;
+		}
+		std::cout <<  std::endl;
+	}
 	
 	
 	// Add a vertex with the given newVertexId identifier to the graph
