@@ -20,6 +20,7 @@
 #include "gslGraph.h"
 #include "rebuildgraph.h"
 #include "FactoryGraphIndicator.h"
+#include <matrix/gsl_matrix.h>
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"
@@ -532,51 +533,51 @@ void UTest_graphIndicatorBetweennessCentrality_submatrix(){
 	graphwheel->graphToGsl( matrix );
 	
 //	BetweennessCentrality->submatrix(matrix,NULL,NULL); // for test the exception
-	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(matrix,NULL,NULL), std::exception);
+	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(matrix,NULL,0), std::exception);
 	
 	gsl_vector *rows = gsl_vector_alloc(3);
 	
 	//BetweennessCentrality->submatrix(matrix,rows,NULL); // for test the exception
-	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(matrix,rows,NULL), std::exception);
+	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(matrix,rows,0), std::exception);
 
-	gsl_vector *columns = gsl_vector_alloc(3);
 	
 	gsl_vector_set(rows,0,0);
 	gsl_vector_set(rows,1,1);
 	gsl_vector_set(rows,2,2);
 	
-	gsl_vector_set(columns,0,0);
-	gsl_vector_set(columns,1,1);
-	gsl_vector_set(columns,2,2);
 	
 	
-	gsl_matrix *result_3x3_up_left = BetweennessCentrality->submatrix(matrix,rows,columns);
+	
+	gsl_matrix *result_3x3_up_left = BetweennessCentrality->submatrix(matrix,rows,3);
 	
 	
 	
 	CRebuildGraph::printGslMatrix( matrix );
 	CRebuildGraph::printGslMatrix( result_3x3_up_left );
 	
-	
+	for ( int i = 0; i< 3; i++)
+		for (int j = 0; j < 3 ; j++)
+			BOOST_CHECK(gsl_matrix_get(matrix,i,j) == gsl_matrix_get(result_3x3_up_left,i,j));
 	
 	gsl_vector_free(rows);
-	gsl_vector_free(columns);
+	
 	gsl_matrix_free(result_3x3_up_left);
 	
 	rows = gsl_vector_alloc(2);
-	columns = gsl_vector_alloc(2);
+	
 	
 	gsl_vector_set(rows,0,1);
 	gsl_vector_set(rows,1,2);
 	
-	gsl_vector_set(columns,0,0);
-	gsl_vector_set(columns,1,1);
 	
-	gsl_matrix *result_2x2_middle_left = BetweennessCentrality->submatrix(matrix,rows,columns);
+	gsl_matrix *result_2x2_middle_left = BetweennessCentrality->submatrix(matrix,rows,2);
 	
 	
 	CRebuildGraph::printGslMatrix( matrix );
 	CRebuildGraph::printGslMatrix( result_2x2_middle_left );
+	for ( int i = 0; i< 2; i++)
+		for (int j = 0; j < 2 ; j++)
+			BOOST_CHECK(gsl_matrix_get(matrix,i+1,j) == gsl_matrix_get(result_2x2_middle_left,i,j));
 
 	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
 				++numberOfTestExeccuted,numberOfTests);
@@ -703,6 +704,45 @@ void UTest_gslGraph_CommunicabilityBetweennessCentrality_test_4nodes(){
 	
 }
 
+void UTest_graphIndicatorBetweennessCentrality_anyUnconnectedVertex(){
+	
+	CFuncTrace trace(true,"UTest_graphIndicatorBetweennessCentrality_anyUnconnectedVertex");
+	
+	graphIndicatorBetweennessCentrality *BetweennessCentrality =
+	new graphIndicatorBetweennessCentrality(NULL);
+
+	
+	gslGraph *generalGraph =   new gslGraph();
+	generalGraph->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
+	// Vertex 0 in wheel14 is connected to 13 vertex
+	// if we remove its neighbours, node 0 is unconnected
+	
+	generalGraph->removeVertexNeighbours(0);
+
+	gsl_vector * vector = BetweennessCentrality->anyUnconnectedVertex(generalGraph->getGslMatrix());
+	
+	BOOST_CHECK(gsl_vector_get(vector,0)==0);
+	for (int i = 1; i < ORDER_WHEEL14 ;i++){
+		BOOST_CHECK(gsl_vector_get(vector,i)==1);
+	}
+	
+	generalGraph->removeVertexNeighbours(1);
+	
+	gsl_vector_free(vector);
+	vector = BetweennessCentrality->anyUnconnectedVertex(generalGraph->getGslMatrix());
+	
+	BOOST_CHECK(gsl_vector_get(vector,0)==0);
+	BOOST_CHECK(gsl_vector_get(vector,1)==0);
+	for (int i = 2; i < ORDER_WHEEL14 ;i++){
+		BOOST_CHECK(gsl_vector_get(vector,i)==1);
+	}
+	
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+	
+}
+
+
 typedef void (*func_type)(void);
 
 func_type functions[]={
@@ -729,7 +769,8 @@ func_type functions[]={
 	UTest_gslGraph_BetweennessCentrality_krackhardt_kite,
 	UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite,
 	UTest_gslGraph_CommunicabilityBetweennessCentrality_krackhardt_kite,
-	UTest_gslGraph_CommunicabilityBetweennessCentrality_test_4nodes
+	UTest_gslGraph_CommunicabilityBetweennessCentrality_test_4nodes,
+	UTest_graphIndicatorBetweennessCentrality_anyUnconnectedVertex
 	
 	
 };

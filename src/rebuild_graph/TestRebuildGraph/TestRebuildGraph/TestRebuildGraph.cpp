@@ -704,7 +704,7 @@ BOOST_AUTO_TEST_CASE(UTEST_GENErateRandomNumbers){
 	
 }
 
-BOOST_AUTO_TEST_CASE(UTest_Betweeness_centraliyt_wheel14_execution_time){
+BOOST_AUTO_TEST_CASE(UTest_Betweeness_centraliy_wheel14_execution_time){
 	CFuncTrace trace (true,"UTest_Betweeness_centraliyt_wheel14_execution_time");
 	using namespace std;
 	clock_t begin = clock();
@@ -713,8 +713,24 @@ BOOST_AUTO_TEST_CASE(UTest_Betweeness_centraliyt_wheel14_execution_time){
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 	trace.trace(CTrace::TRACE_INFO,"Elapsed time %f %f",elapsed_secs,compareResult);
-	// 56.893174 seconds 69.096907 72.344237
-	BOOST_CHECK((elapsed_secs ) < ( 72.344237 + (elapsed_secs / 10)));
+	// 56.893174 seconds 69.096907 72.344237 37.685672(-O3 and -DHAVE_INLINE -DGSL_RANGE_CHECK_OFF
+	// 36.947093 matrix_calloc instead matrix zero
+	// 28.101863, deleting sequence 25.411876
+	BOOST_CHECK((elapsed_secs ) < ( 25.411876 + (elapsed_secs / 10)));
+	
+}
+
+BOOST_AUTO_TEST_CASE(UTest_CommunicabilityBetweenessCentrality_wheel14_execution_time){
+	CFuncTrace trace (true,"UTest_CommunicabilityBetweenessCentrality_wheel14_execution_time");
+	using namespace std;
+	clock_t begin = clock();
+	double compareResult = 10;
+	simulation(COMMUNICABILITY_CENTRALITY, "wheel14.txt" ,1000,&compareResult);
+	clock_t end = clock();
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	trace.trace(CTrace::TRACE_INFO,"Elapsed time %f %f",elapsed_secs,compareResult);
+	// 5.085668
+	BOOST_CHECK((elapsed_secs ) < ( 4.808676 + (elapsed_secs / 10)));
 	
 }
 

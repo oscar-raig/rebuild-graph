@@ -31,8 +31,8 @@ gslGraph::gslGraph(int sizeOfMatrix):
 		order(sizeOfMatrix),
 		degree(0){
 
-	matrix = gsl_matrix_alloc(sizeOfMatrix,sizeOfMatrix);
-	gsl_matrix_set_zero(matrix);
+	matrix = gsl_matrix_calloc(sizeOfMatrix,sizeOfMatrix);
+	//gsl_matrix_set_zero(matrix);
 	vertex_degree = (int *)malloc(sizeOfMatrix * sizeof(int));
 	memset(vertex_degree,0,sizeOfMatrix * sizeof(int));
 };
@@ -164,7 +164,7 @@ int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
 				throw "ERROR vertex_degree is null";
 			
 		}else{
-			sourceWasConnected = true;
+			sourceWasConnected = true;	
 			
 		}
 			
