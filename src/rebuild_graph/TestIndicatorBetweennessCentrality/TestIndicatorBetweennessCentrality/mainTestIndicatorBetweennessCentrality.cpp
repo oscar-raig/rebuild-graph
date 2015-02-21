@@ -78,6 +78,41 @@ void UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_2NonZe
 	
 }
 
+
+void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel5(){
+	
+	CFuncTrace trace(true,"UTest_BetweennessCentrality_wheel5");
+	
+	gslGraph *  generalGraph =  new gslGraph();
+	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel5.txt");
+	
+	generalGraph->printGraph(CTrace::TRACE_INFO);
+	
+	double *betweeness_centrality = NULL;
+	
+	graphIndicatorBetweennessCentrality *betweennessCentrality =
+	new graphIndicatorBetweennessCentrality ( generalGraph );
+	
+	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	double expectedBetweenessCentralityForNode0OfWheelGraph = 0.11;
+	double expectedBetweenessCentralityForRestOfWheelGraphNodes = 0.00641;
+	for (int i = 0; i < generalGraph->getOrder(); i++){
+		//		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
+		BOOST_CHECK(betweeness_centrality[i] != 0 );
+		if ( i == 0)
+			BOOST_CHECK(abs(betweeness_centrality[i] - expectedBetweenessCentralityForNode0OfWheelGraph) <0.1);
+		else{
+			BOOST_CHECK(abs(betweeness_centrality[i] - expectedBetweenessCentralityForRestOfWheelGraphNodes) <0.1);
+		}
+	}
+	
+	delete generalGraph;
+	
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+	
+}
+
 void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14(){
 	
 	CFuncTrace trace(true,"UTest_BetweennessCentrality_wheel14");
@@ -114,6 +149,7 @@ void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14(){
 typedef void (*func_type)(void);
 
 func_type functions[]={
+	UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel5,
 	UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14,
 	UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_2NonZeros,
 	UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_NoNonZeros,

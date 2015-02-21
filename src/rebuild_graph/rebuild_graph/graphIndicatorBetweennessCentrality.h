@@ -48,6 +48,11 @@ public:
 
 	static gsl_matrix* submatrix(const gsl_matrix* m, const gsl_vector* rows,
 							  int column_size);
+	void calculateDeltaForW(gsl_matrix *p, int w,gsl_vector* sigma, 
+						gsl_vector*delta) const;
+	void updateBetweenessCentralityForW(gsl_vector* delta,int w,gsl_vector* node_betweenness) const;
+	void recalculateDeltaAndBetweennessCentrality(gsl_vector *Q,gsl_matrix *p,gsl_vector *sigma,
+												  gsl_vector* betweenness_centrality)const;
 
 };
 
