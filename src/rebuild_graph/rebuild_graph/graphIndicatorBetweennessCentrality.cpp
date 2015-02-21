@@ -218,7 +218,7 @@ void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gs
 				double sigma_v = gsl_vector_get(sigma, v);
 				double sigma_w = gsl_vector_get(sigma, w);
 				double dpvw = (1 + delta_w) * sigma_v / sigma_w;
-				std::cout << " sigma_v " << sigma_v << " sigma_w " << sigma_w << " dpvw " << dpvw << std::endl;
+			//	std::cout << " sigma_v " << sigma_v << " sigma_w " << sigma_w << " dpvw " << dpvw << std::endl;
 				// DP(v)=DP(v)+DPvw;
 				double dpv = gsl_vector_get(delta, v);
 				gsl_vector_set(delta, v, dpv + dpvw);
