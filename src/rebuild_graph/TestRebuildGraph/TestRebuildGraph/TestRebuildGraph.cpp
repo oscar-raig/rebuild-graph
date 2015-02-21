@@ -716,6 +716,7 @@ BOOST_AUTO_TEST_CASE(UTest_Betweeness_centraliy_wheel14_execution_time){
 	// 56.893174 seconds 69.096907 72.344237 37.685672(-O3 and -DHAVE_INLINE -DGSL_RANGE_CHECK_OFF
 	// 36.947093 matrix_calloc instead matrix zero
 	// 28.101863, deleting sequence 25.411876
+	// inline 23.243 // 22.87308
 	BOOST_CHECK((elapsed_secs ) < ( 25.411876 + (elapsed_secs / 10)));
 	
 }
@@ -729,7 +730,7 @@ BOOST_AUTO_TEST_CASE(UTest_CommunicabilityBetweenessCentrality_wheel14_execution
 	clock_t end = clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 	trace.trace(CTrace::TRACE_INFO,"Elapsed time %f %f",elapsed_secs,compareResult);
-	// 5.085668
+	// 5.085668 , 4.088514 inline  3.983686
 	BOOST_CHECK((elapsed_secs ) < ( 4.808676 + (elapsed_secs / 10)));
 	
 }

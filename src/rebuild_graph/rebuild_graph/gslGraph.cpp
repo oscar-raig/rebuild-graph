@@ -259,19 +259,9 @@ void gslGraph::printGraph(int TRACE_LEVEL){
 
 
 
-// Get the graph degree
-int  gslGraph::getDegree() const {
-	return this->degree;
-};
 
-int gslGraph::getDegree(int vertex)const {
-	
-	if ( vertex > order )
-		throw "ERROR: Asking for vertex greater than order";
-	
-	
-	return vertex_degree[vertex];
-}
+
+
 
 
 void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
