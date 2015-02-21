@@ -36,7 +36,7 @@ void graphIndicatorBetweennessCentrality::brandes_betweenness_centrality(double 
 gsl_vector* graphIndicatorBetweennessCentrality::betweenness_bin(const gsl_matrix* sourceGraph) const {
 	CFuncTrace trace(false,"gslGraph::betweenness_bin");
 	gsl_vector* betweenness = gsl_vector_alloc(sourceGraph->size1);
-	node_and_edge_betweenness_bin(sourceGraph, betweenness, NULL );
+	node_and_edge_betweenness_bin(sourceGraph, betweenness);
 	return betweenness;
 }
 
@@ -81,7 +81,7 @@ gsl_vector* graphIndicatorBetweennessCentrality::returnVectorWithNonZeroIndexOfA
 }
 
 
-void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness,gsl_matrix* edge_betweenness) const {
+void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness) const {
 	CFuncTrace trace(false,"node_and_edge_betweenness_bin");
 	if (sourceGraph->size1 != sourceGraph->size2) {
 		trace.trace(CTrace::TRACE_ERROR,"ERROR size2 and size2 different");
@@ -97,12 +97,9 @@ void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gs
 	} else {
 		gsl_vector_set_zero(node_betweenness);
 	}
-	if (edge_betweenness == NULL) {
-		free_edge_betweenness = true;
-		edge_betweenness = gsl_matrix_calloc(sourceGraph->size1, sourceGraph->size2);
-	} else {
-		gsl_matrix_set_zero(edge_betweenness);
-	}
+	
+	gsl_matrix* edge_betweenness = NULL;
+	edge_betweenness = gsl_matrix_calloc(sourceGraph->size1, sourceGraph->size2);
 	
 	
 	// for u=1:n
@@ -187,7 +184,7 @@ void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gs
 		}
 		
 		// if ~all(D)
-		if (all(d) == 0) {
+		if (allNonZero(d) == false) {
 			trace.trace(CTrace::TRACE_DEBUG,"All the distances are 0");
 			// Q(1:q)=find(~D);
 			gsl_vector* not_d = logical_not(d);
@@ -221,7 +218,7 @@ void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gs
 				double sigma_v = gsl_vector_get(sigma, v);
 				double sigma_w = gsl_vector_get(sigma, w);
 				double dpvw = (1 + delta_w) * sigma_v / sigma_w;
-				//				std::cout << " sigma_v " << sigma_v << "sigma_w" << sigma_w << std::endl;
+				std::cout << " sigma_v " << sigma_v << " sigma_w " << sigma_w << " dpvw " << dpvw << std::endl;
 				// DP(v)=DP(v)+DPvw;
 				double dpv = gsl_vector_get(delta, v);
 				gsl_vector_set(delta, v, dpv + dpvw);
@@ -262,7 +259,7 @@ int  graphIndicatorBetweennessCentrality::anyNonZeroElemenInVector(const gsl_vec
 	return 0;
 }
 
-int  graphIndicatorBetweennessCentrality::all(const gsl_vector* v) const {
+int  graphIndicatorBetweennessCentrality::allNonZero(const gsl_vector* v) const {
 	for (int i = 0; i < (int)v->size; i++) {
 		if (fp_zero(gsl_vector_get(v, i))) {
 			return 0;

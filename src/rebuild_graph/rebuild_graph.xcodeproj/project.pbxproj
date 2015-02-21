@@ -61,6 +61,13 @@
 			remoteGlobalIDString = 3658719D1985964F000C40A2;
 			remoteInfo = TestClassgslGraph;
 		};
+		362F52F91A988CF8000529EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 362F52F11A988CF5000529EC /* TestIndicatorBetweennessCentrality.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 362F52E71A988CF5000529EC;
+			remoteInfo = TestIndicatorBetweennessCentrality;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -93,6 +100,7 @@
 		36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = convert_graph_file.xcodeproj; path = convert_graph_file/convert_graph_file.xcodeproj; sourceTree = "<group>"; };
 		3625A35618EDBA400037F00D /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 		3625A35718EDBA400037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
+		362F52F11A988CF5000529EC /* TestIndicatorBetweennessCentrality.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestIndicatorBetweennessCentrality.xcodeproj; path = TestIndicatorBetweennessCentrality/TestIndicatorBetweennessCentrality.xcodeproj; sourceTree = "<group>"; };
 		363522451A896B0A002057C1 /* FactoryStrategyPatternAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FactoryStrategyPatternAlgorithm.cpp; sourceTree = "<group>"; };
 		363522461A896B0A002057C1 /* FactoryStrategyPatternAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FactoryStrategyPatternAlgorithm.h; sourceTree = "<group>"; };
 		3636C7191A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphIndicatorCommunicabilityBetweennessCentrality.h; sourceTree = SOURCE_ROOT; };
@@ -145,6 +153,7 @@
 		360BA6FC18DD74E300F54F2B = {
 			isa = PBXGroup;
 			children = (
+				362F52F11A988CF5000529EC /* TestIndicatorBetweennessCentrality.xcodeproj */,
 				365871A91985964F000C40A2 /* TestClassgslGraph.xcodeproj */,
 				36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */,
 				3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */,
@@ -221,6 +230,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		362F52F21A988CF5000529EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				362F52FA1A988CF8000529EC /* TestIndicatorBetweennessCentrality */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -278,6 +295,10 @@
 					ProjectRef = 365871A91985964F000C40A2 /* TestClassgslGraph.xcodeproj */;
 				},
 				{
+					ProductGroup = 362F52F21A988CF5000529EC /* Products */;
+					ProjectRef = 362F52F11A988CF5000529EC /* TestIndicatorBetweennessCentrality.xcodeproj */;
+				},
+				{
 					ProductGroup = 36207B7A18EC25A10033A4DC /* Products */;
 					ProjectRef = 36207B7918EC25A10033A4DC /* TestRebuildGraph.xcodeproj */;
 				},
@@ -323,6 +344,13 @@
 			fileType = "compiled.mach-o.executable";
 			path = TestClassgslGraph;
 			remoteRef = 362E55F81A6977CD005AB3AA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		362F52FA1A988CF8000529EC /* TestIndicatorBetweennessCentrality */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = TestIndicatorBetweennessCentrality;
+			remoteRef = 362F52F91A988CF8000529EC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

@@ -35,21 +35,19 @@ public:
 	gsl_vector* betweenness_bin(const gsl_matrix* sourceGraph) const;
 	
 	void node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness,gsl_matrix* edge_betweenness) const;
-	gsl_vector* sequence(int start, int end) const;
-	gsl_vector* find(const gsl_vector* v, int n = std::numeric_limits<int>::max(),
-					 const std::string& direction = "first") const ;
+	gsl_vector* returnVectorWithNonZeroIndexOfASourceVector(const gsl_vector* v) const ;
 	gsl_vector * logical_not(const gsl_vector* v) const ;
 	double  epsilon;
-	int  nnz(const gsl_vector* v) const ;
+	int  getNumberOfNonZeroInVector(const gsl_vector* v) const ;
 	bool fp_nonzero(double x) const { return abs(x) > epsilon; }
 	bool fp_zero(double x) const { return abs(x) < epsilon; }
 	
 	int  all(const gsl_vector* v) const;
-	int  any(const gsl_vector* v) const;
-	gsl_vector* any(const gsl_matrix* m, int dim=1 ) const ;
+	int  anyNonZeroElemenInVector(const gsl_vector* v) const;
+	gsl_vector* anyUnconnectedVertex(const gsl_matrix* m ) const ;
 
 	static gsl_matrix* submatrix(const gsl_matrix* m, const gsl_vector* rows,
-							  const gsl_vector* columns);
+							  int column_size);
 
 };
 

@@ -31,8 +31,8 @@ gslGraph::gslGraph(int sizeOfMatrix):
 		order(sizeOfMatrix),
 		degree(0){
 
-	matrix = gsl_matrix_alloc(sizeOfMatrix,sizeOfMatrix);
-	gsl_matrix_set_zero(matrix);
+	matrix = gsl_matrix_calloc(sizeOfMatrix,sizeOfMatrix);
+	//gsl_matrix_set_zero(matrix);
 	vertex_degree = (int *)malloc(sizeOfMatrix * sizeof(int));
 	memset(vertex_degree,0,sizeOfMatrix * sizeof(int));
 };
@@ -164,7 +164,7 @@ int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
 				throw "ERROR vertex_degree is null";
 			
 		}else{
-			sourceWasConnected = true;
+			sourceWasConnected = true;	
 			
 		}
 			
@@ -259,19 +259,9 @@ void gslGraph::printGraph(int TRACE_LEVEL){
 
 
 
-// Get the graph degree
-int  gslGraph::getDegree() const {
-	return this->degree;
-};
 
-int gslGraph::getDegree(int vertex)const {
-	
-	if ( vertex > order )
-		throw "ERROR: Asking for vertex greater than order";
-	
-	
-	return vertex_degree[vertex];
-}
+
+
 
 
 void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
