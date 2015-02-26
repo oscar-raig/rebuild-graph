@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include "gslGraph.h"
 #include "graphIndicator.h"
+#include <queue>
+#include <list>
+using namespace std;
+
 
 class graphIndicatorBetweennessCentrality: public graphIndicator{
 	
@@ -34,20 +38,25 @@ public:
 	void brandes_betweenness_centrality(double *arrayIndicatorBetweennesscentrality);
 	gsl_vector* betweenness_bin(const gsl_matrix* sourceGraph) const;
 	
-	void node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness,gsl_matrix* edge_betweenness) const;
-	gsl_vector* returnVectorWithNonZeroIndexOfASourceVector(const gsl_vector* v) const ;
+	void node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* node_betweenness) const;
+	gsl_vector* returnVectorWithNonZeroIndexOfASourceVector(const gsl_vector* v,int columnException) const ;
 	gsl_vector * logical_not(const gsl_vector* v) const ;
 	double  epsilon;
 	int  getNumberOfNonZeroInVector(const gsl_vector* v) const ;
 	bool fp_nonzero(double x) const { return abs(x) > epsilon; }
 	bool fp_zero(double x) const { return abs(x) < epsilon; }
 	
-	int  all(const gsl_vector* v) const;
+	int  allNonZero(const gsl_vector* v) const;
 	int  anyNonZeroElemenInVector(const gsl_vector* v) const;
 	gsl_vector* anyUnconnectedVertex(const gsl_matrix* m ) const ;
 
 	static gsl_matrix* submatrix(const gsl_matrix* m, const gsl_vector* rows,
 							  int column_size);
+	void calculateDeltaForW(gsl_matrix *p, int w,gsl_vector* sigma, 
+						gsl_vector*delta) const;
+	void updateBetweenessCentralityForW(gsl_vector* delta,int w,gsl_vector* node_betweenness) const;
+	void recalculateDeltaAndBetweennessCentrality(std::list<int> S,gsl_matrix *p,int s,gsl_vector *sigma,
+												  gsl_vector* betweenness_centrality)const;
 
 };
 

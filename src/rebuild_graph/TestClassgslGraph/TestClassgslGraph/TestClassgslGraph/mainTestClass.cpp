@@ -624,7 +624,7 @@ void UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite(){
 	
 	
 	double *betweeness_centrality = NULL;
-	double expectedbetweenessCentrality[10]={ 10.254,10.254,7.402,17.518,
+	double expectedcommunicabilityCentrality[10]={ 10.254,10.254,7.402,17.518,
 		7.402,12.703,12.703,4.880,2.333,1.593};
 	
 	graphIndicator *communicabilityCentrality = FactoryGraphIndicator::CreategraphIndicator(COMMUNICABILITY_BETWEENESS,krackhardtKiteGraph);
@@ -632,8 +632,8 @@ void UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite(){
 	betweeness_centrality = communicabilityCentrality->calculateIndicator();
 	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
 		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
-		std::cout << "Pos " << i << " : " << expectedbetweenessCentrality[i] << std::endl;
-		BOOST_CHECK( abs(betweeness_centrality[i] - expectedbetweenessCentrality[i])< 0.01);
+		std::cout << "Pos " << i << " : " << expectedcommunicabilityCentrality[i] << std::endl;
+		BOOST_CHECK( abs(betweeness_centrality[i] - expectedcommunicabilityCentrality[i])< 0.01);
 	}
 	
 	delete krackhardtKiteGraph;

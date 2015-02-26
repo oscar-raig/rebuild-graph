@@ -86,7 +86,7 @@ void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel5(){
 	gslGraph *  generalGraph =  new gslGraph();
 	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel5.txt");
 	
-	generalGraph->printGraph(CTrace::TRACE_INFO);
+//	generalGraph->printGraph(CTrace::TRACE_INFO);
 	
 	double *betweeness_centrality = NULL;
 	
@@ -133,9 +133,9 @@ void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14(){
 //		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
 		BOOST_CHECK(betweeness_centrality[i] != 0 );
 		if ( i == 0)
-			BOOST_CHECK(abs(betweeness_centrality[i] - expectedBetweenessCentralityForNode0OfWheelGraph) <0.1);
+			BOOST_CHECK(abs(betweeness_centrality[i] - expectedBetweenessCentralityForNode0OfWheelGraph) <0.001);
 		else{
-			BOOST_CHECK(abs(betweeness_centrality[i] - expectedBetweenessCentralityForRestOfWheelGraphNodes) <0.1);
+			BOOST_CHECK(abs(betweeness_centrality[i] - expectedBetweenessCentralityForRestOfWheelGraphNodes) <0.001);
 		}
 	}
 	
@@ -146,14 +146,51 @@ void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14(){
 
 }
 
+
+
+void UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite(){
+	
+	CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
+	
+	gslGraph *krackhardtKiteGraph =   new gslGraph();
+	krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
+	
+	
+	double *betweeness_centrality = NULL;
+	double expectedbetweenessCentrality[10]={ 0.023,0.023,0.000,0.102,
+		0.000,0.231,0.231,0.389,0.222,0.000};
+	
+	
+	graphIndicatorBetweennessCentrality *betweennessCentrality =
+	new graphIndicatorBetweennessCentrality ( krackhardtKiteGraph );
+	
+	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
+		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
+		std::cout << "Pos " << i << " : " << expectedbetweenessCentrality[i] << std::endl;
+		BOOST_CHECK( abs(betweeness_centrality[i] - expectedbetweenessCentrality[i])< 0.01);
+	}
+	
+	delete krackhardtKiteGraph;
+	delete betweeness_centrality;
+	delete betweennessCentrality;
+	
+	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
+				++numberOfTestExeccuted,numberOfTests);
+}
+
+
+
 typedef void (*func_type)(void);
 
 func_type functions[]={
-	UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel5,
-	UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14,
-	UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_2NonZeros,
-	UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_NoNonZeros,
-	UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_logical_not_1010};
+	UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel5
+	,UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14
+	,UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_2NonZeros
+	,UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_NoNonZeros
+	,UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_logical_not_1010
+	,UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite
+};
 
 void getFirstTest(int * iTerator, func_type * test){
 	*iTerator = 0;

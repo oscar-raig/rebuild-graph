@@ -45,18 +45,18 @@ void StrategyPatternAlgorithm::modifyGraph(gslGraph *sourceGraph, int LevelGraph
 	int newNeighbours[myOrder];
 	int found;
 	
-	CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::modifyGraph");
+//	CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::modifyGraph");
 	
 	// Select vertex to change
 
 	vertex2change=(int)(generateRandomNumber()*(myOrder));
 	sourceGraph->removeVertexNeighbours(vertex2change);
-	sourceGraph->printGraph(LevelGraph);
-	lFuncTrace.trace(LevelGraph,"modifyGraph vertex removed %d\n",vertex2change);
+//	sourceGraph->printGraph(LevelGraph);
+//	lFuncTrace.trace(LevelGraph,"modifyGraph vertex removed %d\n",vertex2change);
 	do{
 		//Choose new vertex degree
 		myNewNumberOfNeighbours=1+(int)(generateRandomNumber()*(myOrder-1));
-		lFuncTrace.trace(LevelGraph,"New Degree %d for vertex   %d\n",myNewNumberOfNeighbours,vertex2change);
+//		lFuncTrace.trace(LevelGraph,"New Degree %d for vertex   %d\n",myNewNumberOfNeighbours,vertex2change);
 		// myNewNumberOfNeighbours is in [1,n-1]
 		// Connect new neighbours
 		for(i=0; i<myNewNumberOfNeighbours; i++){

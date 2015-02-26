@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <stdio.h>
 #include "CTrace.hpp"
 #include "gslGraph.h"
 #include <matrix/gsl_matrix.h>
