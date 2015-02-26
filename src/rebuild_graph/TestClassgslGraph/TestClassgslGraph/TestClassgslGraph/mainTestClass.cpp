@@ -517,71 +517,6 @@ UTest_gslGraph_compare_equal_graphs(void){
 }
 
 
-void UTest_graphIndicatorBetweennessCentrality_submatrix(){
-	CFuncTrace trace(true,"UTest_graphIndicatorBetweennessCentrality_ordinal_index");
-
-	graphIndicatorBetweennessCentrality *BetweennessCentrality =
-	new graphIndicatorBetweennessCentrality(NULL);
-	
-	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(NULL,NULL,NULL), std::exception);
-	
-	gslGraph *graphwheel =   new gslGraph();
-	graphwheel->readPythonGraphFile( DIR_GRAPHS "wheel4.txt" );
-	
-	gsl_matrix *matrix = NULL;
-	matrix = gsl_matrix_alloc(graphwheel->getOrder(), graphwheel->getOrder());
-	graphwheel->graphToGsl( matrix );
-	
-//	BetweennessCentrality->submatrix(matrix,NULL,NULL); // for test the exception
-	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(matrix,NULL,0), std::exception);
-	
-	gsl_vector *rows = gsl_vector_alloc(3);
-	
-	//BetweennessCentrality->submatrix(matrix,rows,NULL); // for test the exception
-	BOOST_REQUIRE_THROW( BetweennessCentrality->submatrix(matrix,rows,0), std::exception);
-
-	
-	gsl_vector_set(rows,0,0);
-	gsl_vector_set(rows,1,1);
-	gsl_vector_set(rows,2,2);
-	
-	
-	
-	
-	gsl_matrix *result_3x3_up_left = BetweennessCentrality->submatrix(matrix,rows,3);
-	
-	
-	
-	CRebuildGraph::printGslMatrix( matrix );
-	CRebuildGraph::printGslMatrix( result_3x3_up_left );
-	
-	for ( int i = 0; i< 3; i++)
-		for (int j = 0; j < 3 ; j++)
-			BOOST_CHECK(gsl_matrix_get(matrix,i,j) == gsl_matrix_get(result_3x3_up_left,i,j));
-	
-	gsl_vector_free(rows);
-	
-	gsl_matrix_free(result_3x3_up_left);
-	
-	rows = gsl_vector_alloc(2);
-	
-	
-	gsl_vector_set(rows,0,1);
-	gsl_vector_set(rows,1,2);
-	
-	
-	gsl_matrix *result_2x2_middle_left = BetweennessCentrality->submatrix(matrix,rows,2);
-	
-	
-	CRebuildGraph::printGslMatrix( matrix );
-	CRebuildGraph::printGslMatrix( result_2x2_middle_left );
-	for ( int i = 0; i< 2; i++)
-		for (int j = 0; j < 2 ; j++)
-			BOOST_CHECK(gsl_matrix_get(matrix,i+1,j) == gsl_matrix_get(result_2x2_middle_left,i,j));
-
-	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
-				++numberOfTestExeccuted,numberOfTests);
-}
 
 void UTest_gslGraph_BetweennessCentrality_krackhardt_kite(){
 
@@ -764,7 +699,7 @@ func_type functions[]={
 	test_brandes_comunicability_centrality_test_4nodes,
 		UTest_2copyGraph,
 	
-	UTest_graphIndicatorBetweennessCentrality_submatrix,
+
 	
 	UTest_gslGraph_BetweennessCentrality_krackhardt_kite,
 	UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite,

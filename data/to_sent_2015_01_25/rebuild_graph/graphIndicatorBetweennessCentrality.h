@@ -16,6 +16,8 @@
 #include <list>
 using namespace std;
 
+#include <map>
+
 
 class graphIndicatorBetweennessCentrality: public graphIndicator{
 	
@@ -57,6 +59,8 @@ public:
 	void updateBetweenessCentralityForW(gsl_vector* delta,int w,gsl_vector* node_betweenness) const;
 	void recalculateDeltaAndBetweennessCentrality(std::list<int> S,gsl_matrix *p,int s,gsl_vector *sigma,
 												  gsl_vector* betweenness_centrality)const;
+	void  calculateSigma(int v, gsl_matrix *sourceGraph,map<int, int> &D,
+															  std::queue<int> &Queue,gsl_matrix *P,gsl_vector *sigma)const;
 
 };
 

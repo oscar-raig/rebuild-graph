@@ -44,17 +44,7 @@ gsl_vector* graphIndicatorBetweennessCentrality::betweenness_bin(const gsl_matri
 	return betweenness;
 }
 
-/*
- * Emulates (~v).
- */
-gsl_vector * graphIndicatorBetweennessCentrality::logical_not(const gsl_vector* v) const {
-	gsl_vector* not_v = gsl_vector_alloc(v->size);
-	for (int i = 0; i < (int)v->size; i++) {
-		bool z = fp_zero(gsl_vector_get(v, i));
-		gsl_vector_set(not_v, i, (double)z);
-	}
-	return not_v;
-}
+
 
 
 int  graphIndicatorBetweennessCentrality::getNumberOfNonZeroInVector(const gsl_vector* v) const {
@@ -106,48 +96,53 @@ void graphIndicatorBetweennessCentrality::recalculateDeltaAndBetweennessCentrali
 
 void  graphIndicatorBetweennessCentrality::updateBetweenessCentralityForW(gsl_vector* delta,int w,gsl_vector* betweenness_centrality) const{
 	// BC(w)=BC(w)+DP(w)
-	double Old_betweenness_centrality_ForVertex_W = gsl_vector_get(betweenness_centrality, w);
+	double *Old_betweenness_centrality_ForVertex_W = gsl_vector_ptr(betweenness_centrality, w);
 	double delta_w = gsl_vector_get(delta, w);
 //	cout << "BC :Actualitzatn bc amb delta " << delta_w <<  " per vertex " << w << endl;
-	gsl_vector_set(betweenness_centrality, w, Old_betweenness_centrality_ForVertex_W + delta_w);
+	*Old_betweenness_centrality_ForVertex_W = *Old_betweenness_centrality_ForVertex_W + delta_w;
 //	cout << "Actualitzatn betweeness " << gsl_vector_get(betweenness_centrality,w) << " " << w << endl;
 	
 }
 
-void  graphIndicatorBetweennessCentrality::calculateSigma(int v, gsl_matrix *sourceGraph,map<int, int> &D,
+void  graphIndicatorBetweennessCentrality::calculateSigma(int v, gsl_matrix *sourceGraph,int *D,
 											std::queue<int> &Queue,gsl_matrix *P,gsl_vector *sigma) const{
 	//			std::cout <<"\tIterating on " << v << std::endl;
 	// W=find(Gu(v,:));
 	gsl_vector_view copy_m_row = gsl_matrix_row((gsl_matrix*)sourceGraph, v);
-	gsl_vector* W = returnVectorWithNonZeroIndexOfASourceVector(&copy_m_row.vector,v);
+	//gsl_vector* W = returnVectorWithNonZeroIndexOfASourceVector(&copy_m_row.vector,v);
 	
 	//    for w in G[v]:
-	for (int W_index = 0; W != NULL && W_index < (int)W->size; W_index++) {
-		int w = (int)gsl_vector_get(W, W_index);
-		//					std::cout <<"\t\tIterating on " << w << std::endl;
+	for (int W_index = 0;    W_index < (int)sourceGraph->size1; W_index++) {
 		
-		if ( D.find(w) == D.end() ){
-			//						std::cout <<"w not in D " << w << std::endl;
-			Queue.push(w);
-			int value = D[v] + 1;
-			D[w] = value;
+		 double w = gsl_vector_get( &copy_m_row.vector, W_index);
+		if ( fp_nonzero(w) && v != W_index){
+			
+			//					std::cout <<"\t\tIterating on " << w << std::endl;
+			
+			if ( D[W_index] == -1 ){
+				//						std::cout <<"w not in D " << w << std::endl;
+				Queue.push(W_index);
+				int value = D[v] + 1;
+				D[W_index] = value;
+			}
+			
+			//	for (std::map<int,int>::iterator it=D.begin(); it!=D.end(); ++it)
+			//			std::cout << it->first << " => " << it->second << '\n';
+			
+			if( ((int)D[W_index]) == ((int)D[v]) + 1 ){
+				//						std::cout << "We have found shortest path w Dw v Dv" << w << D[w] << v << D[v] << endl;
+				gsl_matrix_set(P, W_index, v, 1.0);  // P[w].append(v) # predecessors
+				double *sigma_w = gsl_vector_ptr(sigma, W_index);
+				double sigma_v = gsl_vector_get(sigma, v);
+				*sigma_w = *sigma_w + sigma_v;
+				//						cout << "\t\t\tsigma w w " << w  << " "<< sigma_w + sigma_v << endl;
+			}
 		}
 		
-		//	for (std::map<int,int>::iterator it=D.begin(); it!=D.end(); ++it)
-		//			std::cout << it->first << " => " << it->second << '\n';
-		
-		if( ((int)D[w]) == ((int)D[v]) + 1 ){
-			//						std::cout << "We have found shortest path w Dw v Dv" << w << D[w] << v << D[v] << endl;
-			gsl_matrix_set(P, w, v, 1.0);  // P[w].append(v) # predecessors
-			double sigma_w = gsl_vector_get(sigma, w);
-			double sigma_v = gsl_vector_get(sigma, v);
-			gsl_vector_set(sigma, w, sigma_w + sigma_v);
-			//						cout << "\t\t\tsigma w w " << w  << " "<< sigma_w + sigma_v << endl;
-		}
 	}
-	if (W != NULL) {
-		gsl_vector_free(W);
-	}
+//	if (W != NULL) {
+//		gsl_vector_free(W);
+//	}
 
 }
 
@@ -157,25 +152,38 @@ void  graphIndicatorBetweennessCentrality::calculateDeltaForW(gsl_matrix *p, int
 	// for v=find(P(w,:))
 	double delta_w = gsl_vector_get(delta, w);
 	gsl_vector_view p_row = gsl_matrix_row(p, w);
-	gsl_vector* found_p_row = returnVectorWithNonZeroIndexOfASourceVector(&p_row.vector,-1);
+//	gsl_vector* found_p_row = returnVectorWithNonZeroIndexOfASourceVector(&p_row.vector,-1);
 	//			printGslMatrix(p);
-	for (int p_index = 0; found_p_row != NULL && p_index < (int)found_p_row->size; p_index++) {
-		int v = (int)gsl_vector_get(found_p_row, p_index);
-//		std::cout << "Calculate delta: v " << v << "Is connected with w" << w << std::endl;
-		// DPvw=(1+DP(w)).*NP(v)./NP(w);
-		double sigma_v = gsl_vector_get(sigma, v);
-		double sigma_w = gsl_vector_get(sigma, w);
-		double dpvw = (1.0 + delta_w) * sigma_v / sigma_w;
-		//	std::cout << " sigma_v " << sigma_v << " sigma_w " << sigma_w << " dpvw " << dpvw << std::endl;
-		// DP(v)=DP(v)+DPvw;
-		double dpv = gsl_vector_get(delta, v);
-		gsl_vector_set(delta, v, dpv + dpvw);
-//		std::cout << "New delta " <<  dpv + dpvw << " For node " << v << endl;
+	for (int p_index = 0;  p_index < (int)p->size1; p_index++) {
+		double vv = (int)gsl_vector_get(&p_row.vector, p_index);
+		
+		if ( fp_nonzero(vv)){
+	//		std::cout << "Calculate delta: v " << v << "Is connected with w" << w << std::endl;
+			// DPvw=(1+DP(w)).*NP(v)./NP(w);
+			double sigma_v = gsl_vector_get(sigma, p_index);
+			double sigma_w = gsl_vector_get(sigma, w);
+			double dpvw = (1.0 + delta_w) * sigma_v / sigma_w;
+			//	std::cout << " sigma_v " << sigma_v << " sigma_w " << sigma_w << " dpvw " << dpvw << std::endl;
+			// DP(v)=DP(v)+DPvw;
+			double *dpv =  gsl_vector_ptr(delta, p_index);
+			*dpv =  *dpv + dpvw;
+	//		std::cout << "New delta " <<  dpv + dpvw << " For node " << v << endl;
+		}
 		
 	}
-	if (found_p_row != NULL) {
-		gsl_vector_free(found_p_row);
-	}
+//	if (found_p_row != NULL) {
+//		gsl_vector_free(found_p_row);
+//	}
+}
+
+int *InitMap(int numberOfVertex){
+	int *local_map = (int*)malloc(numberOfVertex*sizeof(int));
+	memset(local_map,-1,numberOfVertex*sizeof(int));
+	return local_map;
+}
+
+void resetMap(int numberOfVertex,int *D){
+	memset(D,-1,numberOfVertex*sizeof(int));
 }
 
 void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gsl_matrix* sourceGraph, gsl_vector* betweenness_centrality) const {
@@ -184,25 +192,26 @@ void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gs
 		trace.trace(CTrace::TRACE_ERROR,"ERROR size2 and size2 different");
 		return;
 	}
-//	gsl_matrix * copy_sourceGraph = gsl_matrix_alloc(sourceGraph->size1,sourceGraph->size2);
-//	gsl_matrix_memcpy ( copy_sourceGraph, sourceGraph );
-	// for u=1:n
+    int *D = InitMap((int)sourceGraph->size2);
+	gsl_vector* sigma = gsl_vector_calloc(sourceGraph->size1);
+	gsl_matrix* P = gsl_matrix_calloc(sourceGraph->size1, sourceGraph->size2);
 	for (int s = 0; s < (int)sourceGraph->size1; s++) {
 //		std::cout << "Working with s: " << s << "---------"<< endl;
 		
-		map<int, int> D; //   D={}
+		resetMap((int)sourceGraph->size1,D);
+		//   D={}
 		D[s]=0;
 	//	for (std::map<int,int>::iterator it=D.begin(); it!=D.end(); ++it)
 	//		std::cout << it->first << " => " << it->second << '\n';
 		
 		
 		// sigma=dict.fromkeys(G,0)    # sigma[v]=0 for v in G
-		gsl_vector* sigma = gsl_vector_calloc(sourceGraph->size1);
+		gsl_vector_set_zero (sigma);
 		gsl_vector_set(sigma, s, 1.0);  //   sigma[s]=1
 		
 		//  P={} //  for v in G: P[v]=[]
-		gsl_matrix* P = gsl_matrix_calloc(sourceGraph->size1, sourceGraph->size2);
 		
+		gsl_matrix_set_zero(P);
 
 		// Q=[s]
 		std::queue<int> Queue;
@@ -220,9 +229,11 @@ void graphIndicatorBetweennessCentrality::node_and_edge_betweenness_bin(const gs
 
 		}
 		recalculateDeltaAndBetweennessCentrality(S,P,s,sigma,betweenness_centrality);
-		gsl_matrix_free(P);
-		gsl_vector_free(sigma);
+		
+		
 	}
+	gsl_vector_free(sigma);
+	gsl_matrix_free(P);
 //	gsl_matrix_free(copy_sourceGraph);
 	
 }
@@ -247,30 +258,7 @@ int  graphIndicatorBetweennessCentrality::allNonZero(const gsl_vector* v) const 
 	return 1;
 }
 
-// Matrix-by-two-vectors indexing (non-mixed)
 
-gsl_matrix* graphIndicatorBetweennessCentrality::submatrix(const gsl_matrix* m, const gsl_vector* rows,
-									int column_size){
-	
-	if ( m  == NULL ) {
-		throw runtime_error("matrix is NULL");
-	}
-	if ( rows	== NULL ) {
-		throw runtime_error("ROWS is NULL");
-	}
-	if ( column_size == 0)
-		throw runtime_error("column size cannot be 0");
-	
-	gsl_matrix* index_m = gsl_matrix_alloc(rows->size, column_size);
-	for (int i = 0; i < (int)rows->size; i++) {
-		int row = (int)gsl_vector_get(rows, i);
-		for (int j = 0; j < column_size; j++) {
-			double value = gsl_matrix_get(m, row, j);
-			gsl_matrix_set(index_m, i, j, value);
-		}
-	}
-	return index_m;
-}
 
 
 gsl_vector* graphIndicatorBetweennessCentrality::anyUnconnectedVertex(const gsl_matrix* m ) const {

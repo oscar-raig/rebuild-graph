@@ -17,28 +17,7 @@ int numberOfTestExeccuted = 0;
 int numberOfTests = 0;
 #define DIR_GRAPHS "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/"
 
-void UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_logical_not_1010(){
-	CFuncTrace trace(true,"UTest_getNumberOfNonZeroInVector_NoNonZeros");
-	graphIndicatorBetweennessCentrality *betweennessCentrality =
-	new graphIndicatorBetweennessCentrality ( NULL );
-	
-	gsl_vector *  vector1010= gsl_vector_calloc(4);
-	gsl_vector *  vector0101 = betweennessCentrality->logical_not(vector1010);
-	
-	for ( int i = 0; i < 4; i++){
-		bool Iszero10101 = betweennessCentrality->fp_zero(gsl_vector_get(vector1010,i));
-		bool Iszero01010 =  betweennessCentrality->fp_zero(gsl_vector_get(vector0101,i));
 
-		BOOST_CHECK( Iszero10101 != Iszero01010);
-	}
-	
-	gsl_vector_free( vector0101 );
-	gsl_vector_free( vector1010 );
-	delete betweennessCentrality;
-	
-	trace.trace(CTrace::TRACE_INFO,"Executing test %d/%d",
-				++numberOfTestExeccuted,numberOfTests);
-}
 
 void UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_NoNonZeros(){
 	
@@ -188,7 +167,6 @@ func_type functions[]={
 	,UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14
 	,UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_2NonZeros
 	,UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_NoNonZeros
-	,UTest_graphIndicatorBetweennessCentrality_getNumberOfNonZeroInVector_logical_not_1010
 	,UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite
 };
 
