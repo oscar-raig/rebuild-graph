@@ -155,8 +155,9 @@ int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
 		if ( newNeighbour> getOrder())
 			throw "ERROR: newNeighbour is greate than order";
 		
-		if ( !gsl_matrix_get(matrix,sourceVertex,newNeighbour) ){
-			gsl_matrix_set (matrix, sourceVertex,newNeighbour, 1);
+		double *element = gsl_matrix_ptr(matrix,sourceVertex,newNeighbour);
+		if ( !*element ){
+			*element= 1;
 			weHaveConnected = true;
 			if ( this->vertex_degree )
 				this->vertex_degree[sourceVertex] = this->vertex_degree[sourceVertex]+ 1;
@@ -167,9 +168,10 @@ int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
 			sourceWasConnected = true;	
 			
 		}
-			
-		if ( !gsl_matrix_get(matrix, newNeighbour,sourceVertex) ){
-			gsl_matrix_set (matrix, newNeighbour,sourceVertex, 1);
+		
+		element = gsl_matrix_ptr(matrix, newNeighbour,sourceVertex);
+		if ( !*element ){
+			*element = 1;
 			weHaveConnected = true;
 			this->vertex_degree[newNeighbour] = this->vertex_degree[newNeighbour] +1;
 		}else{
@@ -268,13 +270,14 @@ void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
 	int maxDegree = 0;
 	if ( vertexToRemoveNegighbours < order ){
 		for (int i = 0; i < order ; i++ ){
-			
-			if ( gsl_matrix_get(matrix,vertexToRemoveNegighbours,i )){
-				gsl_matrix_set(matrix,vertexToRemoveNegighbours,i,0);
+			double *element = gsl_matrix_ptr(matrix,vertexToRemoveNegighbours,i );
+			if ( *element){
+				*element= 0;
 				this->vertex_degree[vertexToRemoveNegighbours]--;
 			}
-			if ( gsl_matrix_get(matrix,i,vertexToRemoveNegighbours)){
-				gsl_matrix_set(matrix,i,vertexToRemoveNegighbours,0);
+			element = gsl_matrix_ptr(matrix,i,vertexToRemoveNegighbours);
+			if (*element){
+				*element = 0;
 				this->vertex_degree[i]--;
 			}
 			if( vertexToRemoveNegighbours != i){
@@ -320,12 +323,14 @@ void  gslGraph::addNewVertexNeighbour(int sourceVertex,int newNeighbour){
 	CFuncTrace trace (false,"gslGraph::addNewVertexNeighbour");
 	if(((order+1)>sourceVertex) &&
 	   ((order+1)>newNeighbour)) {
-		if ( !gsl_matrix_get(matrix,sourceVertex,newNeighbour )){
-			gsl_matrix_set(matrix,sourceVertex,newNeighbour,1);
+		double *element = gsl_matrix_ptr(matrix,sourceVertex,newNeighbour );
+		if ( !*element){
+			*element = 1;
 			vertex_degree[sourceVertex]++;
 		}
-		if ( !gsl_matrix_get(matrix,newNeighbour,sourceVertex )){
-			gsl_matrix_set(matrix,newNeighbour,sourceVertex,1);
+		element = gsl_matrix_ptr(matrix,newNeighbour,sourceVertex );
+		if ( !*element){
+			*element = 1;
 			vertex_degree[newNeighbour]++;
 		}
 		if(this->degree < vertex_degree[newNeighbour])
