@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include <cmath>
+#include <stdio.h>
+#include <string.h>
 #include "CTrace.hpp"
 #include "gslGraph.h"
 #include <matrix/gsl_matrix.h>
@@ -49,6 +51,7 @@ private:
 	int order;
 	int degree;
 	gsl_matrix * matrix;
+	int *vertex_degree;
 	
 public:
 	
@@ -57,17 +60,33 @@ public:
 	virtual ~gslGraph();
 	virtual gslGraph *readPythonGraphFile(std::string fileName);
 	virtual gslGraph*	copyGraph() const ;
-
+	gsl_matrix* getGslMatrix(){return matrix;}
 	
 	// Get the number of vertex (order) of the graph
-	virtual int getOrder() const { return order;};
-	// Get the graph degree
-	virtual int getDegree() const;
-	virtual int getDegree(int vertex)const;
+	inline int getOrder() const { return order;};
 	
+	// Get the graph degree
+	inline int  getDegree() const {
+		return this->degree;
+	};
+	
+	inline int getDegree(int vertex)const {
+		
+		if ( vertex > order )
+			throw "ERROR: Asking for vertex greater than order";
+		
+		
+		return vertex_degree[vertex];
+	}
 	virtual void printMyGraph(const char * outputGraphFilename,bool outputAsAdjacencyList) const;
 	void printGraph(int TRACE_LEVEL = CTrace::TRACE_DEBUG);
-	
+	void printVertexDegree(){
+		
+		for (int i =0 ; i < order;i++){
+			std::cout << vertex_degree[i] << std::endl;
+		}
+		std::cout <<  std::endl;
+	}
 	
 	
 	// Add a vertex with the given newVertexId identifier to the graph

@@ -59,7 +59,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--graphFile /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/to_sent_2015_01_25/example_graphs/circ-inipy.txt --algorithm 2  "
+            argument = "--graphFile /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/to_sent_2015_01_25/example_graphs/SCadj0.txt --algorithm 2  --output-format-adjlist --nIteration 320 --nMax 10 --To 40 --TMin 0.001 --k 0.9 --seed_x  12  --seed_y  13 --seed_z  14"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

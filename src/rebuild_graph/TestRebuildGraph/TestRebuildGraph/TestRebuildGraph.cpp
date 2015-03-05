@@ -8,6 +8,7 @@
 #include "rebuildgraph.h"
 #include "AbstractFactoryPatternRebuildGraph.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
+#include <ctime>
 
 using namespace boost::unit_test;
 
@@ -212,7 +213,7 @@ BOOST_AUTO_TEST_CASE(test_wheel14_BETWEENNESS_CENTRALITY){
 	
 	std::cout << " BETWEENNESS CENTRALITY with wheel 14>>" << std::endl;
 	double compareResult = 10;
-	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,1000,&compareResult,0.0478094);
+	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,1000,&compareResult,0.0458888);
 	std::cout << "BETWEENESS CENTRALITY wheel 14 Result:" << compareResult << " <<" << std::endl;
 }
 #endif
@@ -242,7 +243,8 @@ BOOST_AUTO_TEST_CASE( UTest_Betweeness_centraliyt_4_nodes_and_communicabilt_betw
 	simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,100,&compareResult);
 	
 	
-	simulation(COMMUNICABILITY_CENTRALITY, "test.gpfc" ,100,&compareResult,0.047794677317142487);
+	simulation(COMMUNICABILITY_CENTRALITY, "test.gpfc" ,1000,&compareResult);
+	std::cout << "BETWEENNESS_CENTRALITY " << compareResult << " <<" << std::endl;
 }
 #endif
 
@@ -531,13 +533,11 @@ BOOST_AUTO_TEST_CASE(test_generateInitialGraph_order_10_){
 
 BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes){
 	CFuncTrace trace (true,"test_generateInitialGraph_brandes_communicability_10_nodes");
-	int random_value_x=11,random_value_y=92,random_value_z=37;
 	double *newBC = NULL;
 	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
 	
 	strategyPatternAlgorithm->generateInitialGraph(10);
 	gslGraph *  generalGraph = strategyPatternAlgorithm->getGraph();
-	// generalGraph->brandes_comunicability_centrality_exp(newBC);
 	
 	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
 	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(generalGraph);
@@ -550,26 +550,44 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 		trace.trace(CTrace::TRACE_INFO,"NEWBC %f",newBC[j]);
 		
 	}
-	BOOST_CHECK(abs(19.780136 - newBC[0]) < 0.00001);
-	BOOST_CHECK(abs(37.142999 - newBC[1]) < 0.00001);
-	BOOST_CHECK(abs(27.733060 - newBC[2] )< 0.00001);
-	BOOST_CHECK(abs(18.014479 - newBC[3]) < 0.00001);
-	BOOST_CHECK(abs(2.071303 - newBC[4]) < 0.00001);
-	BOOST_CHECK(abs(20.609464 - newBC[5]) < 0.00001);
-	BOOST_CHECK(abs(53.250202 - newBC[6] )< 0.00001);
-	BOOST_CHECK(abs(33.859518 - newBC[7]) < 0.00001);
-	BOOST_CHECK(abs(34.453578 - newBC[8]) < 0.00001);
-	BOOST_CHECK(abs(28.560175 - newBC[9]) < 0.00001);
+	BOOST_CHECK(abs(261.013261 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(225.343407 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(175.408517 - newBC[2] )< 0.00001);
+	BOOST_CHECK(abs(261.013261 - newBC[3]) < 0.00001);
+	BOOST_CHECK(abs(175.408517 - newBC[4]) < 0.00001);
+	BOOST_CHECK(abs(181.020066 - newBC[5]) < 0.00001);
+	BOOST_CHECK(abs(181.020066 - newBC[6] )< 0.00001);
+	BOOST_CHECK(abs(261.013261 - newBC[7]) < 0.00001);
+	BOOST_CHECK(abs(142.901666 - newBC[8]) < 0.00001);
+	BOOST_CHECK(abs(98.909936 - newBC[9]) < 0.00001);
+	
+	for ( int j =0 ; j < 10; j++){
+		trace.trace(CTrace::TRACE_INFO,"Degree %d",generalGraph->getDegree(j));
+		
+	}
+	BOOST_CHECK( 9 == generalGraph->getDegree(0));
+	BOOST_CHECK( 8 == generalGraph->getDegree(1));
+	BOOST_CHECK( 7 == generalGraph->getDegree(2));
+	BOOST_CHECK( 9 == generalGraph->getDegree(3));
+	BOOST_CHECK( 7 == generalGraph->getDegree(4));
+	BOOST_CHECK( 7 == generalGraph->getDegree(5));
+	BOOST_CHECK( 7 == generalGraph->getDegree(6));
+	BOOST_CHECK( 9 == generalGraph->getDegree(7));
+	BOOST_CHECK( 6 == generalGraph->getDegree(8));
+	BOOST_CHECK( 5 == generalGraph->getDegree(9));
+
+	
+	generalGraph->printGraph(CTrace::TRACE_INFO);
 	
 	gslGraph *newGraph=NULL;
 	newGraph=generalGraph->copyGraph();
 	
 	
 	
-	strategyPatternAlgorithm->modifyGraph(newGraph);
-	// en aqest p
-	
-    //newGraph->brandes_comunicability_centrality_exp(newBC);
+	strategyPatternAlgorithm->modifyGraph(newGraph,CTrace::TRACE_INFO);
+	newGraph->printGraph(CTrace::TRACE_INFO);
+
+
 	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentralityCopy =
 	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(newGraph);
 	
@@ -580,23 +598,32 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 		trace.trace(CTrace::TRACE_INFO,"NEWBC 2 %f",newBC[j]);
 		
 	}
-	BOOST_CHECK(abs(20.251314 - newBC[0]) < 0.00001);
-	BOOST_CHECK(abs(27.104859 - newBC[1]) < 0.00001);
-	BOOST_CHECK(abs(32.967459 - newBC[2] )< 0.00001);
-	BOOST_CHECK(abs(19.221320 - newBC[3]) < 0.00001);
-	BOOST_CHECK(abs(3.946619 - newBC[4]) < 0.00001);
-	BOOST_CHECK(abs( 15.363911 - newBC[5]) < 0.00001);
-	BOOST_CHECK(abs(49.258089 - newBC[6] )< 0.00001);
-	BOOST_CHECK(abs(39.717238 - newBC[7]) < 0.00001);
-	BOOST_CHECK(abs(24.218654 - newBC[8]) < 0.00001);
-	BOOST_CHECK(abs(19.136546 - newBC[9]) < 0.00001);
+	BOOST_CHECK(abs(261.013261 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(225.343407 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(175.408517 - newBC[2] )< 0.00001);
+	BOOST_CHECK(abs(261.013261 - newBC[3]) < 0.00001);
+	BOOST_CHECK(abs(175.408517 - newBC[4]) < 0.00001);
+	BOOST_CHECK(abs(181.020066 - newBC[5]) < 0.00001);
+	BOOST_CHECK(abs(181.020066 - newBC[6] )< 0.00001);
+	BOOST_CHECK(abs(261.013261 - newBC[7]) < 0.00001);
+	BOOST_CHECK(abs(142.901666 - newBC[8]) < 0.00001);
+	BOOST_CHECK(abs(98.909936 - newBC[9]) < 0.00001);
 	
+	BOOST_CHECK( 9 == newGraph->getDegree(0));
+	BOOST_CHECK( 8 == newGraph->getDegree(1));
+	BOOST_CHECK( 7 == newGraph->getDegree(2));
+	BOOST_CHECK( 9 == newGraph->getDegree(3));
+	BOOST_CHECK( 7 == newGraph->getDegree(4));
+	BOOST_CHECK( 7 == newGraph->getDegree(5));
+	BOOST_CHECK( 7 == newGraph->getDegree(6));
+	BOOST_CHECK( 9 == newGraph->getDegree(7));
+	BOOST_CHECK( 6 == newGraph->getDegree(8));
+	BOOST_CHECK( 5 == newGraph->getDegree(9));
 }
 
 
 BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes){
-	CFuncTrace trace (true,"test_2");
-	int random_value_x=11,random_value_y=92,random_value_z=37;
+	CFuncTrace trace (true,"UTest_generateInitialGraph_brandes_communicability_5_nodes");
 	double *newBC = NULL;
 	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
 	
@@ -617,16 +644,16 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes)
 		
 	}
 	
-	BOOST_CHECK(abs(7.239877 - newBC[0]) < 0.00001);
-	BOOST_CHECK(abs(5.154875 - newBC[1]) < 0.00001);
-	BOOST_CHECK(abs(5.154875 - newBC[2]) < 0.00001);
-	BOOST_CHECK(abs(5.154875 - newBC[3]) < 0.00001);
-	BOOST_CHECK(abs(5.154875 - newBC[4]) < 0.00001);
+	BOOST_CHECK(abs(9.063906 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(9.063906 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(6.524227 - newBC[2]) < 0.00001);
+	BOOST_CHECK(abs(9.063906 - newBC[3]) < 0.00001);
+	BOOST_CHECK(abs(6.524227 - newBC[4]) < 0.00001);
 	
 	gslGraph *newGraph=NULL;
 	newGraph=generalGraph->copyGraph();
 	
-//	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
+
 	strategyPatternAlgorithm->modifyGraph(newGraph);
 	// en aqest p
 	//newGraph->brandes_comunicability_centrality_exp(newBC);
@@ -639,15 +666,72 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes)
 	
 	for ( int j =0 ; j < 5; j++){
 		trace.trace(CTrace::TRACE_INFO,"NEWBC 2 %f",newBC[j]);
-		
 	}
-//	newGraph->printGraph();
-	BOOST_CHECK(abs(7.472245 - newBC[0]) < 0.00001);
-	BOOST_CHECK(abs(5.820453 - newBC[1]) < 0.00001);
-	BOOST_CHECK(abs(7.472245 - newBC[2] )< 0.00001);
-	BOOST_CHECK(abs(5.820453 - newBC[3]) < 0.00001);
-	BOOST_CHECK(abs(3.521522 - newBC[4]) < 0.00001);
+	BOOST_CHECK(abs(6.236668 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(6.236668 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(3.371805 - newBC[2]) < 0.00001);
+	BOOST_CHECK(abs(3.371805 - newBC[3]) < 0.00001);
+	BOOST_CHECK(abs(3.371805 - newBC[4]) < 0.00001);
 	
 }
 
+
+
+BOOST_AUTO_TEST_CASE(UTEST_GENErateRandomNumbers){
+	CFuncTrace trace (true,"UTEST_GENErateRandomNumbers");
+	StrategyPatternAlgorithm * strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
+	int values_random[10];
+	memset(values_random,0,10*sizeof(int));
+	for ( int i = 0; i < 10 ; i++){
+		double value =strategyPatternAlgorithm->generateRandomNumber();
+		trace.trace(CTrace::TRACE_INFO,"%f",value);
+		values_random[(int)(value*10.0)]++;
+	}
+	for ( int i = 0; i < 10 ; i++){
+		trace.trace(CTrace::TRACE_INFO," %d %d",i, values_random[i]);
+	}
+	
+	BOOST_CHECK(values_random[0] == 0);
+	BOOST_CHECK(values_random[1] == 0);
+	BOOST_CHECK(values_random[2] == 0);
+	BOOST_CHECK(values_random[3] == 2);
+	BOOST_CHECK(values_random[4] == 1);
+	BOOST_CHECK(values_random[5] == 0);
+	BOOST_CHECK(values_random[6] == 3);
+	BOOST_CHECK(values_random[7] == 3);
+	BOOST_CHECK(values_random[8] == 1);
+	BOOST_CHECK(values_random[9] == 0);
+	
+}
+
+BOOST_AUTO_TEST_CASE(UTest_Betweeness_centraliy_wheel14_execution_time){
+	CFuncTrace trace (true,"UTest_Betweeness_centraliyt_wheel14_execution_time");
+	using namespace std;
+	clock_t begin = clock();
+	double compareResult = 10;
+	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,1000,&compareResult,0.0458888);
+	clock_t end = clock();
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	trace.trace(CTrace::TRACE_INFO,"Elapsed time %f %f",elapsed_secs,compareResult);
+	// 56.893174 seconds 69.096907 72.344237 37.685672(-O3 and -DHAVE_INLINE -DGSL_RANGE_CHECK_OFF
+	// 36.947093 matrix_calloc instead matrix zero
+	// 28.101863, deleting sequence 25.411876
+	// inline 23.243 // 22.87308 12.6194 10.082
+	BOOST_CHECK((elapsed_secs ) < ( 10.082 + (elapsed_secs / 10)));
+	
+}
+
+BOOST_AUTO_TEST_CASE(UTest_CommunicabilityBetweenessCentrality_wheel14_execution_time){
+	CFuncTrace trace (true,"UTest_CommunicabilityBetweenessCentrality_wheel14_execution_time");
+	using namespace std;
+	clock_t begin = clock();
+	double compareResult = 10;
+	simulation(COMMUNICABILITY_CENTRALITY, "wheel14.txt" ,1000,&compareResult);
+	clock_t end = clock();
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	trace.trace(CTrace::TRACE_INFO,"Elapsed time %f %f",elapsed_secs,compareResult);
+	// 5.085668 , 4.088514 inline  3.983686
+	BOOST_CHECK((elapsed_secs ) < ( 3.945558 + (elapsed_secs / 10)));
+	
+}
 

@@ -2,10 +2,12 @@
 #include "CTrace.hpp"
 #include<stdio.h>
 
+
+
 void CFuncTrace::trace(const char *Format, va_list  vaArguments){
 	char szOutput[10000];
 	vsnprintf(szOutput, 1000, Format, vaArguments);
-	cout << this->FunctionName + " "  + szOutput << endl;
+	cout << GetTimeDate () << this->FunctionName + " "  + szOutput << endl;
 }
 
 
@@ -27,7 +29,7 @@ void CFuncTrace::trace(int level, const char *Format, ...){
 			traceLevelName = "INFO";
 			break;
 	}
-	cout << traceLevelName << " " << this->FunctionName + " "  + szOutput << endl;
+	cout <<  GetTimeDate () << traceLevelName << " " << this->FunctionName + " "  + szOutput << endl;
 	va_end(vaArguments);
 
 }

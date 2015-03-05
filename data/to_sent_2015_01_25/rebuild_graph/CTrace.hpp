@@ -29,6 +29,20 @@ public:
 	std::string FunctionName;
 	bool traceOnCreateAndDestroy;
 public:
+	string GetTimeDate(){
+		
+		time_t rawtime;
+		struct tm * timeinfo;
+		char buffer[80];
+		
+		time (&rawtime);
+		timeinfo = localtime(&rawtime);
+		
+		strftime(buffer,80,"%d-%m-%Y %I:%M:%S ",timeinfo);
+		std::string str(buffer);
+		
+		return str;
+	}
     CFuncTrace (bool traceOnCreateAndDestroy,string FunctionName){
 
 		levelTrace = CTrace::TRACE_INFO;
@@ -38,12 +52,12 @@ public:
 		this->FunctionName = FunctionName;
 		this->traceOnCreateAndDestroy = traceOnCreateAndDestroy;
 		if (traceOnCreateAndDestroy)
-			cout << FunctionName + ">>" << endl;
+			cout <<  GetTimeDate() << FunctionName + ">>" << endl;
 	};
 	
 	~CFuncTrace(){
 		if (this->traceOnCreateAndDestroy)
-			cout << FunctionName + "<<" << endl;
+			cout <<  GetTimeDate() << FunctionName + "<<" << endl;
 	}
 	void trace( const char *Format,va_list  vaArguments);
 	void trace(int level, const char *Format, ...);

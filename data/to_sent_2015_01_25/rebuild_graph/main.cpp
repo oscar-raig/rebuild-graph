@@ -103,6 +103,7 @@ po::options_description GetOptionsDescription(){
 	
 	("TMin",po::value<double>(),"TMin")
 	("output-format-adjlist","output format adjlist")
+	("threshold-accpting","Using threshold accepting")
 	("only-calculate-indicator","only calculates the BC, CB or CBC of the input file")
 	("algorithm",po::value<int>(),"algorithm 1:BETWEENESS CENTRALITY, 2:COMMUNICABILITY BETWEENESS, 3: COMMUNICABILITY BETWEENESS CENTRALITY ");
 	return argumentDescription;
@@ -197,6 +198,11 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 		settingsSimulation->random_value_z = argumentMap["seed_z"].as<int>();
 		std::cout << "seed_z " << settingsSimulation->random_value_z  << std::endl;
 		
+	}
+	if ( argumentMap.count("threshold-accepting")  )
+	{
+		settingsSimulation->thresholdAccepting = THRESHOLD_ACCEPTING_ALGORITHM;
+		std::cout << "Threshold-accepting" << std::endl;
 	}
 	
 	

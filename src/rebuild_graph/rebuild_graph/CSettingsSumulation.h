@@ -31,6 +31,9 @@ namespace po = boost::program_options;
 #define COMMUNICABILITY_CENTRALITY 2
 #define COMMUNICABILITY_BETWEENESS_CENTRALITY 3
 
+#define ANNEALING_ALGORITHM				1
+#define THRESHOLD_ACCEPTING_ALGORITHM	2
+
 
 #define OUTPUT_BINARY false
 #define OUTPUT_ADJACENCY_LIST true
@@ -48,6 +51,7 @@ public:
 	int graphProperty;
 	int maxIterations;
 	int outputFormatGraphResultAdjList;
+	int thresholdAccepting;
 	
 	CSettingsSimulation():
 	k(DEFAULT_K),nMax(DEFAULT_N_MAX),
@@ -57,7 +61,8 @@ public:
 	random_value_z(DEFAULT_SEED_Z),
 	graphProperty(BETWEENNESS_CENTRALITY),
 	maxIterations(DEFAULT_MAX_ITERATIONS),
-	outputFormatGraphResultAdjList(OUTPUT_ADJACENCY_LIST)
+	outputFormatGraphResultAdjList(OUTPUT_ADJACENCY_LIST),
+	thresholdAccepting(ANNEALING_ALGORITHM)
 	{
 	}
 	
@@ -69,7 +74,8 @@ public:
 		random_value_z(DEFAULT_SEED_Z),
 		graphProperty(BETWEENNESS_CENTRALITY),
 		maxIterations(DEFAULT_MAX_ITERATIONS),
-		outputFormatGraphResultAdjList(OUTPUT_ADJACENCY_LIST)
+		outputFormatGraphResultAdjList(OUTPUT_ADJACENCY_LIST),
+		thresholdAccepting(ANNEALING_ALGORITHM)
 	{
 		if (argumentMap.count("graphFile")){
 			inputFileName = argumentMap["graphFile"].as<std::string>();
