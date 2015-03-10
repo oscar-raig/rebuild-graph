@@ -55,7 +55,7 @@ using namespace boost::unit_test;
 #define COMPARA
 #define TEST_ANALIZA
 // 2014-11-11 GRAPH
-//#define DEFAULT_GRAPH_TEST_TNODES
+#define DEFAULT_GRAPH_TEST_TNODES
 
 
 void simulation( int algorithm, std::string GraphName, int nMax,
@@ -294,7 +294,6 @@ BOOST_AUTO_TEST_CASE( UTest_analitza){
 #endif
 
 
-#ifdef DEFAULT_GRAPH_TEST_TNODES
 BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 		CFuncTrace trace (true,"graph_betweness_centrality");
 		const char *largv[2]={"program_name","/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc"};
@@ -307,16 +306,12 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 	settingSimulation->setMaxIterations(100);
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	double compareResult = 0.0;
-	rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
+	rebuildGraph->regenerateGraph(settingSimulation,BestBC,graphOrder,compareResult);
 		BOOST_CHECK( 4 == graphOrder);
-		double ExpectedTargetBC[4]={0,0.66,0.66,0};
 		double ExpectedBestBC[4]={0,0.66,0.66,0};
 		for (int nVertex = 0;nVertex < graphOrder;nVertex++){
 		
-			std::cout << "TargetBC[" << nVertex << "]" << TargetBC[nVertex] << std::endl;
 			std::cout << "BestBC[" << nVertex << "]" << BestBC[nVertex] << std::endl;
-			
-			BOOST_CHECK(fabs(TargetBC[nVertex] - ExpectedTargetBC[nVertex]) < 0.1 );
 			BOOST_CHECK(fabs(BestBC[nVertex] - ExpectedBestBC[nVertex]) < 0.1 );
 		}
 		free(TargetBC);
@@ -328,7 +323,7 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 		graphOrder = 0;
 	settingSimulation->inputFileName = largv[1];
 		compareResult = 0.0;
-		rebuildGraph->regenerateGraph(settingSimulation,TargetBC,BestBC,graphOrder,compareResult);
+		rebuildGraph->regenerateGraph(settingSimulation,BestBC,graphOrder,compareResult);
 		BOOST_CHECK( 20 == graphOrder);
 		double expectedTargetBCBarabase[20]={0.0139492459,0.0000000000,0.0121514823,0.0099333301,0.2414517944,
 			0.1100452867,	0.1536684219, 0.0866688151,	0.0177944862, 0.0201197438,
@@ -343,35 +338,14 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 	
 		for (int nVertex = 0;nVertex < graphOrder;nVertex++){
 			
-//			std::cout << "TargetBC[" << nVertex << "]" << TargetBC[nVertex] << std::endl;
-//			std::cout << "BestBC[" << nVertex << "]" << BestBC[nVertex] << std::endl;
-			
-			BOOST_CHECK(fabs(TargetBC[nVertex] - expectedTargetBCBarabase[nVertex]) < 0.1 );
 			BOOST_CHECK(fabs(BestBC[nVertex] - expectedBestBCBarabase[nVertex]) < 0.1 );
 		}
 		free(TargetBC);
 		free(BestBC);
 	
-	/* Testing files results for barabasi out*/
-	 std::ifstream ifs1("/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc.out");
-	 std::ifstream ifs2("/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc.out.expected");
-	 
-	 std::istream_iterator<char> b1(ifs1), e1;
-	 std::istream_iterator<char> b2(ifs2), e2;
-	 
-	 BOOST_CHECK_EQUAL_COLLECTIONS(b1, e1, b2, e2);
 	
-	/* Testing files results for barabasi res*/
-	std::ifstream ifs1res("/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc.res");
-	std::ifstream ifs2res("/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc.res.expected");
-	
-	std::istream_iterator<char> b1res(ifs1res), e1res;
-	std::istream_iterator<char> b2res(ifs2res), e2res;
-	
-	BOOST_CHECK_EQUAL_COLLECTIONS(b1res, e1res, b2res, e2res);
-
 }
-#endif
+
 
 
 
@@ -734,4 +708,35 @@ BOOST_AUTO_TEST_CASE(UTest_CommunicabilityBetweenessCentrality_wheel14_execution
 	BOOST_CHECK((elapsed_secs ) < ( 3.945558 + (elapsed_secs / 10)));
 	
 }
+
+
+BOOST_AUTO_TEST_CASE(UTest_StrategyPatternAlgorithmThresholdAccepting){
+	
+	CFuncTrace trace (true,"UTest_StrategyPatternAlgorithmThresholdAccepting");
+
+	const char *largv="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc";
+	double *TargetBC = NULL;
+	double *BestBC = NULL;
+	int graphOrder = 0;
+	CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
+	settingSimulation->inputFileName =largv;
+	settingSimulation->setNMax(100);
+	settingSimulation->setMaxIterations(100);
+	settingSimulation->thresholdAccepting = THRESHOLD_ACCEPTING_ALGORITHM;
+	CRebuildGraph *rebuildGraph = new CRebuildGraph();
+	double compareResult = 0.0;
+	rebuildGraph->regenerateGraph(settingSimulation,BestBC,graphOrder,compareResult);
+	BOOST_CHECK( 4 == graphOrder);
+	double ExpectedBestBC[4]={0,0.66,0.66,0};
+	for (int nVertex = 0;nVertex < graphOrder;nVertex++){
+		
+		std::cout << "BestBC[" << nVertex << "]" << BestBC[nVertex] << std::endl;
+		BOOST_CHECK(fabs(BestBC[nVertex] - ExpectedBestBC[nVertex]) < 0.1 );
+	}
+	free(TargetBC);
+	free(BestBC);
+	free(settingSimulation);
+}
+
+
 

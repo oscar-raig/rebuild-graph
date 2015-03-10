@@ -22,7 +22,7 @@ public:
 		if ( algorithm == ANNEALING_ALGORITHM)
 			return new StrategyPatternAlgorithm(settings);
 		else
-			return new StrategyPatternAlgorithm(settings);
+			return new StrategyPatternAlgorithmThresholdAccepting(settings);
 		};
 	
 };
