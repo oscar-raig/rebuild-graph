@@ -93,7 +93,7 @@ public:
 		timeStart=time(NULL);
 		if ( settingsSimulation == NULL )
 			throw std::runtime_error("settingsSimulation is NULL");
-		double Tk=TEMPER_INITIAL_DEFAULT;
+		double Tk=settingsSimulation->tMin;
 		strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
 		strcpy(outputGraphFilename,inputFilename);
 		strcat(outputGraphFilename,".res");
