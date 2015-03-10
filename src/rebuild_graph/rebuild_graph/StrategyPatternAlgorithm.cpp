@@ -158,40 +158,7 @@ void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 	
 }
 
-void StrategyPatternAlgorithm::Loop(double &costNew,double &costBest,
-									gslGraph ** newGraph,double *newBC, double *bestBC,
-									int graphOrder,int &weAreDone, double Tk,int N){
-	CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::Loop");
-	
-	if(costNew<costBest){
-		costBest=costNew;
-		this->setGraph( (*newGraph)->copyGraph() );
-		
-		memcpy(bestBC,newBC,graphOrder*sizeof(double));
-		if(costBest<=settingsSimulation->tMin){
-			lFuncTrace.trace(STP_INFO,"We are Done costBest < tol %d",N);
-			weAreDone=true;
-			return;
-		}
-		lFuncTrace.trace(CTrace::TRACE_DEBUG,".");
-		fprintf(logFile,".");
-	} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
-		// if newCost not is better than oldCost,
-		// we still accept it if exp(df/T_k)<rand()
-		lFuncTrace.trace(CTrace::TRACE_DEBUG,"o");
-		fprintf(logFile,"o");
-	} else {
-		//otherwise we don't accept the new graph
-		if (*newGraph)
-			delete *newGraph;
-		//newGraph = sourceGraph->copyGraph();
-		*newGraph = this->getGraph()->copyGraph();
-		lFuncTrace.trace(CTrace::TRACE_DEBUG,"Al loro que hi havia aqui un erro, copiant to newgraph sourcegrAPH");
-		lFuncTrace.trace(CTrace::TRACE_DEBUG,"x");
-		fprintf(logFile,"x");
-	}
-	
-}
+
 
 
 void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
@@ -251,7 +218,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 			costOld=costNew;
 			costNew=cost(targetBC,newBC,graphOrder);
 			lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
-			Loop(costNew,costBest,&newGraph,newBC,bestBC,graphOrder,weAreDone,Tk,N);
+			Loop(costNew,costBest,&newGraph,newBC,bestBC,graphOrder,weAreDone,Tk);
 		}
 		fprintf(logFile,"\n");
 		lFuncTrace.trace(STP_INFO,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",

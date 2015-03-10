@@ -58,10 +58,46 @@ public:
 		if (settingsSimulation && settingsSimulationAllocated )
 			delete settingsSimulation;
 	}
+
 	
-	virtual  void Loop(double &costNew,double &costBest,
-			gslGraph ** newGraph,double *newBC, double *bestBC,
-			int graphOrder,int &weAreDone, double Tk,int N);
+	
+	void acceptChangesInGraph(double &costBest,double costNew,gslGraph * newGraph,double *newBC, double *bestBC){
+		costBest=costNew;
+		this->setGraph( newGraph->copyGraph() );
+		memcpy(bestBC,newBC,newGraph->getOrder()*sizeof(double));
+	}
+	
+	void discardChangeInGraph( gslGraph ** newGraph ){
+		if (*newGraph)
+			delete *newGraph;
+		//newGraph = sourceGraph->copyGraph();
+		*newGraph = this->getGraph()->copyGraph();
+	}
+	
+	void Loop(double &costNew,double &costBest,
+					  gslGraph ** newGraph,double *newBC, double *bestBC,
+					  int graphOrder,int &weAreDone, double Tk){
+		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::Loop");
+	//	double Tk=settingsSimulation->tMin;
+		if(costNew<costBest){
+			acceptChangesInGraph(costBest,costNew,*newGraph,newBC,bestBC);
+			fprintf(logFile,".");
+		} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
+			// if newCost not is better than oldCost,
+			// we still accept it if exp(df/T_k)<rand()
+			fprintf(logFile,"o");
+		} else {
+			discardChangeInGraph( newGraph );
+			fprintf(logFile,"x");
+		}
+		if(costBest<=settingsSimulation->tMin){
+			lFuncTrace.trace(STP_INFO,"We are Done costBest < tol");
+			weAreDone=true;
+			return;
+		}
+		
+	}
+	
 	
 	gslGraph * getGraph(){
 		return sourceGraph;
@@ -90,7 +126,7 @@ public:
 					double *costBest);
 	// Rebuilding Graph Main Functions
 
-	virtual void AnnealingAlgorithm(int graphOrder,
+	void AnnealingAlgorithm(int graphOrder,
 							double *&bestBC,double * targetBC,
 							double &costBest);
 };
@@ -103,123 +139,9 @@ public:
 		
 	}
 	
-	void acceptChangesInGraph(double &costBest,double costNew,gslGraph * newGraph,double *newBC, double *bestBC){
-		costBest=costNew;
-		this->setGraph( newGraph->copyGraph() );
-		memcpy(bestBC,newBC,newGraph->getOrder()*sizeof(double));
-	}
-	
-	void discardChangeInGraph( gslGraph ** newGraph ){
-		if (*newGraph)
-			delete *newGraph;
-		//newGraph = sourceGraph->copyGraph();
-		*newGraph = this->getGraph()->copyGraph();
-	}
-	
-	virtual void Loop(double &costNew,double &costBest,
-										gslGraph ** newGraph,double *newBC, double *bestBC,
-										int graphOrder,int &weAreDone){
-		CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithmThresholdAccepting::Loop");
-		double Tk=settingsSimulation->To;
-		if(costNew<costBest){
-			acceptChangesInGraph(costBest,costNew,*newGraph,newBC,bestBC);
-			fprintf(logFile,".");
-		} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
-			// if newCost not is better than oldCost,
-			// we still accept it if exp(df/T_k)<rand()
-			fprintf(logFile,"o");
-		} else {
-			discardChangeInGraph( newGraph );
-			fprintf(logFile,"x");
-		}
-		if(costBest<=settingsSimulation->tMin){
-			lFuncTrace.trace(STP_INFO,"We are Done costBest < tol");
-			weAreDone=true;
-			return;
-		}
-		
-	}
 
 	
-	virtual void AnnealingAlgorithm(int graphOrder,
-													  double *&bestBC,double * targetBC,
-													  double &costBest){
-		
-		CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithmThresholdAccepting::AnnealingAlgorithm");
-		//	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
-		double temperMin=this->settingsSimulation->tMin;
-		double k=this->settingsSimulation->k;
-		int iterations=0;
-//		double tol=TOL;
-		int weAreDone=0;
-		costBest=0.0;
-		double costOld=0.0;
-		double costNew=0.0;
-		long int N=0;
-		double * newBC = new double [graphOrder];
-		double Tk;
-		gslGraph *newGraph=NULL;
-		
-		for(int i=0;i<graphOrder;i++){
-			bestBC[i]=0.0;
-			newBC[i]=0.0;
-		}
-		
-		// STARTING SIMMULATED ANNEALING
-		Tk=settingsSimulation->To;
-		generateInitialGraph(graphOrder);
-		
-		{
-			graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,sourceGraph);
-			bestBC = graphIndicator->calculateIndicator();
-			delete  graphIndicator;
-		}
-		costBest=cost(targetBC,bestBC,graphOrder);
-		costOld=2.0*costBest;
-		costNew=costOld;
-		newGraph=sourceGraph->copyGraph();
-		newGraph->printGraph();
-		lFuncTrace.trace(STP_INFO,"Cost Best=%2.15f Cost New %2.15f Cost Old %2.15f\n",
-						 costBest,costNew,costOld);
-		do{
-			/* Repeat NMAX times */
-			for(N=0;(N<settingsSimulation->nMax)&&(!weAreDone);N++){
-				lFuncTrace.trace(STP_DEBUG,"Iteration N %d",N);
-				
-				modifyGraph(newGraph);
-				
-				{
-					graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,newGraph);
-					if ( newBC)
-						delete newBC;
-					newBC = graphIndicator->calculateIndicator();
-					delete  graphIndicator;
-				}
-				// Update cost variables (new and old graphs)
-				costOld=costNew;
-				costNew=cost(targetBC,newBC,graphOrder);
-				lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
-				Loop(costNew,costBest,&newGraph,newBC,bestBC,graphOrder,weAreDone);
-			}
-			fprintf(logFile,"\n");
-			lFuncTrace.trace(STP_INFO,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
-							 Tk,costBest,weAreDone,iterations);
-			fprintf(logFile,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
-					Tk,costBest,weAreDone,iterations);
-			// Lower temperature: T(k)=k*T(k-1)
-			Tk*=this->settingsSimulation->k;
-			// Update number of iterations
-			iterations++;
-		}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!= settingsSimulation->maxIterations));
-		
-		lFuncTrace.trace(STP_DEBUG,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
-						 Tk,costBest,weAreDone,iterations);
-		if (newGraph)
-			delete newGraph;
-		if ( newBC)
-			delete newBC;
-	}
-
+	
 };
 
 
