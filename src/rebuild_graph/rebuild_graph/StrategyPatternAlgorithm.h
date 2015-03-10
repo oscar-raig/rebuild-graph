@@ -74,15 +74,23 @@ public:
 		*newGraph = this->getGraph()->copyGraph();
 	}
 	
+	virtual bool AreChangesAccepted( double costNew, double costBest,double Tk){
+		
+		return (costNew<costBest);
+	}
+	virtual bool AreChangesAcceptedRandomly(double costNew, double costBest,double Tk ){
+		return (exp((costBest-costNew)/Tk)>generateRandomNumber());
+	}
+	
 	void Loop(double &costNew,double &costBest,
 					  gslGraph ** newGraph,double *newBC, double *bestBC,
 					  int graphOrder,int &weAreDone, double Tk){
 		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::Loop");
 	//	double Tk=settingsSimulation->tMin;
-		if(costNew<costBest){
+		if(AreChangesAccepted(costNew,costBest,Tk)){
 			acceptChangesInGraph(costBest,costNew,*newGraph,newBC,bestBC);
 			fprintf(logFile,".");
-		} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
+		} else if(AreChangesAcceptedRandomly(costNew,costBest,Tk)){
 			// if newCost not is better than oldCost,
 			// we still accept it if exp(df/T_k)<rand()
 			fprintf(logFile,"o");
@@ -134,9 +142,19 @@ public:
 
 class StrategyPatternAlgorithmThresholdAccepting : public StrategyPatternAlgorithm {
 public:
+	
 	StrategyPatternAlgorithmThresholdAccepting(CSettingsSimulation *argummentSettingsSimulation)
 	:StrategyPatternAlgorithm(argummentSettingsSimulation){
 		
+		
+	}
+	
+	virtual bool AreChangesAccepted( double costNew, double costBest,double Tk){
+		double TRHESHOLD = Tk;
+		return ((costBest-costNew)> -TRHESHOLD);
+	}
+	virtual bool AreChangesAcceptedRandomly(double costNew, double costBest,double Tk ){
+		return false;
 	}
 	
 
