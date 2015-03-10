@@ -159,7 +159,7 @@ void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 }
 
 void StrategyPatternAlgorithm::Loop(double &costNew,double &costBest,
-									gslGraph ** newGraph,double tol,double *newBC, double *bestBC,
+									gslGraph ** newGraph,double *newBC, double *bestBC,
 									int graphOrder,int &weAreDone, double Tk,int N){
 	CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::Loop");
 	
@@ -168,7 +168,7 @@ void StrategyPatternAlgorithm::Loop(double &costNew,double &costBest,
 		this->setGraph( (*newGraph)->copyGraph() );
 		
 		memcpy(bestBC,newBC,graphOrder*sizeof(double));
-		if(costBest<=tol){
+		if(costBest<=settingsSimulation->tMin){
 			lFuncTrace.trace(STP_INFO,"We are Done costBest < tol %d",N);
 			weAreDone=true;
 			return;
@@ -202,7 +202,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 //	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
 	double temperMin=this->settingsSimulation->tMin;
 	int iterations=0;
-	double tol=TOL;
+//	double tol=TOL;
 	int weAreDone=0;
 	costBest=0.0;
 	double costOld=0.0;
@@ -251,7 +251,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 			costOld=costNew;
 			costNew=cost(targetBC,newBC,graphOrder);
 			lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
-			Loop(costNew,costBest,&newGraph,tol,newBC,bestBC,graphOrder,weAreDone,Tk,N);
+			Loop(costNew,costBest,&newGraph,newBC,bestBC,graphOrder,weAreDone,Tk,N);
 		}
 		fprintf(logFile,"\n");
 		lFuncTrace.trace(STP_INFO,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",

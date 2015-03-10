@@ -21,12 +21,9 @@
 #define STP_DEBUG CTrace::TRACE_DEBUG
 #define STP_INFO CTrace::TRACE_INFO
 
-//#define TEMPER_INITIAL_DEFAULT 10
-//#define TEMPER_MIN_DEFAULT 0.0001
-//#define NUMBER_MAX_COMBINATIONS_DEFAULT 1000
-//#define K 0.9
-#define TOL 0.0001
-//#define MAX_ITERATIONS 1000
+
+
+
 
 #ifndef STRING_LENGTH
 #define STRING_LENGTH 256
@@ -63,7 +60,7 @@ public:
 	}
 	
 	virtual  void Loop(double &costNew,double &costBest,
-			gslGraph ** newGraph,double tol,double *newBC, double *bestBC,
+			gslGraph ** newGraph,double *newBC, double *bestBC,
 			int graphOrder,int &weAreDone, double Tk,int N);
 	
 	gslGraph * getGraph(){
@@ -135,7 +132,7 @@ public:
 			discardChangeInGraph( newGraph );
 			fprintf(logFile,"x");
 		}
-		if(costBest<=TOL){
+		if(costBest<=settingsSimulation->tMin){
 			lFuncTrace.trace(STP_INFO,"We are Done costBest < tol");
 			weAreDone=true;
 			return;
