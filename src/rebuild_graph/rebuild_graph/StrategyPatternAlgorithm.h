@@ -22,11 +22,11 @@
 #define STP_INFO CTrace::TRACE_INFO
 
 #define TEMPER_INITIAL_DEFAULT 10
-#define TEMPER_MIN_DEFAULT 0.0001
-#define NUMBER_MAX_COMBINATIONS_DEFAULT 1000
-#define K 0.9
+//#define TEMPER_MIN_DEFAULT 0.0001
+//#define NUMBER_MAX_COMBINATIONS_DEFAULT 1000
+//#define K 0.9
 #define TOL 0.0001
-#define MAX_ITERATIONS 1000
+//#define MAX_ITERATIONS 1000
 
 #ifndef STRING_LENGTH
 #define STRING_LENGTH 256
@@ -106,37 +106,39 @@ public:
 		
 	}
 	
+	void acceptChangesInGraph(double &costBest,double costNew,gslGraph * newGraph,double *newBC, double *bestBC){
+		costBest=costNew;
+		this->setGraph( newGraph->copyGraph() );
+		memcpy(bestBC,newBC,newGraph->getOrder()*sizeof(double));
+	}
+	
+	void discardChangeInGraph( gslGraph ** newGraph ){
+		if (*newGraph)
+			delete *newGraph;
+		//newGraph = sourceGraph->copyGraph();
+		*newGraph = this->getGraph()->copyGraph();
+	}
+	
 	virtual void Loop(double &costNew,double &costBest,
-										gslGraph ** newGraph,double tol,double *newBC, double *bestBC,
-										int graphOrder,int &weAreDone, double Tk,int N){
+										gslGraph ** newGraph,double *newBC, double *bestBC,
+										int graphOrder,int &weAreDone){
 		CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithmThresholdAccepting::Loop");
-		
+		double Tk=settingsSimulation->To;
 		if(costNew<costBest){
-			costBest=costNew;
-			this->setGraph( (*newGraph)->copyGraph() );
-			
-			memcpy(bestBC,newBC,graphOrder*sizeof(double));
-			if(costBest<=tol){
-				lFuncTrace.trace(STP_INFO,"We are Done costBest < tol %d",N);
-				weAreDone=true;
-				return;
-			}
-			lFuncTrace.trace(CTrace::TRACE_DEBUG,".");
+			acceptChangesInGraph(costBest,costNew,*newGraph,newBC,bestBC);
 			fprintf(logFile,".");
 		} else if(exp((costBest-costNew)/Tk)>generateRandomNumber()){
 			// if newCost not is better than oldCost,
 			// we still accept it if exp(df/T_k)<rand()
-			lFuncTrace.trace(CTrace::TRACE_DEBUG,"o");
 			fprintf(logFile,"o");
 		} else {
-			//otherwise we don't accept the new graph
-			if (*newGraph)
-				delete *newGraph;
-			//newGraph = sourceGraph->copyGraph();
-			*newGraph = this->getGraph()->copyGraph();
-			lFuncTrace.trace(CTrace::TRACE_DEBUG,"Al loro que hi havia aqui un erro, copiant to newgraph sourcegrAPH");
-			lFuncTrace.trace(CTrace::TRACE_DEBUG,"x");
+			discardChangeInGraph( newGraph );
 			fprintf(logFile,"x");
+		}
+		if(costBest<=TOL){
+			lFuncTrace.trace(STP_INFO,"We are Done costBest < tol");
+			weAreDone=true;
+			return;
 		}
 		
 	}
@@ -149,9 +151,9 @@ public:
 		CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithmThresholdAccepting::AnnealingAlgorithm");
 		//	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
 		double temperMin=this->settingsSimulation->tMin;
-		double k=K;
+		double k=this->settingsSimulation->k;
 		int iterations=0;
-		double tol=TOL;
+//		double tol=TOL;
 		int weAreDone=0;
 		costBest=0.0;
 		double costOld=0.0;
@@ -200,7 +202,7 @@ public:
 				costOld=costNew;
 				costNew=cost(targetBC,newBC,graphOrder);
 				lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
-				Loop(costNew,costBest,&newGraph,tol,newBC,bestBC,graphOrder,weAreDone,Tk,N);
+				Loop(costNew,costBest,&newGraph,newBC,bestBC,graphOrder,weAreDone);
 			}
 			fprintf(logFile,"\n");
 			lFuncTrace.trace(STP_INFO,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
@@ -208,7 +210,7 @@ public:
 			fprintf(logFile,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 					Tk,costBest,weAreDone,iterations);
 			// Lower temperature: T(k)=k*T(k-1)
-			Tk*=k;
+			Tk*=this->settingsSimulation->k;
 			// Update number of iterations
 			iterations++;
 		}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!= settingsSimulation->maxIterations));

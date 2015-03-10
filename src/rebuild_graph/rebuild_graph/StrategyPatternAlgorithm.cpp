@@ -201,7 +201,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::AnnealingAlgorithm");
 //	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
 	double temperMin=this->settingsSimulation->tMin;
-	double k=K;
 	int iterations=0;
 	double tol=TOL;
 	int weAreDone=0;
@@ -260,7 +259,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 		fprintf(logFile,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 				Tk,costBest,weAreDone,iterations);
 		// Lower temperature: T(k)=k*T(k-1)
-		Tk*=k;
+		Tk*=this->settingsSimulation->k;
 		// Update number of iterations
 		iterations++;
 	}while((Tk>=temperMin)&&(!weAreDone)&&(iterations!= settingsSimulation->maxIterations));
@@ -288,15 +287,10 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 		
 		
 		// Simmulated Annealing variables
-		double temperMin=TEMPER_MIN_DEFAULT;
-				double k=K;
 		
 		if ( settingsSimulation == NULL)
 			throw std::runtime_error("settingsSimulation is NULL");
 		
-		k = settingsSimulation->k;
-		temperMin = settingsSimulation->tMin;
-
 		graphOrder=0;
 		graphOrder=targetGraph->getOrder();
 		double * targetBC = NULL;
