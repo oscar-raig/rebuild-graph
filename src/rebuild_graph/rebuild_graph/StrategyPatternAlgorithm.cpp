@@ -172,7 +172,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 //	double tol=TOL;
 	int weAreDone=0;
 	costBest=0.0;
-	double costOld=0.0;
 	double costNew=0.0;
 	long int N=0;
 	double * newBC = new double [graphOrder];
@@ -194,12 +193,11 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 		delete  graphIndicator;
 	}
 	costBest=cost(targetBC,bestBC,graphOrder);
-	costOld=2.0*costBest;
-	costNew=costOld;
+	costNew=2.0*costBest;
 	newGraph=sourceGraph->copyGraph();
 	newGraph->printGraph();
-	lFuncTrace.trace(STP_INFO,"Cost Best=%2.15f Cost New %2.15f Cost Old %2.15f\n",
-					 costBest,costNew,costOld);
+	lFuncTrace.trace(STP_INFO,"Cost Best=%2.15f Cost New %2.15f\n",
+					 costBest,costNew);
 	do{
 		/* Repeat NMAX times */
 		for(N=0;(N<settingsSimulation->nMax)&&(!weAreDone);N++){
@@ -215,7 +213,6 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 				delete  graphIndicator;
 			}
 			// Update cost variables (new and old graphs)
-			costOld=costNew;
 			costNew=cost(targetBC,newBC,graphOrder);
 			lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
 			Loop(costNew,costBest,&newGraph,newBC,bestBC,graphOrder,weAreDone,Tk);
