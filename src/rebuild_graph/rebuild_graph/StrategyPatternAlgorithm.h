@@ -74,6 +74,8 @@ public:
 		*newGraph = this->getGraph()->copyGraph();
 	}
 	
+	double * CalculateIndicator(gslGraph *Graph);
+	
 	virtual bool AreChangesAccepted( double costNew, double costBest,double Tk){
 		
 		return (costNew<costBest);

@@ -158,7 +158,13 @@ void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 	
 }
 
-
+double * StrategyPatternAlgorithm::CalculateIndicator(gslGraph *Graph){
+	double * bestBC = NULL;
+	graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,Graph);
+	bestBC = graphIndicator->calculateIndicator();
+	delete  graphIndicator;
+	return bestBC;
+}
 
 
 void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
@@ -186,16 +192,12 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 	// STARTING SIMMULATED ANNEALING
 	Tk=settingsSimulation->To;
 	generateInitialGraph(graphOrder);
+	bestBC= CalculateIndicator(sourceGraph);
 
-	{
-		graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,sourceGraph);
-		bestBC = graphIndicator->calculateIndicator();
-		delete  graphIndicator;
-	}
 	costBest=cost(targetBC,bestBC,graphOrder);
 	costNew=2.0*costBest;
 	newGraph=sourceGraph->copyGraph();
-	newGraph->printGraph();
+
 	lFuncTrace.trace(STP_INFO,"Cost Best=%2.15f Cost New %2.15f\n",
 					 costBest,costNew);
 	do{
@@ -204,14 +206,9 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 			lFuncTrace.trace(STP_DEBUG,"Iteration N %d",N);
 			
 			modifyGraph(newGraph);
-
-			{
-				graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,newGraph);
-				if ( newBC)
-					delete newBC;
-				newBC = graphIndicator->calculateIndicator();
-				delete  graphIndicator;
-			}
+			if ( newBC)
+				delete newBC;
+			newBC = CalculateIndicator(newGraph);
 			// Update cost variables (new and old graphs)
 			costNew=cost(targetBC,newBC,graphOrder);
 			lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
