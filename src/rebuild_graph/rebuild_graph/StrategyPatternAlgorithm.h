@@ -77,10 +77,12 @@ public:
 	double * CalculateIndicator(gslGraph *Graph);
 	
 	virtual bool AreChangesAccepted( double costNew, double costBest,double Tk){
-		
+		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::AreChangesAccepted");
 		return (costNew<costBest);
 	}
 	virtual bool AreChangesAcceptedRandomly(double costNew, double costBest,double Tk ){
+		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::AreChangesAcceptedRandomly");
+		
 		return (exp((costBest-costNew)/Tk)>generateRandomNumber());
 	}
 	
@@ -153,9 +155,11 @@ public:
 	
 	virtual bool AreChangesAccepted( double costNew, double costBest,double Tk){
 		double TRHESHOLD = Tk;
-		return ((costBest-costNew)> -TRHESHOLD);
+		CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithmThresholdAccepting::AreChangesAccepted");
+		return ((costBest- costNew)> TRHESHOLD);
 	}
 	virtual bool AreChangesAcceptedRandomly(double costNew, double costBest,double Tk ){
+		CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithmThresholdAccepting::AreChangesAcceptedRandomly");
 		return false;
 	}
 	

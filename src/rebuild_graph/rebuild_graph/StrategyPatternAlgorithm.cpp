@@ -262,15 +262,10 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 			bestBC[i]=0.0;
 			targetBC[i]=0.0;
 		}
+		if ( targetBC)
+			delete targetBC;
+		targetBC= CalculateIndicator(targetGraph);
 		
-		{
-			graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,targetGraph);
-			if ( targetBC)
-			     delete targetBC;
-			targetBC = graphIndicator->calculateIndicator();
-			delete  graphIndicator;
-		}
-
 		
 		strcpy(inputGraphFilename,settingsSimulation->inputFileName.c_str());
 		strcat(inputGraphFilename,".in");
