@@ -215,7 +215,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 			Loop(costNew,costBest,&newGraph,newBC,bestBC,graphOrder,weAreDone,Tk);
 		}
 		fprintf(logFile,"\n");
-		lFuncTrace.trace(STP_INFO,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
+		lFuncTrace.trace(STP_DEBUG,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 						 Tk,costBest,weAreDone,iterations);
 		fprintf(logFile,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
 				Tk,costBest,weAreDone,iterations);

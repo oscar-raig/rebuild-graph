@@ -44,7 +44,7 @@ using namespace boost::unit_test;
 
 // 2014-11-11 GRAPH DEFAULT_ALGORITHM_BARBASE_20_4
 // -- WORKING --> TOO SLOW
-//#define DEFAULT_ALGORITHM_BARBASE_20_4
+#define DEFAULT_ALGORITHM_BARBASE_20_4
 
 // DELETE DUE NO GRAPH FROM FILE
 #define COMPARA_THE_SAME_GRAPH
@@ -59,7 +59,7 @@ using namespace boost::unit_test;
 
 
 void simulation( int algorithm, std::string GraphName, int nMax,
-				double * compareResult,double valueToCompare = 0.000001);
+				double * compareResult,double valueToCompare = 0.000001, double To  = DEFAULT_TO, bool ThresHold = false);
 
 void testexceptionSettingSimulationIsNULL(){
 	CFuncTrace( false,"testexceptionSettingSimulationIsNULL");
@@ -103,27 +103,42 @@ BOOST_AUTO_TEST_CASE(UTest_Trow_excpetion_file_not_found){
 
 
 void simulation( int algorithm, std::string GraphName,
-				int nMax, double * compareResult,double valueToCompare){
+				int nMax, double * compareResult,double valueToCompare, double To, bool ThresHoldAccepting){
 	
-    AbstractFactoryPatternRebuildGraph * FactoryTest= new	AbstractFactoryPatternRebuildGraph(algorithm,GraphName,nMax,compareResult);
+    AbstractFactoryPatternRebuildGraph * FactoryTest= new	AbstractFactoryPatternRebuildGraph(algorithm,GraphName,nMax,compareResult,To,ThresHoldAccepting);
 	BOOST_CHECK(abs(*compareResult-valueToCompare)< 0.001);
 
 	delete FactoryTest;
 }
 
-#ifdef COMMUNICABILITY_BETWEENESS_TEST_4_NODES
-BOOST_AUTO_TEST_CASE(UTest_communicability_beetweeness_centrality_test_4nodes){
-	CFuncTrace trace (true,"test_communicability_beetweeness_centrality_test_4nodes");
+
+BOOST_AUTO_TEST_CASE(UTest_beetweeness_centrality_test_4nodes){
+	CFuncTrace trace (true,"test_beetweeness_centrality_test_4nodes");
 	trace.trace(CTrace::TRACE_DEBUG,"begin");
 	double compareResult = 10.0;
-	// 2014-11-09 compareResult == 0.29804, very different 0.000001 GSL_GRAPH
+
 	simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,1000,&compareResult);
 	
 	trace.trace(CTrace::TRACE_INFO,"test_4nodes.gpfc %f",compareResult);
-	std::cout << "COMMUNICABILITY_BETWEENESS_CENTRALITY test_4nodes.gpfc " << compareResult << " <<" << std::endl;
+	std::cout << "BETWEENNESS_CENTRALITY test_4nodes.gpfc " << compareResult << " <<" << std::endl;
 	
 }
-#endif
+
+
+
+BOOST_AUTO_TEST_CASE(UTest_beetweeness_centrality_test_4nodes_thresholdAcceptance){
+	CFuncTrace trace (true,"test_beetweeness_centrality_test_4nodes_thresholdAcceptance");
+	trace.trace(CTrace::TRACE_DEBUG,"begin");
+	double compareResult = 10.0;
+
+	simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,10000,&compareResult,0,1,true);
+	
+	trace.trace(CTrace::TRACE_INFO,"test_4nodes.gpfc %f",compareResult);
+	std::cout << "BETWEENESS_CENTRALITY test_4nodes.gpfc thresholdAcceptance " << compareResult << " <<" << std::endl;
+	
+}
+
+
 
 #ifdef COMMUNICABILITY_BETWEENESS__WHEEL4
 BOOST_AUTO_TEST_CASE(UTest_wheel4_COMMUNICABILITY_BETWEENESS){
@@ -350,17 +365,25 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 
 
 
-#ifdef DEFAULT_ALGORITHM_BARBASE_20_4
 BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm){
 	
 	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc>>" << std::endl;
 	double compareResult = 10.0;
-	simulation(0, "barabase_20_4.gpfc" ,1000000,&compareResult);
+	simulation(0, "barabase_20_4.gpfc" ,1000,&compareResult,0.0764033);
 	std::cout << "DEFAULT ALGORITHM barabase_20_4.gpfc Result:" << compareResult << " <<" << std::endl;
 	
-	BOOST_CHECK(abs(compareResult-0.0467452)< 0.1);
+	BOOST_CHECK(abs(compareResult-0.0764033)< 0.1);
 }
-#endif
+
+BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm_threshold){
+	
+	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc threshold>>" << std::endl;
+	double compareResult = 10.0;
+	simulation(0, "barabase_20_4.gpfc" ,1000,&compareResult,0.0764033,1,true);
+	std::cout << "DEFAULT ALGORITHM barabase_20_4.gpfc threshold Result:" << compareResult << " <<" << std::endl;
+	
+	BOOST_CHECK(abs(compareResult-0.287882)< 0.1);
+}
 
 #ifdef COMPARA_THE_SAME_GRAPH
 BOOST_AUTO_TEST_CASE(compara){
@@ -723,6 +746,9 @@ BOOST_AUTO_TEST_CASE(UTest_StrategyPatternAlgorithmThresholdAccepting){
 	settingSimulation->setNMax(100);
 	settingSimulation->setMaxIterations(100);
 	settingSimulation->thresholdAccepting = THRESHOLD_ACCEPTING_ALGORITHM;
+	settingSimulation->tMin = 0.0001;
+	settingSimulation->To = 1;
+	
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	double compareResult = 0.0;
 	rebuildGraph->regenerateGraph(settingSimulation,BestBC,graphOrder,compareResult);

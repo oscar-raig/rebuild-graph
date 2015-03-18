@@ -24,7 +24,8 @@ private:
 	CSettingsSimulation *settingSimulation;
 	
 public:
-	AbstractFactoryPatternRebuildGraph (int algorithm, std::string GraphName, int nMax, double * compareResult){
+	AbstractFactoryPatternRebuildGraph (int algorithm, std::string GraphName,
+										int nMax, double * compareResult, double To, bool thresholdAccepting ){
 		int graphOrder = 0;
 		this->settingSimulation= new CSettingsSimulation() ;
 		
@@ -37,6 +38,12 @@ public:
 		double *BestBC = NULL;
 		if (algorithm)
 			settingSimulation->graphProperty = algorithm;
+		
+		settingSimulation->To = To;
+		if ( thresholdAccepting )
+			settingSimulation->thresholdAccepting = THRESHOLD_ACCEPTING_ALGORITHM;
+		else
+			settingSimulation->thresholdAccepting = ANNEALING_ALGORITHM;
 		
 		rebuildGraph->regenerateGraph(settingSimulation,BestBC,graphOrder,*compareResult);
 	}

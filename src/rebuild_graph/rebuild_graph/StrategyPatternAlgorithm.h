@@ -155,11 +155,11 @@ public:
 	
 	virtual bool AreChangesAccepted( double costNew, double costBest,double Tk){
 		double TRHESHOLD = Tk;
-		CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithmThresholdAccepting::AreChangesAccepted");
-		return ((costBest- costNew)> TRHESHOLD);
+		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithmThresholdAccepting::AreChangesAccepted");
+		return ((costNew - costBest )> -TRHESHOLD);
 	}
 	virtual bool AreChangesAcceptedRandomly(double costNew, double costBest,double Tk ){
-		CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithmThresholdAccepting::AreChangesAcceptedRandomly");
+		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithmThresholdAccepting::AreChangesAcceptedRandomly");
 		return false;
 	}
 	
