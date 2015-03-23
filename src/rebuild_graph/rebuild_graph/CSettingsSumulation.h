@@ -83,6 +83,21 @@ public:
 		
 	};
 	
+	CSettingsSimulation(CSettingsSimulation *sourceSettings) {
+		k = sourceSettings->k;
+		nMax = sourceSettings->nMax ;
+		tMin = sourceSettings->tMin;
+		To = sourceSettings->To;
+		inputFileName = sourceSettings->inputFileName;
+		random_value_x = sourceSettings->random_value_x;
+		random_value_y = sourceSettings->random_value_y;
+		random_value_z = sourceSettings->random_value_z;
+		graphProperty = sourceSettings->graphProperty;
+		maxIterations = sourceSettings->maxIterations;
+		outputFormatGraphResultAdjList = sourceSettings->outputFormatGraphResultAdjList;
+		thresholdAccepting = sourceSettings->thresholdAccepting;
+	}
+	
 	void setNMax( int newNmax)
 	{
 		nMax = newNmax;

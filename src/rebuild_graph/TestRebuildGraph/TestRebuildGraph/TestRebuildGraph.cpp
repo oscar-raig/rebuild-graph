@@ -379,7 +379,7 @@ BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm_threshold){
 	
 	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc threshold>>" << std::endl;
 	double compareResult = 10.0;
-	simulation(0, "barabase_20_4.gpfc" ,1000,&compareResult,0.0764033,1,true);
+	simulation(0, "barabase_20_4.gpfc" ,1000,&compareResult,0.287882,1,true);
 	std::cout << "DEFAULT ALGORITHM barabase_20_4.gpfc threshold Result:" << compareResult << " <<" << std::endl;
 	
 	BOOST_CHECK(abs(compareResult-0.287882)< 0.1);

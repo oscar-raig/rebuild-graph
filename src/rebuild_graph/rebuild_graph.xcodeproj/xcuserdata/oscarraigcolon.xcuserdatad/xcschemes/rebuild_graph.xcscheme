@@ -48,7 +48,8 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "360BA70418DD74E300F54F2B"
@@ -59,7 +60,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--graphFile /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/to_sent_2015_01_25/example_graphs/SCadj0.txt --algorithm 2  --output-format-adjlist --nIteration 320 --nMax 10 --To 40 --TMin 0.001 --k 0.9 --seed_x  12  --seed_y  13 --seed_z  14"
+            argument = "--graphFile /Users/oscarraigcolon/Arrel/git/rebuild-graph/data/to_sent_2015_01_25/example_graphs/SCadj0.txt --algorithm 2  --output-format-adjlist --nIteration 320 --nMax 10 --To 40 --TMin 0.001 --k 0.9 --seed_x  12  --seed_y  13 --seed_z  14 --threshold-accepting "
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
@@ -72,7 +73,8 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "360BA70418DD74E300F54F2B"
