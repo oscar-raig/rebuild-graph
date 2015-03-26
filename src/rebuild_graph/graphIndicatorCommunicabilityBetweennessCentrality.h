@@ -32,15 +32,7 @@ public:
 			gsl_matrix_set(target,iterator,i,0);
 		}
 	};
-	void  rescale( double *arrayIndicator,int sizeArray){
-		if ( sizeArray <= 2)
-			return;
-		double scale = 1.0/((pow(sizeArray-1.0,2))-(sizeArray-1.0));
-		
-		for ( int posArray = 0; posArray < sizeArray; posArray++ ){
-			arrayIndicator[posArray] *= scale;
-		}
-	}
+
 
 		
 		
@@ -127,7 +119,6 @@ public:
 		gsl_matrix_free(A1expm);
 		gsl_matrix_free(A1);
 		this->graph->gslVectorToArray(matrixFinalResult,myCExp);
-		rescale(myCExp,this->graph->getOrder());
 		gsl_vector_free(matrixFinalResult);
 	}
 

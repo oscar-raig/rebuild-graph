@@ -39,6 +39,9 @@ public:
 		if (algorithm)
 			settingSimulation->graphProperty = algorithm;
 		
+		if (settingSimulation->graphProperty == COMMUNICABILITY_CENTRALITY )
+			settingSimulation->reescale = false;
+		
 		settingSimulation->To = To;
 		if ( thresholdAccepting )
 			settingSimulation->thresholdAccepting = THRESHOLD_ACCEPTING_ALGORITHM;

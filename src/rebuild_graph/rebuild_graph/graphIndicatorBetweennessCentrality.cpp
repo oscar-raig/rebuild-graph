@@ -24,11 +24,7 @@ void graphIndicatorBetweennessCentrality::brandes_betweenness_centrality(double 
 	
 	gsl_vector * v = betweenness_bin( gslmatrix );
 	gslGraph::gslVectorToArray(v,arrayIndicatorBetweennesscentrality);
-	for(int i=0;i< this->graph->getOrder();i++){
-		arrayIndicatorBetweennesscentrality[i]=
-		(arrayIndicatorBetweennesscentrality[i])/((this->graph->getOrder()-1.0)*(this->graph->getOrder()-2.0));
-		trace.trace(CTrace::TRACE_DEBUG," BC ",  arrayIndicatorBetweennesscentrality[i]);
-	}
+	
 }
 
 

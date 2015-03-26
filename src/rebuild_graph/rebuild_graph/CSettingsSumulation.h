@@ -52,6 +52,8 @@ public:
 	int maxIterations;
 	int outputFormatGraphResultAdjList;
 	int thresholdAccepting;
+	bool reescale;
+	bool onlyCalculateIndicator;
 	
 	CSettingsSimulation():
 	k(DEFAULT_K),nMax(DEFAULT_N_MAX),
@@ -62,8 +64,13 @@ public:
 	graphProperty(BETWEENNESS_CENTRALITY),
 	maxIterations(DEFAULT_MAX_ITERATIONS),
 	outputFormatGraphResultAdjList(OUTPUT_ADJACENCY_LIST),
-	thresholdAccepting(ANNEALING_ALGORITHM)
+	thresholdAccepting(ANNEALING_ALGORITHM),
+	reescale(true),
+	onlyCalculateIndicator(false)
 	{
+		if (graphProperty != COMMUNICABILITY_CENTRALITY ) {
+			reescale = true;
+		}
 	}
 	
 	CSettingsSimulation(po::variables_map argumentMap):
@@ -75,11 +82,17 @@ public:
 		graphProperty(BETWEENNESS_CENTRALITY),
 		maxIterations(DEFAULT_MAX_ITERATIONS),
 		outputFormatGraphResultAdjList(OUTPUT_ADJACENCY_LIST),
-		thresholdAccepting(ANNEALING_ALGORITHM)
+		thresholdAccepting(ANNEALING_ALGORITHM),
+		reescale(true),
+		onlyCalculateIndicator(false)
 	{
 		if (argumentMap.count("graphFile")){
 			inputFileName = argumentMap["graphFile"].as<std::string>();
 		}
+		if (graphProperty != COMMUNICABILITY_CENTRALITY ) {
+			reescale = true;
+		}
+		
 		
 	};
 	
@@ -96,6 +109,8 @@ public:
 		maxIterations = sourceSettings->maxIterations;
 		outputFormatGraphResultAdjList = sourceSettings->outputFormatGraphResultAdjList;
 		thresholdAccepting = sourceSettings->thresholdAccepting;
+		reescale = sourceSettings->reescale;
+		onlyCalculateIndicator = sourceSettings->onlyCalculateIndicator;
 	}
 	
 	void setNMax( int newNmax)

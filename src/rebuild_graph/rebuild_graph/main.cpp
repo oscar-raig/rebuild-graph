@@ -105,6 +105,7 @@ po::options_description GetOptionsDescription(){
 	("output-format-adjlist","output format adjlist")
 	("threshold-accepting","Using threshold accepting")
 	("only-calculate-indicator","only calculates the BC, CB or CBC of the input file")
+	("reescale-cc","Reescale Communicability Centrality, BC and CBC are always reescale ")
 	("algorithm",po::value<int>(),"algorithm 1:BETWEENESS CENTRALITY, 2:COMMUNICABILITY BETWEENESS, 3: COMMUNICABILITY BETWEENESS CENTRALITY ");
 	return argumentDescription;
 }
@@ -235,6 +236,8 @@ int main(int argc, const char * argv[])
 		}
 		return 0;
 	}
+	
+	
 	
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
 	double compareResult = 0.0;

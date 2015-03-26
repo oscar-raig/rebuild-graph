@@ -89,7 +89,7 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 	double *targetBC = NULL;
 	{
 		graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation.graphProperty,targetGraph);
-		      targetBC = graphIndicator->calculateIndicator();
+		      targetBC = graphIndicator->calculateIndicatorWithReescale(settingsSimulation.reescale);
 		delete  graphIndicator;
 	}
 	

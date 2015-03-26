@@ -20,10 +20,31 @@ public:
 	void setGraph( gslGraph *graph){
 		this->graph = graph;
 	}
-	gslGraph * getGraph( ){
+	gslGraph * getGraph( ) {
 		return graph;
 	}
-	virtual double *calculateIndicator() = 0;
+	
+	double *calculateIndicatorWithReescale(bool Reescale) {
+		
+		double * arrayIndicator = calculateIndicator();
+		if ( Reescale ) {
+			rescale(arrayIndicator,this->graph->getOrder());
+		}
+		return arrayIndicator;
+	}
+	virtual ~graphIndicator(){};
+private:
+	virtual  double *calculateIndicator() = 0;
+
+	void  rescale( double *arrayIndicator,int sizeArray) {
+		if ( sizeArray <= 2)
+			return;
+		double scale = 1.0/((pow(sizeArray-1.0,2))-(sizeArray-1.0));
+		
+		for ( int posArray = 0; posArray < sizeArray; posArray++ ){
+			arrayIndicator[posArray] *= scale;
+		}
+	}
 };
 
 #endif /* defined(__rebuild_graph__graphIndicator__) */

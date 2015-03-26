@@ -161,7 +161,7 @@ void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 double * StrategyPatternAlgorithm::CalculateIndicator(gslGraph *Graph){
 	double * bestBC = NULL;
 	graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,Graph);
-	bestBC = graphIndicator->calculateIndicator();
+	bestBC = graphIndicator->calculateIndicatorWithReescale(settingsSimulation->reescale);
 	delete  graphIndicator;
 	return bestBC;
 }
