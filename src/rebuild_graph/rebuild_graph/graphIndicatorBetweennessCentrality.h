@@ -29,13 +29,7 @@ public:
 	}
 
 	
-	double * calculateIndicator( ){
-		int graphOrder = getGraph()->getOrder();
-		double *arrayIndicator = new double[graphOrder];
-		
-		brandes_betweenness_centrality(arrayIndicator);
-		return arrayIndicator;
-	}
+
 	
 	void brandes_betweenness_centrality(double *arrayIndicatorBetweennesscentrality);
 	gsl_vector* betweenness_bin(const gsl_matrix* sourceGraph) const;
@@ -59,6 +53,14 @@ public:
 	void  calculateSigma(int v, gsl_matrix *sourceGraph,int *D,
 															  std::queue<int> &Queue,gsl_matrix *P,gsl_vector *sigma)const;
 
+private:
+	double * calculateIndicator( ){
+		int graphOrder = getGraph()->getOrder();
+		double *arrayIndicator = new double[graphOrder];
+		
+		brandes_betweenness_centrality(arrayIndicator);
+		return arrayIndicator;
+	}
 };
 
 #endif /* defined(__rebuild_graph__graphIndicatorBetweennessCentrality__) */

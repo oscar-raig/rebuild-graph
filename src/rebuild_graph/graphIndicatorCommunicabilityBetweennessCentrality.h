@@ -21,7 +21,7 @@ public:
 	gsl_matrix *
 	gslCopyGraph(const gsl_matrix* target){
 		
-		gsl_matrix *dest=gsl_matrix_alloc(target->size1,target->size1);
+		gsl_matrix *dest=gsl_matrix_calloc(target->size1,target->size1);
 		
 		gsl_matrix_memcpy (dest, target);
 		return dest;
@@ -50,11 +50,11 @@ public:
 		int graphOrder=graph->getOrder();
 		
 		
-		gsl_vector * matrixFinalResult = gsl_vector_alloc(graphOrder);
+		gsl_vector * matrixFinalResult = gsl_vector_calloc(graphOrder);
 		
 		
 		// Get Numpy Matrix // Matriu d'adjacencia
-		gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
+		gsl_matrix *A1=gsl_matrix_calloc(graphOrder,graphOrder);
 		
 		//	targetGraph->printGraph();
 		
@@ -67,7 +67,7 @@ public:
 	  mapping = dict(zip(nodelist,range(n)))
 	  sc = {}
 	  */
-		gsl_matrix *A1expm=gsl_matrix_alloc(graphOrder,graphOrder);
+		gsl_matrix *A1expm=gsl_matrix_calloc(graphOrder,graphOrder);
 		
 		gsl_linalg_exponential_ss(A1, A1expm, .01);
 		//	lFuncTrace.trace("Printing ExpmMatrix");
@@ -80,7 +80,7 @@ public:
 			/*
 			 B = (expA - scipy.linalg.expm(A)) / expA
 			 */
-			gsl_matrix *copyA1expm=gsl_matrix_alloc(graphOrder,graphOrder);
+			gsl_matrix *copyA1expm=gsl_matrix_calloc(graphOrder,graphOrder);
 			gsl_linalg_exponential_ss(copyA1, copyA1expm, .01);
 			gsl_matrix_free(copyA1);		
 	

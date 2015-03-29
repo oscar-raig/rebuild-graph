@@ -225,7 +225,7 @@ void test_brandes_comunicability_centrality_wheel14(){
 	graphIndicatorBetweennessCentrality *betweennessCentrality =
 	new graphIndicatorBetweennessCentrality ( generalGraph );
 	
-	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	betweeness_centrality = betweennessCentrality->calculateIndicatorWithReescale(true);
 	double expectedBetweenessCentralityForNode0OfWheelGraph = 0.75;
 	double expectedBetweenessCentralityForRestOfWheelGraphNodes = 0.00641;
 	for (int i = 0; i < generalGraph->getOrder(); i++){
@@ -257,7 +257,7 @@ void test_brandes_comunicability_centrality_test_4nodes(){
 	graphIndicatorBetweennessCentrality *betweennessCentrality =
 		new graphIndicatorBetweennessCentrality ( generalGraph );
 	
-	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	betweeness_centrality = betweennessCentrality->calculateIndicatorWithReescale(true);
 	for (int i = 0; i < generalGraph->getOrder(); i++){
 		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
 		if ( i == 0 || i == 3)
@@ -533,7 +533,7 @@ void UTest_gslGraph_BetweennessCentrality_krackhardt_kite(){
 	graphIndicator *betweennessCentrality = FactoryGraphIndicator::CreategraphIndicator(BETWEENNESS_CENTRALITY,krackhardtKiteGraph);
 	
 	
-	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	betweeness_centrality = betweennessCentrality->calculateIndicatorWithReescale(true);
 	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
 		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
 		std::cout << "Pos " << i << " : " << expectedbetweenessCentrality[i] << std::endl;
@@ -562,9 +562,9 @@ void UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite(){
 	double expectedcommunicabilityCentrality[10]={ 10.254,10.254,7.402,17.518,
 		7.402,12.703,12.703,4.880,2.333,1.593};
 	
-	graphIndicator *communicabilityCentrality = FactoryGraphIndicator::CreategraphIndicator(COMMUNICABILITY_BETWEENESS,krackhardtKiteGraph);
+	graphIndicator *communicabilityCentrality = FactoryGraphIndicator::CreategraphIndicator(COMMUNICABILITY_CENTRALITY,krackhardtKiteGraph);
 	
-	betweeness_centrality = communicabilityCentrality->calculateIndicator();
+	betweeness_centrality = communicabilityCentrality->calculateIndicatorWithReescale(false);
 	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
 		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
 		std::cout << "Pos " << i << " : " << expectedcommunicabilityCentrality[i] << std::endl;
@@ -595,7 +595,7 @@ void UTest_gslGraph_CommunicabilityBetweennessCentrality_krackhardt_kite(){
 	
 	graphIndicator *communicabilityBetweennessCentrality = FactoryGraphIndicator::CreategraphIndicator(COMMUNICABILITY_BETWEENESS_CENTRALITY,krackhardtKiteGraph);
 	
-	communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicator();
+	communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicatorWithReescale(true);
 	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
 		std::cout << "Pos " << i << " : " << communicability_betweeness_centrality[i] << std::endl;
 		std::cout << "Pos " << i << " : " << expectedCommunicabilitybetweenessCentrality[i] << std::endl;
@@ -623,7 +623,7 @@ void UTest_gslGraph_CommunicabilityBetweennessCentrality_test_4nodes(){
 		
 	graphIndicator *communicabilityBetweennessCentrality = FactoryGraphIndicator::CreategraphIndicator(COMMUNICABILITY_BETWEENESS_CENTRALITY,krackhardtKiteGraph);
 	
-	communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicator();
+	communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicatorWithReescale(true);
 	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
 		std::cout << "Pos " << i << " : " << communicability_betweeness_centrality[i] << std::endl;
 		std::cout << "Pos " << i << " : " << expectedCommunicabilitybetweenessCentrality[i] << std::endl;

@@ -68,8 +68,8 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 											  ){
 	CFuncTrace lFuncTrace(false,string("CRebuildGraph::CompareAndGenerateResults"));
 	time_t timeEnd;
-	gsl_matrix *targetGraphGsl = gsl_matrix_alloc(targetGraph->getOrder(), targetGraph->getOrder());
-	gsl_matrix *bestGraphGsl = gsl_matrix_alloc(bestGraph->getOrder(), bestGraph->getOrder());
+	gsl_matrix *targetGraphGsl = gsl_matrix_calloc(targetGraph->getOrder(), targetGraph->getOrder());
+	gsl_matrix *bestGraphGsl = gsl_matrix_calloc(bestGraph->getOrder(), bestGraph->getOrder());
 	
 	targetGraph->graphToGsl(targetGraphGsl);
 	bestGraph->graphToGsl(bestGraphGsl);
@@ -128,7 +128,7 @@ int CRebuildGraph::calculateBeterness(const char *argv[]){
 	graphIndicatorBetweennessCentrality *betweennessCentrality =
 	new graphIndicatorBetweennessCentrality ( targetGraph );
 	
-	targetBC = betweennessCentrality->calculateIndicator();
+	targetBC = betweennessCentrality->calculateIndicatorWithReescale(true);
 	
 	
 	for (int i = 0; i < graphOrder; i++){
@@ -245,7 +245,7 @@ CRebuildGraph::calculateCommunicability(const char *argv[]){
 	lFuncTrace.trace(CTrace::TRACE_DEBUG,"Graph Order %d",graphOrder);
 	
 	// Get Numpy Matrix // Matriu d'adjacencia
-	gsl_matrix *A1=gsl_matrix_alloc(graphOrder,graphOrder);
+	gsl_matrix *A1=gsl_matrix_calloc(graphOrder,graphOrder);
 	
 	//targetGraph->printGraph();
 	
@@ -284,7 +284,7 @@ CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
 	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
 	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(targetGraph);
 	
-	double * bestCommCentExp = communicabilityCentrality->calculateIndicator();
+	double * bestCommCentExp = communicabilityCentrality->calculateIndicatorWithReescale(false);
 
 	return RESULT_OK;
 	

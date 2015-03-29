@@ -12,10 +12,10 @@
 
 using namespace boost::unit_test;
 
+#define SLOW_TEST_ENABLED 1
 
-// Record 11/12 GRAPH
-// Record 11/2 GSL_GRAPH
-// 11 GSL_GRAPH
+
+
 
 #define THROW_EXCEPTION
 #define THROW_EXCEPTION_FILE_NOT_FOUND
@@ -223,10 +223,10 @@ BOOST_AUTO_TEST_CASE(test_wheel10_BETWEENNESS_CENTRALITY){
 
 
 
-#ifdef BETWEENNESS_CENTRALITY__WHEEL14
+#if defined( BETWEENNESS_CENTRALITY__WHEEL14 ) && defined(SLOW_TEST_ENABLED)
 BOOST_AUTO_TEST_CASE(test_wheel14_BETWEENNESS_CENTRALITY){
 	
-	std::cout << " BETWEENNESS CENTRALITY with wheel 14>>" << std::endl;
+	std::cout  << std::endl << " BETWEENNESS CENTRALITY with wheel 14>>" << std::endl;
 	double compareResult = 10;
 	simulation(BETWEENNESS_CENTRALITY, "wheel14.txt" ,1000,&compareResult,0.0458888);
 	std::cout << "BETWEENESS CENTRALITY wheel 14 Result:" << compareResult << " <<" << std::endl;
@@ -308,6 +308,7 @@ BOOST_AUTO_TEST_CASE( UTest_analitza){
 }
 #endif
 
+#if defined(SLOW_TEST_ENABLED)
 
 BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 		CFuncTrace trace (true,"graph_betweness_centrality");
@@ -361,9 +362,9 @@ BOOST_AUTO_TEST_CASE(graph_betweness_centrality){
 	
 }
 
+#endif
 
-
-
+#if defined(SLOW_TEST_ENABLED)
 
 BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm){
 	
@@ -374,7 +375,9 @@ BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm){
 	
 	BOOST_CHECK(abs(compareResult-0.0764033)< 0.1);
 }
+#endif
 
+#if defined(SLOW_TEST_ENABLED)
 BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm_threshold){
 	
 	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc threshold>>" << std::endl;
@@ -385,7 +388,9 @@ BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm_threshold){
 	BOOST_CHECK(abs(compareResult-0.287882)< 0.1);
 }
 
-#ifdef COMPARA_THE_SAME_GRAPH
+
+#endif
+
 BOOST_AUTO_TEST_CASE(compara){
 	CFuncTrace trace (true,"COMPARA_THE_SAME_GRAPH");
 	CRebuildGraph *rebuildGraph = new CRebuildGraph();
@@ -410,7 +415,7 @@ BOOST_AUTO_TEST_CASE(compara){
 	delete matrixB;
 	
 }
-#endif
+
 
 
 BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph){
@@ -425,7 +430,7 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph){
 	int order = generalGraph->getOrder();
 	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degree,order);
 
-	generalGraph->printGraph(CTrace::TRACE_INFO);
+//	generalGraph->printGraph(CTrace::TRACE_INFO);
 	BOOST_CHECK(degree == 3); // FAILED IN GRAPH
 	BOOST_CHECK(order ==4);
 	StrategyPatternAlgorithm *strategy= new StrategyPatternAlgorithm(NULL);
@@ -539,7 +544,7 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
 	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(generalGraph);
 	
-	newBC = communicabilityCentrality->calculateIndicator();
+	newBC = communicabilityCentrality->calculateIndicatorWithReescale(false);
 
 	
 	
@@ -574,7 +579,7 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 	BOOST_CHECK( 5 == generalGraph->getDegree(9));
 
 	
-	generalGraph->printGraph(CTrace::TRACE_INFO);
+//	generalGraph->printGraph(CTrace::TRACE_INFO);
 	
 	gslGraph *newGraph=NULL;
 	newGraph=generalGraph->copyGraph();
@@ -582,14 +587,14 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_10_nodes
 	
 	
 	strategyPatternAlgorithm->modifyGraph(newGraph,CTrace::TRACE_INFO);
-	newGraph->printGraph(CTrace::TRACE_INFO);
+//	newGraph->printGraph(CTrace::TRACE_INFO);
 
 
 	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentralityCopy =
 	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(newGraph);
 	
 	
-	newBC = communicabilityCentralityCopy->calculateIndicator();
+	newBC = communicabilityCentralityCopy->calculateIndicatorWithReescale(false);
 	
 	for ( int j =0 ; j < 10; j++){
 		trace.trace(CTrace::TRACE_INFO,"NEWBC 2 %f",newBC[j]);
@@ -633,7 +638,7 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes)
 	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
 	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(generalGraph);
 	
-	newBC = communicabilityCentrality->calculateIndicator();
+	newBC = communicabilityCentrality->calculateIndicatorWithReescale(false);
 	
 	for ( int j =0 ; j < 5; j++){
 		trace.trace(CTrace::TRACE_INFO,"NEWBC %f",newBC[j]);
@@ -659,7 +664,7 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_brandes_communicability_5_nodes)
 	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(newGraph);
 	
 	
-	newBC = communicabilityCentralityCopy->calculateIndicator();
+	newBC = communicabilityCentralityCopy->calculateIndicatorWithReescale(false);
 	
 	for ( int j =0 ; j < 5; j++){
 		trace.trace(CTrace::TRACE_INFO,"NEWBC 2 %f",newBC[j]);
@@ -765,4 +770,76 @@ BOOST_AUTO_TEST_CASE(UTest_StrategyPatternAlgorithmThresholdAccepting){
 }
 
 
+BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_sfba_inipy) {
+	CFuncTrace trace (true,"UTest_generateInitialGraph_sfba_inipy");
+	
+	StrategyPatternAlgorithm *strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
+	
+	const char *fileNameGraph="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/sfba-inipy.txt";
+	gslGraph* graph = new gslGraph();
+	graph->readPythonGraphFile((char*)fileNameGraph);
+	int degreeSfgaInipy = graph->getDegree();
+	int orderSfgaInipy = graph->getOrder();
 
+	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degreeSfgaInipy,orderSfgaInipy);
+	
+	BOOST_CHECK(degreeSfgaInipy == 17); // FAILED IN GRAPH
+	BOOST_CHECK(orderSfgaInipy == 40);
+	
+	
+	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
+	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(graph);
+	
+	double *target = communicabilityCentrality->calculateIndicatorWithReescale(false);
+	
+	delete communicabilityCentrality;
+	
+	for ( int j =0 ; j < 5; j++){
+		trace.trace(CTrace::TRACE_INFO,"NEWBC %f",target[j]);
+	}
+	
+	BOOST_CHECK(abs(45.652232 - target[0]) < 0.00001);
+	BOOST_CHECK(abs(3.619358 - target[1]) < 0.00001);
+	BOOST_CHECK(abs(14.810197 - target[2]) < 0.00001);
+	BOOST_CHECK(abs(95.680259 - target[3]) < 0.00001);
+	BOOST_CHECK(abs(80.759941 - target[4]) < 0.00001);
+	
+	
+	
+	strategyPatternAlgorithm->generateInitialGraph(graph->getOrder());
+	gslGraph *  generalGraph = strategyPatternAlgorithm->getGraph();
+	int degree = generalGraph->getDegree();
+	int order = generalGraph->getOrder();
+	trace.trace(CTrace::TRACE_INFO," Graph degree %d order %d",degree,order);
+	
+//	generalGraph->printGraph(CTrace::TRACE_INFO);
+	BOOST_CHECK(degree == 39); // FAILED IN GRAPH
+	BOOST_CHECK(order ==40);
+	
+	communicabilityCentrality = 
+	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(generalGraph);
+	
+	//const char *inputGraphFilename="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/sfba-inipy.txt.new";
+	//generalGraph->printMyGraph(inputGraphFilename,OUTPUT_ADJACENCY_LIST);
+	
+	double *newBC = communicabilityCentrality->calculateIndicatorWithReescale(false);
+	
+	delete communicabilityCentrality;
+	
+	for ( int j =0 ; j < 5; j++){
+		trace.trace(CTrace::TRACE_INFO,"NEWBC %f",newBC[j]);
+	}
+	
+	BOOST_CHECK(abs(223074037715.542542 - newBC[0]) < 0.00001);
+	BOOST_CHECK(abs(96724489314.835770 - newBC[1]) < 0.00001);
+	BOOST_CHECK(abs(77268189515.968658 - newBC[2]) < 0.00001);
+	BOOST_CHECK(abs(121779028298.609863 - newBC[3]) < 0.00001);
+	BOOST_CHECK(abs(103926740003.010391 - newBC[4]) < 0.00001);
+
+	
+	double cost = strategyPatternAlgorithm->cost(target,newBC, order);
+	
+	trace.trace(CTrace::TRACE_INFO," Cost %f",cost);
+	BOOST_CHECK(abs(1040609828999.770264 - cost) < 0.00001);
+	
+	}

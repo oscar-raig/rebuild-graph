@@ -6,6 +6,15 @@
          contextName = "gslGraph::compare(gslGraph*, gslGraph*):gslGraph.cpp">
       </ContextState>
       <ContextState
+         contextName = "gslGraph::addVertex(int):gslGraph.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "graph::vertex::addNeighbour(int):graphs.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "gslGraph::brandes_betweenness_centrality(double*):gslGraph.h">
+      </ContextState>
+      <ContextState
          contextName = "gslGraph::gslVectorToArray(gsl_vector*, double*):gslGraph.h">
          <PersistentStrings>
             <PersistentString
@@ -14,10 +23,16 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "StrategyPatternAlgorithm::AnnealingAlgorithm(double&amp;, GeneralGraph**, int, double*, double*, __sFILE*, double&amp;, CSettingsSimulation):StrategyPatternAlgorithm.cpp">
+         contextName = "graph::addVertexNeighbours(int, int*, int):graphs.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "">
+               value = "myNeighbours[i]">
+            </PersistentString>
+            <PersistentString
+               value = "myNeighbours[1]">
+            </PersistentString>
+            <PersistentString
+               value = "vertexArray[myNeighbours[i]]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -25,33 +40,51 @@
          contextName = "gslGraph::node_and_edge_betweenness_bin(gsl_matrix const*, gsl_vector*, gsl_matrix*):gslGraph.h">
       </ContextState>
       <ContextState
-         contextName = "gslGraph::copyGraph(gslGraph*) const:gslGraph.cpp">
+         contextName = "gslGraph::addVertexNeighbour(int, int):gslGraph.cpp">
       </ContextState>
       <ContextState
-         contextName = "gslGraph::brandes_betweenness_centrality(double*):gslGraph.h">
+         contextName = "gslGraph::gslVectorToArray(gsl_vector*, double*):gslGraph.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "arrayDoubles[i]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "graph::copyGraph() const:graphs.cpp">
+         contextName = "graphIndicatorCommunicabilityCentralityUsingMatrixExponential::getDiagonalFromGslMatrix(gsl_matrix const*):graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "gsl_matrix_get(gslMatrix,i,i)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "graphIndicator::rescale(double*, int):graphIndicator.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "arrayIndicator[posArray]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "gslGraph::betweenness_bin(gsl_matrix const*):gslGraph.h">
       </ContextState>
       <ContextState
-         contextName = "graph::addVertexNeighbours(int, int*, int):graphs.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "vertexArray[myNeighbours[i]]">
-            </PersistentString>
-            <PersistentString
-               value = "myNeighbours[1]">
-            </PersistentString>
-            <PersistentString
-               value = "myNeighbours[i]">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "graph::copyGraph() const:graphs.cpp">
       </ContextState>
       <ContextState
-         contextName = "graph::vertex::addNeighbour(int):graphs.cpp">
+         contextName = "gslGraph::copyGraph(gslGraph*) const:gslGraph.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "graphIndicatorCommunicabilityCentralityUsingMatrixExponential::brandes_comunicability_centrality_exp(double*):graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h">
+      </ContextState>
+      <ContextState
+         contextName = "StrategyPatternAlgorithm::AnnealingAlgorithm(double&amp;, GeneralGraph**, int, double*, double*, __sFILE*, double&amp;, CSettingsSimulation):StrategyPatternAlgorithm.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

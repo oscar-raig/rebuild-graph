@@ -20,6 +20,7 @@
 
 
 bool only_calculate = false;
+bool reescale = false;
 
 int
 fregenerateGraph(CSettingsSimulation &settingsSimulation, double *&ptargetBC, double *&pbestBC,int *order);
@@ -206,10 +207,22 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 		std::cout << "Threshold-accepting" << std::endl;
 	}
 	
+	if ( argumentMap.count("reescale-cc")  )
+	{
+		reescale = true;
+		std::cout << "reescale-cc" << std::endl;
+	}
 	
 	
 	// CSettingsSimulation *settingsSimulation = new CSettingsSimulation(argumentMap);
 	settingsSimulation->graphProperty = Algorithm;
+	if ( Algorithm == COMMUNICABILITY_CENTRALITY) {
+		if ( reescale == true ) {
+			settingsSimulation->reescale = true;
+		} else {
+			settingsSimulation->reescale = false;
+		}
+	}
 	settingsSimulation->outputFormatGraphResultAdjList = outputFormatDefaultAdjacencyList;
 	
 	return settingsSimulation;
@@ -230,7 +243,7 @@ int main(int argc, const char * argv[])
 		
 
 		 graphIndicator *graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty, gsl_Graph);
-		arrayIndicator = graphIndicator->calculateIndicator();
+		arrayIndicator = graphIndicator->calculateIndicatorWithReescale( settingsSimulation->reescale);
 		for ( int i=0; i < gsl_Graph->getOrder(); i++){
 			std::cout << " Result pos : " << i << " = " << arrayIndicator[i]<< std::endl;
 		}

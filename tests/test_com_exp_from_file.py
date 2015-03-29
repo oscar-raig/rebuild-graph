@@ -3,7 +3,7 @@ import networkx as nx
 import numpy
 
 import scipy.linalg
-G=nx.read_adjlist("wheel14.txt",delimiter=" ",nodetype=int)
+G=nx.read_adjlist("sfba-inipy.txt.new",delimiter=" ",nodetype=int)
 #G=nx.read_adjlist("test.gpfc",delimiter=" ",nodetype=int)
 sc = nx.communicability_centrality_exp(G)
 print sc

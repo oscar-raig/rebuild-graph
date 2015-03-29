@@ -99,6 +99,7 @@ public:
 		strcat(outputGraphFilename,".res");
 		targetGraph = new gslGraph();
 		targetGraph->readPythonGraphFile( inputFilename );
+//		targetGraph->printGraph(CTrace::TRACE_INFO);
 		StrategyPatternAlgorithm *strategyPattern = FactoryStrategyPatternAlgorithm::CreateStrategyPatternAlgorithm (
 			settingsSimulation->thresholdAccepting, settingsSimulation );
 		strategyPattern->regenerateGraph(targetGraph,  bestBC, graphOrder,compareResult,&Tk,&costBest);

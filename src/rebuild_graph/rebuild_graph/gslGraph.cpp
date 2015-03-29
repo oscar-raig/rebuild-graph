@@ -107,7 +107,7 @@ int gslGraph::addVertex(int newVertexId){
 	if ( order == 0){
 		if ( matrix)
 			gsl_matrix_free( matrix);
-		matrix = gsl_matrix_alloc	(newVertexId+1,newVertexId+1);
+		matrix = gsl_matrix_calloc	(newVertexId+1,newVertexId+1);
 		order = newVertexId+1;
 		degree = 0;
 		this->vertex_degree = (int*)malloc(order*sizeof(int));
@@ -116,7 +116,7 @@ int gslGraph::addVertex(int newVertexId){
 	}
 	
 	if(order<(newVertexId+1)){
-		gsl_matrix *new_matrix = gsl_matrix_alloc(newVertexId+1,newVertexId+1);
+		gsl_matrix *new_matrix = gsl_matrix_calloc(newVertexId+1,newVertexId+1);
 		for (int i = 0 ; i < matrix->size1 ; i ++){
 			for ( int j =0; j < matrix->size1;  j ++){
 				gsl_matrix_set (new_matrix, i,j, gsl_matrix_get(matrix,i,j));
@@ -225,10 +225,13 @@ gslGraph *gslGraph::readPythonGraphFile( std::string fileName){
 				if(newaux-endOfVertex!=0){
 					addVertexNeighbour(vertex_identifier,vertex_neighbour);
 				}
+//			printGraph(CTrace::level::TRACE_INFO);
 			} while(endOfVertex!=newaux);
+//			printGraph(CTrace::level::TRACE_INFO);
 		}
 		line[0]='\0';
 		lineReadResult=fgets(line,STRING_LENGTH,input);
+//		printGraph(CTrace::level::TRACE_INFO);
 	}
 	fclose(input);
 	free(line);
