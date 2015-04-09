@@ -34,8 +34,8 @@ void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *
 	fprintf(output,"\t\tOrdre-> %d\n",targetGraph->getOrder());
 	fprintf(output,"\tPseudorandom generator seeds-> %d,%d,%d\n",
 			settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
-	if ( settingSimulation.thresholdAccepting ) {
-			fprintf(output,"THRESHOLD ACCEPT :\n");
+	if ( settingSimulation.thresholdAccepting  == THRESHOLD_ACCEPTING_ALGORITHM) {
+			fprintf(output,"THRESHOLD ACCEPTANCE :\n");
 	}else{
 			fprintf(output,"SIMULATED ANNEALING:\n");
 	}
