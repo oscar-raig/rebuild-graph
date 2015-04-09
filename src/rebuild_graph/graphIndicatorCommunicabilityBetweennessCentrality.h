@@ -69,7 +69,7 @@ public:
 	  */
 		gsl_matrix *A1expm=gsl_matrix_calloc(graphOrder,graphOrder);
 		
-		gsl_linalg_exponential_ss(A1, A1expm, .01);
+		gsl_linalg_exponential_ss(A1, A1expm, 0x00);
 		//	lFuncTrace.trace("Printing ExpmMatrix");
 		//		printGslMatrix(A1expm);
 		
@@ -81,7 +81,7 @@ public:
 			 B = (expA - scipy.linalg.expm(A)) / expA
 			 */
 			gsl_matrix *copyA1expm=gsl_matrix_calloc(graphOrder,graphOrder);
-			gsl_linalg_exponential_ss(copyA1, copyA1expm, .01);
+			gsl_linalg_exponential_ss(copyA1, copyA1expm, 0x00);
 			gsl_matrix_free(copyA1);		
 	
 			gsl_matrix *copyexpmAForSubstract  = gslCopyGraph(A1expm);

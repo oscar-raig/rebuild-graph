@@ -96,7 +96,7 @@ po::options_description GetOptionsDescription(){
 	("k",po::value<double>(),k_argument_description.c_str() )
 	("nIteration",po::value<int>(),nIteration_argument_description.c_str())
 	("nMax",po::value<int>(),nMax_argument_description.c_str())
-	("To",po::value<int>(),To_argument_description.c_str())
+	("To",po::value<double>(),To_argument_description.c_str())
 
 	("seed_x",po::value<int>(),seed_x_argument_description.c_str())
 	("seed_y",po::value<int>(),seed_y_argument_description.c_str())
@@ -171,7 +171,7 @@ CSettingsSimulation * readConfiguration(int argc, const char * argv[] ){
 	}
 	if (argumentMap.count("To"))
 	{
-		settingsSimulation->To = argumentMap["To"].as<int>();
+		settingsSimulation->To = argumentMap["To"].as<double>();
 		std::cout << "To " << settingsSimulation->To  << std::endl;
 		
 	}

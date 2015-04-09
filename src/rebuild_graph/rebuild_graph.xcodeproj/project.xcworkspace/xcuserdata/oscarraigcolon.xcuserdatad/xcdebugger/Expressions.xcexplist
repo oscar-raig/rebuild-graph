@@ -6,7 +6,12 @@
          contextName = "gslGraph::compare(gslGraph*, gslGraph*):gslGraph.cpp">
       </ContextState>
       <ContextState
-         contextName = "gslGraph::addVertex(int):gslGraph.cpp">
+         contextName = "StrategyPatternAlgorithm::AnnealingAlgorithm(double&amp;, GeneralGraph**, int, double*, double*, __sFILE*, double&amp;, CSettingsSimulation):StrategyPatternAlgorithm.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "graph::vertex::addNeighbour(int):graphs.cpp">
@@ -23,24 +28,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "graph::addVertexNeighbours(int, int*, int):graphs.cpp">
+         contextName = "graphIndicatorCommunicabilityCentralityUsingMatrixExponential::getDiagonalFromGslMatrix(gsl_matrix const*):graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h">
          <PersistentStrings>
             <PersistentString
-               value = "myNeighbours[i]">
-            </PersistentString>
-            <PersistentString
-               value = "myNeighbours[1]">
-            </PersistentString>
-            <PersistentString
-               value = "vertexArray[myNeighbours[i]]">
+               value = "gsl_matrix_get(gslMatrix,i,i)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "gslGraph::node_and_edge_betweenness_bin(gsl_matrix const*, gsl_vector*, gsl_matrix*):gslGraph.h">
-      </ContextState>
-      <ContextState
-         contextName = "gslGraph::addVertexNeighbour(int, int):gslGraph.cpp">
       </ContextState>
       <ContextState
          contextName = "gslGraph::gslVectorToArray(gsl_vector*, double*):gslGraph.cpp">
@@ -51,12 +47,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "graphIndicatorCommunicabilityCentralityUsingMatrixExponential::getDiagonalFromGslMatrix(gsl_matrix const*):graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h">
+         contextName = "graph::addVertexNeighbours(int, int*, int):graphs.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "gsl_matrix_get(gslMatrix,i,i)">
+               value = "vertexArray[myNeighbours[i]]">
+            </PersistentString>
+            <PersistentString
+               value = "myNeighbours[i]">
+            </PersistentString>
+            <PersistentString
+               value = "myNeighbours[1]">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "gslGraph::addVertexNeighbour(int, int):gslGraph.cpp">
       </ContextState>
       <ContextState
          contextName = "graphIndicator::rescale(double*, int):graphIndicator.h">
@@ -70,6 +75,14 @@
          contextName = "gslGraph::betweenness_bin(gsl_matrix const*):gslGraph.h">
       </ContextState>
       <ContextState
+         contextName = "StrategyPatternAlgorithmThresholdAccepting::AreChangesAccepted(double, double, double):StrategyPatternAlgorithm.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "costBest*THRESHOLD">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "graph::copyGraph() const:graphs.cpp">
       </ContextState>
       <ContextState
@@ -79,12 +92,7 @@
          contextName = "graphIndicatorCommunicabilityCentralityUsingMatrixExponential::brandes_comunicability_centrality_exp(double*):graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h">
       </ContextState>
       <ContextState
-         contextName = "StrategyPatternAlgorithm::AnnealingAlgorithm(double&amp;, GeneralGraph**, int, double*, double*, __sFILE*, double&amp;, CSettingsSimulation):StrategyPatternAlgorithm.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "gslGraph::addVertex(int):gslGraph.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
