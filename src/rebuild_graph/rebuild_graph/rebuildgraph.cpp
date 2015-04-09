@@ -34,7 +34,11 @@ void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *
 	fprintf(output,"\t\tOrdre-> %d\n",targetGraph->getOrder());
 	fprintf(output,"\tPseudorandom generator seeds-> %d,%d,%d\n",
 			settingSimulation.random_value_x,settingSimulation.random_value_y,settingSimulation.random_value_z);
-	fprintf(output,"SIMULATED ANNEALING:\n");
+	if ( settingSimulation.thresholdAccepting ) {
+			fprintf(output,"THRESHOLD ACCEPT :\n");
+	}else{
+			fprintf(output,"SIMULATED ANNEALING:\n");
+	}
 	fprintf(output,"\tInitial Temperature-> %f\n",settingSimulation.To);
 	fprintf(output,"\tTk final-> %f\n",Tk);
 	fprintf(output,"\tMinimum Temperature-> %f\n",settingSimulation.tMin);

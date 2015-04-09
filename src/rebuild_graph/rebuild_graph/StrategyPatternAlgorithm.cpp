@@ -171,7 +171,10 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 									   double *&bestBC,double * targetBC,
 									   double &costBest){
 	
-	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::AnnealingAlgorithm");
+	string ThresHold ="";
+	if( this->settingsSimulation->thresholdAccepting )
+		ThresHold = "Threshold Acceptance";
+	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::AnnealingAlgorithm" + ThresHold);
 //	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
 	double temperMin=this->settingsSimulation->tMin;
 	int iterations=0;
