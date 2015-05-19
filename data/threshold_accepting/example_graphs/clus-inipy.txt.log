@@ -1,0 +1,220 @@
+....................
+Tk=1.000000000000000	Best Cost=0.374940609725448 EXIT=0 Iterations=0
+....................
+Tk=0.900000000000000	Best Cost=0.384236712220386 EXIT=0 Iterations=1
+....................
+Tk=0.810000000000000	Best Cost=0.379517275012963 EXIT=0 Iterations=2
+....................
+Tk=0.729000000000000	Best Cost=0.381873986054048 EXIT=0 Iterations=3
+....................
+Tk=0.656100000000000	Best Cost=0.389097705262946 EXIT=0 Iterations=4
+....................
+Tk=0.590490000000000	Best Cost=0.389944240756655 EXIT=0 Iterations=5
+....................
+Tk=0.531441000000000	Best Cost=0.378730681045747 EXIT=0 Iterations=6
+....................
+Tk=0.478296900000000	Best Cost=0.384759589123484 EXIT=0 Iterations=7
+....................
+Tk=0.430467210000000	Best Cost=0.372100858501554 EXIT=0 Iterations=8
+....................
+Tk=0.387420489000000	Best Cost=0.350111269869392 EXIT=0 Iterations=9
+....................
+Tk=0.348678440100000	Best Cost=0.357748401459458 EXIT=0 Iterations=10
+....................
+Tk=0.313810596090000	Best Cost=0.362056871519372 EXIT=0 Iterations=11
+....................
+Tk=0.282429536481000	Best Cost=0.350301116785077 EXIT=0 Iterations=12
+....................
+Tk=0.254186582832900	Best Cost=0.375913006100384 EXIT=0 Iterations=13
+....................
+Tk=0.228767924549610	Best Cost=0.362546449803287 EXIT=0 Iterations=14
+....................
+Tk=0.205891132094649	Best Cost=0.371038025959052 EXIT=0 Iterations=15
+....................
+Tk=0.185302018885184	Best Cost=0.345763539191438 EXIT=0 Iterations=16
+....................
+Tk=0.166771816996666	Best Cost=0.368426545569885 EXIT=0 Iterations=17
+....................
+Tk=0.150094635296999	Best Cost=0.360977357763842 EXIT=0 Iterations=18
+....................
+Tk=0.135085171767299	Best Cost=0.367303281214711 EXIT=0 Iterations=19
+....................
+Tk=0.121576654590569	Best Cost=0.363787774190869 EXIT=0 Iterations=20
+....................
+Tk=0.109418989131512	Best Cost=0.354338600327527 EXIT=0 Iterations=21
+....................
+Tk=0.098477090218361	Best Cost=0.360730289383471 EXIT=0 Iterations=22
+....................
+Tk=0.088629381196525	Best Cost=0.361652523007175 EXIT=0 Iterations=23
+....................
+Tk=0.079766443076873	Best Cost=0.356941313859735 EXIT=0 Iterations=24
+....................
+Tk=0.071789798769185	Best Cost=0.363764844063396 EXIT=0 Iterations=25
+....................
+Tk=0.064610818892267	Best Cost=0.379228221198814 EXIT=0 Iterations=26
+....................
+Tk=0.058149737003040	Best Cost=0.375722381286168 EXIT=0 Iterations=27
+....................
+Tk=0.052334763302736	Best Cost=0.381025791246330 EXIT=0 Iterations=28
+....................
+Tk=0.047101286972462	Best Cost=0.379005308311215 EXIT=0 Iterations=29
+....................
+Tk=0.042391158275216	Best Cost=0.378901513565828 EXIT=0 Iterations=30
+....................
+Tk=0.038152042447695	Best Cost=0.377499601258370 EXIT=0 Iterations=31
+....................
+Tk=0.034336838202925	Best Cost=0.378724052110420 EXIT=0 Iterations=32
+....................
+Tk=0.030903154382633	Best Cost=0.382698601121766 EXIT=0 Iterations=33
+....................
+Tk=0.027812838944369	Best Cost=0.375638945371900 EXIT=0 Iterations=34
+..........x.........
+Tk=0.025031555049932	Best Cost=0.373925489088878 EXIT=0 Iterations=35
+....................
+Tk=0.022528399544939	Best Cost=0.382886430522997 EXIT=0 Iterations=36
+....................
+Tk=0.020275559590445	Best Cost=0.379616997912765 EXIT=0 Iterations=37
+....................
+Tk=0.018248003631401	Best Cost=0.378919795924677 EXIT=0 Iterations=38
+....................
+Tk=0.016423203268261	Best Cost=0.369020155313888 EXIT=0 Iterations=39
+....................
+Tk=0.014780882941435	Best Cost=0.379113113328020 EXIT=0 Iterations=40
+..............x.....
+Tk=0.013302794647291	Best Cost=0.373133927064360 EXIT=0 Iterations=41
+....................
+Tk=0.011972515182562	Best Cost=0.370682154715291 EXIT=0 Iterations=42
+....................
+Tk=0.010775263664306	Best Cost=0.351979729059693 EXIT=0 Iterations=43
+....................
+Tk=0.009697737297875	Best Cost=0.366774982767275 EXIT=0 Iterations=44
+..............x.....
+Tk=0.008727963568088	Best Cost=0.376155212454796 EXIT=0 Iterations=45
+..............xx....
+Tk=0.007855167211279	Best Cost=0.380708273621871 EXIT=0 Iterations=46
+....................
+Tk=0.007069650490151	Best Cost=0.377629155665753 EXIT=0 Iterations=47
+...........x........
+Tk=0.006362685441136	Best Cost=0.362000816199656 EXIT=0 Iterations=48
+......x.............
+Tk=0.005726416897022	Best Cost=0.388625383683034 EXIT=0 Iterations=49
+........x........x.x
+Tk=0.005153775207320	Best Cost=0.385263125681367 EXIT=0 Iterations=50
+.....xxx.x...x..x...
+Tk=0.004638397686588	Best Cost=0.390474792912864 EXIT=0 Iterations=51
+.................x..
+Tk=0.004174557917929	Best Cost=0.398567190088353 EXIT=0 Iterations=52
+xxx.xx.x.....x......
+Tk=0.003757102126136	Best Cost=0.383233528963304 EXIT=0 Iterations=53
+..................x.
+Tk=0.003381391913523	Best Cost=0.376291188098429 EXIT=0 Iterations=54
+.x......x.x.x......x
+Tk=0.003043252722170	Best Cost=0.390800359641786 EXIT=0 Iterations=55
+.........x.........x
+Tk=0.002738927449953	Best Cost=0.390922560751954 EXIT=0 Iterations=56
+.....xx.x..x.x......
+Tk=0.002465034704958	Best Cost=0.393616422462765 EXIT=0 Iterations=57
+....xx.....x........
+Tk=0.002218531234462	Best Cost=0.384005687127514 EXIT=0 Iterations=58
+x....x..x.x.x.x..x..
+Tk=0.001996678111016	Best Cost=0.389768168357417 EXIT=0 Iterations=59
+...x.......x.x.x....
+Tk=0.001797010299914	Best Cost=0.394972766177582 EXIT=0 Iterations=60
+...xxx.xx.x...x.x...
+Tk=0.001617309269923	Best Cost=0.398838022529083 EXIT=0 Iterations=61
+.xx.xxx.xxxx....xx.x
+Tk=0.001455578342931	Best Cost=0.395119463583578 EXIT=0 Iterations=62
+.x.x.xx.x.x.xx.xx...
+Tk=0.001310020508638	Best Cost=0.412899316880618 EXIT=0 Iterations=63
+.xxxxx.x..xx.xx.x...
+Tk=0.001179018457774	Best Cost=0.422640089614830 EXIT=0 Iterations=64
+.xxxxxx...xxxxxx..xx
+Tk=0.001061116611996	Best Cost=0.444713751063686 EXIT=0 Iterations=65
+xx..xxxxxxxxxxx.xxxx
+Tk=0.000955004950797	Best Cost=0.485898800020094 EXIT=0 Iterations=66
+xxxx.xxxxxxx.xxxxxxx
+Tk=0.000859504455717	Best Cost=0.504066578675524 EXIT=0 Iterations=67
+.xxxxxxxxxxxxxxxxxxx
+Tk=0.000773554010145	Best Cost=0.516472724519479 EXIT=0 Iterations=68
+xxxxxxxx.xxxxxxxxx.x
+Tk=0.000696198609131	Best Cost=0.576643571815534 EXIT=0 Iterations=69
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000626578748218	Best Cost=0.576643571815534 EXIT=0 Iterations=70
+xxxxxxxxxxxxxxx.xxxx
+Tk=0.000563920873396	Best Cost=0.577076014951380 EXIT=0 Iterations=71
+xx.xxxxxxxx.xxxxxxxx
+Tk=0.000507528786056	Best Cost=0.606261056513425 EXIT=0 Iterations=72
+xxxxxxxx.xx.xxxxxxxx
+Tk=0.000456775907451	Best Cost=0.655826401032405 EXIT=0 Iterations=73
+xxxxxxxxxxxxxxxxxxx.
+Tk=0.000411098316706	Best Cost=0.678604935551249 EXIT=0 Iterations=74
+xxx.xxxxxxxxxxx.x..x
+Tk=0.000369988485035	Best Cost=0.721381641782833 EXIT=0 Iterations=75
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000332989636532	Best Cost=0.721381641782833 EXIT=0 Iterations=76
+.xxxxxxxxxxxx.xxxxxx
+Tk=0.000299690672878	Best Cost=0.733875537623824 EXIT=0 Iterations=77
+xxxxxxxxxx.xxxxxxxxx
+Tk=0.000269721605591	Best Cost=0.883487716322472 EXIT=0 Iterations=78
+xxx.xxxxxxxxxxxxxxxx
+Tk=0.000242749445032	Best Cost=0.884121254997194 EXIT=0 Iterations=79
+xxxxxxxxxxxxxxxxxx.x
+Tk=0.000218474500528	Best Cost=0.884330888449648 EXIT=0 Iterations=80
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000196627050476	Best Cost=0.884330888449648 EXIT=0 Iterations=81
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000176964345428	Best Cost=0.884330888449648 EXIT=0 Iterations=82
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000159267910885	Best Cost=0.884330888449648 EXIT=0 Iterations=83
+xxxx.xxxxxxxxxxxxxxx
+Tk=0.000143341119797	Best Cost=0.917067054853274 EXIT=0 Iterations=84
+xxx.xxxxxxxxxxxxxxxx
+Tk=0.000129007007817	Best Cost=0.919931378169522 EXIT=0 Iterations=85
+xxxxxxxxxxxxxxxxxxx.
+Tk=0.000116106307035	Best Cost=0.954185416414959 EXIT=0 Iterations=86
+xxx.xxxxxxxxxxxxxxxx
+Tk=0.000104495676332	Best Cost=0.979871535468544 EXIT=0 Iterations=87
+xx.xxxxxxxx.xxxxx.xx
+Tk=0.000094046108699	Best Cost=0.985820927923607 EXIT=0 Iterations=88
+xxxx.xxxxxxxxxxxx.xx
+Tk=0.000084641497829	Best Cost=0.998910387357791 EXIT=0 Iterations=89
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000076177348046	Best Cost=0.998910387357791 EXIT=0 Iterations=90
+xxxxxxxxxxxx.xxxxxxx
+Tk=0.000068559613241	Best Cost=0.999773395714496 EXIT=0 Iterations=91
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000061703651917	Best Cost=0.999773395714496 EXIT=0 Iterations=92
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000055533286725	Best Cost=0.999773395714496 EXIT=0 Iterations=93
+xxxxxxxxxx.xxxxxxxxx
+Tk=0.000049979958053	Best Cost=1.000834098635570 EXIT=0 Iterations=94
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000044981962248	Best Cost=1.000834098635570 EXIT=0 Iterations=95
+xxxxxxxxxxxxxxxx.xxx
+Tk=0.000040483766023	Best Cost=1.004088713860198 EXIT=0 Iterations=96
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000036435389421	Best Cost=1.004088713860198 EXIT=0 Iterations=97
+xxxxxxxxxx.xxxxxxxxx
+Tk=0.000032791850479	Best Cost=1.004799185634254 EXIT=0 Iterations=98
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000029512665431	Best Cost=1.004799185634254 EXIT=0 Iterations=99
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000026561398888	Best Cost=1.004799185634254 EXIT=0 Iterations=100
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000023905258999	Best Cost=1.004799185634254 EXIT=0 Iterations=101
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000021514733099	Best Cost=1.004799185634254 EXIT=0 Iterations=102
+xxxxxxxxxx.xxxxxxxxx
+Tk=0.000019363259789	Best Cost=1.011046164140481 EXIT=0 Iterations=103
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000017426933810	Best Cost=1.011046164140481 EXIT=0 Iterations=104
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000015684240429	Best Cost=1.011046164140481 EXIT=0 Iterations=105
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000014115816386	Best Cost=1.011046164140481 EXIT=0 Iterations=106
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000012704234748	Best Cost=1.011046164140481 EXIT=0 Iterations=107
+.xxxxxxxxxxxxxxxxxxx
+Tk=0.000011433811273	Best Cost=1.014541079793744 EXIT=0 Iterations=108
+xxxxxxxxxxxxxxxxxxxx
+Tk=0.000010290430146	Best Cost=1.014541079793744 EXIT=0 Iterations=109

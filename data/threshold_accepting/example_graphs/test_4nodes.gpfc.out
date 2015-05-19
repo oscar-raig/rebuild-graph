@@ -1,0 +1,17 @@
+Graph reconstruction via  vertex betweenness centrality
+	Original graph description file-> ../example_graphs/test_4nodes.gpfc		Ordre-> 4
+	Pseudorandom generator seeds-> 5164,29267,28594
+SIMULATED ANNEALING:
+	Initial Temperature-> 10.000000
+	Tk final-> 9.000000
+	Minimum Temperature-> 0.000100
+	Geometric cooling rate: T[k]=0.900000 * T[k-1]
+	Number Maxim of Combinations-> 1000
+RESULTS:
+	Best cost -> 0.00000000000000000000
+	Betweenness centrality
+	 Desired BC  |  Closest BC  | Difference^2
+	0.0701744795 | 0.0000000000 | 0.0049244576
+	0.7156559870 | 0.0000000000 | 0.5121634917
+	0.7156559870 | 0.0000000000 | 0.5121634917
+	0.0701744795 | 0.0000000000 | 0.0049244576

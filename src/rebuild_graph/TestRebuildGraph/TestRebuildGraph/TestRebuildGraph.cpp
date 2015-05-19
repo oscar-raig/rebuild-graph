@@ -370,10 +370,10 @@ BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm){
 	
 	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc>>" << std::endl;
 	double compareResult = 10.0;
-	simulation(0, "barabase_20_4.gpfc" ,1000,&compareResult,0.0764033);
+	simulation(0, "barabase_20_4.gpfc" ,1000,&compareResult,0.0739609);
 	std::cout << "DEFAULT ALGORITHM barabase_20_4.gpfc Result:" << compareResult << " <<" << std::endl;
 	
-	BOOST_CHECK(abs(compareResult-0.0764033)< 0.1);
+	BOOST_CHECK(abs(compareResult-0.0739609)< 0.1);
 }
 #endif
 
@@ -382,10 +382,10 @@ BOOST_AUTO_TEST_CASE(regenerate_compare_default_algorithm_threshold){
 	
 	std::cout << " DEFAULT ALGORITHM with barabase_20_4.gpfc threshold>>" << std::endl;
 	double compareResult = 10.0;
-	simulation(0, "barabase_20_4.gpfc" ,1000,&compareResult,0.0540619,1,true);
+	simulation(0, "barabase_20_4.gpfc" ,1000,&compareResult,0.0787239 ,1,true);
 	std::cout << "DEFAULT ALGORITHM barabase_20_4.gpfc threshold Result:" << compareResult << " <<" << std::endl;
 	
-	BOOST_CHECK(abs(compareResult-0.0540619)< 0.1);
+	BOOST_CHECK(abs(compareResult-0.0787239 )< 0.1);
 }
 
 
