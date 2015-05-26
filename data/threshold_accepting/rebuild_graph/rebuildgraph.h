@@ -96,6 +96,7 @@ public:
 		double Tk=settingsSimulation->tMin;
 		strcpy(inputFilename,settingsSimulation->inputFileName.c_str());
 		strcpy(outputGraphFilename,inputFilename);
+		strcat(outputGraphFilename,settingsSimulation->outputFileNameSuFix.c_str());
 		strcat(outputGraphFilename,".res");
 		targetGraph = new gslGraph();
 		targetGraph->readPythonGraphFile( inputFilename );
