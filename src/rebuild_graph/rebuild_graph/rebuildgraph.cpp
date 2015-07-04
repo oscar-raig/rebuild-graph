@@ -38,21 +38,21 @@ char* CRebuildGraph::getAbrevationFromIndicator(int indicator){
 }
 
 char* CRebuildGraph::getStringFromIndicator(int indicator){
-#define BC	"Betweenness Centrality"
-#define CC	"Communicability Centrality"
-#define CBC "Communicabilit Betweeness Centrality"
-#define ERROR "ERROR"
+#define BC_LONG	"Betweenness Centrality"
+#define CC_LONG	"Communicability Centrality"
+#define CBC_LONG "Communicabilit Betweeness Centrality"
+#define ERROR_LONG "ERROR"
 	
 	
 	switch (indicator) {
 		case COMMUNICABILITY_CENTRALITY:
-			return CC;
+			return CC_LONG;
 			break;
 		case BETWEENNESS_CENTRALITY:
-			return BC;
+			return BC_LONG;
 			break;
 		case COMMUNICABILITY_BETWEENESS_CENTRALITY:
-			return CBC;
+			return CBC_LONG;
 			break;
 		defult:
 			return ERROR;
@@ -96,7 +96,7 @@ void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *
 	fprintf(output,"\tBest cost -> %3.20f\n",costBest);
 	fprintf(output,"\t%s\n",getStringFromIndicator(settingSimulation.graphProperty));
 	char * abreviatonIndicator = getAbrevationFromIndicator(settingSimulation.graphProperty);
-	fprintf(output,"\t Desired %s  |  Closest %s  | Difference^2\n",abreviatonIndicator);
+	fprintf(output,"\t Desired %s  |  Closest %s  | Difference^2\n",abreviatonIndicator,abreviatonIndicator);
 	for(int i=0; i<graphOrder; i++){
 		fprintf(output,"\t%2.10f | ",targetBC[i]);
 		fprintf(output,"%2.10f | ",bestBC[i]);
