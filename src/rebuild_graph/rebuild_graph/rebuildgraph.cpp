@@ -14,6 +14,51 @@
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 
+char* CRebuildGraph::getAbrevationFromIndicator(int indicator){
+#define BC	"BC"
+#define CC	"CC"
+#define CBC "CBC"
+#define ERROR "ERROR"
+	
+	
+	switch (indicator) {
+		case COMMUNICABILITY_CENTRALITY:
+			return CC;
+			break;
+		case BETWEENNESS_CENTRALITY:
+			return BC;
+			break;
+		case COMMUNICABILITY_BETWEENESS_CENTRALITY:
+			return CBC;
+			break;
+		defult:
+			return ERROR;
+	}
+	return ERROR;
+}
+
+char* CRebuildGraph::getStringFromIndicator(int indicator){
+#define BC	"Betweenness Centrality"
+#define CC	"Communicability Centrality"
+#define CBC "Communicabilit Betweeness Centrality"
+#define ERROR "ERROR"
+	
+	
+	switch (indicator) {
+		case COMMUNICABILITY_CENTRALITY:
+			return CC;
+			break;
+		case BETWEENNESS_CENTRALITY:
+			return BC;
+			break;
+		case COMMUNICABILITY_BETWEENESS_CENTRALITY:
+			return CBC;
+			break;
+		defult:
+			return ERROR;
+	}
+	return ERROR;
+}
 
 void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *inputFileName,double Tk,
 						double costBest,double *targetBC,
@@ -49,8 +94,9 @@ void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *
 	fprintf(output,"\tNumber Maxim of Combinations-> %d\n",settingSimulation.nMax);
 	fprintf(output,"RESULTS:\n");
 	fprintf(output,"\tBest cost -> %3.20f\n",costBest);
-	fprintf(output,"\tBetweenness centrality\n");
-	fprintf(output,"\t Desired BC  |  Closest BC  | Difference^2\n");
+	fprintf(output,"\t%s\n",getStringFromIndicator(settingSimulation.graphProperty));
+	char * abreviatonIndicator = getAbrevationFromIndicator(settingSimulation.graphProperty);
+	fprintf(output,"\t Desired %s  |  Closest %s  | Difference^2\n",abreviatonIndicator);
 	for(int i=0; i<graphOrder; i++){
 		fprintf(output,"\t%2.10f | ",targetBC[i]);
 		fprintf(output,"%2.10f | ",bestBC[i]);
