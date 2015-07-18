@@ -35,3 +35,4 @@ data/example_graphs/wheel4.txt.out
 data/example_graphs/wheel4.txt.res
 src/rebuild_graph/rebuild_graph.xcodeproj/project.xcworkspace/xcuserdata/oscarraigcolon.xcuserdatad/UserInterfaceState.xcuserstate
 src/rebuild_graph/rebuild_graph.xcodeproj/xcuserdata/oscarraigcolon.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+src/rebuild_graph/TestIndicatorBetweennessCentrality/TestIndicatorBetweennessCentrality.xcodeproj/xcuserdata/
