@@ -1,0 +1,160 @@
+El Node 0
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 1
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 2
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 3
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 4
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 5
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 6
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 7
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 8
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 9
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 10
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 11
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 12
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 13
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 14
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 15
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 16
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 17
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 18
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 19
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 20
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 21
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 22
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 23
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 24
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 25
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 26
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 27
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 28
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 29
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 30
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 31
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 32
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 33
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 34
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 35
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 36
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 37
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 38
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
+El Node 39
+	 aporta al clustering 0.000000
+	 te una BC de 0.000000
+	 te 0 nodes a la distancia 1
