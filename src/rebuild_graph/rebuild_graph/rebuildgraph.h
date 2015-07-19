@@ -29,8 +29,8 @@ class CRebuildGraph{
 	
 private:
 //	StrategyPatternAlgorithm *SrategyPatternAlgorithm;
-	char* getStringFromIndicator(int indicator);
-	char* getAbrevationFromIndicator(int indicator);
+	const char* getStringFromIndicator(int indicator);
+	const char* getAbrevationFromIndicator(int indicator);
 
 public:
 	// Input Output File Functions

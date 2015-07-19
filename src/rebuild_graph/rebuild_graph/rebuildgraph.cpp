@@ -14,7 +14,7 @@
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 
-char* CRebuildGraph::getAbrevationFromIndicator(int indicator){
+const char* CRebuildGraph::getAbrevationFromIndicator(int indicator){
 #define BC	"BC"
 #define CC	"CC"
 #define CBC "CBC"
@@ -37,7 +37,7 @@ char* CRebuildGraph::getAbrevationFromIndicator(int indicator){
 	return ERROR;
 }
 
-char* CRebuildGraph::getStringFromIndicator(int indicator){
+const char* CRebuildGraph::getStringFromIndicator(int indicator){
 #define BC_LONG	"Betweenness Centrality"
 #define CC_LONG	"Communicability Centrality"
 #define CBC_LONG "Communicabilit Betweeness Centrality"
@@ -95,7 +95,7 @@ void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *
 	fprintf(output,"RESULTS:\n");
 	fprintf(output,"\tBest cost -> %3.20f\n",costBest);
 	fprintf(output,"\t%s\n",getStringFromIndicator(settingSimulation.graphProperty));
-	char * abreviatonIndicator = getAbrevationFromIndicator(settingSimulation.graphProperty);
+	const char * abreviatonIndicator = getAbrevationFromIndicator(settingSimulation.graphProperty);
 	fprintf(output,"\t Desired %s  |  Closest %s  | Difference^2\n",abreviatonIndicator,abreviatonIndicator);
 	for(int i=0; i<graphOrder; i++){
 		fprintf(output,"\t%2.10f | ",targetBC[i]);
