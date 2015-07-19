@@ -14,6 +14,7 @@
 		362F53051A9890E0000529EC /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 362F53041A9890E0000529EC /* libgsl.a */; };
 		362F53131A989F71000529EC /* graphIndicatorBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 362F53061A989F71000529EC /* graphIndicatorBetweennessCentrality.cpp */; };
 		362F53191A989FD5000529EC /* graphIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 362F53181A989FD5000529EC /* graphIndicator.cpp */; };
+		363DC77B1B5C652B004DFBC6 /* readPythonGraphFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 363DC7791B5C652B004DFBC6 /* readPythonGraphFile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,8 @@
 		362F53071A989F71000529EC /* graphIndicatorBetweennessCentrality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphIndicatorBetweennessCentrality.h; path = ../../rebuild_graph/graphIndicatorBetweennessCentrality.h; sourceTree = "<group>"; };
 		362F53121A989F71000529EC /* graphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphIndicator.h; path = ../../rebuild_graph/graphIndicator.h; sourceTree = "<group>"; };
 		362F53181A989FD5000529EC /* graphIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphIndicator.cpp; path = ../../rebuild_graph/graphIndicator.cpp; sourceTree = "<group>"; };
+		363DC7791B5C652B004DFBC6 /* readPythonGraphFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readPythonGraphFile.cpp; path = ../../rebuild_graph/readPythonGraphFile.cpp; sourceTree = "<group>"; };
+		363DC77A1B5C652B004DFBC6 /* readPythonGraphFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readPythonGraphFile.h; path = ../../rebuild_graph/readPythonGraphFile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +80,8 @@
 		362F52E91A988CF5000529EC /* TestIndicatorBetweennessCentrality */ = {
 			isa = PBXGroup;
 			children = (
+				363DC7791B5C652B004DFBC6 /* readPythonGraphFile.cpp */,
+				363DC77A1B5C652B004DFBC6 /* readPythonGraphFile.h */,
 				362F53181A989FD5000529EC /* graphIndicator.cpp */,
 				362F53061A989F71000529EC /* graphIndicatorBetweennessCentrality.cpp */,
 				362F53071A989F71000529EC /* graphIndicatorBetweennessCentrality.h */,
@@ -148,6 +153,7 @@
 			files = (
 				362F52EB1A988CF5000529EC /* mainTestIndicatorBetweennessCentrality.cpp in Sources */,
 				362F53131A989F71000529EC /* graphIndicatorBetweennessCentrality.cpp in Sources */,
+				363DC77B1B5C652B004DFBC6 /* readPythonGraphFile.cpp in Sources */,
 				362F53001A988F99000529EC /* CTrace.cpp in Sources */,
 				362F53191A989FD5000529EC /* graphIndicator.cpp in Sources */,
 				362F53031A9890A5000529EC /* gslGraph.cpp in Sources */,
@@ -288,6 +294,7 @@
 				362F52F01A988CF5000529EC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

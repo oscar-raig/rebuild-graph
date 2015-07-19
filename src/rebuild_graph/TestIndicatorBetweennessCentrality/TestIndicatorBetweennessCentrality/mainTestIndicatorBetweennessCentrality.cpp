@@ -11,6 +11,7 @@
 #include "CTrace.hpp"
 #include "gslGraph.h"
 #include "graphIndicatorBetweennessCentrality.h"
+#include "readPythonGraphFile.h"
 
 
 int numberOfTestExeccuted = 0;
@@ -62,8 +63,7 @@ void UTest_graphIndicatorBC_getNumberOfNonZeroInVector_2NonZeros() {
 void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel5() {
     CFuncTrace trace(true, "UTest_BetweennessCentrality_wheel5");
 
-    gslGraph *  generalGraph =  new gslGraph();
-    generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel5.txt");
+    gslGraph *  generalGraph =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel5.txt");
 
     double *betweeness_centrality = NULL;
 
@@ -94,8 +94,7 @@ void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel5() {
 void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14() {
     CFuncTrace trace(true,"UTest_BetweennessCentrality_wheel14");
 
-    gslGraph *  generalGraph =  new gslGraph();
-    generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+    gslGraph *  generalGraph =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 
 
     double *betweeness_centrality = NULL;
@@ -131,8 +130,7 @@ void UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite(){
     
     CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
     
-    gslGraph *krackhardtKiteGraph =   new gslGraph();
-    krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
+    gslGraph *krackhardtKiteGraph = ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
     
     
     double *betweeness_centrality = NULL;
