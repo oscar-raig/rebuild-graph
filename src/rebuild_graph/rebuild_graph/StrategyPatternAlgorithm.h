@@ -21,10 +21,6 @@
 #define STP_DEBUG CTrace::TRACE_DEBUG
 #define STP_INFO CTrace::TRACE_DEBUG
 
-
-
-
-
 #ifndef STRING_LENGTH
 #define STRING_LENGTH 256
 #endif
