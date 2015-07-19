@@ -14,11 +14,12 @@
 #include "CSettingsSumulation.h"
 
 
+// Desing Patterns: Factory Method
+// Parameterized factory methods
 
-
-class FactoryStrategyPatternAlgorithm{
+class FactoryMethodStrategyPatternAlgorithm{
 public:
-	static StrategyPatternAlgorithm *CreateStrategyPatternAlgorithm( int algorithm,CSettingsSimulation *settings){
+	static StrategyPatternAlgorithm *createStrategyPatternAlgorithm( int algorithm,CSettingsSimulation *settings){
 		CSettingsSimulation settingsCopy = new CSettingsSimulation(settings);
 		
 		if ( algorithm == ANNEALING_ALGORITHM)

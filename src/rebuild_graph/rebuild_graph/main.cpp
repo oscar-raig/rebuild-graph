@@ -14,7 +14,7 @@
 #include "rebuildgraph.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "FactoryGraphIndicator.h"
+#include "FactoryMethodGraphIndicator.h"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"
@@ -248,7 +248,7 @@ int main(int argc, const char * argv[])
 		double *arrayIndicator = NULL;
 		
 
-		 graphIndicator *graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty, gsl_Graph);
+		 graphIndicator *graphIndicator = FactoryMethodGraphIndicator::createGraphIndicator(settingsSimulation->graphProperty, gsl_Graph);
 		arrayIndicator = graphIndicator->calculateIndicatorWithReescale( settingsSimulation->reescale);
 		for ( int i=0; i < gsl_Graph->getOrder(); i++){
 			std::cout << " Result pos : " << i << " = " << arrayIndicator[i]<< std::endl;

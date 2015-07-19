@@ -10,7 +10,7 @@
 #include "rebuildgraph.h"
 #include "CTrace.hpp"
 
-#include  "FactoryGraphIndicator.h"
+#include "FactoryMethodGraphIndicator.h"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 
@@ -141,7 +141,7 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 	
 	double *targetBC = NULL;
 	{
-		graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation.graphProperty,targetGraph);
+		graphIndicator * graphIndicator = FactoryMethodGraphIndicator::createGraphIndicator(settingsSimulation.graphProperty,targetGraph);
 		      targetBC = graphIndicator->calculateIndicatorWithReescale(settingsSimulation.reescale);
 		delete  graphIndicator;
 	}

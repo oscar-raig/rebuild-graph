@@ -13,7 +13,7 @@
 #include "CSettingsSumulation.h"
 #include "CTrace.hpp"
 #include "gslGraph.h"
-#include "FactoryGraphIndicator.h"
+#include "FactoryMethodGraphIndicator.h"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"

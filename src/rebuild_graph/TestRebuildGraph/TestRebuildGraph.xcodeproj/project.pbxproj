@@ -56,7 +56,7 @@
 		3625A36018EDC9980037F00D /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 		3636C7161A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphIndicatorCommunicabilityBetweennessCentrality.h; path = ../../graphIndicatorCommunicabilityBetweennessCentrality.h; sourceTree = "<group>"; };
 		3636C7171A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphIndicatorCommunicabilityBetweennessCentrality.cpp; path = ../../graphIndicatorCommunicabilityBetweennessCentrality.cpp; sourceTree = "<group>"; };
-		3636C7271A75AFEB006EE086 /* FactoryGraphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FactoryGraphIndicator.h; path = ../../rebuild_graph/FactoryGraphIndicator.h; sourceTree = "<group>"; };
+		3636C7271A75AFEB006EE086 /* FactoryMethodGraphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FactoryMethodGraphIndicator.h; path = ../../rebuild_graph/FactoryMethodGraphIndicator.h; sourceTree = "<group>"; };
 		363DC7671B5C2AC0004DFBC6 /* graphIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphIndicator.cpp; path = ../../rebuild_graph/graphIndicator.cpp; sourceTree = "<group>"; };
 		363DC7691B5C2C20004DFBC6 /* graphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphIndicator.h; path = ../../rebuild_graph/graphIndicator.h; sourceTree = "<group>"; };
 		365F8FA619854D4300E3A7CD /* StrategyPatternAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StrategyPatternAlgorithm.cpp; path = ../../rebuild_graph/StrategyPatternAlgorithm.cpp; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 			children = (
 				363DC7691B5C2C20004DFBC6 /* graphIndicator.h */,
 				363DC7671B5C2AC0004DFBC6 /* graphIndicator.cpp */,
-				3636C7271A75AFEB006EE086 /* FactoryGraphIndicator.h */,
+				3636C7271A75AFEB006EE086 /* FactoryMethodGraphIndicator.h */,
 				3636C7161A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */,
 				3636C7171A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */,
 				36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */,

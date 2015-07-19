@@ -24,7 +24,7 @@
 
 #include "StrategyPatternAlgorithm.h"
 #include "StrategyPatternAlgorithm.h"
-#include "FactoryStrategyPatternAlgorithm.h"
+#include "FactoryMethodStrategyPatternAlgorithm.h"
 class CRebuildGraph{
 	
 private:
@@ -103,7 +103,7 @@ public:
 		targetGraph = new gslGraph();
 		targetGraph->readPythonGraphFile( inputFilename );
 //		targetGraph->printGraph(CTrace::TRACE_INFO);
-		StrategyPatternAlgorithm *strategyPattern = FactoryStrategyPatternAlgorithm::CreateStrategyPatternAlgorithm (
+		StrategyPatternAlgorithm *strategyPattern = FactoryMethodStrategyPatternAlgorithm::createStrategyPatternAlgorithm (
 			settingsSimulation->thresholdAccepting, settingsSimulation );
 		strategyPattern->regenerateGraph(targetGraph,  bestBC, graphOrder,compareResult,&Tk,&costBest);
 		CompareAndGenerateResults(*settingsSimulation,targetGraph,

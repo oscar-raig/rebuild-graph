@@ -19,9 +19,9 @@
 
 
 
-class FactoryGraphIndicator{
+class FactoryMethodGraphIndicator{
 public:
-	static graphIndicator *CreategraphIndicator( int Indicator, gslGraph* gslGraph ){
+	static graphIndicator *createGraphIndicator( int Indicator, gslGraph* gslGraph ){
 		if ( Indicator == BETWEENNESS_CENTRALITY)
 			return new graphIndicatorBetweennessCentrality(gslGraph);
 		else if ( Indicator == COMMUNICABILITY_CENTRALITY)

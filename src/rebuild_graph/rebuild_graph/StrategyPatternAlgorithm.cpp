@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Oscar Raig Colon. All rights reserved.
 //
 
-#include "FactoryGraphIndicator.h"
+#include "FactoryMethodGraphIndicator.h"
 #include "StrategyPatternAlgorithm.h"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
@@ -160,7 +160,7 @@ void StrategyPatternAlgorithm::generateInitialGraph(int sourceGraphOrder){
 
 double * StrategyPatternAlgorithm::CalculateIndicator(gslGraph *Graph){
 	double * bestBC = NULL;
-	graphIndicator * graphIndicator = FactoryGraphIndicator::CreategraphIndicator(settingsSimulation->graphProperty,Graph);
+	graphIndicator * graphIndicator = FactoryMethodGraphIndicator::createGraphIndicator(settingsSimulation->graphProperty,Graph);
 	bestBC = graphIndicator->calculateIndicatorWithReescale(settingsSimulation->reescale);
 	delete  graphIndicator;
 	return bestBC;
