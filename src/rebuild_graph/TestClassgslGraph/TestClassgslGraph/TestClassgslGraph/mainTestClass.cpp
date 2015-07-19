@@ -162,8 +162,7 @@ void UTest_gslGraph_removeVertexNeighbours_wheel14(){
 void UTest_gslGraph_vertexAreNeighbours(){
 	CFuncTrace trace(true,"test_vertexAreNeighbours");
 	
-	gslGraph *  wheel14Graph =  new gslGraph();
-	ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	gslGraph *  wheel14Graph =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	
 	int numberOfVertexForWheel14Graph = 14;
 	for  ( int i = 1; i < numberOfVertexForWheel14Graph; i++ ){
