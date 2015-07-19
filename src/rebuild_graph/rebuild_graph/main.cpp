@@ -7,6 +7,7 @@
 //
 
 #include <stdio.h>
+#include <string>
 #include "boost/program_options.hpp"
 #include <boost/format.hpp>
 #include "CSettingsSumulation.h"

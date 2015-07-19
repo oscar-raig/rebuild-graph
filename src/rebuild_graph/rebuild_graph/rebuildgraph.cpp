@@ -150,8 +150,7 @@ void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimula
 	generateOutputFile(targetGraph,inputFilename,  Tk, costBest,targetBC,
 					   bestBC, timeStart, timeEnd,settingsSimulation);
 	
-	printf("\nReconstructed graph file: %s\n",outputGraphFilename);
-//	bestGraph->printGraph();
+	lFuncTrace.trace(CTrace::TRACE_DEBUG,"Reconstructed graph file: %s",outputGraphFilename);
 	
 	bestGraph->printMyGraph(outputGraphFilename,settingsSimulation.outputFormatGraphResultAdjList);
 

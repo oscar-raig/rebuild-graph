@@ -174,7 +174,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 	string ThresHold ="";
 	if( this->settingsSimulation->thresholdAccepting == THRESHOLD_ACCEPTING_ALGORITHM)
 		ThresHold = "Threshold Acceptance";
-	CFuncTrace lFuncTrace(true,"StrategyPatternAlgorithm::AnnealingAlgorithm " + ThresHold);
+	CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::AnnealingAlgorithm " + ThresHold);
 //	fprintf(logFile,"CRebuildGraph::AnnealingAlgorithm");
 	double temperMin=this->settingsSimulation->tMin;
 	int iterations=0;
@@ -243,7 +243,7 @@ StrategyPatternAlgorithm::regenerateGraph(gslGraph *targetGraph,
 							   double &compareResult,
 							  double *Tk,
 								double *costBest){
-	CFuncTrace trace (true,"StrategyPatternAlgorithm::regenerateGraph");
+	CFuncTrace trace (false,"StrategyPatternAlgorithm::regenerateGraph");
 	
 	try {
 		char inputGraphFilename[STRING_LENGTH];

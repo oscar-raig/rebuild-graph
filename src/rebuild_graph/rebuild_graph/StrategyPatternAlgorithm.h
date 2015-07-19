@@ -19,7 +19,7 @@
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"
 
 #define STP_DEBUG CTrace::TRACE_DEBUG
-#define STP_INFO CTrace::TRACE_INFO
+#define STP_INFO CTrace::TRACE_DEBUG
 
 
 

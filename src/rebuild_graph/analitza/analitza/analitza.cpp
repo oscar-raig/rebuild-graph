@@ -280,7 +280,6 @@ char c;
 
 
 if ((llista=fopen(nom, "rt"))==NULL){
-	printf("ep! no trobo el fitxer.\n");
 	return -1;
 }
                  
@@ -311,8 +310,7 @@ fclose (llista);
 mitja =(float) mitja / linies;
 Nvertexs=linies;
 
-printf("Caracteristiques del graf:\n\t %i vertexs\n\t grau maxim %i\n\t grau minim %i\n\t grau mitja %f\n", linies, maxveins,minveins,mitja);
-                                                                     
+                                                                    
 /* Obrim de nou el fitxer i guardem la informació del graf a l´estructura
 vertex[]. Aprofitem la passada pero generar el fitxer graus.txt on es guardarà
 el grau de cada node                                                          */
