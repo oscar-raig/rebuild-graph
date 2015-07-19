@@ -72,7 +72,7 @@ void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel5(){
 	graphIndicatorBetweennessCentrality *betweennessCentrality =
 	new graphIndicatorBetweennessCentrality ( generalGraph );
 	
-	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	betweeness_centrality = betweennessCentrality->calculateIndicatorWithReescale(true);
 	double expectedBetweenessCentralityForNode0OfWheelGraph = 0.11;
 	double expectedBetweenessCentralityForRestOfWheelGraphNodes = 0.00641;
 	for (int i = 0; i < generalGraph->getOrder(); i++){
@@ -105,11 +105,11 @@ void UTest_graphIndicatorBetweennessCentrality_BetweennessCentrality_wheel14(){
 	graphIndicatorBetweennessCentrality *betweennessCentrality =
 	new graphIndicatorBetweennessCentrality ( generalGraph );
 	
-	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	betweeness_centrality = betweennessCentrality->calculateIndicatorWithReescale(true);
 	double expectedBetweenessCentralityForNode0OfWheelGraph = 0.75;
 	double expectedBetweenessCentralityForRestOfWheelGraphNodes = 0.00641;
 	for (int i = 0; i < generalGraph->getOrder(); i++){
-//		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
+		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
 		BOOST_CHECK(betweeness_centrality[i] != 0 );
 		if ( i == 0)
 			BOOST_CHECK(abs(betweeness_centrality[i] - expectedBetweenessCentralityForNode0OfWheelGraph) <0.001);
@@ -143,7 +143,7 @@ void UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite(){
 	graphIndicatorBetweennessCentrality *betweennessCentrality =
 	new graphIndicatorBetweennessCentrality ( krackhardtKiteGraph );
 	
-	betweeness_centrality = betweennessCentrality->calculateIndicator();
+	betweeness_centrality = betweennessCentrality->calculateIndicatorWithReescale(true);
 	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
 		std::cout << "Pos " << i << " : " << betweeness_centrality[i] << std::endl;
 		std::cout << "Pos " << i << " : " << expectedbetweenessCentrality[i] << std::endl;

@@ -284,6 +284,8 @@
 					"$(OTHER_CFLAGS)",
 					"-I",
 					/opt/local/include/,
+					"-I",
+					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 				);
 				PRODUCT_NAME = TestClassgslGraph;
 			};

@@ -194,7 +194,7 @@ void UTest_brandes_comunicability_centrality_exp(){
 	
 	double *bcc_exp = NULL;
 	
-	bcc_exp = communicabilityCentrality->calculateIndicator();
+	bcc_exp = communicabilityCentrality->calculateIndicatorWithReescale(false);
 	double expectedCommunicabilityForNode0OfWheelGraph = 42.03;
 	double expectedCommunicabilityCentralityForRestOfWheelGraphNodes = 7.29;
 	for (int i = 0; i < generalGraph->getOrder(); i++){
