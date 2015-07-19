@@ -24,7 +24,6 @@ class graphIndicatorBetweennessCentrality: public graphIndicator{
 	
 public:
 	graphIndicatorBetweennessCentrality(gslGraph *graph):graphIndicator(graph){
-		this->graph =  graph;
 		this->epsilon =  std::numeric_limits<double>::epsilon();
 	}
 

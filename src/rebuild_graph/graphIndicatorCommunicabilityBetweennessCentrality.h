@@ -47,7 +47,7 @@ public:
 		 # convert to 0-1 matrix
 		 A[A!=0.0] = 1
 		 */
-		int graphOrder=graph->getOrder();
+		int graphOrder=getGraph()->getOrder();
 		
 		
 		gsl_vector * matrixFinalResult = gsl_vector_calloc(graphOrder);
@@ -58,7 +58,7 @@ public:
 		
 		//	targetGraph->printGraph();
 		
-		graph->graphToGsl(A1);
+		getGraph()->graphToGsl(A1);
 		lFuncTrace.trace(CTrace::TRACE_DEBUG,"\nPrinting Home made Matrix\n");
 		//		printGslMatrix(A1," %g");
 	 
@@ -118,7 +118,7 @@ public:
 		}
 		gsl_matrix_free(A1expm);
 		gsl_matrix_free(A1);
-		this->graph->gslVectorToArray(matrixFinalResult,myCExp);
+		this->getGraph()->gslVectorToArray(matrixFinalResult,myCExp);
 		gsl_vector_free(matrixFinalResult);
 	}
 

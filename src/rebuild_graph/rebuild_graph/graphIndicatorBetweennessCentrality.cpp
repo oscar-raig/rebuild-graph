@@ -18,9 +18,9 @@ using std::runtime_error;
 void graphIndicatorBetweennessCentrality::brandes_betweenness_centrality(double *arrayIndicatorBetweennesscentrality){
 	
 	CFuncTrace trace (false,"brandes_betweenness_centrality");
-	gsl_matrix *gslmatrix = gsl_matrix_calloc(this->graph->getOrder(), this->graph->getOrder());
+	gsl_matrix *gslmatrix = gsl_matrix_calloc(this->getGraph()->getOrder(), this->getGraph()->getOrder());
 	
-	this->graph->graphToGsl( gslmatrix );
+	this->getGraph()->graphToGsl( gslmatrix );
 	
 	gsl_vector * v = betweenness_bin( gslmatrix );
 	gslGraph::gslVectorToArray(v,arrayIndicatorBetweennesscentrality);
