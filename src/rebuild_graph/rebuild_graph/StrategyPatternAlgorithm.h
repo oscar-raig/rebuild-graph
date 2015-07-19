@@ -163,7 +163,6 @@ public:
 	virtual bool AreChangesAcceptedRandomly(double costNew, double costBest,double Tk ){
 		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithmThresholdAccepting::AreChangesAcceptedRandomly");
 		double TRHESHOLD = Tk;
-//		lFuncTrace.trace(CTrace::TRACE_INFO,"CostNew %f , CostBest %f, (costNew -costBest ) %f TRESHOLD %f THRESHOSL*CostBest %f",costNew,costBest,( costNew - costBest ),TRHESHOLD,( TRHESHOLD * costBest));
 		return ((costNew -costBest  )< ( TRHESHOLD * costBest));
 	}
 	
