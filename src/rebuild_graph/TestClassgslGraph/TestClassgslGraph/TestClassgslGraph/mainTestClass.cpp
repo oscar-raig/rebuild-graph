@@ -19,7 +19,7 @@
 
 #include "gslGraph.h"
 #include "rebuildgraph.h"
-#include "FactoryGraphIndicator.h"
+#include "FactoryMethodGraphIndicator.h"
 #include <matrix/gsl_matrix.h>
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
@@ -530,7 +530,7 @@ void UTest_gslGraph_BetweennessCentrality_krackhardt_kite(){
 	double expectedbetweenessCentrality[10]={ 0.023,0.023,0.000,0.102,
 					0.000,0.231,0.231,0.389,0.222,0.000};
 
-	graphIndicator *betweennessCentrality = FactoryGraphIndicator::CreategraphIndicator(BETWEENNESS_CENTRALITY,krackhardtKiteGraph);
+	graphIndicator *betweennessCentrality = FactoryMethodGraphIndicator::createGraphIndicator(BETWEENNESS_CENTRALITY,krackhardtKiteGraph);
 	
 	
 	betweeness_centrality = betweennessCentrality->calculateIndicatorWithReescale(true);
@@ -562,7 +562,7 @@ void UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite(){
 	double expectedcommunicabilityCentrality[10]={ 10.254,10.254,7.402,17.518,
 		7.402,12.703,12.703,4.880,2.333,1.593};
 	
-	graphIndicator *communicabilityCentrality = FactoryGraphIndicator::CreategraphIndicator(COMMUNICABILITY_CENTRALITY,krackhardtKiteGraph);
+	graphIndicator *communicabilityCentrality = FactoryMethodGraphIndicator::createGraphIndicator(COMMUNICABILITY_CENTRALITY,krackhardtKiteGraph);
 	
 	betweeness_centrality = communicabilityCentrality->calculateIndicatorWithReescale(false);
 	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
@@ -593,7 +593,7 @@ void UTest_gslGraph_CommunicabilityBetweennessCentrality_krackhardt_kite(){
 		0.164,0.497,0.497,0.451,0.233,0.010};
 	
 	
-	graphIndicator *communicabilityBetweennessCentrality = FactoryGraphIndicator::CreategraphIndicator(COMMUNICABILITY_BETWEENESS_CENTRALITY,krackhardtKiteGraph);
+	graphIndicator *communicabilityBetweennessCentrality = FactoryMethodGraphIndicator::createGraphIndicator(COMMUNICABILITY_BETWEENESS_CENTRALITY,krackhardtKiteGraph);
 	
 	communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicatorWithReescale(true);
 	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
@@ -621,7 +621,7 @@ void UTest_gslGraph_CommunicabilityBetweennessCentrality_test_4nodes(){
 	double *communicability_betweeness_centrality = NULL;
 	double expectedCommunicabilitybetweenessCentrality[4]={ 0.07017,0.71565,0.71565,0.07017};
 		
-	graphIndicator *communicabilityBetweennessCentrality = FactoryGraphIndicator::CreategraphIndicator(COMMUNICABILITY_BETWEENESS_CENTRALITY,krackhardtKiteGraph);
+	graphIndicator *communicabilityBetweennessCentrality = FactoryMethodGraphIndicator::createGraphIndicator(COMMUNICABILITY_BETWEENESS_CENTRALITY,krackhardtKiteGraph);
 	
 	communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicatorWithReescale(true);
 	for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
