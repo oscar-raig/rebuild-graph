@@ -19,6 +19,7 @@
 		3625A36218EDC9980037F00D /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625A36018EDC9980037F00D /* libgslcblas.a */; };
 		3636C7181A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C7171A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */; };
 		363DC7681B5C2AC0004DFBC6 /* graphIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 363DC7671B5C2AC0004DFBC6 /* graphIndicator.cpp */; };
+		363DC7751B5C5DBE004DFBC6 /* readPythonGraphFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 363DC7731B5C5DBE004DFBC6 /* readPythonGraphFile.cpp */; };
 		365F8FA819854D4300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365F8FA619854D4300E3A7CD /* StrategyPatternAlgorithm.cpp */; };
 		36DB1610198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DB160E198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp */; };
 		36DF6D141A48531D004A0C99 /* graphIndicatorBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DF6D131A48531D004A0C99 /* graphIndicatorBetweennessCentrality.cpp */; };
@@ -59,6 +60,8 @@
 		3636C7271A75AFEB006EE086 /* FactoryMethodGraphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FactoryMethodGraphIndicator.h; path = ../../rebuild_graph/FactoryMethodGraphIndicator.h; sourceTree = "<group>"; };
 		363DC7671B5C2AC0004DFBC6 /* graphIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphIndicator.cpp; path = ../../rebuild_graph/graphIndicator.cpp; sourceTree = "<group>"; };
 		363DC7691B5C2C20004DFBC6 /* graphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphIndicator.h; path = ../../rebuild_graph/graphIndicator.h; sourceTree = "<group>"; };
+		363DC7731B5C5DBE004DFBC6 /* readPythonGraphFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readPythonGraphFile.cpp; path = ../../rebuild_graph/readPythonGraphFile.cpp; sourceTree = "<group>"; };
+		363DC7741B5C5DBE004DFBC6 /* readPythonGraphFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readPythonGraphFile.h; path = ../../rebuild_graph/readPythonGraphFile.h; sourceTree = "<group>"; };
 		365F8FA619854D4300E3A7CD /* StrategyPatternAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StrategyPatternAlgorithm.cpp; path = ../../rebuild_graph/StrategyPatternAlgorithm.cpp; sourceTree = "<group>"; };
 		365F8FA719854D4300E3A7CD /* StrategyPatternAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StrategyPatternAlgorithm.h; path = ../../rebuild_graph/StrategyPatternAlgorithm.h; sourceTree = "<group>"; };
 		36DB160E198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractFactoryPatternRebuildGraph.cpp; sourceTree = "<group>"; };
@@ -100,6 +103,8 @@
 		36207B6F18EC25A10033A4DC /* TestRebuildGraph */ = {
 			isa = PBXGroup;
 			children = (
+				363DC7731B5C5DBE004DFBC6 /* readPythonGraphFile.cpp */,
+				363DC7741B5C5DBE004DFBC6 /* readPythonGraphFile.h */,
 				363DC7691B5C2C20004DFBC6 /* graphIndicator.h */,
 				363DC7671B5C2AC0004DFBC6 /* graphIndicator.cpp */,
 				3636C7271A75AFEB006EE086 /* FactoryMethodGraphIndicator.h */,
@@ -189,6 +194,7 @@
 				365F8FA819854D4300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */,
 				3625A35B18EDC6C70037F00D /* analitza.cpp in Sources */,
 				36207B7118EC25A10033A4DC /* TestRebuildGraph.cpp in Sources */,
+				363DC7751B5C5DBE004DFBC6 /* readPythonGraphFile.cpp in Sources */,
 				36DF6D141A48531D004A0C99 /* graphIndicatorBetweennessCentrality.cpp in Sources */,
 				363DC7681B5C2AC0004DFBC6 /* graphIndicator.cpp in Sources */,
 				3608474A198CC884008D4784 /* gslGraph.cpp in Sources */,

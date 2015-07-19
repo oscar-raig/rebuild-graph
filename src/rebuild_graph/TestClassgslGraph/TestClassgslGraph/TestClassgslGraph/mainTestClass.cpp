@@ -44,7 +44,7 @@ void UTest_gslGraph_readPythonGraphFile_NULLFile(){
 	
 	gslGraph *  generalGraph = new gslGraph();
 	
-	BOOST_REQUIRE_THROW(generalGraph->readPythonGraphFile(NULL), std::exception);
+    BOOST_REQUIRE_THROW(ReadPythonGraphFile::readPythonGraphFile(NULL), std::exception);
 	
 	delete generalGraph;
 	
@@ -56,7 +56,7 @@ void UTest_gslGraph_readPythonGraphFile_FileNotExists(){
 	CFuncTrace trace(true,"UTest_readGraphFromFileNotExists");
 	
 	gslGraph *  generalGraph =  new gslGraph();
-	BOOST_REQUIRE_THROW(generalGraph->readPythonGraphFile("filenotfound"), std::exception);
+	BOOST_REQUIRE_THROW(ReadPythonGraphFile::readPythonGraphFile("filenotfound"), std::exception);
 	
 	delete generalGraph;
 	
@@ -67,8 +67,7 @@ void UTest_gslGraph_readPythonGraphFile_FileNotExists(){
 void UTest_gslGraph_readPythonGraphFile_wheel10(){
 	CFuncTrace trace(true,"test_readGraphFromFilewheel10");
 	
-	gslGraph *  generalGraph = new gslGraph();
-	generalGraph->readPythonGraphFile(DIR_GRAPHS "test.gpfc");
+	gslGraph *  generalGraph = ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test.gpfc");
 	
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
@@ -91,8 +90,7 @@ void UTest_gslGraph_readPythonGraphFile_wheel10(){
 void Utest_gslGraph_readPythonGraphFile_4nodes(){
 	CFuncTrace trace(true,"test_readGraphFromFiletest_4nodes");
 	
-	gslGraph *  generalGraph =  new gslGraph();
-	generalGraph->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	gslGraph *  generalGraph =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
 	
 	int degree = generalGraph->getDegree();
 	int order = generalGraph->getOrder();
@@ -115,8 +113,7 @@ void Utest_gslGraph_readPythonGraphFile_4nodes(){
 void UTest_gslGraph_removeVertexNeighbours_wheel14(){
 	CFuncTrace trace(true,"test_removeVertexNeighbours");
 	
-	gslGraph *  generalGraph = new gslGraph();
-	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	gslGraph *  generalGraph = ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	
 	int graphdegree = generalGraph->getDegree();
 	int graphorder = generalGraph->getOrder();
@@ -166,7 +163,7 @@ void UTest_gslGraph_vertexAreNeighbours(){
 	CFuncTrace trace(true,"test_vertexAreNeighbours");
 	
 	gslGraph *  wheel14Graph =  new gslGraph();
-	wheel14Graph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	
 	int numberOfVertexForWheel14Graph = 14;
 	for  ( int i = 1; i < numberOfVertexForWheel14Graph; i++ ){
@@ -184,9 +181,7 @@ void UTest_gslGraph_vertexAreNeighbours(){
 void UTest_brandes_comunicability_centrality_exp(){
 	CFuncTrace trace(true,"test_brandes_comunicability_centrality_exp");
 	
-	gslGraph *  generalGraph =  new gslGraph();
-	
-	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	gslGraph *  generalGraph =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	
 	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
 	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(generalGraph);
@@ -216,8 +211,7 @@ void UTest_brandes_comunicability_centrality_exp(){
 void test_brandes_comunicability_centrality_wheel14(){
 	CFuncTrace trace(true,"test_brandes_comunicability_centrality_wheel14");
 	
-	gslGraph *  generalGraph =  new gslGraph();
-	generalGraph->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	gslGraph *  generalGraph =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	
 	
 	double *betweeness_centrality = NULL;
@@ -250,8 +244,7 @@ void test_brandes_comunicability_centrality_wheel14(){
 void test_brandes_comunicability_centrality_test_4nodes(){
 	CFuncTrace trace(true,"test_brandes_comunicability_centrality_test_4nodes");
 	
-	gslGraph *  generalGraph =  new gslGraph();
-	generalGraph->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	gslGraph *  generalGraph =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
 	double *betweeness_centrality = NULL;
 	
 	graphIndicatorBetweennessCentrality *betweennessCentrality =
@@ -365,10 +358,8 @@ void UTest_gslGraph_adNewVertexNeighbour_and_check_order_and_degree(){
 void test_setAllVertexneigbours(){
 	CFuncTrace trace(true,"test_setAllVertexneigbours");
 	
-	gslGraph *  generalGraph =  new gslGraph();
-	generalGraph->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
-	gslGraph * newGraph =   new gslGraph();
-	newGraph->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
+	gslGraph *  generalGraph =  ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
+	gslGraph * newGraph =   ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
     newGraph->printGraph();
 	newGraph->printGraph();
 	
@@ -414,8 +405,7 @@ void test_setAllVertexneigbours(){
 void UTest_2copyGraph(){
 	CFuncTrace trace(true,"UTest_2copyGraph");
 	
-	gslGraph *general =  new gslGraph();
-	general->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	gslGraph *general =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
 	
 	gslGraph *copy1 = general->copyGraph();
 	
@@ -443,8 +433,7 @@ void
 UTest_gslGraph_compare_bad_parameter_1(void){
 	CFuncTrace trace(true,"UTest_gslGraph_compare_bad_parameter_1");
 	
-	gslGraph *general =  new gslGraph();
-	general->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	gslGraph *general =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
 
 	BOOST_REQUIRE_THROW(general->compare(NULL, general), std::exception);
 	
@@ -458,8 +447,7 @@ void
 UTest_gslGraph_compare_bad_parameter_2(void){
 	CFuncTrace trace(true,"UTest_gslGraph_compare_bad_parameter_2");
 	
-	gslGraph *general =  new gslGraph();
-	general->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	gslGraph *general =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
 	
 	BOOST_REQUIRE_THROW( general->compare(NULL, general), std::exception);
 	
@@ -474,11 +462,9 @@ UTest_gslGraph_compare_different_graphs(void){
 	
 	CFuncTrace trace(true,"UTest_gslGraph_compare_bad_parameter_2");
 	
-	gslGraph *graph1 =  new gslGraph();
-	graph1->readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
+	gslGraph *graph1 =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
 	
-	gslGraph *graph2 =   new gslGraph();
-	graph2->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
+	gslGraph *graph2 = ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
 	
 	int areGraphEquals = gslGraph::compare(graph1, graph2);
 	
@@ -497,11 +483,9 @@ UTest_gslGraph_compare_equal_graphs(void){
 	
 	CFuncTrace trace(true,"UTest_gslGraph_compare_equal_graphs");
 	
-	gslGraph *graph1 =  new gslGraph();
-	graph1->readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
+	gslGraph *graph1 =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
 	
-	gslGraph *graph2 =   new gslGraph();
-	graph2->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
+	gslGraph *graph2 = ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
 	
 	int areGraphEquals = gslGraph::compare(graph1, graph2);
 	
@@ -522,8 +506,7 @@ void UTest_gslGraph_BetweennessCentrality_krackhardt_kite(){
 
 	CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
 	
-	gslGraph *krackhardtKiteGraph =   new gslGraph();
-	krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
+	gslGraph *krackhardtKiteGraph = ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
 	
 	
 	double *betweeness_centrality = NULL;
@@ -554,8 +537,7 @@ void UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite(){
 	
 	CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
 	
-	gslGraph *krackhardtKiteGraph =   new gslGraph();
-	krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
+	gslGraph *krackhardtKiteGraph =  ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
 	
 	
 	double *betweeness_centrality = NULL;
@@ -584,8 +566,7 @@ void UTest_gslGraph_CommunicabilityBetweennessCentrality_krackhardt_kite(){
 	
 	CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
 	
-	gslGraph *krackhardtKiteGraph =   new gslGraph();
-	krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
+	gslGraph *krackhardtKiteGraph =   ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
 	
 	
 	double *communicability_betweeness_centrality = NULL;
@@ -614,8 +595,7 @@ void UTest_gslGraph_CommunicabilityBetweennessCentrality_test_4nodes(){
 	
 	CFuncTrace trace(true,"UTest_gslGraph_BetweennessCentrality_krackhardt_kite");
 	
-	gslGraph *krackhardtKiteGraph =   new gslGraph();
-	krackhardtKiteGraph->readPythonGraphFile( DIR_GRAPHS "test_4nodes.gpfc" );
+	gslGraph *krackhardtKiteGraph =   ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "test_4nodes.gpfc" );
 	
 	
 	double *communicability_betweeness_centrality = NULL;
@@ -647,8 +627,7 @@ void UTest_graphIndicatorBetweennessCentrality_anyUnconnectedVertex(){
 	new graphIndicatorBetweennessCentrality(NULL);
 
 	
-	gslGraph *generalGraph =   new gslGraph();
-	generalGraph->readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
+	gslGraph *generalGraph =   ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
 	// Vertex 0 in wheel14 is connected to 13 vertex
 	// if we remove its neighbours, node 0 is unconnected
 	

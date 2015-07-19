@@ -376,10 +376,10 @@ BOOST_AUTO_TEST_CASE(compara){
     CRebuildGraph *rebuildGraph = new CRebuildGraph();
     gsl_matrix * matrixA;
     gsl_matrix * matrixB;
-    gslGraph* graph = new gslGraph();
+    
     
     const char *fileNameGraph="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/test_4nodes.gpfc";
-    graph->readPythonGraphFile((char*)fileNameGraph);
+    gslGraph* graph  = ReadPythonGraphFile::readPythonGraphFile((char*)fileNameGraph);
     matrixA = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
     matrixB = gsl_matrix_alloc(graph->getOrder(),graph->getOrder());
     
@@ -725,8 +725,7 @@ BOOST_AUTO_TEST_CASE(UTest_generateInitialGraph_sfba_inipy) {
     StrategyPatternAlgorithm *strategyPatternAlgorithm = new StrategyPatternAlgorithm(NULL);
     
     const char *fileNameGraph="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/sfba-inipy.txt";
-    gslGraph* graph = new gslGraph();
-    graph->readPythonGraphFile((char*)fileNameGraph);
+    gslGraph* graph = ReadPythonGraphFile::readPythonGraphFile((char*)fileNameGraph);
     int degreeSfgaInipy = graph->getDegree();
     int orderSfgaInipy = graph->getOrder();
 

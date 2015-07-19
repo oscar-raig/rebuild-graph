@@ -243,8 +243,7 @@ int main(int argc, const char * argv[])
 	}
 	
 	if (only_calculate ){
-		gslGraph *gsl_Graph = new gslGraph();
-		gsl_Graph->readPythonGraphFile(settingsSimulation->inputFileName);
+        gslGraph *gsl_Graph = ReadPythonGraphFile::readPythonGraphFile(settingsSimulation->inputFileName);
 		double *arrayIndicator = NULL;
 		
 

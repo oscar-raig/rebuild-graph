@@ -58,7 +58,7 @@ public:
 	gslGraph();
 	gslGraph(int sizeOfMatrix);
 	virtual ~gslGraph();
-	virtual gslGraph *readPythonGraphFile(std::string fileName);
+	
 	virtual gslGraph*	copyGraph() const ;
 	gsl_matrix* getGslMatrix(){return matrix;}
 	
