@@ -19,7 +19,7 @@
 
 int calculateIndicator(SettingsSimulation * settings ) {
     gslGraph *gsl_Graph =
-    ReadPythonGraphFile::readPythonGraphFile(settingsSimulation->inputFileName);
+    ReadPythonGraphFile::readPythonGraphFile(settings->inputFileName);
     double *arrayIndicator = NULL;
 
     graphIndicator *graphIndicator =
