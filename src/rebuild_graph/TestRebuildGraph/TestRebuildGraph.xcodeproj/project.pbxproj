@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3608474A198CC884008D4784 /* gslGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36084747198CC884008D4784 /* gslGraph.cpp */; };
-		360854F518F7489100033919 /* CSettingsSumulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360854F418F7489100033919 /* CSettingsSumulation.cpp */; };
+		360854F518F7489100033919 /* SettingsSimulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360854F418F7489100033919 /* SettingsSimulation.cpp */; };
 		3609DCF418F5F83B00AC64B9 /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3609DCF318F5F83B00AC64B9 /* CTrace.cpp */; };
 		36133E1B18FCE0F9000F7E09 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36133E1918FCE0F9000F7E09 /* rebuildgraph.cpp */; };
 		36207B7118EC25A10033A4DC /* TestRebuildGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36207B7018EC25A10033A4DC /* TestRebuildGraph.cpp */; };
@@ -40,8 +40,8 @@
 
 /* Begin PBXFileReference section */
 		36084747198CC884008D4784 /* gslGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gslGraph.cpp; path = ../../rebuild_graph/gslGraph.cpp; sourceTree = "<group>"; };
-		360854F318F746BD00033919 /* CSettingsSumulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSettingsSumulation.h; path = ../../rebuild_graph/CSettingsSumulation.h; sourceTree = "<group>"; };
-		360854F418F7489100033919 /* CSettingsSumulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CSettingsSumulation.cpp; path = ../../rebuild_graph/CSettingsSumulation.cpp; sourceTree = "<group>"; };
+		360854F318F746BD00033919 /* SettingsSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsSimulation.h; path = ../../rebuild_graph/SettingsSimulation.h; sourceTree = "<group>"; };
+		360854F418F7489100033919 /* SettingsSimulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SettingsSimulation.cpp; path = ../../rebuild_graph/SettingsSimulation.cpp; sourceTree = "<group>"; };
 		3609DCF318F5F83B00AC64B9 /* CTrace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 		36133E1918FCE0F9000F7E09 /* rebuildgraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rebuildgraph.cpp; path = ../../rebuild_graph/rebuildgraph.cpp; sourceTree = "<group>"; };
 		36133E1A18FCE0F9000F7E09 /* rebuildgraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rebuildgraph.h; path = ../../rebuild_graph/rebuildgraph.h; sourceTree = "<group>"; };
@@ -121,8 +121,8 @@
 				36084747198CC884008D4784 /* gslGraph.cpp */,
 				365F8FA619854D4300E3A7CD /* StrategyPatternAlgorithm.cpp */,
 				365F8FA719854D4300E3A7CD /* StrategyPatternAlgorithm.h */,
-				360854F418F7489100033919 /* CSettingsSumulation.cpp */,
-				360854F318F746BD00033919 /* CSettingsSumulation.h */,
+				360854F418F7489100033919 /* SettingsSimulation.cpp */,
+				360854F318F746BD00033919 /* SettingsSimulation.h */,
 				3625A35C18EDC8FA0037F00D /* CTrace.cpp */,
 				3625A35D18EDC8FA0037F00D /* CTrace.hpp */,
 				3625A35918EDC6C70037F00D /* analitza.cpp */,
@@ -188,7 +188,7 @@
 			files = (
 				36133E1B18FCE0F9000F7E09 /* rebuildgraph.cpp in Sources */,
 				3636C7181A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */,
-				360854F518F7489100033919 /* CSettingsSumulation.cpp in Sources */,
+				360854F518F7489100033919 /* SettingsSimulation.cpp in Sources */,
 				3609DCF418F5F83B00AC64B9 /* CTrace.cpp in Sources */,
 				36DB1610198458C70083A9BA /* AbstractFactoryPatternRebuildGraph.cpp in Sources */,
 				365F8FA819854D4300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */,

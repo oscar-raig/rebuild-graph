@@ -45,7 +45,7 @@ public:
 	int calculateCommunicability_cent_exp(const char *argv[]);
 	void generateOutputFile(const  gslGraph *targetGraph,const char *inputFileName,double Tk,
 							double costBest,double *targetBC,
-							double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation);
+							double *bestBC, time_t timeStart, time_t timeEnd,SettingsSimulation settingSimulation);
 	
 	
 	static void printingCompareMatrixResults(float delta,
@@ -71,7 +71,7 @@ public:
 	// Others
 		
 
-	void CompareAndGenerateResults(CSettingsSimulation settingsSimulation,
+	void CompareAndGenerateResults(SettingsSimulation settingsSimulation,
 												  gslGraph *targetGraph,
 												  gslGraph *bestGraph,
 												  char* inputFilename,
@@ -82,7 +82,7 @@ public:
 												  double &compareResult,
 												  char *outputGraphFilename
 												  );
-	void regenerateGraph(CSettingsSimulation *settingsSimulation,
+	void regenerateGraph(SettingsSimulation *settingsSimulation,
 						double *&bestBC,
 						int &graphOrder,
 						double &compareResult)

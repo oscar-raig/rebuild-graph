@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3607297419881DDB000BBF7A /* gslGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3607297219881DDB000BBF7A /* gslGraph.cpp */; };
-		360854F218F731CC00033919 /* CSettingsSumulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360854F018F731CC00033919 /* CSettingsSumulation.cpp */; };
+		360854F218F731CC00033919 /* SettingsSimulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360854F018F731CC00033919 /* SettingsSimulation.cpp */; };
 		36093C8A18E9A6FA003710C0 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36093C8918E9A6FA003710C0 /* libgsl.a */; };
 		360BA70918DD74E300F54F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA70818DD74E300F54F2B /* main.cpp */; };
 		360BA70B18DD74E300F54F2B /* rebuild_graph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 360BA70A18DD74E300F54F2B /* rebuild_graph.1 */; };
@@ -16,6 +16,7 @@
 		3625A35818EDBA400037F00D /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35618EDBA400037F00D /* CTrace.cpp */; };
 		3636C71B1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C71A1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */; };
 		363DC7721B5C5A8E004DFBC6 /* readPythonGraphFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 363DC7701B5C5A8E004DFBC6 /* readPythonGraphFile.cpp */; };
+		364837BB1B5D4FE100CCACC4 /* ProgramOptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 364837B91B5D4FE100CCACC4 /* ProgramOptions.cpp */; };
 		365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */; };
 		36842EC31A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36842EC11A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp */; };
 		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
@@ -85,8 +86,8 @@
 /* Begin PBXFileReference section */
 		3607297219881DDB000BBF7A /* gslGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gslGraph.cpp; sourceTree = "<group>"; };
 		3607297319881DDB000BBF7A /* gslGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gslGraph.h; sourceTree = "<group>"; };
-		360854F018F731CC00033919 /* CSettingsSumulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSettingsSumulation.cpp; sourceTree = "<group>"; };
-		360854F118F731CC00033919 /* CSettingsSumulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSettingsSumulation.h; sourceTree = "<group>"; };
+		360854F018F731CC00033919 /* SettingsSimulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsSimulation.cpp; sourceTree = "<group>"; };
+		360854F118F731CC00033919 /* SettingsSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSimulation.h; sourceTree = "<group>"; };
 		3609206118ECAA0700BAE922 /* compara.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = compara.xcodeproj; path = compara/compara.xcodeproj; sourceTree = "<group>"; };
 		36093C8918E9A6FA003710C0 /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
 		3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = analitza.xcodeproj; path = analitza/analitza.xcodeproj; sourceTree = "<group>"; };
@@ -106,6 +107,8 @@
 		3636C7221A75A585006EE086 /* FactoryMethodGraphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FactoryMethodGraphIndicator.h; sourceTree = "<group>"; };
 		363DC7701B5C5A8E004DFBC6 /* readPythonGraphFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = readPythonGraphFile.cpp; sourceTree = "<group>"; };
 		363DC7711B5C5A8E004DFBC6 /* readPythonGraphFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readPythonGraphFile.h; sourceTree = "<group>"; };
+		364837B91B5D4FE100CCACC4 /* ProgramOptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgramOptions.cpp; sourceTree = "<group>"; };
+		364837BA1B5D4FE100CCACC4 /* ProgramOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramOptions.h; sourceTree = "<group>"; };
 		365871A91985964F000C40A2 /* TestClassgslGraph.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TestClassgslGraph.xcodeproj; path = TestClassgslGraph/TestClassgslGraph/TestClassgslGraph.xcodeproj; sourceTree = "<group>"; };
 		365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StrategyPatternAlgorithm.cpp; sourceTree = "<group>"; };
 		365F8FA0198545C300E3A7CD /* StrategyPatternAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrategyPatternAlgorithm.h; sourceTree = "<group>"; };
@@ -183,8 +186,8 @@
 				36093C8918E9A6FA003710C0 /* libgsl.a */,
 				360BA70818DD74E300F54F2B /* main.cpp */,
 				360BA70A18DD74E300F54F2B /* rebuild_graph.1 */,
-				360854F018F731CC00033919 /* CSettingsSumulation.cpp */,
-				360854F118F731CC00033919 /* CSettingsSumulation.h */,
+				360854F018F731CC00033919 /* SettingsSimulation.cpp */,
+				360854F118F731CC00033919 /* SettingsSimulation.h */,
 				36133E1218FC7AC3000F7E09 /* rebuildgraph.cpp */,
 				36133E1818FC7C09000F7E09 /* rebuildgraph.h */,
 				365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */,
@@ -201,6 +204,8 @@
 				363522461A896B0A002057C1 /* FactoryMethodStrategyPatternAlgorithm.h */,
 				363DC7701B5C5A8E004DFBC6 /* readPythonGraphFile.cpp */,
 				363DC7711B5C5A8E004DFBC6 /* readPythonGraphFile.h */,
+				364837B91B5D4FE100CCACC4 /* ProgramOptions.cpp */,
+				364837BA1B5D4FE100CCACC4 /* ProgramOptions.h */,
 			);
 			path = rebuild_graph;
 			sourceTree = "<group>";
@@ -362,9 +367,10 @@
 				36DF6D091A484B3D004A0C99 /* graphIndicator.cpp in Sources */,
 				3636C71B1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */,
 				36DF6D111A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp in Sources */,
+				364837BB1B5D4FE100CCACC4 /* ProgramOptions.cpp in Sources */,
 				365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */,
 				36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */,
-				360854F218F731CC00033919 /* CSettingsSumulation.cpp in Sources */,
+				360854F218F731CC00033919 /* SettingsSimulation.cpp in Sources */,
 				360BA70918DD74E300F54F2B /* main.cpp in Sources */,
 				3625A35818EDBA400037F00D /* CTrace.cpp in Sources */,
 				36842EC31A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp in Sources */,

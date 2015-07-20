@@ -37,7 +37,7 @@ namespace po = boost::program_options;
 
 #define OUTPUT_BINARY false
 #define OUTPUT_ADJACENCY_LIST true
-class CSettingsSimulation{
+class SettingsSimulation{
 	
 public:
 	double	k;
@@ -56,7 +56,7 @@ public:
 	bool reescale;
 	bool onlyCalculateIndicator;
 	
-	CSettingsSimulation():
+	SettingsSimulation():
 	k(DEFAULT_K),nMax(DEFAULT_N_MAX),
 	tMin(DEFAULT_T_MIN),To(DEFAULT_TO),
 	random_value_x(DEFAULT_SEED_X),
@@ -74,7 +74,7 @@ public:
 		}
 	}
 	
-	CSettingsSimulation(po::variables_map argumentMap):
+	SettingsSimulation(po::variables_map argumentMap):
 		k(DEFAULT_K),nMax(DEFAULT_N_MAX),tMin(DEFAULT_T_MIN),
 		To(DEFAULT_TO),
 		random_value_x(DEFAULT_SEED_X),
@@ -97,7 +97,7 @@ public:
 		
 	};
 	
-	CSettingsSimulation(CSettingsSimulation *sourceSettings) {
+	SettingsSimulation(SettingsSimulation *sourceSettings) {
 		k = sourceSettings->k;
 		nMax = sourceSettings->nMax ;
 		tMin = sourceSettings->tMin;

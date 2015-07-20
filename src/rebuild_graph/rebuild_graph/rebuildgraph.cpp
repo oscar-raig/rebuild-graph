@@ -62,7 +62,7 @@ const char* CRebuildGraph::getStringFromIndicator(int indicator){
 
 void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *inputFileName,double Tk,
 						double costBest,double *targetBC,
-						double *bestBC, time_t timeStart, time_t timeEnd,CSettingsSimulation settingSimulation){
+						double *bestBC, time_t timeStart, time_t timeEnd,SettingsSimulation settingSimulation){
 	
 	FILE *output=NULL;
 	int graphOrder =targetGraph->getOrder();
@@ -108,7 +108,7 @@ void CRebuildGraph::generateOutputFile(const  gslGraph *targetGraph,const char *
 	
 }
 
-void CRebuildGraph::CompareAndGenerateResults(CSettingsSimulation settingsSimulation,
+void CRebuildGraph::CompareAndGenerateResults(SettingsSimulation settingsSimulation,
 											  gslGraph *targetGraph,
 											  gslGraph *bestGraph,
 											  char* inputFilename,
@@ -321,26 +321,7 @@ CRebuildGraph::calculateCommunicability(const char *argv[]){
 
 
 
-int
-CRebuildGraph::calculateCommunicability_cent_exp(const char *argv[]){
-	CFuncTrace lFuncTrace(false,"fCalculateCommunicability_cent_exp");
-	
-	gslGraph *targetGraph=NULL;
-//	targetGraph=GetGraphfromFile(argv[1]);
-	int graphOrder=targetGraph->getOrder();
-	lFuncTrace.trace(CTrace::TRACE_DEBUG,"Graph Order %d",graphOrder);
-//	double * bestCommCentExp = (double*)malloc(graphOrder * sizeof(double));
-	
-//	targetGraph->brandes_comunicability_centrality_exp(bestCommCentExp);
 
-	graphIndicatorCommunicabilityCentralityUsingMatrixExponential *communicabilityCentrality =
-	new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(targetGraph);
-	
-	double * bestCommCentExp = communicabilityCentrality->calculateIndicatorWithReescale(false);
-
-	return RESULT_OK;
-	
-}
 
 
 //Multiplica matrius quadrades

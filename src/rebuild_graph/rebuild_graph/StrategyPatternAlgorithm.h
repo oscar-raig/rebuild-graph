@@ -10,7 +10,7 @@
 #define __rebuild_graph__SrategyPatternAlgorithm__
 
 #include <iostream>
-#include "CSettingsSumulation.h"
+#include "SettingsSimulation.h"
 #include "CTrace.hpp"
 #include "gslGraph.h"
 #include "FactoryMethodGraphIndicator.h"
@@ -28,13 +28,13 @@
 class StrategyPatternAlgorithm {
 	
 protected:
-	CSettingsSimulation *settingsSimulation;
+	SettingsSimulation *settingsSimulation;
 	bool settingsSimulationAllocated;
 	gslGraph *sourceGraph;
 	FILE *logFile;
 	
 public:
-	StrategyPatternAlgorithm(CSettingsSimulation *argummentSettingsSimulation)
+	StrategyPatternAlgorithm(SettingsSimulation *argummentSettingsSimulation)
 	{
 		CFuncTrace trace(false,"StrategyPatternAlgorithm");
 		
@@ -44,7 +44,7 @@ public:
 		}
 		else{
 			settingsSimulationAllocated = true;
-			settingsSimulation = new CSettingsSimulation();
+			settingsSimulation = new SettingsSimulation();
 		}
 	};
 
@@ -143,7 +143,7 @@ public:
 class StrategyPatternAlgorithmThresholdAccepting : public StrategyPatternAlgorithm {
 public:
 	
-	StrategyPatternAlgorithmThresholdAccepting(CSettingsSimulation *argummentSettingsSimulation)
+	StrategyPatternAlgorithmThresholdAccepting(SettingsSimulation *argummentSettingsSimulation)
 	:StrategyPatternAlgorithm(argummentSettingsSimulation){
 		
 		

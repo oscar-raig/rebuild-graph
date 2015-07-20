@@ -11,7 +11,8 @@
 
 #include <stdio.h>
 #include "StrategyPatternAlgorithm.h"
-#include "CSettingsSumulation.h"
+#include "SettingsSimulation.h"
+
 
 
 // Desing Patterns: Factory Method
@@ -19,8 +20,8 @@
 
 class FactoryMethodStrategyPatternAlgorithm{
 public:
-	static StrategyPatternAlgorithm *createStrategyPatternAlgorithm( int algorithm,CSettingsSimulation *settings){
-		CSettingsSimulation settingsCopy = new CSettingsSimulation(settings);
+	static StrategyPatternAlgorithm *createStrategyPatternAlgorithm( int algorithm,SettingsSimulation *settings){
+		SettingsSimulation settingsCopy = new SettingsSimulation(settings);
 		
 		if ( algorithm == ANNEALING_ALGORITHM)
 			return new StrategyPatternAlgorithm(&settingsCopy);

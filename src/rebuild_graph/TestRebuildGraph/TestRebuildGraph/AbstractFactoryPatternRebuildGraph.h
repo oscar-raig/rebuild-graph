@@ -10,7 +10,7 @@
 #define __TestRebuildGraph__AbstractFactoryPatternRebuildGraph__
 
 #include <iostream>
-#include "CSettingsSumulation.h"
+#include "SettingsSimulation.h"
 #include "rebuildgraph.h"
 #include "StrategyPatternAlgorithm.h"
 
@@ -21,13 +21,13 @@ class AbstractFactoryPatternRebuildGraph {
 	
 private:
 	CRebuildGraph *rebuildGraph;
-	CSettingsSimulation *settingSimulation;
+	SettingsSimulation *settingSimulation;
 	
 public:
 	AbstractFactoryPatternRebuildGraph (int algorithm, std::string GraphName,
 										int nMax, double * compareResult, double To, bool thresholdAccepting ){
 		int graphOrder = 0;
-		this->settingSimulation= new CSettingsSimulation() ;
+		this->settingSimulation= new SettingsSimulation() ;
 		
 		settingSimulation->inputFileName = "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/" + GraphName;
 		

@@ -4,7 +4,7 @@
 #include <math.h>
 #include <fstream>
 #include <iterator>
-#include "CSettingsSumulation.h"
+#include "SettingsSimulation.h"
 #include "rebuildgraph.h"
 #include "AbstractFactoryPatternRebuildGraph.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
@@ -62,7 +62,7 @@ void testexceptionSettingSimulationIsNULL(){
     
     CRebuildGraph *rebuildGraph = new CRebuildGraph();
     int graphOrder = 0;
-    CSettingsSimulation *settingSimulation = NULL;
+    SettingsSimulation *settingSimulation = NULL;
     double *TargetBC = NULL;
     double *BestBC = NULL;
     double compareResult = 10.0;
@@ -128,7 +128,6 @@ BOOST_AUTO_TEST_CASE(test_BC_test_4nodes_thresholdAcceptance_should_compute_delt
     CFuncTrace trace (true,"test_BC_test_4nodes_thresholdAcceptance_should_compute_delta_0_withMaxIterations_10");
     
     double compareResult = INICIALIZE_COMPARE_GRAPH_NOT_EQUAL;
-    double compareResultExpected = COMPARE_GRAPH_EQUAL;
     bool UseThresholdAcceptance = true;
 
     simulation(BETWEENNESS_CENTRALITY, "test_4nodes.gpfc" ,MAX_NUMBER_ITERATIONS_FOR_TEST_10,
@@ -303,7 +302,7 @@ BOOST_AUTO_TEST_CASE(test_BC_two_graphs){
         double *TargetBC = NULL;
         double *BestBC = NULL;
         int graphOrder = 0;
-    CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
+    SettingsSimulation *settingSimulation = new SettingsSimulation() ;
     settingSimulation->inputFileName =largv[1];
     settingSimulation->setNMax(100);
     settingSimulation->setMaxIterations(100);
@@ -318,7 +317,7 @@ BOOST_AUTO_TEST_CASE(test_BC_two_graphs){
         free(TargetBC);
     free(BestBC);
     free(settingSimulation);
-    settingSimulation = new CSettingsSimulation() ;
+    settingSimulation = new SettingsSimulation() ;
     
         largv[1]="/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/barabase_20_4.gpfc";
         graphOrder = 0;
@@ -326,11 +325,7 @@ BOOST_AUTO_TEST_CASE(test_BC_two_graphs){
         compareResult = 0.0;
         rebuildGraph->regenerateGraph(settingSimulation,BestBC,graphOrder,compareResult);
         BOOST_CHECK( 20 == graphOrder);
-        double expectedTargetBCBarabase[20]={0.0139492459,0.0000000000,0.0121514823,0.0099333301,0.2414517944,
-            0.1100452867,   0.1536684219, 0.0866688151, 0.0177944862, 0.0201197438,
-            0.0278154537,   0.0564327485,0.0212409795,0.0136259452,0.0165429915,
-            0.0048732943,0.0096798368,0.0143987105,0.0103940407,0.0013186561};
-    
+ 
         double expectedBestBCBarabase[20]={0.0114267149,0.0095261301,0.0000000000, 0.0123688852, 0.2423887879,
             0.1131020634,0.1553697697, 0.0742358347, 0.0212614871,  0.0218641648,
             0.0289211591,  0.0519398988, 0.0234236190, 0.0079434698, 0.0007309942,
@@ -697,7 +692,7 @@ BOOST_AUTO_TEST_CASE(UTest_StrategyPatternAlgorithmThresholdAccepting){
     double *TargetBC = NULL;
     double *BestBC = NULL;
     int graphOrder = 0;
-    CSettingsSimulation *settingSimulation = new CSettingsSimulation() ;
+    SettingsSimulation *settingSimulation = new SettingsSimulation() ;
     settingSimulation->inputFileName =largv;
     settingSimulation->setNMax(100);
     settingSimulation->setMaxIterations(100);

@@ -15,7 +15,7 @@
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"
-#include "CSettingsSumulation.h"
+#include "SettingsSimulation.h"
 
 
 
