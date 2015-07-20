@@ -24,7 +24,7 @@ gslGraph *ReadPythonGraphFile::readPythonGraphFile( std::string fileName){
             throw runtime_error("FileName : is NULL");
         }
         
-        //	graph *result=new graph();
+        //  graph *result=new graph();
         line=(char *)malloc(sizeof(char)*STRING_LENGTH);
         if((input=fopen(fileName.c_str(),"rt"))==NULL){
             char szPath[255];
@@ -47,13 +47,13 @@ gslGraph *ReadPythonGraphFile::readPythonGraphFile( std::string fileName){
                     if(newaux-endOfVertex!=0){
                         graph->addVertexNeighbour(vertex_identifier,vertex_neighbour);
                     }
-                    //			printGraph(CTrace::level::TRACE_INFO);
+                    //          printGraph(CTrace::level::TRACE_INFO);
                 } while(endOfVertex!=newaux);
-                //			printGraph(CTrace::level::TRACE_INFO);
+                //          printGraph(CTrace::level::TRACE_INFO);
             }
             line[0]='\0';
             lineReadResult=fgets(line,STRING_LENGTH,input);
-            //		printGraph(CTrace::level::TRACE_INFO);
+            //      printGraph(CTrace::level::TRACE_INFO);
         }
         fclose(input);
         free(line);

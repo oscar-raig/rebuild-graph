@@ -28,22 +28,22 @@
  *******************************************************************************/
 
 int main(int argc, const char *argv[]){
-	
-	
-	/* llegir el nom del fitxer de la comanda de linia                            */
-	const char *nom = NULL;                  /* String on guardem el arxiu d¥entrada           */
-	if (argc!=2) {
-		printf("analitza: falta el nom del fitxer a llegir\n");
-		exit(1);
-	}
-	
-	nom = argv[1];
-	int order=0,maxveins=0,minveins=0;
-	float mitja = 0.0;
-	llegir_dades(nom,order,maxveins,minveins,mitja);
-	be_ce();
-	distancies();
-	
-	return 0;
+    
+    
+    /* llegir el nom del fitxer de la comanda de linia                            */
+    const char *nom = NULL;                  /* String on guardem el arxiu d¥entrada           */
+    if (argc!=2) {
+        printf("analitza: falta el nom del fitxer a llegir\n");
+        exit(1);
+    }
+    
+    nom = argv[1];
+    int order=0,maxveins=0,minveins=0;
+    float mitja = 0.0;
+    llegir_dades(nom,order,maxveins,minveins,mitja);
+    be_ce();
+    distancies();
+    
+    return 0;
 }
 
