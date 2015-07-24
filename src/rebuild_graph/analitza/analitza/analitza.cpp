@@ -273,14 +273,14 @@ A LA VARIABLE GLOBAL vertex[]
 
 int
 llegir_dades(const char* nom, int &linies,int &maxveins,int &minveins, float &mitja ){
-	
+    
 FILE * llista, * sortida;
 int i,j, val, veins=0, posicio=0;
 char c;
 
 
 if ((llista=fopen(nom, "rt"))==NULL){
-	return -1;
+    return -1;
 }
                  
 /* Aprofitem la primera passada per calcular el nombre de vertexs i el  grau
@@ -333,19 +333,16 @@ while (!feof(llista) && i<linies) {
    if (c=='\n') {
       vertex[i].name=i;
       vertex[i].degree=j;
-      fprintf (sortida, "Node %i -> %i \n",i,j);
-      i++;      
-      j=0;
-      }   
+      fprintf(sortida, "Node %i -> %i \n", i, j);
+      i++;
+      j = 0;
+      }
   }
 
 fclose(llista);
 fclose(sortida);
 
-	return 1;
+    return 1;
 }
 
 
-
-                                                                                               
-                                                                                                                           
