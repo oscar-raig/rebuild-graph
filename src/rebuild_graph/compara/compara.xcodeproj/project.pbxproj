@@ -15,6 +15,7 @@
 		3625201E1A7AF311005E3625 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625201D1A7AF311005E3625 /* libboost_program_options.a */; };
 		36361DDC1A7D2E9500F27A29 /* gslGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36361DDA1A7D2E9500F27A29 /* gslGraph.cpp */; };
 		36361DDF1A7D324000F27A29 /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36361DDE1A7D324000F27A29 /* CTrace.cpp */; };
+		364837C41B604C9000CCACC4 /* readPythonGraphFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 364837C21B604C9000CCACC4 /* readPythonGraphFile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,8 @@
 		36361DDB1A7D2E9500F27A29 /* gslGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gslGraph.h; path = ../../rebuild_graph/gslGraph.h; sourceTree = "<group>"; };
 		36361DDD1A7D324000F27A29 /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
 		36361DDE1A7D324000F27A29 /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
+		364837C21B604C9000CCACC4 /* readPythonGraphFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readPythonGraphFile.cpp; path = ../../rebuild_graph/readPythonGraphFile.cpp; sourceTree = "<group>"; };
+		364837C31B604C9000CCACC4 /* readPythonGraphFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = readPythonGraphFile.h; path = ../../rebuild_graph/readPythonGraphFile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 		3609205718ECAA0700BAE922 /* compara */ = {
 			isa = PBXGroup;
 			children = (
+				364837C21B604C9000CCACC4 /* readPythonGraphFile.cpp */,
+				364837C31B604C9000CCACC4 /* readPythonGraphFile.h */,
 				36361DDD1A7D324000F27A29 /* CTrace.hpp */,
 				36361DDE1A7D324000F27A29 /* CTrace.cpp */,
 				36361DDA1A7D2E9500F27A29 /* gslGraph.cpp */,
@@ -154,6 +159,7 @@
 			files = (
 				3609205918ECAA0700BAE922 /* compara_main.cpp in Sources */,
 				36361DDF1A7D324000F27A29 /* CTrace.cpp in Sources */,
+				364837C41B604C9000CCACC4 /* readPythonGraphFile.cpp in Sources */,
 				3609206A18ECAAFF00BAE922 /* compara.cpp in Sources */,
 				36361DDC1A7D2E9500F27A29 /* gslGraph.cpp in Sources */,
 			);
@@ -246,6 +252,7 @@
 					"$(OTHER_CFLAGS)",
 					"-I",
 					/opt/local/include/,
+					"-fvisibility=default",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -265,6 +272,7 @@
 					"$(OTHER_CFLAGS)",
 					"-I",
 					/opt/local/include/,
+					"-fvisibility=default",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

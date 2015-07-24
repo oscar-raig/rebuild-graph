@@ -15,6 +15,7 @@
 #include <exception>
 #include <stdexcept>
 #include "gslGraph.h"
+#include "readPythonGraphFile.h"
 
 using std::runtime_error;
 /********************************* FUNCIO PRINCIPAL ********************************/
@@ -172,12 +173,13 @@ int main(int argc, const char *argv[])
             omple_matriu(&graf1,A1);
             omple_matriu(&graf2,A2);
         }else{
-            trace.trace(CTrace::TRACE_INFO,"Reading adjlist file"); 
-            gslGraph * graph1 = new gslGraph();
-            gslGraph * graph2 = new gslGraph();
+            trace.trace(CTrace::TRACE_INFO,"Reading adjlist file");
             
-            graph1->readPythonGraphFile(graphFile1);
-            graph2->readPythonGraphFile(graphFile2);
+            ReadPythonGraphFile *readGraphFile = new ReadPythonGraphFile();
+            gslGraph * graph1 = readGraphFile->readPythonGraphFile(graphFile1);
+            gslGraph * graph2 = readGraphFile->readPythonGraphFile(graphFile2);
+            
+          
             order1 = graph1->getOrder();
             order2 =  graph1->getOrder();
             A1=gsl_matrix_alloc(order1,order1);

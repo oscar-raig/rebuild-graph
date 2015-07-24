@@ -2,8 +2,8 @@
 #include "analitza.h"
 
 vert vertex[VERTEXS];       /* Vector de Vertexs                              */
-int dist[VERTEXS][VERTEXS]; /* Matriu de distàncies                           */
-int dis[VERTEXS];           /* Vector de distàncies                           */
+int dist[VERTEXS][VERTEXS]; /* Matriu de distncies                           */
+int dis[VERTEXS];           /* Vector de distncies                           */
 int Nvertexs;               /* Nombre de Vertexs                              */
 
 
@@ -13,7 +13,7 @@ int Nvertexs;               /* Nombre de Vertexs                              */
 /*******************************************************************************
 ********************************************************************************
 
-FUNCIó clustering()
+FUNCI clustering()
 
 AQUESTA FUNCIO CALCULA I RETORNA LA APORTACIO AL CLUSTERING
 DEL NODE PASSAT COM A PARAMETRE (NO ESTA NORMALITZADA)
@@ -43,7 +43,7 @@ if (vertex[vert].degree>1){
       }   
    }
 else
-   max=1;    /*    Per que els vertexs amb un sol veí tinguin clustering=0    */
+   max=1;    /*    Per que els vertexs amb un sol vetinguin clustering=0    */
 
 return((float)count/max);
 }
@@ -54,9 +54,9 @@ return((float)count/max);
 
 FUNCIO be_ce() 
 
-AQUESTA FUNCIÓ CALCULA LA BETWEENNESS CENTRALITY DE CADA NODE
-DEL GRAF UTILITZANT L´ALGORITME DE ULRIK BRANDES PERAL CÀLCUL
-RÀPID D´AQUESTA
+AQUESTA FUNCI CALCULA LA BETWEENNESS CENTRALITY DE CADA NODE
+DEL GRAF UTILITZANT LALGORITME DE ULRIK BRANDES PERAL C LCUL
+RPID DAQUESTA
 
 ********************************************************************************
 *******************************************************************************/
@@ -99,10 +99,10 @@ for (i=0;i<Nvertexs;i++)
             cua[fi]=a;    /* Fiquem el node a la qua                          */
             fi++;
             ncua++;
-            dis[a]=dis[cua[index]]+1;  /* Fiquem la disància al node a        */
+            dis[a]=dis[cua[index]]+1;  /* Fiquem la discia al node a        */
             }
          
-         if (dis[a] == dis[cua[index]]+1) /* Si el camí es mínim              */
+         if (dis[a] == dis[cua[index]]+1) /* Si el cames mnim              */
            {
            sig[a]+=sig[cua[index]];
            vertex[a].llista[vertex[a].nllista] = cua[index];
@@ -111,10 +111,10 @@ for (i=0;i<Nvertexs;i++)
 
          }
 
-     stack[n_stack]=cua[index]; /* Fiquem l´ement que estem tractan de la     */
-     n_stack++;                 /* cua a l´stack                              */
+     stack[n_stack]=cua[index]; /* Fiquem lment que estem tractan de la     */
+     n_stack++;                 /* cua a lstack                              */
             
-     index ++;  /* Avancem una posició a la cua                               */
+     index ++;  /* Avancem una posici a la cua                               */
      ncua --;   /* I elminem el element que acabem de tractar                 */
         
      }    
@@ -146,11 +146,11 @@ return(i);
 /*******************************************************************************
 ********************************************************************************
 
-FUNCIÓ distancies()
+FUNCI distancies()
 
-AQUESTA FUNCIÓ CALCULA ES DISTÀNCIES I EL CLUSTERING DEL GRAF
+AQUESTA FUNCI CALCULA ES DISTNCIES I EL CLUSTERING DEL GRAF
 I GUARDA AL ARXIU clustering.txt EL CLUSTERING DEL NODE
-I EL NOMBRE DE VERTEXS QUE HI HA A CADA DISTÀNCIA
+I EL NOMBRE DE VERTEXS QUE HI HA A CADA DISTNCIA
 
 ********************************************************************************
 *******************************************************************************/
@@ -169,8 +169,8 @@ if ((sortida=fopen("clustering.txt", "wt"))==NULL)
 
 for (i=0;i<Nvertexs;i++)    /* Per a cada node del graf                       */
    {
-
-/* primer calculem l´aportació al clustering del vertex                       */
+       
+/* primer calculem laportacial clustering del vertex                       */
 
    clus=clustering(i);
    clus_total = clus_total + clus;
@@ -184,11 +184,11 @@ trobat la distancia a cada vertex                                             */
    for (j=0;j<Nvertexs;j++)
       dis[j]=-1;
 
-   dis[i]=0;        /* La distància d´un node a ell mateix és 0               */
-   count=0;         /* nÝmero de nodes a cada distància                       */
-   dis_mitja=0.0;   /* distància mitja                                        */
+   dis[i]=0;        /* La distncia dun node a ell mateix  0               */
+   count=0;         /* nmero de nodes a cada distncia                       */
+   dis_mitja=0.0;   /* distcia mitja                                        */
    num=0;
-   diametre=1;      /* Màxima distància per a un vértex                       */
+   diametre=1;      /* Mxima distncia per a un vrtex                       */
 
    index=0;         /* Inicialitzam la qua                                    */
    cua[index]=i;
@@ -204,7 +204,7 @@ trobat la distancia a cada vertex                                             */
          if ( dis[vertex[cua[index]].nei[j]]==-1 ) /* Si encara no hem trobat */
             {                                      /* la distancia al node    */
 
-/*          Si el node està més lluny que el últim node trobat                */
+/*          Si el node est ms lluny que el tim node trobat                */
 
             if(diametre<dis[cua[index]]+1){
                fprintf (sortida,"\t te %i nodes a la distancia %i\n",count,diametre);
@@ -234,7 +234,7 @@ trobat la distancia a cada vertex                                             */
 
  fprintf (sortida,"\t te %i nodes a la distancia %i\n",count,diametre); 
 
-/* calculem la distància mitja del vertex i ho sumem a la global              */
+/* calculem la distncia mitja del vertex i ho sumem a la global              */
 
  dis_mitja=(float) dis_mitja/(Nvertexs-1);
  dis_mitja_total+=dis_mitja;
@@ -245,7 +245,7 @@ trobat la distancia a cada vertex                                             */
 
  }
 
-/*  Un cop finalitzat l´algotime calculem el clustering del graf, la distància
+/*  Un cop finalitzat lalgotime calculem el clustering del graf, la distncia
 mitja entre nodes i ho mostrem per pantalla                                   */
 
 clus_total =clus_total/(float)Nvertexs;
@@ -284,7 +284,7 @@ if ((llista=fopen(nom, "rt"))==NULL){
 }
                  
 /* Aprofitem la primera passada per calcular el nombre de vertexs i el  grau
-mínim, maxim i mitja del graf                                                 */
+mnim, maxim i mitja del graf                                                 */
 
 linies=0, minveins=0,maxveins=0,mitja=0.0;
 while (!feof(llista)) {
@@ -311,8 +311,8 @@ mitja =(float) mitja / linies;
 Nvertexs=linies;
 
                                                                     
-/* Obrim de nou el fitxer i guardem la informació del graf a l´estructura
-vertex[]. Aprofitem la passada pero generar el fitxer graus.txt on es guardarà
+/* Obrim de nou el fitxer i guardem la informaci del graf a l estructura
+vertex[]. Aprofitem la passada pero generar el fitxer graus.txt on es guardar
 el grau de cada node                                                          */
 
 if ((sortida=fopen("graus.txt", "wt"))==NULL)  
