@@ -318,21 +318,22 @@ el grau de cada node                                                          */
 if ((sortida=fopen("graus.txt", "wt"))==NULL)  
    {printf("ep! no puc crear el fitxer.\n"); return -1; }
 
-if ((llista=fopen(nom, "rt"))==NULL)
-   {printf("ep! no trobo el fitxer.\n"); return -1; }
+if ((llista=fopen(nom, "rt")) == NULL) {
+    printf("ep! no trobo el fitxer.\n"); return -1;
+}
 
 
-i=0;
-j=0;
+i = 0;
+j = 0;
 
-while (!feof(llista) && i<linies) {
-   fscanf(llista, "%i", &val);
-   vertex[i].nei[j]=val;
-   j++;        
-   fscanf(llista, "%c", &c);
-   if (c=='\n') {
-      vertex[i].name=i;
-      vertex[i].degree=j;
+while (!feof(llista) && i < linies) {
+        fscanf(llista, "%i", &val);
+    vertex[i].nei[j] = val;
+    j++;
+    fscanf(llista, "%c" , &c);
+    if (c == '\n') {
+      vertex[i].name = i;
+      vertex[i].degree = j;
       fprintf(sortida, "Node %i -> %i \n", i, j);
       i++;
       j = 0;
