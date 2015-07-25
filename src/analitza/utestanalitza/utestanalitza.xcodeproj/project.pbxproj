@@ -243,7 +243,10 @@
 					"-I",
 					/usr/include,
 				);
-				"OTHER_CPLUSPLUSFLAGS[arch=*]" = "$(OTHER_CFLAGS)";
+				"OTHER_CPLUSPLUSFLAGS[arch=*]" = (
+					"-I",
+					/usr/include,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
