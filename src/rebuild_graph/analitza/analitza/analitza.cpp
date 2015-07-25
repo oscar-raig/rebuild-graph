@@ -293,30 +293,31 @@ while (!feof(llista)) {
    if (!feof(llista) && c==' ') veins++;
    if (!feof(llista) && c=='\n') {
       veins++;
-      if (veins>maxveins) maxveins=veins;
-      if (veins<minveins) minveins=veins;
-      if (posicio>1){
-         if(linies==0) minveins=veins;
+      if (veins > maxveins) maxveins=veins;
+      if (veins < minveins) minveins=veins;
+      if (posicio > 1){
+         if(linies == 0) minveins=veins;
          linies++;
-         mitja= mitja + (float)veins;
+         mitja = mitja + static_cast<float>(veins);
          }
       posicio=0;
       veins=0;
       }
-   }
+}
 
-fclose (llista);
+fclose(llista);
 
-mitja =(float) mitja / linies;
-Nvertexs=linies;
+mitja  = static_cast<float>(mitja) / linies;
+Nvertexs = linies;
 
-                                                                    
 /* Obrim de nou el fitxer i guardem la informaci del graf a l estructura
 vertex[]. Aprofitem la passada pero generar el fitxer graus.txt on es guardar
 el grau de cada node                                                          */
 
-if ((sortida=fopen("graus.txt", "wt"))==NULL)  
-   {printf("ep! no puc crear el fitxer.\n"); return -1; }
+if ((sortida=fopen("graus.txt", "wt")) == NULL) {
+    printf("ep! no puc crear el fitxer.\n");
+    return -1;
+}
 
 if ((llista=fopen(nom, "rt")) == NULL) {
     printf("ep! no trobo el fitxer.\n"); return -1;
