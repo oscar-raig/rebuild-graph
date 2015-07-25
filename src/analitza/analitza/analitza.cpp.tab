@@ -1,0 +1,5 @@
+#include <stdio.h>
+#include "analitza.h"
+
+vert vertex[VERTEXS];       /* Vector de Vertexs                              */
+int dist[VERTEXS][VERTEXS]; /* Matriu de dist

@@ -33,13 +33,6 @@
 			remoteGlobalIDString = 3609205518ECAA0700BAE922;
 			remoteInfo = compara;
 		};
-		3609866818ED4A4300A0F6F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3609865818ED4A4200A0F6F8;
-			remoteInfo = analitza;
-		};
 		36207B7D18EC25A20033A4DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 36207B7918EC25A10033A4DC /* TestRebuildGraph.xcodeproj */;
@@ -90,7 +83,6 @@
 		360854F118F731CC00033919 /* SettingsSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsSimulation.h; sourceTree = "<group>"; };
 		3609206118ECAA0700BAE922 /* compara.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = compara.xcodeproj; path = compara/compara.xcodeproj; sourceTree = "<group>"; };
 		36093C8918E9A6FA003710C0 /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../lib/libgsl.a; sourceTree = "<group>"; };
-		3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = analitza.xcodeproj; path = analitza/analitza.xcodeproj; sourceTree = "<group>"; };
 		360BA70518DD74E300F54F2B /* rebuild_graph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = rebuild_graph; sourceTree = BUILT_PRODUCTS_DIR; };
 		360BA70818DD74E300F54F2B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		360BA70A18DD74E300F54F2B /* rebuild_graph.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = rebuild_graph.1; sourceTree = "<group>"; };
@@ -144,21 +136,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3609866518ED4A4200A0F6F8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3609866918ED4A4300A0F6F8 /* analitza */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		360BA6FC18DD74E300F54F2B = {
 			isa = PBXGroup;
 			children = (
 				362F52F11A988CF5000529EC /* TestIndicatorBetweennessCentrality.xcodeproj */,
 				365871A91985964F000C40A2 /* TestClassgslGraph.xcodeproj */,
 				36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */,
-				3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */,
 				3609206118ECAA0700BAE922 /* compara.xcodeproj */,
 				36207B9B18EC50590033A4DC /* convert_graph_file.xcodeproj */,
 				36207B7918EC25A10033A4DC /* TestRebuildGraph.xcodeproj */,
@@ -283,10 +266,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3609866518ED4A4200A0F6F8 /* Products */;
-					ProjectRef = 3609866418ED4A4200A0F6F8 /* analitza.xcodeproj */;
-				},
-				{
 					ProductGroup = 3609206218ECAA0700BAE922 /* Products */;
 					ProjectRef = 3609206118ECAA0700BAE922 /* compara.xcodeproj */;
 				},
@@ -320,13 +299,6 @@
 			fileType = "compiled.mach-o.executable";
 			path = compara;
 			remoteRef = 3609206518ECAA0800BAE922 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3609866918ED4A4300A0F6F8 /* analitza */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = analitza;
-			remoteRef = 3609866818ED4A4300A0F6F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		36207B7E18EC25A20033A4DC /* TestRebuildGraph */ = {
