@@ -91,12 +91,34 @@ TEST(clustering,rand_graph_should_return_specificvalues) {
     result = llegir_dades(FILE_UNDER_TEST_RAND, nodes,
                           maxNeighbour, minNeighbour, average);
     for ( int vertex = 0; vertex < nodes ; vertex++) {
-        std::cout << vertex << std::endl;
         int clusterVertex = clustering(vertex);
         EXPECT_EQ(clusterVertex, expectedClustering[vertex]);
         
     }
     
+}
+
+
+TEST(distances,circ_graph_should_return_specificvalues) {
+    int result = 0;
+    int nodes = 0;
+    int maxNeighbour = 0;
+    int minNeighbour = 0;
+    float average = 0;
+    float f1,f2,f3;
+#define NUMBER_VERTEX_GRAPH_CIRC 40
+
+    
+    result = llegir_dades(FILE_UNDER_TEST_RAND, nodes,
+                          maxNeighbour, minNeighbour, average);
+
+    int clusterVertex = distancies(&f1,&f2,&f3);
+    EXPECT_TRUE(abs(f1-0.594762)<0.001);
+    EXPECT_EQ(f2, 5);
+    EXPECT_EQ(f3, 0);
+        
+
+ 
 }
 
 

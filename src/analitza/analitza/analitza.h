@@ -44,7 +44,7 @@ extern const char *nom;                  /* String on guardem el arxiu d¥entrad
 
 
 int llegir_dades(const char* nom, int &linies,int &maxveins,int &minveins, float &mitja );
-int distancies();
+int distancies( float *clusTotal, float *diametreMax,float *disMitjaTotal);
 int be_ce();
 float clustering(int vert);
 #endif

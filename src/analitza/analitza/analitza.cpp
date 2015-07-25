@@ -155,12 +155,14 @@ I EL NOMBRE DE VERTEXS QUE HI HA A CADA DISTNCIA
 ********************************************************************************
 *******************************************************************************/
 
-int distancies()
+int distancies( float *clusTotal, float *diametreMax,float *disMitjaTotal)
 {
-FILE * sortida;
-int i,j,fi,count=0,index=0,ncua=1,cua[VERTEXS],num,diametre_max=0,diametre=0;
-float clus ,clus_total=0.0,dis_mitja_total=0.0,dis_mitja;
-
+    FILE * sortida;
+    int i,j,fi,count=0,index=0,ncua=1,cua[VERTEXS],num,diametre=0,dis_mitja;
+    float clus ;
+    *clusTotal = 0;
+    *diametreMax  = 0;
+    *disMitjaTotal = 0;
 /* Obrim el arxiu on escriurem el la aportacio al  clustering
 i el nombre de vertexs a cada distancia per a cada vertex                     */
 
@@ -173,7 +175,7 @@ for (i=0;i<Nvertexs;i++)    /* Per a cada node del graf                       */
 /* primer calculem laportacial clustering del vertex                       */
 
    clus=clustering(i);
-   clus_total = clus_total + clus;
+   *clusTotal = *clusTotal + clus;
    clus=clus/(float)Nvertexs;
    fprintf (sortida , "El Node %i\n\t aporta al clustering %f\n", i, clus);
    fprintf (sortida , "\t te una BC de %f\n", vertex[i].BC/(float)((Nvertexs-1)*(Nvertexs-2)));
@@ -237,23 +239,23 @@ trobat la distancia a cada vertex                                             */
 /* calculem la distncia mitja del vertex i ho sumem a la global              */
 
  dis_mitja=(float) dis_mitja/(Nvertexs-1);
- dis_mitja_total+=dis_mitja;
+ *disMitjaTotal+=dis_mitja;
 
  /* Comprobem si ha augmentat el diametre que teniem fins ara */
 
- if (diametre>diametre_max) diametre_max=diametre;
+ if (diametre>*diametreMax) *diametreMax=diametre;
 
  }
 
 /*  Un cop finalitzat lalgotime calculem el clustering del graf, la distncia
 mitja entre nodes i ho mostrem per pantalla                                   */
 
-clus_total =clus_total/(float)Nvertexs;
-dis_mitja_total=(float) dis_mitja_total/Nvertexs ;
+*clusTotal =(*clusTotal)/(float)Nvertexs;
+*disMitjaTotal=(float) *disMitjaTotal/Nvertexs ;
 
-printf ("\t Clustering %f\n",clus_total);
-printf ("\t Diametre %i\n",diametre_max);
-printf ("\t Distancia mitja %f\n",dis_mitja_total); 
+printf ("\t Clustering %f\n",*clusTotal);
+printf ("\t Diametre %i\n",*diametreMax);
+printf ("\t Distancia mitja %f\n",*disMitjaTotal);
 
 fclose(sortida);
 return(1);
