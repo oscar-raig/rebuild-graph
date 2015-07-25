@@ -10,7 +10,18 @@
 		3609865C18ED4A4200A0F6F8 /* analitza_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3609865B18ED4A4200A0F6F8 /* analitza_main.cpp */; };
 		3609865E18ED4A4200A0F6F8 /* analitza.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3609865D18ED4A4200A0F6F8 /* analitza.1 */; };
 		3609867218ED515A00A0F6F8 /* analitza.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3609867118ED515A00A0F6F8 /* analitza.cpp */; };
+		3675389B1B638C4D0036A01F /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3675389A1B638C4D0036A01F /* libgtest.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		367538B31B63D5000036A01F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 367538AF1B63D4FE0036A01F /* utestanalitza.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 367538A51B63D4FE0036A01F;
+			remoteInfo = utestanalitza;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		3609865618ED4A4200A0F6F8 /* CopyFiles */ = {
@@ -23,6 +34,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		3675388F1B6388B80036A01F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +51,10 @@
 		3609865D18ED4A4200A0F6F8 /* analitza.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = analitza.1; sourceTree = "<group>"; };
 		3609867018ED4C9400A0F6F8 /* analitza.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = analitza.h; sourceTree = "<group>"; };
 		3609867118ED515A00A0F6F8 /* analitza.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = analitza.cpp; sourceTree = "<group>"; };
+		367538911B6388B80036A01F /* testanalitza */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = testanalitza; sourceTree = BUILT_PRODUCTS_DIR; };
+		367538981B638B3A0036A01F /* libgtest.la */ = {isa = PBXFileReference; lastKnownFileType = text; name = libgtest.la; path = "../../../../../Downloads/gtest-1.7.0/lib/libgtest.la"; sourceTree = "<group>"; };
+		3675389A1B638C4D0036A01F /* libgtest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgtest.a; path = "../../../../../Downloads/gtest-1.7.0/lib/libgtest.a"; sourceTree = "<group>"; };
+		367538AF1B63D4FE0036A01F /* utestanalitza.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = utestanalitza.xcodeproj; path = utestanalitza/utestanalitza.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,12 +65,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3675388E1B6388B80036A01F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3675389B1B638C4D0036A01F /* libgtest.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		3609864F18ED4A4200A0F6F8 = {
 			isa = PBXGroup;
 			children = (
+				367538AF1B63D4FE0036A01F /* utestanalitza.xcodeproj */,
+				3675389A1B638C4D0036A01F /* libgtest.a */,
+				367538981B638B3A0036A01F /* libgtest.la */,
 				3609865A18ED4A4200A0F6F8 /* analitza */,
 				3609865918ED4A4200A0F6F8 /* Products */,
 			);
@@ -56,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				3609865818ED4A4200A0F6F8 /* analitza */,
+				367538911B6388B80036A01F /* testanalitza */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,12 +99,20 @@
 		3609865A18ED4A4200A0F6F8 /* analitza */ = {
 			isa = PBXGroup;
 			children = (
-				3609867118ED515A00A0F6F8 /* analitza.cpp */,
 				3609865B18ED4A4200A0F6F8 /* analitza_main.cpp */,
+				3609867118ED515A00A0F6F8 /* analitza.cpp */,
 				3609865D18ED4A4200A0F6F8 /* analitza.1 */,
 				3609867018ED4C9400A0F6F8 /* analitza.h */,
 			);
 			path = analitza;
+			sourceTree = "<group>";
+		};
+		367538B01B63D4FE0036A01F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				367538B41B63D5000036A01F /* utestanalitza */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -91,6 +135,23 @@
 			productReference = 3609865818ED4A4200A0F6F8 /* analitza */;
 			productType = "com.apple.product-type.tool";
 		};
+		367538901B6388B80036A01F /* testanalitza */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 367538971B6388B90036A01F /* Build configuration list for PBXNativeTarget "testanalitza" */;
+			buildPhases = (
+				3675388D1B6388B80036A01F /* Sources */,
+				3675388E1B6388B80036A01F /* Frameworks */,
+				3675388F1B6388B80036A01F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testanalitza;
+			productName = testanalitza;
+			productReference = 367538911B6388B80036A01F /* testanalitza */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -99,6 +160,11 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
+				TargetAttributes = {
+					367538901B6388B80036A01F = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+				};
 			};
 			buildConfigurationList = 3609865318ED4A4200A0F6F8 /* Build configuration list for PBXProject "analitza" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -110,12 +176,29 @@
 			mainGroup = 3609864F18ED4A4200A0F6F8;
 			productRefGroup = 3609865918ED4A4200A0F6F8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 367538B01B63D4FE0036A01F /* Products */;
+					ProjectRef = 367538AF1B63D4FE0036A01F /* utestanalitza.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3609865718ED4A4200A0F6F8 /* analitza */,
+				367538901B6388B80036A01F /* testanalitza */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		367538B41B63D5000036A01F /* utestanalitza */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = utestanalitza;
+			remoteRef = 367538B31B63D5000036A01F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3609865418ED4A4200A0F6F8 /* Sources */ = {
@@ -124,6 +207,13 @@
 			files = (
 				3609865C18ED4A4200A0F6F8 /* analitza_main.cpp in Sources */,
 				3609867218ED515A00A0F6F8 /* analitza.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3675388D1B6388B80036A01F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +304,54 @@
 			};
 			name = Release;
 		};
+		367538951B6388B90036A01F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/oscarraigcolon/Downloads/gtest-1.7.0/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-I",
+					/usr/include,
+					"$(OTHER_CFLAGS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		367538961B6388B90036A01F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/oscarraigcolon/Downloads/gtest-1.7.0/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-I",
+					/usr/include,
+					"$(OTHER_CFLAGS)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -231,6 +369,15 @@
 			buildConfigurations = (
 				3609866218ED4A4200A0F6F8 /* Debug */,
 				3609866318ED4A4200A0F6F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		367538971B6388B90036A01F /* Build configuration list for PBXNativeTarget "testanalitza" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				367538951B6388B90036A01F /* Debug */,
+				367538961B6388B90036A01F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
