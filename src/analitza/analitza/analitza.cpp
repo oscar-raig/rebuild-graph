@@ -157,7 +157,6 @@ I EL NOMBRE DE VERTEXS QUE HI HA A CADA DISTNCIA
 
 int distancies( float *clusTotal, int *diametreMax,float *disMitjaTotal)
 {
-    FILE * sortida;
     int i,j,fi,count=0,index=0,ncua=1,cua[VERTEXS],num,diametre=0;
     float clus,dis_mitja ;
     *clusTotal = 0;
@@ -165,9 +164,6 @@ int distancies( float *clusTotal, int *diametreMax,float *disMitjaTotal)
     *disMitjaTotal = 0;
 /* Obrim el arxiu on escriurem el la aportacio al  clustering
 i el nombre de vertexs a cada distancia per a cada vertex                     */
-
-if ((sortida=fopen("clustering.txt", "wt"))==NULL)  
-   {printf("ep! no puc crear el fitxer.\n"); return -1; }
 
 for (i=0;i<Nvertexs;i++)    /* Per a cada node del graf                       */
    {
@@ -177,9 +173,7 @@ for (i=0;i<Nvertexs;i++)    /* Per a cada node del graf                       */
    clus=clustering(i);
    *clusTotal = *clusTotal + clus;
    clus=clus/(float)Nvertexs;
-   fprintf (sortida , "El Node %i\n\t aporta al clustering %f\n", i, clus);
-   fprintf (sortida , "\t te una BC de %f\n", vertex[i].BC/(float)((Nvertexs-1)*(Nvertexs-2)));
-
+ 
 /*  Inicialitzem el vector de distancies que usarem per controlar si ja hem
 trobat la distancia a cada vertex                                             */
 
@@ -209,7 +203,6 @@ trobat la distancia a cada vertex                                             */
 /*          Si el node est ms lluny que el tim node trobat                */
 
             if(diametre<dis[cua[index]]+1){
-               fprintf (sortida,"\t te %i nodes a la distancia %i\n",count,diametre);
                diametre=dis[cua[index]]+1;
                count=0;
                }
@@ -234,8 +227,6 @@ trobat la distancia a cada vertex                                             */
       index++;
       }
 
- fprintf (sortida,"\t te %i nodes a la distancia %i distancia mitja %i\n",count,diametre,dis_mitja);
-
 /* calculem la distncia mitja del vertex i ho sumem a la global              */
 
  dis_mitja=(float) dis_mitja/(Nvertexs-1);
@@ -243,21 +234,21 @@ trobat la distancia a cada vertex                                             */
 
  /* Comprobem si ha augmentat el diametre que teniem fins ara */
 
- if (diametre>*diametreMax) *diametreMax=diametre;
-
+   if (diametre > *diametreMax) {
+       *diametreMax=diametre;
+   }
  }
 
 /*  Un cop finalitzat lalgotime calculem el clustering del graf, la distncia
 mitja entre nodes i ho mostrem per pantalla                                   */
 
-*clusTotal =(*clusTotal)/(float)Nvertexs;
-*disMitjaTotal=(float) *disMitjaTotal/Nvertexs ;
+*clusTotal = (*clusTotal)/static_cast<float>(Nvertexs);
+*disMitjaTotal = static_cast<float>(*disMitjaTotal/Nvertexs);
 
-printf ("\t Clustering %f\n",*clusTotal);
-printf ("\t Diametre %i\n",*diametreMax);
-printf ("\t Distancia mitja %f\n",*disMitjaTotal);
+printf("\t Clustering %f\n", *clusTotal);
+printf("\t Diametre %i\n", *diametreMax);
+printf("\t Distancia mitja %f\n", *disMitjaTotal);
 
-fclose(sortida);
 return(1);
 }
 
@@ -274,43 +265,51 @@ A LA VARIABLE GLOBAL vertex[]
 *******************************************************************************/
 
 int
-llegir_dades(const char* nom, int &linies,int &maxveins,int &minveins, float &mitja ){
-    
+llegir_dades(const char* nom, int *linies, int *maxveins,
+             int *minveins, float *mitja ) {
 FILE * llista, * sortida;
-int i,j, val, veins=0, posicio=0;
+int i, j, val, veins = 0, posicio = 0;
 char c;
 
 
-if ((llista=fopen(nom, "rt"))==NULL){
+if ((llista = fopen(nom, "rt")) == NULL) {
     return -1;
 }
-                 
+
 /* Aprofitem la primera passada per calcular el nombre de vertexs i el  grau
 mnim, maxim i mitja del graf                                                 */
 
-linies=0, minveins=0,maxveins=0,mitja=0.0;
+*linies = 0, *minveins = 0, *maxveins = 0, *mitja = 0.0;
 while (!feof(llista)) {
-   c=fgetc(llista); 
-   posicio++;
-   if (!feof(llista) && c==' ') veins++;
-   if (!feof(llista) && c=='\n') {
-      veins++;
-      if (veins > maxveins) maxveins=veins;
-      if (veins < minveins) minveins=veins;
-      if (posicio > 1){
-         if(linies == 0) minveins=veins;
-         linies++;
-         mitja = mitja + static_cast<float>(veins);
-         }
-      posicio=0;
-      veins=0;
-      }
+    c = fgetc(llista);
+    posicio++;
+    if (!feof(llista) && c == ' ') {
+        veins++;
+    }
+    if (!feof(llista) && c == '\n') {
+        veins++;
+        if (veins > *maxveins) {
+            *maxveins = veins;
+        }
+        if ( veins < *minveins ) {
+            *minveins = veins;
+        }
+        if ( posicio > 1 ) {
+            if ( *linies == 0 ) {
+                *minveins = veins;
+            }
+            *linies = *linies + 1;
+            *mitja = *mitja + static_cast<float>(veins);
+        }
+        posicio = 0;
+        veins = 0;
+    }
 }
 
 fclose(llista);
 
-mitja  = static_cast<float>(mitja) / linies;
-Nvertexs = linies;
+*mitja  = static_cast<float>(*mitja) / *linies;
+Nvertexs = *linies;
 
 /* Obrim de nou el fitxer i guardem la informaci del graf a l estructura
 vertex[]. Aprofitem la passada pero generar el fitxer graus.txt on es guardar
@@ -329,7 +328,7 @@ if ((llista=fopen(nom, "rt")) == NULL) {
 i = 0;
 j = 0;
 
-while (!feof(llista) && i < linies) {
+while (!feof(llista) && i < *linies) {
         fscanf(llista, "%i", &val);
     vertex[i].nei[j] = val;
     j++;

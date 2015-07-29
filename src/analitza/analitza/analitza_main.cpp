@@ -40,7 +40,7 @@ int main(int argc, const char *argv[]){
     nom = argv[1];
     int order=0,maxveins=0,minveins=0;
     float mitja = 0.0;
-    llegir_dades(nom,order,maxveins,minveins,mitja);
+    llegir_dades(nom, &order, &maxveins, &minveins, &mitja);
     be_ce();
     float f1, f3;
     int diametre;
