@@ -105,17 +105,18 @@ TEST(distances,circ_graph_should_return_specificvalues) {
     int maxNeighbour = 0;
     int minNeighbour = 0;
     float average = 0;
-    float f1,f2,f3;
+    float clustering,average_distance;
+    int diameter;
 #define NUMBER_VERTEX_GRAPH_CIRC 40
 
     
     result = llegir_dades(FILE_UNDER_TEST_RAND, nodes,
                           maxNeighbour, minNeighbour, average);
 
-    int clusterVertex = distancies(&f1,&f2,&f3);
-    EXPECT_TRUE(abs(f1-0.594762)<0.001);
-    EXPECT_EQ(f2, 5);
-    EXPECT_EQ(f3, 0);
+    int clusterVertex = distancies(&clustering,&diameter,&average_distance);
+    ASSERT_FLOAT_EQ(clustering,0.594762);
+    EXPECT_EQ(diameter, 5);
+    ASSERT_FLOAT_EQ(average_distance, 0.25512832);
         
 
  

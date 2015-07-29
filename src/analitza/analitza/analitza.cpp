@@ -155,11 +155,11 @@ I EL NOMBRE DE VERTEXS QUE HI HA A CADA DISTNCIA
 ********************************************************************************
 *******************************************************************************/
 
-int distancies( float *clusTotal, float *diametreMax,float *disMitjaTotal)
+int distancies( float *clusTotal, int *diametreMax,float *disMitjaTotal)
 {
     FILE * sortida;
-    int i,j,fi,count=0,index=0,ncua=1,cua[VERTEXS],num,diametre=0,dis_mitja;
-    float clus ;
+    int i,j,fi,count=0,index=0,ncua=1,cua[VERTEXS],num,diametre=0;
+    float clus,dis_mitja ;
     *clusTotal = 0;
     *diametreMax  = 0;
     *disMitjaTotal = 0;
@@ -234,7 +234,7 @@ trobat la distancia a cada vertex                                             */
       index++;
       }
 
- fprintf (sortida,"\t te %i nodes a la distancia %i\n",count,diametre); 
+ fprintf (sortida,"\t te %i nodes a la distancia %i distancia mitja %i\n",count,diametre,dis_mitja);
 
 /* calculem la distncia mitja del vertex i ho sumem a la global              */
 

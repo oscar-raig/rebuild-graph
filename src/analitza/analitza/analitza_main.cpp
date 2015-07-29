@@ -42,8 +42,9 @@ int main(int argc, const char *argv[]){
     float mitja = 0.0;
     llegir_dades(nom,order,maxveins,minveins,mitja);
     be_ce();
-    float f1, f2, f3;
-    distancies(&f1,&f2,&f3);
+    float f1, f3;
+    int diametre;
+    distancies(&f1,&diametre,&f3);
     
     return 0;
 }
