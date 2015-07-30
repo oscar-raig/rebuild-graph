@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include "analitza.h"
 
 vert vertex[VERTEXS];       /* Vector de Vertexs                              */
@@ -143,6 +144,15 @@ return(i);
 
 }
 
+void addVertexEndOfQueue(int index, int j, int *nCua, int *fi, int*cua) {
+    
+    /*         afegim el vertex al final de la cua                                */
+    
+    *nCua = *nCua + 1;
+    *fi = *fi +1;
+    cua[*fi]=vertex[cua[index]].nei[j];
+
+}
 /*******************************************************************************
 ********************************************************************************
 
@@ -212,11 +222,9 @@ trobat la distancia a cada vertex                                             */
             dis[vertex[cua[index]].nei[j]]=diametre;
             dis_mitja+=(float)diametre;
           
-/*         afegim el vertex al final de la cua                                */
-
-            ncua++;
-            fi++;
-            cua[fi]=vertex[cua[index]].nei[j];
+            addVertexEndOfQueue(index,j,&ncua,&fi,cua);
+             
+              
             }
 
          }
