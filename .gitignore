@@ -39,4 +39,4 @@ src/rebuild_graph/TestIndicatorBetweennessCentrality/TestIndicatorBetweennessCen
 src/rebuild_graph/analitza/analitza.xcodeproj/xcuserdata/oscarraigcolon.xcuserdatad/xcschemes/analitza.xcscheme
 boost/
 gsl-1.16/
-src/rebuild_graph/*xcuserdatad*
+**/*xcuserdatad*
