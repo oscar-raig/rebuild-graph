@@ -20,7 +20,7 @@
 #include "gslGraph.h"
 #include "rebuildgraph.h"
 #include "FactoryMethodGraphIndicator.h"
-#include <matrix/gsl_matrix.h>
+#include <gsl/gsl_matrix.h>
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"
@@ -33,12 +33,7 @@ int numberOfTests = 0;
 int numberOfTestExeccuted = 0;
 
 #define DIR_GRAPHS "/Users/oscarraigcolon/Arrel/git/rebuild-graph/data/example_graphs/"
-/*
-BOOST_AUTO_TEST_CASE(test_communicability_beetweeness_centrality){
 
-    BOOST_CHECK(0 > 1);
-
-}*/
 void UTest_gslGraph_readPythonGraphFile_NULLFile(){
     CFuncTrace trace(true,"UTest_gslGraph_readPythonGraphFile_NULLFile");
     
