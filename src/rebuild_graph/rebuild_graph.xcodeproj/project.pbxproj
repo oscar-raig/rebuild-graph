@@ -11,7 +11,6 @@
 		360854F218F731CC00033919 /* SettingsSimulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360854F018F731CC00033919 /* SettingsSimulation.cpp */; };
 		36093C8A18E9A6FA003710C0 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36093C8918E9A6FA003710C0 /* libgsl.a */; };
 		360BA70918DD74E300F54F2B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360BA70818DD74E300F54F2B /* main.cpp */; };
-		360BA70B18DD74E300F54F2B /* rebuild_graph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 360BA70A18DD74E300F54F2B /* rebuild_graph.1 */; };
 		36133E1318FC7AC3000F7E09 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36133E1218FC7AC3000F7E09 /* rebuildgraph.cpp */; };
 		3625A35818EDBA400037F00D /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35618EDBA400037F00D /* CTrace.cpp */; };
 		3636C71B1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C71A1A757078006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */; };
@@ -20,7 +19,7 @@
 		365F8FA1198545C300E3A7CD /* StrategyPatternAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365F8F9F198545C300E3A7CD /* StrategyPatternAlgorithm.cpp */; };
 		36842EC31A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36842EC11A4ADA57000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp */; };
 		36C4F4DE18E9E10C002B67FD /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36C4F4DD18E9E10C002B67FD /* libgslcblas.a */; };
-		36DC6DC718F4979D00CEFE98 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */; };
+		36DC6DC718F4979D00CEFE98 /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DC6DC618F4979D00CEFE98 /* libboost_program_options.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		36DF6D091A484B3D004A0C99 /* graphIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DF6D071A484B3D004A0C99 /* graphIndicator.cpp */; };
 		36DF6D111A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DF6D0F1A484B7B004A0C99 /* graphIndicatorBetweennessCentrality.cpp */; };
 /* End PBXBuildFile section */
@@ -62,19 +61,6 @@
 			remoteInfo = TestIndicatorBetweennessCentrality;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		360BA70318DD74E300F54F2B /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-				360BA70B18DD74E300F54F2B /* rebuild_graph.1 in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3607297219881DDB000BBF7A /* gslGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gslGraph.cpp; sourceTree = "<group>"; };
@@ -234,7 +220,6 @@
 			buildPhases = (
 				360BA70118DD74E300F54F2B /* Sources */,
 				360BA70218DD74E300F54F2B /* Frameworks */,
-				360BA70318DD74E300F54F2B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -429,15 +414,16 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				LIBRARY_SEARCH_PATHS = (
+					../../boost/lib,
 					"$(inherited)",
-					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+					"../../gsl-1.16/lib",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
-					"-I",
-					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 					"$(OTHER_CFLAGS)",
 					"-I",
-					/opt/local/include/,
+					"../../gsl-1.16/include/",
+					"-I",
+					../../boost/include/,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -448,15 +434,16 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				LIBRARY_SEARCH_PATHS = (
+					../../boost/lib,
 					"$(inherited)",
-					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+					"../../gsl-1.16/lib",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
-					"-I",
-					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
 					"$(OTHER_CFLAGS)",
 					"-I",
-					/opt/local/include/,
+					"../../gsl-1.16/include/",
+					"-I",
+					../../boost/include/,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

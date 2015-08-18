@@ -37,3 +37,6 @@ src/rebuild_graph/rebuild_graph.xcodeproj/project.xcworkspace/xcuserdata/oscarra
 src/rebuild_graph/rebuild_graph.xcodeproj/xcuserdata/oscarraigcolon.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
 src/rebuild_graph/TestIndicatorBetweennessCentrality/TestIndicatorBetweennessCentrality.xcodeproj/xcuserdata/
 src/rebuild_graph/analitza/analitza.xcodeproj/xcuserdata/oscarraigcolon.xcuserdatad/xcschemes/analitza.xcscheme
+boost/
+gsl-1.16/
+src/rebuild_graph/*xcuserdatad*

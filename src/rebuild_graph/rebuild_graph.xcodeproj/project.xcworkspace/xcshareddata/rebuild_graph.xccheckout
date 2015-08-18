@@ -7,16 +7,16 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>D1539179-C779-4DCE-843F-04A43021B64C</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>rebuild_graph</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>10D98275DB61CE74AB61E44B3CA982C53F5EAF38</key>
-		<string>https://bitbucket.org/oraig/rebuild-graph.git</string>
+		<string>bitbucket.org:oraig/rebuild-graph.git</string>
 		<key>2DE6CBB3E0211AEB3FF47600DFF46159AF9623DE</key>
-		<string>https://bitbucket.org/oraig/libcpp.git</string>
+		<string>bitbucket.org:oraig/libcpp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>src/rebuild_graph/rebuild_graph.xcodeproj/project.xcworkspace</string>
+	<string>src/rebuild_graph/rebuild_graph.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>10D98275DB61CE74AB61E44B3CA982C53F5EAF38</key>
@@ -25,7 +25,7 @@
 		<string>../../../../../libcpp</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://bitbucket.org/oraig/rebuild-graph.git</string>
+	<string>bitbucket.org:oraig/rebuild-graph.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>

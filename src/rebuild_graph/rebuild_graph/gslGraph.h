@@ -13,15 +13,15 @@
 #include <cmath>
 #include <stdio.h>
 #include <string.h>
-#include "CTrace.hpp"
-#include "gslGraph.h"
-#include <matrix/gsl_matrix.h>
-#include <gsl/gsl_vector.h>
 #include <limits>
-#include <matrix/gsl_matrix.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_matrix.h>
 #include <gsl/gsl_eigen.h>
 #include <gsl/gsl_sf_exp.h>
 #include <gsl/gsl_linalg.h>
+#include "CTrace.hpp"
+#include "gslGraph.h"
 #define RESULT_OK 1
 
 

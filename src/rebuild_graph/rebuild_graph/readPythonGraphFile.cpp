@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Oscar Raig Colon. All rights reserved.
 //
 
+#include <unistd.h>
 #include "readPythonGraphFile.h"
 #include <stdexcept>
 
