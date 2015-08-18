@@ -12,7 +12,6 @@
 		3636C7151A756BEB006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C7141A756BEB006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */; };
 		363DC7781B5C5E58004DFBC6 /* readPythonGraphFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 363DC7761B5C5E58004DFBC6 /* readPythonGraphFile.cpp */; };
 		365871A11985964F000C40A2 /* mainTestClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365871A01985964F000C40A2 /* mainTestClass.cpp */; };
-		365871A31985964F000C40A2 /* TestClassgslGraph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 365871A21985964F000C40A2 /* TestClassgslGraph.1 */; };
 		365871B41985973E000C40A2 /* libboost_unit_test_framework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 365871B31985973E000C40A2 /* libboost_unit_test_framework.a */; };
 		365871BA1985A0DD000C40A2 /* CTrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 365871B91985A0DD000C40A2 /* CTrace.cpp */; };
 		365871BC1985A1FE000C40A2 /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 365871BB1985A1FE000C40A2 /* libgsl.a */; };
@@ -21,19 +20,6 @@
 		36842ECE1A4B2310000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36842ECC1A4B2310000F633E /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp */; };
 		36DF6D171A4853CD004A0C99 /* graphIndicatorBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36DF6D161A4853CD004A0C99 /* graphIndicatorBetweennessCentrality.cpp */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		3658719B1985964F000C40A2 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-				365871A31985964F000C40A2 /* TestClassgslGraph.1 in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3607297B1988526E000BBF7A /* gslGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gslGraph.h; path = ../../../rebuild_graph/gslGraph.h; sourceTree = "<group>"; };
@@ -129,7 +115,6 @@
 			buildPhases = (
 				365871991985964F000C40A2 /* Sources */,
 				3658719A1985964F000C40A2 /* Frameworks */,
-				3658719B1985964F000C40A2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -261,14 +246,16 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				LIBRARY_SEARCH_PATHS = (
+					../../../../boost/lib,
 					"$(inherited)",
-					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+					"../../../../gsl-1.16/lib",
 				);
-				"OTHER_CPLUSPLUSFLAGS[arch=*]" = (
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
 					"-I",
-					/opt/local/include/,
+					../../../../boost/include/,
 					"-I",
-					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
+					"../../../../gsl-1.16/include/",
 				);
 				PRODUCT_NAME = TestClassgslGraph;
 			};
@@ -279,15 +266,16 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				LIBRARY_SEARCH_PATHS = (
+					../../../../boost/lib,
 					"$(inherited)",
-					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+					"../../../../gsl-1.16/lib",
 				);
-				"OTHER_CPLUSPLUSFLAGS[arch=*]" = (
+				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-I",
-					/opt/local/include/,
+					../../../../boost/include/,
 					"-I",
-					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
+					"../../../../gsl-1.16/include/",
 				);
 				PRODUCT_NAME = TestClassgslGraph;
 			};

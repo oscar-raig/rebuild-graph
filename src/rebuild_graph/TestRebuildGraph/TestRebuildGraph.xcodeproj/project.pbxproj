@@ -13,10 +13,7 @@
 		36133E1B18FCE0F9000F7E09 /* rebuildgraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36133E1918FCE0F9000F7E09 /* rebuildgraph.cpp */; };
 		36207B7118EC25A10033A4DC /* TestRebuildGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36207B7018EC25A10033A4DC /* TestRebuildGraph.cpp */; };
 		36207B7318EC25A10033A4DC /* TestRebuildGraph.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 36207B7218EC25A10033A4DC /* TestRebuildGraph.1 */; };
-		36207B8518EC3CFC0033A4DC /* libboost_unit_test_framework.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		3625A35B18EDC6C70037F00D /* analitza.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3625A35918EDC6C70037F00D /* analitza.cpp */; };
-		3625A36118EDC9980037F00D /* libgsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625A35F18EDC9980037F00D /* libgsl.a */; };
-		3625A36218EDC9980037F00D /* libgslcblas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3625A36018EDC9980037F00D /* libgslcblas.a */; };
 		3636C7181A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3636C7171A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */; };
 		363DC7681B5C2AC0004DFBC6 /* graphIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 363DC7671B5C2AC0004DFBC6 /* graphIndicator.cpp */; };
 		363DC7751B5C5DBE004DFBC6 /* readPythonGraphFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 363DC7731B5C5DBE004DFBC6 /* readPythonGraphFile.cpp */; };
@@ -39,6 +36,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		31201F9D1B8353B10051CDB2 /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h; path = ../../rebuild_graph/graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h; sourceTree = "<group>"; };
 		36084747198CC884008D4784 /* gslGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gslGraph.cpp; path = ../../rebuild_graph/gslGraph.cpp; sourceTree = "<group>"; };
 		360854F318F746BD00033919 /* SettingsSimulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsSimulation.h; path = ../../rebuild_graph/SettingsSimulation.h; sourceTree = "<group>"; };
 		360854F418F7489100033919 /* SettingsSimulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SettingsSimulation.cpp; path = ../../rebuild_graph/SettingsSimulation.cpp; sourceTree = "<group>"; };
@@ -48,13 +46,10 @@
 		36207B6D18EC25A10033A4DC /* TestRebuildGraph */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestRebuildGraph; sourceTree = BUILT_PRODUCTS_DIR; };
 		36207B7018EC25A10033A4DC /* TestRebuildGraph.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestRebuildGraph.cpp; sourceTree = "<group>"; };
 		36207B7218EC25A10033A4DC /* TestRebuildGraph.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = TestRebuildGraph.1; sourceTree = "<group>"; };
-		36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_unit_test_framework.a; path = ../../../../lib/libboost_unit_test_framework.a; sourceTree = "<group>"; };
 		3625A35918EDC6C70037F00D /* analitza.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = analitza.cpp; path = ../../analitza/analitza/analitza.cpp; sourceTree = "<group>"; };
 		3625A35A18EDC6C70037F00D /* analitza.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = analitza.h; path = ../../analitza/analitza/analitza.h; sourceTree = "<group>"; };
 		3625A35C18EDC8FA0037F00D /* CTrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTrace.cpp; path = ../../../../../libcpp/CTrace.cpp; sourceTree = "<group>"; };
 		3625A35D18EDC8FA0037F00D /* CTrace.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CTrace.hpp; path = ../../../../../libcpp/CTrace.hpp; sourceTree = "<group>"; };
-		3625A35F18EDC9980037F00D /* libgsl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgsl.a; path = ../../../../lib/libgsl.a; sourceTree = "<group>"; };
-		3625A36018EDC9980037F00D /* libgslcblas.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgslcblas.a; path = ../../../../lib/libgslcblas.a; sourceTree = "<group>"; };
 		3636C7161A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphIndicatorCommunicabilityBetweennessCentrality.h; path = ../../graphIndicatorCommunicabilityBetweennessCentrality.h; sourceTree = "<group>"; };
 		3636C7171A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphIndicatorCommunicabilityBetweennessCentrality.cpp; path = ../../graphIndicatorCommunicabilityBetweennessCentrality.cpp; sourceTree = "<group>"; };
 		3636C7271A75AFEB006EE086 /* FactoryMethodGraphIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FactoryMethodGraphIndicator.h; path = ../../rebuild_graph/FactoryMethodGraphIndicator.h; sourceTree = "<group>"; };
@@ -75,9 +70,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3625A36118EDC9980037F00D /* libgsl.a in Frameworks */,
-				3625A36218EDC9980037F00D /* libgslcblas.a in Frameworks */,
-				36207B8518EC3CFC0033A4DC /* libboost_unit_test_framework.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +95,7 @@
 		36207B6F18EC25A10033A4DC /* TestRebuildGraph */ = {
 			isa = PBXGroup;
 			children = (
+				31201F9D1B8353B10051CDB2 /* graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h */,
 				363DC7731B5C5DBE004DFBC6 /* readPythonGraphFile.cpp */,
 				363DC7741B5C5DBE004DFBC6 /* readPythonGraphFile.h */,
 				363DC7691B5C2C20004DFBC6 /* graphIndicator.h */,
@@ -110,9 +103,6 @@
 				3636C7271A75AFEB006EE086 /* FactoryMethodGraphIndicator.h */,
 				3636C7161A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.h */,
 				3636C7171A756BFE006EE086 /* graphIndicatorCommunicabilityBetweennessCentrality.cpp */,
-				36207B8418EC3CFC0033A4DC /* libboost_unit_test_framework.a */,
-				3625A36018EDC9980037F00D /* libgslcblas.a */,
-				3625A35F18EDC9980037F00D /* libgsl.a */,
 				3609DCF318F5F83B00AC64B9 /* CTrace.cpp */,
 				36133E1A18FCE0F9000F7E09 /* rebuildgraph.h */,
 				36133E1918FCE0F9000F7E09 /* rebuildgraph.cpp */,
@@ -221,7 +211,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -261,7 +251,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -278,21 +268,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				LIBRARY_SEARCH_PATHS = (
+					"../../../gsl-1.16/lib",
 					"$(inherited)",
-					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+					../../../boost/lib/,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-I",
-					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
+					../../../boost/include,
 					"-I",
-					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/src/rebuild_graph/rebuild_graph",
-					"-I",
-					/usr/local/include,
-					"-DHAVE_INLINE",
-					"-DGSL_RANGE_CHECK_OFF",
-					"-O3",
+					"../../../gsl-1.16/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -302,21 +289,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				LIBRARY_SEARCH_PATHS = (
+					"../../../gsl-1.16/lib",
 					"$(inherited)",
-					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/lib",
+					../../../boost/lib/,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-I",
-					"/Users/oscarraigcolon/Downloads/gsl-1.16/",
+					../../../boost/include,
 					"-I",
-					"/Users/oscarraigcolon/Arrel/git/rebuild-graph/src/rebuild_graph/rebuild_graph",
-					"-I",
-					/usr/local/include,
-					"-DHAVE_INLINE",
-					"-DGSL_RANGE_CHECK_OFF",
-					"-O3",
+					"../../../gsl-1.16/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

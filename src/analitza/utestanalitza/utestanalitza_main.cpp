@@ -3,11 +3,9 @@
 #include "analitza.h"
 
 
-#define FILE_UNDER_TEST_CIRC "/Users/oscarraigcolon/Arrel/git/" \
-        "rebuild-graph/src/analitza/data/circ-inipy.txt"
+#define FILE_UNDER_TEST_CIRC "./data/circ-inipy.txt"
 
-#define FILE_UNDER_TEST_RAND "/Users/oscarraigcolon/Arrel/git/" \
-"rebuild-graph/src/analitza/data/rand-inipy.txt"
+#define FILE_UNDER_TEST_RAND "./data/rand-inipy.txt"
 
 
 
