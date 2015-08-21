@@ -56,13 +56,13 @@ all: $(TARGET)
 coverage:
 	COMPILER_COVERAGEFLAGS="-fprofile-arcs  -ftest-coverage" LINKER_COVERAGEFLAGS=" -lgcov -coverage" make
 
-$(TARGET): OBJECTS
+$(TARGET): $(OBJECTS)
 	$(LINKER) $(TARGET) $(LINKFLAGS)  $(LINKER_COVERAGEFLAGS) $(OBJECTS)
 
-OBJECTS: $(SOURCES)
+$(OBJECTS): $(SOURCES)
 	$(COMPILER) $(CFLAGS) $(COMPILER_COVERAGEFLAGS)  $(SOURCES)
 
-run:
+test: $(TARGET)
 	$(DYNAMIC_LIBRARY_PATH)=$(BOOST_DIR)/lib/ ./$(TARGET)	
 clean:
 	rm -f $(OBJECTS)
