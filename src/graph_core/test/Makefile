@@ -1,0 +1,4 @@
+
+
+clean:
+	rm -Rf *.o
