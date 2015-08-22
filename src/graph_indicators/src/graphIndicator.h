@@ -10,7 +10,7 @@
 #define __rebuild_graph__graphIndicator__
 
 #include <stdio.h>
-#include "gslGraph.h"
+#include "gslGraph.hpp"
 
 class graphIndicator {
 public:

@@ -10,7 +10,7 @@
 #define BOOST_TEST_MODULE MyTest
 #include <boost/test/unit_test.hpp>
 #include <iostream> 
-#include "gslGraph.h"
+#include "gslGraph.hpp"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "readPythonGraphFile.h"
 

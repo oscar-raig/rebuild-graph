@@ -10,7 +10,7 @@
 #define __rebuild_graph__graphIndicatorBetweennessCentrality__
 
 #include <stdio.h>
-#include "gslGraph.h"
+#include "gslGraph.hpp"
 #include "graphIndicator.h"
 #include <queue>
 #include <list>

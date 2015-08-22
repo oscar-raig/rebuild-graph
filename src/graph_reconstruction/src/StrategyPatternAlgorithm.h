@@ -12,7 +12,7 @@
 #include <iostream>
 #include "SettingsSimulation.h"
 #include "CTrace.hpp"
-#include "gslGraph.h"
+#include "gslGraph.hpp"
 #include "FactoryMethodGraphIndicator.h"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"

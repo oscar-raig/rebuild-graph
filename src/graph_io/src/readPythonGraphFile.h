@@ -10,7 +10,7 @@
 #define __rebuild_graph__readPythonGraphFile__
 
 #include <stdio.h>
-#include "gslGraph.h"
+#include "gslGraph.hpp"
 
 #ifndef STRING_LENGTH
 #define STRING_LENGTH 256

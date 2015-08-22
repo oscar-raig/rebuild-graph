@@ -34,7 +34,7 @@ INCLUDES+=rebuildgraph.h
 INCLUDES+=FactoryMethodGraphIndicator.h FactoryMethodStrategyPatternAlgorithm.h 
 INCLUDES+=ProgramOptions.h SettingsSimulation.h 
 
-INCLUDES+=../../graph_gslgraph/src/gslGraph.h 
+INCLUDES+=../../graph_gslgraph/src/gslGraph.hpp 
 INCLUDES+=$(GRAPH_IO_DIR)readPythonGraphFile.h
 INCLUDES+= StrategyPatternAlgorithm.h  
 INCLUDES+=../../../../libcpp/CTrace.hpp

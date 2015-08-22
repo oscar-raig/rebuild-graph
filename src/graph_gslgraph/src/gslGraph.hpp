@@ -21,7 +21,6 @@
 #include <gsl/gsl_sf_exp.h>
 #include <gsl/gsl_linalg.h>
 #include "CTrace.hpp"
-#include "gslGraph.h"
 #define RESULT_OK 1
 
 
@@ -108,9 +107,6 @@ public:
 	
 	
 	static int printGslMatrix(const gsl_matrix* gslMatrix,const char *format);
-
-	
-	static int compare(gslGraph * graph1, gslGraph * graph2);
 };
 
 #endif /* defined(__rebuild_graph__gslGraph__) */

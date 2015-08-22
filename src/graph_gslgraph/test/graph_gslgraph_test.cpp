@@ -13,7 +13,7 @@
 #define BOOST_TEST_MODULE MyTest
 
 #include <iostream>
-#include "gslGraph.h"
+#include "gslGraph.hpp"
 #include "readPythonGraphFile.h"
 
 #include <boost/test/auto_unit_test.hpp>

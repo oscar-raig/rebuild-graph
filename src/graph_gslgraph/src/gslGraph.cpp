@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Oscar Raig Colon. All rights reserved.
 //
 
-#include "gslGraph.h"
+#include "gslGraph.hpp"
 #include "CTrace.hpp"
 #include <stdexcept>
 #include <iostream>

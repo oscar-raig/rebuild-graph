@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-#include "gslGraph.h"
+#include "gslGraph.hpp"
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"

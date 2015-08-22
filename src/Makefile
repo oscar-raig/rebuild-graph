@@ -14,3 +14,8 @@ test:
 	make -C graph_core/test test
 	make -C graph_gslgraph/test test
 	make -C graph_indicators/test/ test
+
+app:
+	make -C graph_analyze/app
+	make -C graph_reconstruction/src
+	
