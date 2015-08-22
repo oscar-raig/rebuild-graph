@@ -40,3 +40,7 @@ src/rebuild_graph/analitza/analitza.xcodeproj/xcuserdata/oscarraigcolon.xcuserda
 boost/
 gsl-1.16/
 **/*xcuserdatad*
+*.o
+src/graph_analyze/test/utestanalitza_main
+src/graph_gslgraph/test/graph_gslgraph_test
+src/graph_indicators/test/graph_indicators_test
