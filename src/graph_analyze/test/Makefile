@@ -1,10 +1,12 @@
-SOURCES=utestanalitza_main.cpp ../analitza/analitza.cpp
-OBJECTS=utestanalitza_main.o analitza.o
+GRAPH_ANALYZE_DIR=../src
+
+SOURCES=utestanalitza_main.cpp $(GRAPH_ANALYZE_DIR)/graph_analyze.cpp
+OBJECTS=utestanalitza_main.o graph_analyze.o
 TARGET=utestanalitza_main
 COMPILER=gcc -c  
 LINKER=gcc -o
 GTEST_DIR=../gtest
-CFLAGS=-I$(GTEST_DIR)  -I ../analitza/
+CFLAGS=-I$(GTEST_DIR)  -I $(GRAPH_ANALYZE_DIR)
 LINKFLAGS=-lstdc++ -L $(GTEST_DIR)/libs -lgtest -lgtest_main -lpthread 
 DYNAMIC_LIBRARY_PATH_MAC=DYLD_LIBRARY_PATH
 DYNAMIC_LIBRARY_PATH_LINUX=LD_LIBRARY_PATH

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "gtest/gtest.h"
-#include "analitza.h"
+#include "graph_analyze.hpp"
 
 
 #define FILE_UNDER_TEST_CIRC "./data/circ-inipy.txt"

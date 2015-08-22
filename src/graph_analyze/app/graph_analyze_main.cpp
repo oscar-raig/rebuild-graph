@@ -7,7 +7,7 @@
 //
 
 #include <iostream>
-#include "analitza.h"
+#include "graph_analyze.hpp"
 
 
 

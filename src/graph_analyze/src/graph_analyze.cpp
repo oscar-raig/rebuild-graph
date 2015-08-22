@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <iostream>
-#include "analitza.h"
+#include "graph_analyze.hpp"
 
 vert vertex[VERTEXS];       /* Vector de Vertexs                              */
 int dist[VERTEXS][VERTEXS]; /* Matriu de distncies                           */
@@ -319,15 +319,6 @@ fclose(llista);
 *mitja  = static_cast<float>(*mitja) / *linies;
 Nvertexs = *linies;
 
-/* Obrim de nou el fitxer i guardem la informaci del graf a l estructura
-vertex[]. Aprofitem la passada pero generar el fitxer graus.txt on es guardar
-el grau de cada node                                                          */
-
-if ((sortida=fopen("graus.txt", "wt")) == NULL) {
-    printf("ep! no puc crear el fitxer.\n");
-    return -1;
-}
-
 if ((llista=fopen(nom, "rt")) == NULL) {
     printf("ep! no trobo el fitxer.\n"); return -1;
 }
@@ -344,16 +335,15 @@ while (!feof(llista) && i < *linies) {
     if (c == '\n') {
       vertex[i].name = i;
       vertex[i].degree = j;
-      fprintf(sortida, "Node %i -> %i \n", i, j);
       i++;
       j = 0;
       }
   }
 
-fclose(llista);
-fclose(sortida);
 
-    return 1;
+fclose(llista);
+
+return 1;
 }
 
 
