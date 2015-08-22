@@ -96,8 +96,7 @@ public:
 	virtual void removeVertexNeighbours(int vertexToRemoveNegighbours);
 
 	virtual int graphToGsl( gsl_matrix* target);
-	gsl_vector *
-	getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
+	gsl_vector * getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
 	static int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
 	virtual void  communicability_betweenness_centrality(double *myCExp){
 					CFuncTrace trace (true,"communicability_betweenness_centrality");
