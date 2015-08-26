@@ -13,18 +13,22 @@
 #include "gslGraph.hpp"
 
 class graphIndicator {
+private:
+    gslGraph *graph;	
+	
 public:
 	graphIndicator( gslGraph *argGraph );
     virtual ~graphIndicator();
+	
     void setGraph( gslGraph *graph);
     gslGraph * getGraph() ;
+	
     double *calculateIndicatorWithReescale(bool Reescale);
    
 private:
 	virtual  double *calculateIndicator() = 0;
     void  rescale( double *arrayIndicator,int sizeArray);
-private:
-    gslGraph *graph;
+
 };
 
 #endif /* defined(__rebuild_graph__graphIndicator__) */
