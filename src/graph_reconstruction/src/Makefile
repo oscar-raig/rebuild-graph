@@ -55,6 +55,7 @@ LFLAGS=-stdlib=libstdc++ -lgslcblas  -lgsl -L../../../gsl-1.16/lib -L../../../bo
 DYNAMIC_LIBRARY_PATH_MAC=DYLD_LIBRARY_PATH
 DYNAMIC_LIBRARY_PATH_LINUX=LD_LIBRARY_PATH
 DYNAMIC_LIBRARY_PATH=$(DYNAMIC_LIBRARY_PATH_LINUX)
+PARAMS= --graphFile  /Users/oscarraig/bitbucket/rebuild-graph/data/threshold_accepting/example_graphs/clus-inipy.txt --algorithm 2 --k 0.90 --To 1.0 --TMin 0.000001 --nMax 2000 --output-format-adjlist --seed_x 1 --seed_y 1 --seed_z 1 --threshold-accepting --outputFileSufix output_CC_1_1_1
 
 OPERATING_SYSTEM=$(shell uname)
 ifeq ($(OPERATING_SYSTEM),Darwin)
@@ -74,6 +75,9 @@ OBJECTS: $(SOURCES) $(INCLUDES)
 
 run:
 	$(DYNAMIC_LIBRARY_PATH)=$(BOOST_DIR)/lib/ ./$(TARGET)	
+
+run_circ:
+	$(DYNAMIC_LIBRARY_PATH)=$(BOOST_DIR)/lib/ ./$(TARGET) $(PARAMS)
 
 clean:
 	rm -f $(TARGET) $(OBJECTS)
