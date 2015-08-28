@@ -203,11 +203,15 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 
     lFuncTrace.trace(STP_INFO,"Cost Best=%2.15f Cost New %2.15f\n",
                      costBest,costNew);
+	const int MAX_INTERS_WITHOUT_ACCEPTED_CHANGES = 10;
+	int countAccptedChanges = MAX_INTERS_WITHOUT_ACCEPTED_CHANGES;
     do{
         /* Repeat NMAX times */
+		bool acceptedChanges = false;
+		
         for(N=0;(N<settingsSimulation->nMax)&&(!weAreDone);N++){
             lFuncTrace.trace(STP_DEBUG,"Iteration N %d",N);
-            
+            bool accetptedChangesForThisIteration = false;
             modifyGraph(newGraph);
             if ( newBC)
                 delete newBC;
@@ -215,8 +219,14 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
             // Update cost variables (new and old graphs)
             costNew=cost(targetBC,newBC,graphOrder);
             lFuncTrace.trace(STP_DEBUG,"N %d Cost New %f Best Cost  %f",N,costNew,costBest);
-            Loop(costNew,costBest,&newGraph,newBC,bestBC,graphOrder,weAreDone,Tk);
+            accetptedChangesForThisIteration = Loop(costNew,costBest,
+													&newGraph,newBC,bestBC,graphOrder,weAreDone,Tk);
+			if (accetptedChangesForThisIteration) {
+				acceptedChanges = true;
+				lFuncTrace.trace(STP_INFO,"We have acceted changes ");
+			}
         }
+		
         fprintf(logFile,"\n");
         lFuncTrace.trace(STP_INFO,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",
                          Tk,costBest,weAreDone,iterations);
@@ -226,6 +236,17 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
         Tk*=this->settingsSimulation->k;
         // Update number of iterations
         iterations++;
+		if (acceptedChanges) { 
+			countAccptedChanges = MAX_INTERS_WITHOUT_ACCEPTED_CHANGES;
+			lFuncTrace.trace(STP_INFO,"We have acceted changes ==>countAcceptedChanges(%d) ",countAccptedChanges);
+		} else {
+			countAccptedChanges--;
+			lFuncTrace.trace(STP_INFO,"We NOT have acceted changes ==>countAcceptedChanges--(%d) ",countAccptedChanges);
+			if(countAccptedChanges == 0) {
+				lFuncTrace.trace(STP_INFO,"We NOT have acceted changes TOO MANY TIMES ==> GAME OVER ");
+				weAreDone = 1;
+			}
+		}
     }while((Tk>=temperMin)&&(!weAreDone)&&(iterations!= settingsSimulation->maxIterations));
     
     lFuncTrace.trace(STP_INFO,"Tk=%2.15f\tBest Cost=%2.15f EXIT=%d Iterations=%d\n",

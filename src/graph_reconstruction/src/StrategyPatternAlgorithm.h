@@ -57,7 +57,7 @@ public:
 
 	
 	
-	void acceptChangesInGraph(double &costBest,double costNew,gslGraph * newGraph,double *newBC, double *bestBC){
+	void acceptChangesInGraph(double &costBest,double costNew,gslGraph * newGraph,double *newBC, double *bestBC){	
 		costBest=costNew;
 		this->setGraph( newGraph->copyGraph() );
 		memcpy(bestBC,newBC,newGraph->getOrder()*sizeof(double));
@@ -82,14 +82,16 @@ public:
 		return (exp((costBest-costNew)/Tk)>generateRandomNumber());
 	}
 	
-	void Loop(double &costNew,double &costBest,
+	bool Loop(double &costNew,double &costBest,
 					  gslGraph ** newGraph,double *newBC, double *bestBC,
 					  int graphOrder,int &weAreDone, double Tk){
+		bool changesAccepted = false;
 		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::Loop");
 	//	double Tk=settingsSimulation->tMin;
 		if(AreChangesAccepted(costNew,costBest,Tk)){
 			acceptChangesInGraph(costBest,costNew,*newGraph,newBC,bestBC);
 			fprintf(logFile,".");
+			changesAccepted = true;
 		} else if(AreChangesAcceptedRandomly(costNew,costBest,Tk)){
 			// if newCost not is better than oldCost,
 			// we still accept it if exp(df/T_k)<rand()
@@ -101,9 +103,9 @@ public:
 		if(costBest<=settingsSimulation->tMin){
 			lFuncTrace.trace(STP_INFO,"We are Done costBest < tol");
 			weAreDone=true;
-			return;
+			return changesAccepted;
 		}
-		
+		return changesAccepted;
 	}
 	
 	
