@@ -19,16 +19,18 @@ class ProgramOptions {
 public:
     ProgramOptions(int argc, const char *argv[]);
     SettingsSimulation * readConfiguration(int argc, const char * argv[] );
-    
+    bool getOnlyCompare(){return only_compare;}
+	  std::string getgraphFileToCompare() { return graphFileToCompare;}
 private:
     SettingsSimulation *  settingsSimulation;
     int GetAlgorithmFromArgument( po::variables_map argumentMap );
     po::options_description GetOptionsDescription();
-    
+  
 private:
-    bool only_calculate = false;
     bool reescale = false;
     SettingsSimulation *getSettings();
+	bool only_compare = false;
+	std::string graphFileToCompare;
     
 };
 

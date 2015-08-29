@@ -50,7 +50,7 @@ CFLAGS+=-I$(GRAPH_INDICATOR_DIR)
 
 BOOST_DIR=../../../boost/
 
-LFLAGS=-stdlib=libstdc++ -lgslcblas  -lgsl -L../../../gsl-1.16/lib -L../../../boost/lib -lboost_program_options
+LFLAGS=-stdlib=libstdc++ -lgsl -lgslcblas  -lgsl -L../../../gsl-1.16/lib -L../../../boost/lib -lboost_program_options
 
 DYNAMIC_LIBRARY_PATH_MAC=DYLD_LIBRARY_PATH
 DYNAMIC_LIBRARY_PATH_LINUX=LD_LIBRARY_PATH
@@ -67,7 +67,7 @@ TARGET= rebuild_graph
 all: $(TARGET)
 
 $(TARGET): OBJECTS
-	$(LINKER) $(TARGET) $(LFLAGS) $(OBJECTS)
+	$(LINKER) $(TARGET)  $(OBJECTS) $(LFLAGS)
 	@echo "Linking complete!"	
 
 OBJECTS: $(SOURCES) $(INCLUDES)
@@ -78,6 +78,9 @@ run:
 
 run_circ:
 	$(DYNAMIC_LIBRARY_PATH)=$(BOOST_DIR)/lib/ ./$(TARGET) $(PARAMS)
+
+pack:
+	tar zcfv source.gz $(SOURCES) $(INCLUDES)
 
 clean:
 	rm -f $(TARGET) $(OBJECTS)

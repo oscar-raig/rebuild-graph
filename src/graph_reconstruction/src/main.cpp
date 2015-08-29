@@ -47,6 +47,20 @@ int main(int argc, const char * argv[]) {
         return calculateIndicator(settingsSimulation);
     }
 
+	if(programOptions->getOnlyCompare()) {
+		std::cout << "Comparing to graphs" << std::endl;
+		gslGraph *  graph1 =  ReadPythonGraphFile::readPythonGraphFile( programOptions->getgraphFileToCompare() );
+    	gslGraph * graph2 =   ReadPythonGraphFile::readPythonGraphFile( settingsSimulation->inputFileName );
+    	gsl_matrix *graph1Gsl = gsl_matrix_alloc(graph1->getOrder(), graph1->getOrder());
+    	gsl_matrix *graph2Gsl = gsl_matrix_alloc(graph2->getOrder(), graph2->getOrder());
+
+    	graph1->graphToGsl(graph1Gsl);
+    	graph2->graphToGsl(graph2Gsl);
+
+    	double compare = CRebuildGraph::compareMatrix(graph1Gsl, graph2Gsl);
+		std::cout << "Compare result " <<compare << std::endl;
+		return 1;
+	}	
     CRebuildGraph *rebuildGraph = new CRebuildGraph();
     double compareResult = 0.0;
     double *BestBC = NULL;

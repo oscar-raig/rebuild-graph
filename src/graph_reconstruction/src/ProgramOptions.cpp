@@ -81,6 +81,7 @@ po::options_description ProgramOptions::GetOptionsDescription(){
     argumentDescription.add_options()
     ("help", "Print help messages" )
     ("graphFile", po::value< std::string >(),"graph file in python format")
+	("graphFileToCompare", po::value< std::string >(),"graph file in python format to Compare")	
     ("outputFileSufix", po::value< std::string >(),"sufix for output")
     ("k",po::value<double>(),k_argument_description.c_str() )
     ("nIteration",po::value<int>(),nIteration_argument_description.c_str())
@@ -93,6 +94,7 @@ po::options_description ProgramOptions::GetOptionsDescription(){
     
     ("TMin",po::value<double>(),"TMin")
     ("output-format-adjlist","output format adjlist")
+	("only-compare","compare two graphs")	
     ("threshold-accepting","Using threshold accepting")
     ("only-calculate-indicator","only calculates the BC, CB or CBC of the input file")
     ("reescale-cc","Reescale Communicability Centrality, BC and CBC are always reescale ")
@@ -119,11 +121,7 @@ SettingsSimulation * ProgramOptions::readConfiguration(int argc, const char * ar
         std::cout << "graphFile" <<  argumentMap["graphFile"].as<std::string>() << std::endl;
         return NULL;
     }
-    if ( argumentMap.count("only-calculate-indicator")  )
-    {
-        std::cout << "We only calculate  the algorithm" << std::endl;
-        only_calculate = true;
-    }
+    
     bool outputFormatDefaultAdjacencyList = false;
     if ( argumentMap.count("output-format-adjlist")  )
     {
@@ -141,7 +139,26 @@ SettingsSimulation * ProgramOptions::readConfiguration(int argc, const char * ar
     {
         settingsSimulation->outputFileNameSuFix = argumentMap["outputFileSufix"].as<std::string>();
     }
-    
+
+    if ( argumentMap.count("only-calculate-indicator")  )
+    {
+        std::cout << "We only calculate  the algorithm" << std::endl;
+        settingsSimulation->onlyCalculateIndicator = true;
+    }   
+	if ( argumentMap.count("only-compare")  )
+    {
+        std::cout << "We only Compare two graphs" << std::endl;
+        only_compare = true;
+		if ( !argumentMap.count("graphFileToCompare")){
+        	std::cout << "argumentMap count" << argumentMap.count("graphFileToCompare");
+        	std::cout << "graphFileToCompare" <<  argumentMap["graphFileToCompare"].as<std::string>() << std::endl;
+        	return NULL;
+    	} else {
+			graphFileToCompare = argumentMap["graphFileToCompare"].as<std::string>();;
+		}
+		return settingsSimulation;
+    }   
+ 
     if (argumentMap.count("k"))
     {
         settingsSimulation->k = argumentMap["k"].as<double>();

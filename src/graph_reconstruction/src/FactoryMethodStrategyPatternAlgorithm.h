@@ -21,12 +21,12 @@
 class FactoryMethodStrategyPatternAlgorithm{
 public:
 	static StrategyPatternAlgorithm *createStrategyPatternAlgorithm( int algorithm,SettingsSimulation *settings){
-		SettingsSimulation settingsCopy = new SettingsSimulation(settings);
+		SettingsSimulation *settingsCopy = new SettingsSimulation(settings);
 		
 		if ( algorithm == ANNEALING_ALGORITHM)
-			return new StrategyPatternAlgorithm(&settingsCopy);
+			return new StrategyPatternAlgorithm(settingsCopy);
 		else
-			return new StrategyPatternAlgorithmThresholdAccepting(&settingsCopy);
+			return new StrategyPatternAlgorithmThresholdAccepting(settingsCopy);
 		};
 	
 };

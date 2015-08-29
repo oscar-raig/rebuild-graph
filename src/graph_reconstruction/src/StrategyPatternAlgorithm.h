@@ -90,12 +90,12 @@ public:
 	//	double Tk=settingsSimulation->tMin;
 		if(AreChangesAccepted(costNew,costBest,Tk)){
 			acceptChangesInGraph(costBest,costNew,*newGraph,newBC,bestBC);
-			fprintf(logFile,".");
+			fprintf(logFile,"A");
 			changesAccepted = true;
 		} else if(AreChangesAcceptedRandomly(costNew,costBest,Tk)){
 			// if newCost not is better than oldCost,
 			// we still accept it if exp(df/T_k)<rand()
-			fprintf(logFile,"o");
+			fprintf(logFile,"O");
 		} else {
 			discardChangeInGraph( newGraph );
 			fprintf(logFile,"x");
