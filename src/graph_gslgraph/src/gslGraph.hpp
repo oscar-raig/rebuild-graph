@@ -106,7 +106,7 @@ public:
 	virtual int graphNotConnected (int *unconnectedVertex);
 	
 	
-	static int printGslMatrix(const gsl_matrix* gslMatrix,const char *format);
+	
 };
 
 #endif /* defined(__rebuild_graph__gslGraph__) */
