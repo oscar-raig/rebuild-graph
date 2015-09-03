@@ -35,9 +35,6 @@ public:
 	{
 		
 		int graphOrder=this->getGraph()->getOrder();
-		// Get Numpy Matrix // Matriu d'adjacencia
-		//	lFuncTrace.trace("\nPrinting Home made Matrix\n");
-		//	printGslMatrix(A1," %g");
 		gsl_matrix *A1expm=gsl_matrix_calloc(graphOrder,graphOrder);
 		
 		gsl_matrix * matrix = gsl_matrix_calloc( graphOrder,graphOrder);
@@ -46,23 +43,9 @@ public:
 		
 		gsl_linalg_exponential_ss(matrix
 								  , A1expm, 0x00);
-		//	lFuncTrace.trace("Printing ExpmMatrix");
-		//printGslMatrix(A1expm);
-	/*	for (size_t i = 0; i < matrix->size1; i++) {
-			size_t j = 0;
-			printf("%d ",(int)i);
-			for (j = 0; j < matrix->size2-1; j++) {
-				//if ( gsl_matrix_get(matrix, i, j) )
-					printf("%d ",(int)gsl_matrix_get(matrix, i, j));
-			}
-			
-			printf("\n");
-		}
-	*/	
+
 		gsl_vector * gslvDiagonal = getDiagonalFromGslMatrix(A1expm);
 		
-		//	lFuncTrace.trace("Printing Diagonal From ExpmMatrix");
-		//	printGslVector(gslvDiagonal);
 				
 		
 		gslGraph::gslVectorToArray(gslvDiagonal,myCExp);

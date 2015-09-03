@@ -48,13 +48,10 @@ gslGraph *ReadPythonGraphFile::readPythonGraphFile( std::string fileName){
                     if(newaux-endOfVertex!=0){
                         graph->addVertexNeighbour(vertex_identifier,vertex_neighbour);
                     }
-                    //          printGraph(CTrace::level::TRACE_INFO);
                 } while(endOfVertex!=newaux);
-                //          printGraph(CTrace::level::TRACE_INFO);
             }
             line[0]='\0';
             lineReadResult=fgets(line,STRING_LENGTH,input);
-            //      printGraph(CTrace::level::TRACE_INFO);
         }
         fclose(input);
         free(line);

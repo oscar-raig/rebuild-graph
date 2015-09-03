@@ -56,8 +56,7 @@ public:
 		// Get Numpy Matrix // Matriu d'adjacencia
 		gsl_matrix *A1=gsl_matrix_calloc(graphOrder,graphOrder);
 		
-		//	targetGraph->printGraph();
-		
+	
 		getGraph()->graphToGsl(A1);
 		lFuncTrace.trace(CTrace::TRACE_DEBUG,"\nPrinting Home made Matrix\n");
 		//		printGslMatrix(A1," %g");

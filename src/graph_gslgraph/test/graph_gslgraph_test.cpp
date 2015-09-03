@@ -58,8 +58,6 @@ BOOST_AUTO_TEST_CASE(UTest_gslGraph_readPythonGraphFile_wheel10){
 }
 
 
-
-
 BOOST_AUTO_TEST_CASE(Utest_gslGraph_readPythonGraphFile_4nodes){
     
     gslGraph *  generalGraph =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
@@ -67,7 +65,7 @@ BOOST_AUTO_TEST_CASE(Utest_gslGraph_readPythonGraphFile_4nodes){
     int degree = generalGraph->getDegree();
     int order = generalGraph->getOrder();
     
-    generalGraph->printGraph();
+   
     BOOST_CHECK(degree == 2);
     BOOST_CHECK(order == 4);
     
@@ -109,7 +107,6 @@ BOOST_AUTO_TEST_CASE( UTest_gslGraph_removeVertexNeighbours_wheel14){
     
     BOOST_CHECK(graphdegree == 2);
     
-    generalGraph->printGraph();
 
     BOOST_CHECK( graphorder == ORDER_WHEEL14 );
     

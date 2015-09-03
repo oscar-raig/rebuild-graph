@@ -73,13 +73,10 @@ public:
 		
 		if ( vertex > order )
 			throw "ERROR: Asking for vertex greater than order";
-		
-		
+				
 		return vertex_degree[vertex];
 	}
 	virtual void printMyGraph(const char * outputGraphFilename,bool outputAsAdjacencyList) const;
-	void printGraph(int TRACE_LEVEL = CTrace::TRACE_DEBUG);
-	
 	
 	// Add a vertex with the given newVertexId identifier to the graph
     int addVertex(int newVertexId);

@@ -9,14 +9,15 @@ using namespace std;
 #define RETURN_MAIN_NOK     1
 #define NUMBER_OF_ARGUMENTS 1
 
+#define POSTION_ARGUMENT_FILE_NAME 1
+
 
 
 int main(int argc, char* argv[]) {
 	
 	std::cout << "Example using gslIO" << std::endl;
 	
-	if (argc < NUMBER_OF_ARGUMENTS) {
-		
+	if (argc < NUMBER_OF_ARGUMENTS) {	
 		std::cout << "ERROR: minimim 1 argument file to print" << std::endl;
 		return RETURN_MAIN_NOK;
 	}
@@ -25,7 +26,7 @@ int main(int argc, char* argv[]) {
 		std::cout << "ERROR: FilenName is NULL" << std::endl;
 		return RETURN_MAIN_NOK;
 	}
-	char* fileName = argv[1];
+	char* fileName = argv[POSTION_ARGUMENT_FILE_NAME];
 	gslGraph *  graphTest = NULL;
 	try{ 
 		graphTest =  ReadPythonGraphFile::readPythonGraphFile(fileName);
