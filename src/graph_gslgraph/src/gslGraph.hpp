@@ -25,11 +25,9 @@
 
 
 
-//#define DEBUG_GSL_GRAPH CTrace::TRACE_INFO
-#define DEBUG_GSL_GRAPH CTrace::TRACE_DEBUG
 
+#define DEBUG_GSL_GRAPH CTrace::TRACE_DEBUG
 #define INFO_GSL_GRAPH CTrace::TRACE_INFO
-//#define INFO_GSL_GRAPH CTrace::TRACE_DEBUG
 #define ERROR_GSL_GRAPH CTrace::TRACE_ERROR
 
 
@@ -78,7 +76,6 @@ public:
 	}
 	virtual void printMyGraph(const char * outputGraphFilename,bool outputAsAdjacencyList) const;
 	
-	// Add a vertex with the given newVertexId identifier to the graph
     int addVertex(int newVertexId);
 	int addVertexNeighbour(int sourceVertex,int newNeighbour);
 	virtual void addNewVertexNeighbour(int sourceVertex,int newNeighbour);
@@ -87,10 +84,7 @@ public:
 	virtual int graphToGsl( gsl_matrix* target);
 	gsl_vector * getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
 	static int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
-	virtual void  communicability_betweenness_centrality(double *myCExp){
-					CFuncTrace trace (true,"communicability_betweenness_centrality");
-		            trace.trace(CTrace::TRACE_ERROR,"Not implemented");
-	}
+
 
 	virtual int vertexAreNeighbours(int vertexBegining,int vertexEnding);
 	virtual int graphNotConnected (int *unconnectedVertex);
