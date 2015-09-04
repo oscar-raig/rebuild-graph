@@ -2,7 +2,7 @@
 #include "gslIO.hpp"
 
 
-int gslIO::printGslMatrix(const gsl_matrix* gslMatrix,const char *format){
+void gslIO::printGslMatrix(const gsl_matrix* gslMatrix,const char *format){
     printf("\n");
 	printf("hello\n");
     for (size_t i = 0; i < gslMatrix->size1; i++) {
@@ -12,5 +12,24 @@ int gslIO::printGslMatrix(const gsl_matrix* gslMatrix,const char *format){
 
         printf("\n");
    }
-	return RESULT_OK;
 }
+
+void  gslIO::gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles){
+    for (size_t i = 0; i < gslVector->size; i++) {
+        arrayDoubles[i]=  gsl_vector_get(gslVector, i);
+    }
+}
+
+gsl_vector *
+ gslIO::getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
+    
+    int nMatrixOrder = (int) gslMatrix->size1;
+    gsl_vector * gslvDiagonal = gsl_vector_alloc(nMatrixOrder);
+    
+    for (int i=0; i < nMatrixOrder;i++){
+        gsl_vector_set(gslvDiagonal,i,gsl_matrix_get(gslMatrix,i,i));
+    }
+    
+    return gslvDiagonal;
+}
+

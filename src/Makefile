@@ -8,6 +8,7 @@ clean:
 	make -C graph_indicators/test/ clean
 
 test:
+	make -C gsl_utillities/gsl_io/test test
 	make -C graph_gslgraph/test test
 	make -C graph_analyze/test test
 	make -C graph_compare/test  test

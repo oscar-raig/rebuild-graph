@@ -83,7 +83,7 @@ public:
 
 	virtual int graphToGsl( gsl_matrix* target);
 	gsl_vector * getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
-	static int gslVectorToArray(gsl_vector* gslVector, double* arrayDoubles);
+	
 
 
 	virtual int vertexAreNeighbours(int vertexBegining,int vertexEnding);
