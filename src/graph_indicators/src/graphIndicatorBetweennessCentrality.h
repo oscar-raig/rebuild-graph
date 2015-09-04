@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "gslGraph.hpp"
+#include "gslIO.hpp"
 #include "graphIndicator.h"
 #include <queue>
 #include <list>

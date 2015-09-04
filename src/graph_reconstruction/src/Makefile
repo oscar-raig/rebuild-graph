@@ -1,6 +1,7 @@
 GSL_GRAPH_DIR=../../graph_gslgraph/src/
 GRAPH_IO_DIR=../../graph_io/src/
 GRAPH_INDICATOR_DIR=../../graph_indicators/src/
+GSL_IO=../../gsl_utillities/gsl_io/src/
 
 SOURCES=main.cpp ProgramOptions.cpp SettingsSimulation.cpp
 SOURCES+=rebuildgraph.cpp
@@ -12,6 +13,7 @@ SOURCES+=../../graph_gslgraph/src/gslGraph.cpp
 SOURCES+=$(GRAPH_IO_DIR)readPythonGraphFile.cpp
 SOURCES+=StrategyPatternAlgorithm.cpp
 SOURCES+=../../../../libcpp/CTrace.cpp
+SOURCES+=$(GSL_IO)gslIO.cpp
 
 
 OBJECTS=main.o   ProgramOptions.o   SettingsSimulation.o  
@@ -24,6 +26,7 @@ OBJECTS+=gslGraph.o
 OBJECTS+=readPythonGraphFile.o  
 OBJECTS+=StrategyPatternAlgorithm.o  
 OBJECTS+=CTrace.o
+OBJECTS+=gslIO.o
 
 INCLUDES+=$(GRAPH_INDICATOR_DIR)graphIndicator.h 
 INCLUDES+=$(GRAPH_INDICATOR_DIR)graphIndicatorBetweennessCentrality.h  
@@ -31,7 +34,7 @@ INCLUDES+=$(GRAPH_INDICATOR_DIR)graphIndicatorCommunicabilityBetweennessCentrali
 INCLUDES+=$(GRAPH_INDICATOR_DIR)graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h
 
 INCLUDES+=rebuildgraph.h
-INCLUDES+=FactoryMethodGraphIndicator.h FactoryMethodStrategyPatternAlgorithm.h 
+INCLUDES+=$(GRAPH_INDICATOR_DIR)FactoryMethodGraphIndicator.h FactoryMethodStrategyPatternAlgorithm.h 
 INCLUDES+=ProgramOptions.h SettingsSimulation.h 
 
 INCLUDES+=../../graph_gslgraph/src/gslGraph.hpp 
@@ -47,6 +50,7 @@ CFLAGS+=-I../../../../libcpp/ -stdlib=libstdc++
 CFLAGS+=-I$(GSL_GRAPH_DIR)
 CFLAGS+=-I$(GRAPH_IO_DIR)
 CFLAGS+=-I$(GRAPH_INDICATOR_DIR)
+CFLAGS+=-I$(GSL_IO)
 
 BOOST_DIR=../../../boost/
 

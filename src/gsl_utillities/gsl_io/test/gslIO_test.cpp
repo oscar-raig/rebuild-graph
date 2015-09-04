@@ -15,7 +15,7 @@ gsl_matrix* getExampleMatrixForDiagonalTest() {
 	
 }
 
-TEST(test_gslIO_, getDiagonalFromGslMatrix_should_return_vector) {
+TEST(test_gslIO, getDiagonalFromGslMatrix_should_return_vector) {
 	
    	gsl_matrix* matrixTest = getExampleMatrixForDiagonalTest();
 	
@@ -27,7 +27,7 @@ TEST(test_gslIO_, getDiagonalFromGslMatrix_should_return_vector) {
 }
 
 
-TEST(test_gslIO_, gslVectorToArray_should_return_array) {
+TEST(test_gslIO, gslVectorToArray_should_return_array) {
 	
 	gsl_vector* vecctorTest = gsl_vector_calloc(5);
 	gsl_vector_set (vecctorTest, 0, 9);

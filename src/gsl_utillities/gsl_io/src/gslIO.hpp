@@ -1,3 +1,6 @@
+#ifndef __GSL_IO__
+#define __GSL_IO__
+
 #include <gsl/gsl_matrix.h>
 
 class gslIO {
@@ -9,3 +12,5 @@ public:
 	
 
 };
+
+#endif

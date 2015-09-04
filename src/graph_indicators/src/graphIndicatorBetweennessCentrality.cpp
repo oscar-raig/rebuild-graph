@@ -23,7 +23,7 @@ void graphIndicatorBetweennessCentrality::brandes_betweenness_centrality(double 
     this->getGraph()->graphToGsl( gslmatrix );
     
     gsl_vector * v = betweenness_bin( gslmatrix );
-    gslGraph::gslVectorToArray(v,arrayIndicatorBetweennesscentrality);
+    gslIO::gslVectorToArray(v,arrayIndicatorBetweennesscentrality);
     
 }
 

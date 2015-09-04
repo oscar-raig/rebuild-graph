@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdio.h>
 #include "graphIndicator.h"
+#include "gslIO.hpp"
 
 class graphIndicatorCommunicabilityBetweennessCentrality : public graphIndicator{
 	
@@ -117,7 +118,7 @@ public:
 		}
 		gsl_matrix_free(A1expm);
 		gsl_matrix_free(A1);
-		this->getGraph()->gslVectorToArray(matrixFinalResult,myCExp);
+		gslIO::gslVectorToArray(matrixFinalResult,myCExp);
 		gsl_vector_free(matrixFinalResult);
 	}
 

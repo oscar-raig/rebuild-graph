@@ -2,10 +2,12 @@ GRAPH_IO_DIR=../../graph_io/src/
 GRAPH_GSL_GRAPH_DIR=../../graph_gslgraph/src/
 GRAPH_TRACE=../../../../libcpp/
 GRAPH_INDICATOR_DIR=../../graph_indicators/src/
+GSL_IO=../../gsl_utillities/gsl_io/src/
 
 
 SOURCES=graph_indicators_test.cpp 
 SOURCES+=$(GRAPH_GSL_GRAPH_DIR)gslGraph.cpp
+SOURCES+=$(GSL_IO)gslIO.cpp
 SOURCES+=$(GRAPH_TRACE)/CTrace.cpp
 SOURCES+=$(GRAPH_IO_DIR)readPythonGraphFile.cpp
 SOURCES+=$(GRAPH_INDICATOR_DIR)graphIndicator.cpp   
@@ -20,7 +22,8 @@ INCLUDES+=$(GRAPH_IO_DIR)readPythonGraphFile.h
 
 OBJECTS=graph_indicators_test.o gslGraph.o
 OBJECTS+=readPythonGraphFile.o CTrace.o
-OBJECTS+=graphIndicator.o   
+OBJECTS+=graphIndicator.o 
+OBJECTS+=gslIO.o
 OBJECTS+=graphIndicatorBetweennessCentrality.o  
 OBJECTS+=graphIndicatorCommunicabilityBetweennessCentrality.o   
 OBJECTS+=graphIndicatorCommunicabilityCentralityUsingMatrixExponential.o 
@@ -37,10 +40,11 @@ CFLAGS=-I$(BOOST_DIR)/include -I$(GSL_MATRIX_DIR)/include  -I ../src/
 CFLAGS+=-I$(CTRACE_DIR)
 CFLAGS+=-I$(GRAPH_IO_DIR)
 CFLAGS+=-I$(GRAPH_GSL_GRAPH_DIR)
+CFLAGS+=-I$(GSL_IO)
 CFLAGS+=-stdlib=libstdc++
 
 LINKFLAGS=-stdlib=libstdc++ -L $(BOOST_DIR)/lib -lboost_unit_test_framework  
-LINKFLAGS+=-lgsl -L$(GSL_MATRIX_DIR)/lib 
+LINKFLAGS+=-lgsl -lgslcblas -L$(GSL_MATRIX_DIR)/lib 
 
 DYNAMIC_LIBRARY_PATH_MAC=DYLD_LIBRARY_PATH
 DYNAMIC_LIBRARY_PATH_LINUX=LD_LIBRARY_PATH

@@ -92,7 +92,7 @@ for i in `seq 1 $narg`;
 		nameOfOutputFile="output_file_orc"
 		getOutPutFile $indicator $x $y $z nameOfOutputFile
 		echo $nameOfOutputFile
-		ARGS1="  --graphFile ${garg} --algorithm ${iarg} --k 0.95 --To 1.0 --TMin 0.000001 --nMax 2000  --output-format-adjlist"	
+		ARGS1="  --graphFile ${garg} --algorithm ${iarg} --k 0.90 --To 1.0 --TMin 0.000001 --nMax 2000  --output-format-adjlist"	
 		ARGS2=" --seed_x  ${x}  --seed_y  ${y}  --seed_z ${z}   --threshold-accepting   --outputFileSufix $nameOfOutputFile"
 		eval $COMMAND $ARGS1 $ARGS2
 	done    

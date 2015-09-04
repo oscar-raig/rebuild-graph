@@ -10,11 +10,13 @@
 #define BOOST_TEST_MODULE MyTest
 #include <boost/test/unit_test.hpp>
 #include <iostream> 
+
 #include "gslGraph.hpp"
 #include "graphIndicatorBetweennessCentrality.h"
+#include "FactoryMethodGraphIndicator.h"
 #include "readPythonGraphFile.h"
 
-
+int ORDER_WHEEL14 = 14;
 
 #define DIR_GRAPHS "./data/"
 
@@ -143,6 +145,89 @@ BOOST_AUTO_TEST_CASE( UTest_gslGraph_CommunicabilityCentrality_krackhardt_kite){
     delete betweennessCentrality;
     
 
+}
+
+
+BOOST_AUTO_TEST_CASE( UTest_gslGraph_CommunicabilityBetweennessCentrality_krackhardt_kite){
+    
+   
+    gslGraph *krackhardtKiteGraph =   ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "krackhardt_kite_grap.adjlist" );
+    
+    
+    double *communicability_betweeness_centrality = NULL;
+    double expectedCommunicabilitybetweenessCentrality[10]={ 0.259,0.259,0.164,0.497,
+        0.164,0.497,0.497,0.451,0.233,0.010};
+    
+    
+    graphIndicator *communicabilityBetweennessCentrality = FactoryMethodGraphIndicator::createGraphIndicator(COMMUNICABILITY_BETWEENESS_CENTRALITY,krackhardtKiteGraph);
+    
+    communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicatorWithReescale(true);
+    for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
+        BOOST_CHECK( abs(communicability_betweeness_centrality[i] - expectedCommunicabilitybetweenessCentrality[i])< 0.01);
+    }
+    
+    delete krackhardtKiteGraph;
+    delete communicability_betweeness_centrality;
+    delete communicabilityBetweennessCentrality;
+    
+   
+}
+
+BOOST_AUTO_TEST_CASE( UTest_gslGraph_CommunicabilityBetweennessCentrality_test_4nodes){
+    
+   
+    
+    gslGraph *krackhardtKiteGraph =   ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "test_4nodes.gpfc" );
+    
+    
+    double *communicability_betweeness_centrality = NULL;
+    double expectedCommunicabilitybetweenessCentrality[4]={ 0.07017,0.71565,0.71565,0.07017};
+        
+    graphIndicator *communicabilityBetweennessCentrality = FactoryMethodGraphIndicator::createGraphIndicator(COMMUNICABILITY_BETWEENESS_CENTRALITY,krackhardtKiteGraph);
+    
+    communicability_betweeness_centrality = communicabilityBetweennessCentrality->calculateIndicatorWithReescale(true);
+    for (int i = 0; i < krackhardtKiteGraph->getOrder(); i++){
+        BOOST_CHECK( abs(communicability_betweeness_centrality[i] - expectedCommunicabilitybetweenessCentrality[i])< 0.01);
+    }
+    
+    delete krackhardtKiteGraph;
+    delete communicability_betweeness_centrality;
+    delete communicabilityBetweennessCentrality;
+    
+    
+}
+
+BOOST_AUTO_TEST_CASE(UTest_graphIndicatorBetweennessCentrality_anyUnconnectedVertex){
+    
+    
+    graphIndicatorBetweennessCentrality *BetweennessCentrality =
+    new graphIndicatorBetweennessCentrality(NULL);
+
+    
+    gslGraph *generalGraph =   ReadPythonGraphFile::readPythonGraphFile( DIR_GRAPHS "wheel14.txt" );
+    // Vertex 0 in wheel14 is connected to 13 vertex
+    // if we remove its neighbours, node 0 is unconnected
+    
+    generalGraph->removeVertexNeighbours(0);
+
+    gsl_vector * vector = BetweennessCentrality->anyUnconnectedVertex(generalGraph->getGslMatrix());
+    
+    BOOST_CHECK(gsl_vector_get(vector,0)==0);
+    for (int i = 1; i < ORDER_WHEEL14 ;i++){
+        BOOST_CHECK(gsl_vector_get(vector,i)==1);
+    }
+    
+    generalGraph->removeVertexNeighbours(1);
+    
+    gsl_vector_free(vector);
+    vector = BetweennessCentrality->anyUnconnectedVertex(generalGraph->getGslMatrix());
+    
+    BOOST_CHECK(gsl_vector_get(vector,0)==0);
+    BOOST_CHECK(gsl_vector_get(vector,1)==0);
+    for (int i = 2; i < ORDER_WHEEL14 ;i++){
+        BOOST_CHECK(gsl_vector_get(vector,i)==1);
+    }
+      
 }
 
 

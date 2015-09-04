@@ -11,25 +11,13 @@
 
 #include <stdio.h>
 #include "graphIndicator.h"
+#include "gslIO.hpp"
 
 class graphIndicatorCommunicabilityCentralityUsingMatrixExponential : public graphIndicator{
 	
 public:
 	graphIndicatorCommunicabilityCentralityUsingMatrixExponential( gslGraph *argGraph):graphIndicator(argGraph){};
 	
-	gsl_vector *
-	getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix){
-	 
-		 int nMatrixOrder = (int) gslMatrix->size1;
-		 gsl_vector * gslvDiagonal = gsl_vector_calloc(nMatrixOrder);
-		 
-		 for (int i=0; i < nMatrixOrder;i++){
-			 double value = gsl_matrix_get(gslMatrix,i,i);
-			 gsl_vector_set(gslvDiagonal,i,value);
-		 }
-		 
-		 return gslvDiagonal;
-	}
 	
 	void brandes_comunicability_centrality_exp(double *myCExp)
 	{
@@ -44,11 +32,11 @@ public:
 		gsl_linalg_exponential_ss(matrix
 								  , A1expm, 0x00);
 
-		gsl_vector * gslvDiagonal = getDiagonalFromGslMatrix(A1expm);
+		gsl_vector * gslvDiagonal = gslIO::getDiagonalFromGslMatrix(A1expm);
 		
 				
 		
-		gslGraph::gslVectorToArray(gslvDiagonal,myCExp);
+		gslIO::gslVectorToArray(gslvDiagonal,myCExp);
 		gsl_matrix_free(matrix);
 		gsl_matrix_free(A1expm);
 		gsl_vector_free(gslvDiagonal);

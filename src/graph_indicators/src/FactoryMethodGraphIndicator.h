@@ -15,19 +15,25 @@
 #include "graphIndicatorBetweennessCentrality.h"
 #include "graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h"
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"
-#include "SettingsSimulation.h"
 
 
+#define BETWEENNESS_CENTRALITY     1
+#define COMMUNICABILITY_CENTRALITY 2
+#define COMMUNICABILITY_BETWEENESS_CENTRALITY 3
 
 class FactoryMethodGraphIndicator{
 public:
-	static graphIndicator *createGraphIndicator( int Indicator, gslGraph* gslGraph ){
-		if ( Indicator == BETWEENNESS_CENTRALITY)
+	static graphIndicator *createGraphIndicator( int indicator, gslGraph* gslGraph ){
+		if ( indicator == BETWEENNESS_CENTRALITY)
 			return new graphIndicatorBetweennessCentrality(gslGraph);
-		else if ( Indicator == COMMUNICABILITY_CENTRALITY)
+		else if ( indicator == COMMUNICABILITY_CENTRALITY)
 			return new graphIndicatorCommunicabilityCentralityUsingMatrixExponential(gslGraph);
-		else
+		else if ( indicator == COMMUNICABILITY_BETWEENESS_CENTRALITY ) {
 			return new graphIndicatorCommunicabilityBetweennessCentrality(gslGraph);
+		}
+		else {
+			return NULL;
+		}
 	};
 	
 };
