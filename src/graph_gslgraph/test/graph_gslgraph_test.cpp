@@ -45,12 +45,9 @@ BOOST_AUTO_TEST_CASE(UTest_gslGraph_readPythonGraphFile_FileNotExists){
 BOOST_AUTO_TEST_CASE(UTest_gslGraph_readPythonGraphFile_wheel10){
     
     gslGraph *  generalGraph = ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test.gpfc");
-    
-    int degree = generalGraph->getDegree();
+
     int order = generalGraph->getOrder();
-    
-    
-    BOOST_CHECK(degree == 3);
+        
     BOOST_CHECK(order ==7);
     
     delete generalGraph;
@@ -62,11 +59,8 @@ BOOST_AUTO_TEST_CASE(Utest_gslGraph_readPythonGraphFile_4nodes){
     
     gslGraph *  generalGraph =  ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test_4nodes.gpfc");
     
-    int degree = generalGraph->getDegree();
     int order = generalGraph->getOrder();
     
-   
-    BOOST_CHECK(degree == 2);
     BOOST_CHECK(order == 4);
     
     delete generalGraph;
@@ -82,11 +76,10 @@ BOOST_AUTO_TEST_CASE( UTest_gslGraph_removeVertexNeighbours_wheel14){
     
     gslGraph *  generalGraph = ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "wheel14.txt");
     
-    int graphdegree = generalGraph->getDegree();
     int graphorder = generalGraph->getOrder();
     
     BOOST_CHECK( graphorder == ORDER_WHEEL14 );
-    BOOST_CHECK( graphdegree == DEGREE_CENTRAL_VERTEX_WHEEL14 );
+
 
     for (int i = 0; i< ORDER_WHEEL14; i++) {
         int degree = generalGraph->getDegree(i);
@@ -103,11 +96,7 @@ BOOST_AUTO_TEST_CASE( UTest_gslGraph_removeVertexNeighbours_wheel14){
     generalGraph->removeVertexNeighbours(0);
     
     graphorder = generalGraph->getOrder();
-    graphdegree = generalGraph->getDegree();
     
-    BOOST_CHECK(graphdegree == 2);
-    
-
     BOOST_CHECK( graphorder == ORDER_WHEEL14 );
     
     for (int i = 0; i< ORDER_WHEEL14; i++) {
@@ -139,27 +128,22 @@ BOOST_AUTO_TEST_CASE( UTest_gslGraph_vertexAreNeighbours){
 }
 
 
-void addVertexAndTestDegreeAndOrder( gslGraph *graph,
+void addVertexAndTestOrder( gslGraph *graph,
                                           int vertexOrig,
                                           int vertexNeigbour,
-                                          int ExpectedDegree,
                                           int ExpectedOrder)
 {
     graph->addVertexNeighbour(vertexOrig,vertexNeigbour);
-    int graphDegree = graph->getDegree();
-    BOOST_CHECK( graphDegree == ExpectedDegree );
     int graphOrder = graph->getOrder();
     BOOST_CHECK( graphOrder == ExpectedOrder );
 }
 
 
-void removeVertexAndTestDegreeAndOrder( gslGraph *graph,
-                                          int vertex, int ExpectedDegree,
+void removeVertexAndTestOrder( gslGraph *graph,
+                                          int vertex,
                                           int ExpectedOrder)
 {
     graph->removeVertexNeighbours(vertex);
-    int graphDegree = graph->getDegree();
-    BOOST_CHECK( graphDegree == ExpectedDegree );
     int graphOrder = graph->getOrder();
     BOOST_CHECK( graphOrder == ExpectedOrder );
 }
@@ -171,21 +155,17 @@ void removeVertexAndTestDegreeAndOrder( gslGraph *graph,
 BOOST_AUTO_TEST_CASE( UTest_gslGraph_adNewVertexNeighbour_and_check_order_and_degree) {
     
     gslGraph *graph = NULL;
-    int degree = 0;
     int order = 0;
     
     graph =  new gslGraph( 5 );
-    degree = graph->getDegree();
     order = graph->getOrder();
-    BOOST_CHECK( degree == 0 );
     BOOST_CHECK( order == 5 );
     
     
     {
         // adding a conection between vertex 0 and 1
-        int expectedDegree = 1;
         int expectedOrder = 5;
-        addVertexAndTestDegreeAndOrder( graph,0,1,expectedDegree,expectedOrder );
+        addVertexAndTestOrder( graph,0,1,expectedOrder );
     
     }
     {
@@ -193,30 +173,29 @@ BOOST_AUTO_TEST_CASE( UTest_gslGraph_adNewVertexNeighbour_and_check_order_and_de
         int expectedOrder = 5;
         int  vertexToDelete = 0;
         // removing the connection between 0 and 1
-        removeVertexAndTestDegreeAndOrder(graph,vertexToDelete,expectedDegree,expectedOrder);
+        removeVertexAndTestOrder(graph,vertexToDelete,expectedOrder);
     }
     {
         int vertexToRemove = 1;
         // removing a removed connection
         graph->removeVertexNeighbours(vertexToRemove);
     
-        degree = graph->getDegree();
         order = graph->getOrder();
         int expectedDegree = 0;
         int expectedOrder = 5;
-        BOOST_CHECK( degree == expectedDegree );
         BOOST_CHECK( order == expectedOrder);
     }
     //removing a inexisting connection
-    removeVertexAndTestDegreeAndOrder(graph,1,0,5);
+	
+    removeVertexAndTestOrder(graph,1,5);
 
 
     // adding a triangle
     graph->addNewVertexNeighbour( 0,1 );
     graph->addNewVertexNeighbour( 0,3 );
-    addVertexAndTestDegreeAndOrder( graph,3,1,2,5 );
+    addVertexAndTestOrder(graph,3,1,5);
     
     // adding a new Vertex
-    addVertexAndTestDegreeAndOrder( graph,5,0,3,6 );
+    addVertexAndTestOrder(graph,5,0,6);
 
 }

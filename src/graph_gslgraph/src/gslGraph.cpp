@@ -22,14 +22,12 @@ using std::runtime_error;
 
 gslGraph::gslGraph():
         order(0),
-        degree(0),
         matrix(NULL),
         vertex_degree(NULL){
 };
 
 gslGraph::gslGraph(int sizeOfMatrix):
-        order(sizeOfMatrix),
-        degree(0){
+        order(sizeOfMatrix){
 
     matrix = gsl_matrix_calloc(sizeOfMatrix,sizeOfMatrix);
     //gsl_matrix_set_zero(matrix);
@@ -52,7 +50,6 @@ gslGraph*   gslGraph::copyGraph()const{
         throw runtime_error("Order and matrix size are different");
 
     newgslGraph->order = getOrder();
-    newgslGraph->degree = getDegree();
     gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
     memcpy(newgslGraph->vertex_degree,vertex_degree,(sizeof(int)*order));
     return newgslGraph;
@@ -109,7 +106,6 @@ int gslGraph::addVertex(int newVertexId){
             gsl_matrix_free( matrix);
         matrix = gsl_matrix_calloc  (newVertexId+1,newVertexId+1);
         order = newVertexId+1;
-        degree = 0;
         this->vertex_degree = (int*)malloc(order*sizeof(int));
         memset(this->vertex_degree,0,order*sizeof(int));
         return order;
@@ -130,7 +126,6 @@ int gslGraph::addVertex(int newVertexId){
         order = newVertexId+1;
         free (vertex_degree);
         vertex_degree =new_vertex_degree;
-        degree = getDegree();
     }
     return order;
 }
@@ -177,12 +172,6 @@ int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
         }else{
             newNeighbourWasConnected = true;
         }
-        if ( weHaveConnected ){
-            if ( degree < this->vertex_degree[newNeighbour] )
-                degree = this->vertex_degree[newNeighbour];
-            if ( degree < this->vertex_degree[sourceVertex] )
-                degree = this->vertex_degree[sourceVertex];
-        }
         if (sourceWasConnected != newNeighbourWasConnected)
             throw "ERROR one is connected to other but not both";
     }
@@ -209,7 +198,6 @@ void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
                     maxDegree = this->vertex_degree[i];
             }
         }
-        degree = maxDegree;
     }else{
         throw "ERROR: Neighbour to remove greater than order";
     }
@@ -237,13 +225,7 @@ void  gslGraph::addNewVertexNeighbour(int sourceVertex,int newNeighbour){
         if ( !*element){
             *element = 1;
             vertex_degree[newNeighbour]++;
-        }
-        if(this->degree < vertex_degree[newNeighbour])
-            degree = vertex_degree[newNeighbour];
-        if(this->degree < vertex_degree[sourceVertex])
-            degree = vertex_degree[sourceVertex];
-
-            
+        }     
     }
     else{
         trace.trace(ERROR_GSL_GRAPH,"Error: source ore newNeigbour out of bounds");

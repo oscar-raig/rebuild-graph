@@ -46,7 +46,6 @@ public:
 	};
 private:
 	int order;
-	int degree;
 	gsl_matrix * matrix;
 	int *vertex_degree;
 	
@@ -61,12 +60,7 @@ public:
 	
 	// Get the number of vertex (order) of the graph
 	inline int getOrder() const { return order;};
-	
-	// Get the graph degree
-	inline int  getDegree() const {
-		return this->degree;
-	};
-	
+		
 	inline int getDegree(int vertex)const {
 		
 		if ( vertex > order )
@@ -82,9 +76,7 @@ public:
 	virtual void removeVertexNeighbours(int vertexToRemoveNegighbours);
 
 	virtual int graphToGsl( gsl_matrix* target);
-	gsl_vector * getDiagonalFromGslMatrix(const gsl_matrix * gslMatrix);
 	
-
 
 	virtual int vertexAreNeighbours(int vertexBegining,int vertexEnding);
 	virtual int graphNotConnected (int *unconnectedVertex);
