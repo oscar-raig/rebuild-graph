@@ -180,7 +180,7 @@ void gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
 
 
 void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
-    int maxDegree = 0;
+
     if ( vertexToRemoveNegighbours < getOrder() ){
         for (int i = 0; i < getOrder() ; i++ ){
             double *element = gsl_matrix_ptr(matrix,vertexToRemoveNegighbours,i );
@@ -192,10 +192,6 @@ void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
             if (*element){
                 *element = 0;
                 this->vertex_degree[i]--;
-            }
-            if( vertexToRemoveNegighbours != i){
-                if ( maxDegree < this->vertex_degree[i])
-                    maxDegree = this->vertex_degree[i];
             }
         }
     }else{
