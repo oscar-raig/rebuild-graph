@@ -29,16 +29,22 @@ gslGraph::gslGraph():
 gslGraph::gslGraph(int sizeOfMatrix){
 
     matrix = gsl_matrix_calloc(sizeOfMatrix,sizeOfMatrix);
-    //gsl_matrix_set_zero(matrix);
     vertex_degree = (int *)calloc(sizeOfMatrix , sizeof(int));
   
 };
 
 gslGraph::~gslGraph(){
-    if( matrix )
-        gsl_matrix_free(matrix);
+   free_attributes_memory();	
 };
 
+void gslGraph::free_attributes_memory() {
+	if( matrix ) {
+        gsl_matrix_free(matrix);
+	}
+	if( vertex_degree) {
+		free(vertex_degree); 
+	}
+}
 
 gslGraph*   gslGraph::copyGraph()const{
     gslGraph *newgslGraph = new gslGraph(getOrder());
@@ -101,8 +107,7 @@ void gslGraph::printMyGraph(const char * outputGraphFilename,
 void gslGraph::addVertex(int newVertexId){
 
     if ( getOrder() == 0){
-        if ( matrix)
-            gsl_matrix_free( matrix);
+        free_attributes_memory();
         matrix = gsl_matrix_calloc  (newVertexId+1,newVertexId+1);
         this->vertex_degree = (int*)calloc(getOrder(),sizeof(int));
         return;

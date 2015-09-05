@@ -82,6 +82,8 @@ public:
 
 	virtual int vertexAreNeighbours(int vertexBegining,int vertexEnding);
 	virtual int graphNotConnected (int *unconnectedVertex);
+private:
+	void free_attributes_memory();
 	
 };
 
