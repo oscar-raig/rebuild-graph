@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include "readPythonGraphFile.h"
 #include <stdexcept>
+#include "gslIO.hpp"
 
 
 gslGraph *ReadPythonGraphFile::readPythonGraphFile( std::string fileName){

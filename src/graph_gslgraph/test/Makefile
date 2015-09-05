@@ -1,15 +1,17 @@
 GRAPH_IO_DIR=../../graph_io/src/
 GRAPH_TRACE=../../../../libcpp/
+GSL_IO=../../gsl_utillities/gsl_io/src/
 
 SOURCES=graph_gslgraph_test.cpp ../src/gslGraph.cpp
 SOURCES+=$(GRAPH_TRACE)/CTrace.cpp
-SOURCES+=$(GRAPH_IO_DIR)readPythonGraphFile.cpp
+SOURCES+=$(GRAPH_IO_DIR)readPythonGraphFile.cpp 
+SOURCES+=$(GSL_IO)gslIO.cpp
 
 INCLUDES=../src/gslGraph.h
 INCLUDES+=$(GRAPH_IO_DIR)readPythonGraphFile.h
 
 OBJECTS=graph_gslgraph_test.o gslGraph.o
-OBJECTS+=readPythonGraphFile.o CTrace.o
+OBJECTS+=readPythonGraphFile.o CTrace.o gslIO.o
 
 TARGET=graph_gslgraph_test
 COMPILER=g++ -c  
@@ -23,6 +25,7 @@ CFLAGS=-I$(BOOST_DIR)/include -I$(GSL_MATRIX_DIR)/include  -I ../src/
 CFLAGS+=-I$(CTRACE_DIR)
 CFLAGS+=-I$(GRAPH_IO_DIR)
 CFLAGS+=-stdlib=libstdc++
+CFLAGS+=-I$(GSL_IO)
 
 LINKFLAGS=-stdlib=libstdc++ -L $(BOOST_DIR)/lib -lboost_unit_test_framework  
 LINKFLAGS+=-lgsl -L$(GSL_MATRIX_DIR)/lib 

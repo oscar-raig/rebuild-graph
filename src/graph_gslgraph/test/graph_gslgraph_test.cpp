@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include "gslGraph.hpp"
+#include "gslIO.hpp"
 #include "readPythonGraphFile.h"
 
 #include <boost/test/auto_unit_test.hpp>
@@ -37,15 +38,12 @@ BOOST_AUTO_TEST_CASE(UTest_gslGraph_readPythonGraphFile_FileNotExists){
     
     gslGraph *  generalGraph =  new gslGraph();
     BOOST_REQUIRE_THROW(ReadPythonGraphFile::readPythonGraphFile("filenotfound"), std::exception);
-    
     delete generalGraph;
     
 }
 
 BOOST_AUTO_TEST_CASE(UTest_gslGraph_readPythonGraphFile_wheel10){
-    
     gslGraph *  generalGraph = ReadPythonGraphFile::readPythonGraphFile(DIR_GRAPHS "test.gpfc");
-
     int order = generalGraph->getOrder();
         
     BOOST_CHECK(order ==7);
@@ -79,7 +77,7 @@ BOOST_AUTO_TEST_CASE( UTest_gslGraph_removeVertexNeighbours_wheel14){
     int graphorder = generalGraph->getOrder();
     
     BOOST_CHECK( graphorder == ORDER_WHEEL14 );
-
+	
 
     for (int i = 0; i< ORDER_WHEEL14; i++) {
         int degree = generalGraph->getDegree(i);

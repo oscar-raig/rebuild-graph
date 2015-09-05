@@ -45,7 +45,6 @@ public:
 		VERTEX_CONNCTED,
 	};
 private:
-	int order;
 	gsl_matrix * matrix;
 	int *vertex_degree;
 	
@@ -58,20 +57,23 @@ public:
 	virtual gslGraph*	copyGraph() const ;
 	gsl_matrix* getGslMatrix(){return matrix;}
 	
-	// Get the number of vertex (order) of the graph
-	inline int getOrder() const { return order;};
+	inline int getOrder() const { 
+		if(!matrix)
+			return 0;
+		return matrix->size1;
+	};
 		
 	inline int getDegree(int vertex)const {
 		
-		if ( vertex > order )
+		if (vertex > getOrder())
 			throw "ERROR: Asking for vertex greater than order";
 				
 		return vertex_degree[vertex];
 	}
 	virtual void printMyGraph(const char * outputGraphFilename,bool outputAsAdjacencyList) const;
 	
-    int addVertex(int newVertexId);
-	int addVertexNeighbour(int sourceVertex,int newNeighbour);
+    void addVertex(int newVertexId);
+	void addVertexNeighbour(int sourceVertex,int newNeighbour);
 	virtual void addNewVertexNeighbour(int sourceVertex,int newNeighbour);
 	virtual void removeVertexNeighbours(int vertexToRemoveNegighbours);
 
@@ -80,8 +82,6 @@ public:
 
 	virtual int vertexAreNeighbours(int vertexBegining,int vertexEnding);
 	virtual int graphNotConnected (int *unconnectedVertex);
-	
-	
 	
 };
 

@@ -3,8 +3,11 @@
 
 
 void gslIO::printGslMatrix(const gsl_matrix* gslMatrix,const char *format){
+	if( gslMatrix == NULL) {
+		printf("Empty Matrix\n");
+		return;
+	}
     printf("\n");
-	printf("hello\n");
     for (size_t i = 0; i < gslMatrix->size1; i++) {
         for (size_t j = 0; j < gslMatrix->size2; j++) {
             printf(format, gsl_matrix_get(gslMatrix, i, j));

@@ -5,7 +5,8 @@
 //  Created by Oscar Raig Colon on 29/07/14.
 //  Copyright (c) 2014 Oscar Raig Colon. All rights reserved.
 //
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "gslGraph.hpp"
 #include "CTrace.hpp"
 #include <stdexcept>
@@ -21,18 +22,16 @@ using std::runtime_error;
 
 
 gslGraph::gslGraph():
-        order(0),
         matrix(NULL),
         vertex_degree(NULL){
 };
 
-gslGraph::gslGraph(int sizeOfMatrix):
-        order(sizeOfMatrix){
+gslGraph::gslGraph(int sizeOfMatrix){
 
     matrix = gsl_matrix_calloc(sizeOfMatrix,sizeOfMatrix);
     //gsl_matrix_set_zero(matrix);
-    vertex_degree = (int *)malloc(sizeOfMatrix * sizeof(int));
-    memset(vertex_degree,0,sizeOfMatrix * sizeof(int));
+    vertex_degree = (int *)calloc(sizeOfMatrix , sizeof(int));
+  
 };
 
 gslGraph::~gslGraph(){
@@ -42,16 +41,16 @@ gslGraph::~gslGraph(){
 
 
 gslGraph*   gslGraph::copyGraph()const{
-    gslGraph *newgslGraph = new gslGraph(order);
+    gslGraph *newgslGraph = new gslGraph(getOrder());
 
-    if ( order !=  matrix->size1)
+    if ( getOrder() !=  matrix->size1)
             throw runtime_error("Order and matrix size are different");
-    if ( order !=  matrix->size2)
+    if ( getOrder() !=  matrix->size2)
         throw runtime_error("Order and matrix size are different");
 
-    newgslGraph->order = getOrder();
+
     gsl_matrix_memcpy ( newgslGraph->matrix, matrix );
-    memcpy(newgslGraph->vertex_degree,vertex_degree,(sizeof(int)*order));
+    memcpy(newgslGraph->vertex_degree,vertex_degree,(sizeof(int)*getOrder()));
     return newgslGraph;
 }
 
@@ -99,19 +98,17 @@ void gslGraph::printMyGraph(const char * outputGraphFilename,
 // This operation adds newVertexId to the graph
 // RETURNS the updated value of de PRIVATE variable order
 //-----------------------------------------------------------------------------
-int gslGraph::addVertex(int newVertexId){
-    
-    if ( order == 0){
+void gslGraph::addVertex(int newVertexId){
+
+    if ( getOrder() == 0){
         if ( matrix)
             gsl_matrix_free( matrix);
         matrix = gsl_matrix_calloc  (newVertexId+1,newVertexId+1);
-        order = newVertexId+1;
-        this->vertex_degree = (int*)malloc(order*sizeof(int));
-        memset(this->vertex_degree,0,order*sizeof(int));
-        return order;
+        this->vertex_degree = (int*)calloc(getOrder(),sizeof(int));
+        return;
     }
     
-    if(order<(newVertexId+1)){
+    if(getOrder()<(newVertexId+1)){
         gsl_matrix *new_matrix = gsl_matrix_calloc(newVertexId+1,newVertexId+1);
         for (int i = 0 ; i < matrix->size1 ; i ++){
             for ( int j =0; j < matrix->size1;  j ++){
@@ -120,29 +117,26 @@ int gslGraph::addVertex(int newVertexId){
         }
         gsl_matrix_free(matrix);
         matrix = new_matrix;
-        int * new_vertex_degree = (int *) malloc((newVertexId+1) * sizeof(int));
-        memset(new_vertex_degree,0,(newVertexId+1) * sizeof(int));
-        memcpy(new_vertex_degree,vertex_degree,order * sizeof(int));
-        order = newVertexId+1;
+        int * new_vertex_degree = (int *) calloc((newVertexId+1), sizeof(int));
+        memcpy(new_vertex_degree,vertex_degree,(newVertexId) * sizeof(int));
         free (vertex_degree);
-        vertex_degree =new_vertex_degree;
+        vertex_degree = new_vertex_degree;
     }
-    return order;
+	
+    return;
 }
 
 
 
-int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
-    int result=1;
+void gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
     bool sourceWasConnected = false;
     bool newNeighbourWasConnected = false;
     bool weHaveConnected = false;
-    
     if(sourceVertex!=newNeighbour){
-        if(order<(sourceVertex+1)){
+        if(getOrder()<(sourceVertex+1)){
             addVertex(sourceVertex);
         }
-        if(order<(newNeighbour+1)){
+        if(getOrder()<(newNeighbour+1)){
             addVertex(newNeighbour);
         }
         if ( sourceVertex> getOrder())
@@ -175,14 +169,13 @@ int gslGraph::addVertexNeighbour(int sourceVertex,int newNeighbour){
         if (sourceWasConnected != newNeighbourWasConnected)
             throw "ERROR one is connected to other but not both";
     }
-    return result;
 }
 
 
 void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
     int maxDegree = 0;
-    if ( vertexToRemoveNegighbours < order ){
-        for (int i = 0; i < order ; i++ ){
+    if ( vertexToRemoveNegighbours < getOrder() ){
+        for (int i = 0; i < getOrder() ; i++ ){
             double *element = gsl_matrix_ptr(matrix,vertexToRemoveNegighbours,i );
             if ( *element){
                 *element= 0;
@@ -205,17 +198,10 @@ void gslGraph::removeVertexNeighbours(int vertexToRemoveNegighbours){
 }
 
 
-
-
-
-
-
-
-
 void  gslGraph::addNewVertexNeighbour(int sourceVertex,int newNeighbour){
     CFuncTrace trace (false,"gslGraph::addNewVertexNeighbour");
-    if(((order+1)>sourceVertex) &&
-       ((order+1)>newNeighbour)) {
+    if(((getOrder()+1)>sourceVertex) &&
+       ((getOrder()+1)>newNeighbour)) {
         double *element = gsl_matrix_ptr(matrix,sourceVertex,newNeighbour );
         if ( !*element){
             *element = 1;
@@ -241,7 +227,7 @@ int gslGraph::vertexAreNeighbours(int vertexBegining,int vertexEnding){
 
 int gslGraph::graphNotConnected (int *unconnectedVertex){
     int i,result=false;
-    for(i=0;i<order;i++){
+    for(i=0;i<getOrder();i++){
         if(getDegree(i)==0){
             result=true;
             *unconnectedVertex=i;
@@ -251,12 +237,6 @@ int gslGraph::graphNotConnected (int *unconnectedVertex){
     }
     return result;
 }
-
-
-
-
-
-
 
 int  gslGraph::graphToGsl( gsl_matrix* target){
     gsl_matrix_memcpy(target,matrix);
