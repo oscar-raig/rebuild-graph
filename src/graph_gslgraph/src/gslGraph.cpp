@@ -27,23 +27,26 @@ gslGraph::gslGraph():
 };
 
 gslGraph::gslGraph(int sizeOfMatrix){
-
-    matrix = gsl_matrix_calloc(sizeOfMatrix,sizeOfMatrix);
-    vertex_degree = (int *)calloc(sizeOfMatrix , sizeof(int));
-  
+   alloc_members(sizeOfMatrix);
 };
 
 gslGraph::~gslGraph(){
-   free_attributes_memory();	
+   free_members();	
 };
 
-void gslGraph::free_attributes_memory() {
+void gslGraph::free_members() {
 	if( matrix ) {
         gsl_matrix_free(matrix);
 	}
 	if( vertex_degree) {
 		free(vertex_degree); 
 	}
+}
+
+
+void gslGraph::alloc_members(int sizeOfMatrix) {
+	matrix = gsl_matrix_calloc(sizeOfMatrix,sizeOfMatrix);
+    vertex_degree = (int *)calloc(sizeOfMatrix , sizeof(int));
 }
 
 gslGraph*   gslGraph::copyGraph()const{
@@ -107,9 +110,8 @@ void gslGraph::printMyGraph(const char * outputGraphFilename,
 void gslGraph::addVertex(int newVertexId){
 
     if ( getOrder() == 0){
-        free_attributes_memory();
-        matrix = gsl_matrix_calloc  (newVertexId+1,newVertexId+1);
-        this->vertex_degree = (int*)calloc(getOrder(),sizeof(int));
+        free_members();
+        alloc_members(newVertexId + 1);
         return;
     }
     
@@ -225,22 +227,21 @@ void  gslGraph::addNewVertexNeighbour(int sourceVertex,int newNeighbour){
 
 
 int gslGraph::vertexAreNeighbours(int vertexBegining,int vertexEnding){
+	// BUFFF!!!
     if (vertexBegining == vertexEnding)
         return 1;
     return gsl_matrix_get(matrix, vertexBegining, vertexEnding);
 }
 
 int gslGraph::graphNotConnected (int *unconnectedVertex){
-    int i,result=false;
-    for(i=0;i<getOrder();i++){
+    int i,notConnected=false;
+	while( i < getOrder() && !notConnected ) {
         if(getDegree(i)==0){
-            result=true;
+            notConnected = true;
             *unconnectedVertex=i;
-            //printf("NOT CONNECTED\n");//printGraph();
-            break;
         }
     }
-    return result;
+    return notConnected;
 }
 
 int  gslGraph::graphToGsl( gsl_matrix* target){
