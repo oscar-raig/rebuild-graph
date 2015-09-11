@@ -19,7 +19,7 @@
 #include "graphIndicatorCommunicabilityBetweennessCentrality.h"
 
 #define STP_DEBUG CTrace::TRACE_DEBUG
-#define STP_INFO CTrace::TRACE_DEBUG
+#define STP_INFO CTrace::TRACE_INFO
 
 #ifndef STRING_LENGTH
 #define STRING_LENGTH 256
@@ -74,12 +74,19 @@ public:
 	
 	virtual bool AreChangesAccepted( double costNew, double costBest,double Tk){
 		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::AreChangesAccepted");
+	//	lFuncTrace.trace(STP_INFO,"AreChangesAccepted %f %f", costNew, costBest);
 		return (costNew<costBest);
 	}
 	virtual bool AreChangesAcceptedRandomly(double costNew, double costBest,double Tk ){
 		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::AreChangesAcceptedRandomly");
-		
-		return (exp((costBest-costNew)/Tk)>generateRandomNumber());
+		static int count = 0;
+		double deltaTK= exp((costBest-costNew)/Tk);
+		if (count > 100 ) {
+			lFuncTrace.trace(STP_INFO,"DeltaTK %f",deltaTK);
+			count =0;
+		}
+		count++;
+		return (deltaTK>generateRandomNumber());
 	}
 	
 	bool Loop(double &costNew,double &costBest,
@@ -89,13 +96,17 @@ public:
 		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithm::Loop");
 	//	double Tk=settingsSimulation->tMin;
 		if(AreChangesAccepted(costNew,costBest,Tk)){
+	//		lFuncTrace.trace(STP_INFO,"Chages are better");
 			acceptChangesInGraph(costBest,costNew,*newGraph,newBC,bestBC);
 			fprintf(logFile,"A");
 			changesAccepted = true;
 		} else if(AreChangesAcceptedRandomly(costNew,costBest,Tk)){
+		//	lFuncTrace.trace(STP_INFO,"Chages are accepted randomly");
 			// if newCost not is better than oldCost,
 			// we still accept it if exp(df/T_k)<rand()
+			acceptChangesInGraph(costBest,costNew,*newGraph,newBC,bestBC);
 			fprintf(logFile,"O");
+			changesAccepted = true;
 		} else {
 			discardChangeInGraph( newGraph );
 			fprintf(logFile,"x");
@@ -165,7 +176,20 @@ public:
 	virtual bool AreChangesAcceptedRandomly(double costNew, double costBest,double Tk ){
 		CFuncTrace lFuncTrace(false,"StrategyPatternAlgorithmThresholdAccepting::AreChangesAcceptedRandomly");
 		double TRHESHOLD = Tk;
-		return ((costNew -costBest  )< ( TRHESHOLD * costBest));
+		double  diffCostNewCostBest = (costNew -costBest  );
+		double  thresholdCostBest =  TRHESHOLD * costBest;
+		static int count = 0;
+		if (count > 100 ) {
+			lFuncTrace.trace(STP_INFO,"CostNewCostBest  %f < ThresHoldCostBest %f THRESHOLD %f",
+							 diffCostNewCostBest,thresholdCostBest,TRHESHOLD );
+			count =0;
+		}
+		count++;
+		if ( diffCostNewCostBest<thresholdCostBest ) {
+			lFuncTrace.trace(STP_INFO,"YES WE ACCEPTED CostNewCostBest  %f < ThresHoldCostBest %f THRESHOLD %f",
+							 diffCostNewCostBest,thresholdCostBest,TRHESHOLD );
+		}
+		return (diffCostNewCostBest<thresholdCostBest);
 	}
 	
 

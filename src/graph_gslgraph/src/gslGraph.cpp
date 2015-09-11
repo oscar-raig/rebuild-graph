@@ -230,12 +230,13 @@ int gslGraph::vertexAreNeighbours(int vertexBegining,int vertexEnding){
 }
 
 int gslGraph::graphNotConnected (int *unconnectedVertex){
-    int i,notConnected=false;
-	while( i < getOrder() && !notConnected ) {
+    int i = 0,notConnected=false;
+	while( (i < getOrder() ) && !notConnected ) {
         if(getDegree(i)==0){
             notConnected = true;
             *unconnectedVertex=i;
         }
+		i++;
     }
     return notConnected;
 }

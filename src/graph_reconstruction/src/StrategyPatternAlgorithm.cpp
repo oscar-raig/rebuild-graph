@@ -223,7 +223,7 @@ void StrategyPatternAlgorithm::AnnealingAlgorithm(int graphOrder,
 													&newGraph,newBC,bestBC,graphOrder,weAreDone,Tk);
 			if (accetptedChangesForThisIteration) {
 				acceptedChanges = true;
-				lFuncTrace.trace(STP_INFO,"We have acceted changes ");
+				lFuncTrace.trace(STP_DEBUG,"We have acceted changes ");
 			}
         }
 		

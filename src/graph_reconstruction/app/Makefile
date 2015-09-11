@@ -2,16 +2,17 @@ GSL_GRAPH_DIR=../../graph_gslgraph/src/
 GRAPH_IO_DIR=../../graph_io/src/
 GRAPH_INDICATOR_DIR=../../graph_indicators/src/
 GSL_IO=../../gsl_utillities/gsl_io/src/
+GRAPH_RECONSTRUCTION=../../graph_reconstruction/src/
 
-SOURCES=main.cpp ProgramOptions.cpp SettingsSimulation.cpp
-SOURCES+=rebuildgraph.cpp
+SOURCES=$(GRAPH_RECONSTRUCTION)main.cpp $(GRAPH_RECONSTRUCTION)ProgramOptions.cpp $(GRAPH_RECONSTRUCTION)SettingsSimulation.cpp
+SOURCES+=$(GRAPH_RECONSTRUCTION)rebuildgraph.cpp
 SOURCES+=$(GRAPH_INDICATOR_DIR)graphIndicator.cpp 
 SOURCES+=$(GRAPH_INDICATOR_DIR)graphIndicatorBetweennessCentrality.cpp
 SOURCES+=$(GRAPH_INDICATOR_DIR)graphIndicatorCommunicabilityBetweennessCentrality.cpp 
 SOURCES+=$(GRAPH_INDICATOR_DIR)graphIndicatorCommunicabilityCentralityUsingMatrixExponential.cpp
 SOURCES+=../../graph_gslgraph/src/gslGraph.cpp 
 SOURCES+=$(GRAPH_IO_DIR)readPythonGraphFile.cpp
-SOURCES+=StrategyPatternAlgorithm.cpp
+SOURCES+=$(GRAPH_RECONSTRUCTION)StrategyPatternAlgorithm.cpp
 SOURCES+=../../../../libcpp/CTrace.cpp
 SOURCES+=$(GSL_IO)gslIO.cpp
 
@@ -33,13 +34,13 @@ INCLUDES+=$(GRAPH_INDICATOR_DIR)graphIndicatorBetweennessCentrality.h
 INCLUDES+=$(GRAPH_INDICATOR_DIR)graphIndicatorCommunicabilityBetweennessCentrality.h
 INCLUDES+=$(GRAPH_INDICATOR_DIR)graphIndicatorCommunicabilityCentralityUsingMatrixExponential.h
 
-INCLUDES+=rebuildgraph.h
-INCLUDES+=$(GRAPH_INDICATOR_DIR)FactoryMethodGraphIndicator.h FactoryMethodStrategyPatternAlgorithm.h 
-INCLUDES+=ProgramOptions.h SettingsSimulation.h 
+INCLUDES+=$(GRAPH_RECONSTRUCTION)rebuildgraph.h
+INCLUDES+=$(GRAPH_INDICATOR_DIR)FactoryMethodGraphIndicator.h $(GRAPH_RECONSTRUCTION)FactoryMethodStrategyPatternAlgorithm.h 
+INCLUDES+=$(GRAPH_RECONSTRUCTION)ProgramOptions.h $(GRAPH_RECONSTRUCTION)SettingsSimulation.h 
 
 INCLUDES+=../../graph_gslgraph/src/gslGraph.hpp 
 INCLUDES+=$(GRAPH_IO_DIR)readPythonGraphFile.h
-INCLUDES+= StrategyPatternAlgorithm.h  
+INCLUDES+= $(GRAPH_RECONSTRUCTION)StrategyPatternAlgorithm.h  
 INCLUDES+=../../../../libcpp/CTrace.hpp
 
 CC=g++  -c
@@ -59,7 +60,10 @@ LFLAGS=-stdlib=libstdc++ -lgsl -lgslcblas  -lgsl -L../../../gsl-1.16/lib -L../..
 DYNAMIC_LIBRARY_PATH_MAC=DYLD_LIBRARY_PATH
 DYNAMIC_LIBRARY_PATH_LINUX=LD_LIBRARY_PATH
 DYNAMIC_LIBRARY_PATH=$(DYNAMIC_LIBRARY_PATH_LINUX)
-PARAMS= --graphFile  /Users/oscarraig/bitbucket/rebuild-graph/data/threshold_accepting/example_graphs/clus-inipy.txt --algorithm 2 --k 0.90 --To 1.0 --TMin 0.000001 --nMax 2000 --output-format-adjlist --seed_x 1 --seed_y 1 --seed_z 1 --threshold-accepting --outputFileSufix output_CC_1_1_1
+
+PARAMS= --graphFile  /Users/oscarraig/bitbucket/rebuild-graph/data/threshold_accepting/example_graphs/clus-inipy.txt --algorithm 3 --k 0.90 --To 1.0 --TMin 0.000001 --nMax 2000 --output-format-adjlist --seed_x 1 --seed_y 1 --seed_z 1  --outputFileSufix output_CC_1_1_1
+#PARAMS= --graphFile  /Users/oscarraig/bitbucket/rebuild-graph/data/threshold_accepting/example_graphs/clus-inipy.txt --algorithm 3 --k 0.90 --To 1.0 --TMin 0.000001 --nMax 2000 --output-format-adjlist --seed_x 1 --seed_y 1 --seed_z 1 --threshold-accepting --outputFileSufix output_CC_1_1_1
+
 
 OPERATING_SYSTEM=$(shell uname)
 ifeq ($(OPERATING_SYSTEM),Darwin)
