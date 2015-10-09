@@ -13,7 +13,7 @@ SOURCES+=$(GRAPH_INDICATOR_DIR)graphIndicatorCommunicabilityCentralityUsingMatri
 SOURCES+=../../graph_gslgraph/src/gslGraph.cpp 
 SOURCES+=$(GRAPH_IO_DIR)readPythonGraphFile.cpp
 SOURCES+=$(GRAPH_RECONSTRUCTION)StrategyPatternAlgorithm.cpp
-SOURCES+=../../../../libcpp/CTrace.cpp
+SOURCES+=../../../libcpp/CTrace.cpp
 SOURCES+=$(GSL_IO)gslIO.cpp
 
 
@@ -41,13 +41,13 @@ INCLUDES+=$(GRAPH_RECONSTRUCTION)ProgramOptions.h $(GRAPH_RECONSTRUCTION)Setting
 INCLUDES+=../../graph_gslgraph/src/gslGraph.hpp 
 INCLUDES+=$(GRAPH_IO_DIR)readPythonGraphFile.h
 INCLUDES+= $(GRAPH_RECONSTRUCTION)StrategyPatternAlgorithm.h  
-INCLUDES+=../../../../libcpp/CTrace.hpp
+INCLUDES+=../../../libcpp/CTrace.hpp
 
 CC=g++  -c
 LINKER=g++ -o
 
 CFLAGS=-I ../../../gsl-1.16/include -I ../../../boost/include
-CFLAGS+=-I../../../../libcpp/ -stdlib=libstdc++
+CFLAGS+=-I../../../libcpp/ 
 CFLAGS+=-I$(GSL_GRAPH_DIR)
 CFLAGS+=-I$(GRAPH_IO_DIR)
 CFLAGS+=-I$(GRAPH_INDICATOR_DIR)
@@ -55,7 +55,7 @@ CFLAGS+=-I$(GSL_IO)
 
 BOOST_DIR=../../../boost/
 
-LFLAGS=-stdlib=libstdc++ -lgsl -lgslcblas  -lgsl -L../../../gsl-1.16/lib -L../../../boost/lib -lboost_program_options
+LFLAGS= -lgsl -lgslcblas  -lgsl -L../../../gsl-1.16/lib -L../../../boost/lib -lboost_program_options
 
 DYNAMIC_LIBRARY_PATH_MAC=DYLD_LIBRARY_PATH
 DYNAMIC_LIBRARY_PATH_LINUX=LD_LIBRARY_PATH

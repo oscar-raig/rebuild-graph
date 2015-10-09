@@ -18,5 +18,5 @@ test:
 
 app:
 	make -C graph_analyze/app
-	make -C graph_reconstruction/src
+	make -C graph_reconstruction/app
 	

@@ -46,4 +46,4 @@ src/graph_gslgraph/test/graph_gslgraph_test
 src/graph_indicators/test/graph_indicators_test
 src/graph_analyze/app/graph_analyze_main
 src/gsl_utillities/gsl_io/test/gslIO_test
-
+src/graph_reconstruction/app/rebuild_graph

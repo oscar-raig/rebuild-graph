@@ -1,5 +1,8 @@
 test:
 	make -C src test
-	echo "TODO: 1. Compile wiht docker gsl-boost"
+
+app:
+	make -C src app
+
 clean:
 	make -C src clean
