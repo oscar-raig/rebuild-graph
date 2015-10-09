@@ -1,6 +1,6 @@
 GRAPH_IO_DIR=../../graph_io/src/
 GRAPH_GSL_GRAPH_DIR=../../graph_gslgraph/src/
-GRAPH_TRACE=../../../../libcpp/
+GRAPH_TRACE=../../../libcpp/
 GRAPH_INDICATOR_DIR=../../graph_indicators/src/
 GSL_IO=../../gsl_utillities/gsl_io/src/
 
@@ -34,16 +34,15 @@ LINKER=g++ -o
 
 BOOST_DIR=../../../boost/
 GSL_MATRIX_DIR=../../../gsl-1.16/
-CTRACE_DIR=../../../../libcpp/
+CTRACE_DIR=../../../libcpp/
 
 CFLAGS=-I$(BOOST_DIR)/include -I$(GSL_MATRIX_DIR)/include  -I ../src/
 CFLAGS+=-I$(CTRACE_DIR)
 CFLAGS+=-I$(GRAPH_IO_DIR)
 CFLAGS+=-I$(GRAPH_GSL_GRAPH_DIR)
 CFLAGS+=-I$(GSL_IO)
-CFLAGS+=-stdlib=libstdc++
 
-LINKFLAGS=-stdlib=libstdc++ -L $(BOOST_DIR)/lib -lboost_unit_test_framework  
+LINKFLAGS= -L $(BOOST_DIR)/lib -lboost_unit_test_framework  
 LINKFLAGS+=-lgsl -lgslcblas -L$(GSL_MATRIX_DIR)/lib 
 
 DYNAMIC_LIBRARY_PATH_MAC=DYLD_LIBRARY_PATH
