@@ -1,1 +1,1 @@
-docker run   -ti --entrypoint=/bin/bash  -v `pwd`:/home/  test-rebuild-graph 
+docker run   -ti --entrypoint=/bin/bash  -v `pwd`:/home/  oscarraig/gsl-boost
